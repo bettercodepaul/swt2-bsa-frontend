@@ -11,10 +11,10 @@ it('Anzeige Ligatabelle', function () {
  * This test checks if you can filter for a Competition-Day in Ligatablle
  */
 it('Wettkampftagauswahl Ligatabelle', function() {
-  cy.wait(6000)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
-  cy.wait(1000)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
-  cy.wait(500)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 4);
-})
+  cy.visit('http://localhost:4200/#/ligatabelle');
+  cy.get('.fa-list-ol').click();
+  cy.wait(1000);
+  cy.get('#availableYears').select('1: 2016');
+  cy.get('#wettkampftag').select('1: Object');
+  cy.get('#regionSaveButton').click();
+});

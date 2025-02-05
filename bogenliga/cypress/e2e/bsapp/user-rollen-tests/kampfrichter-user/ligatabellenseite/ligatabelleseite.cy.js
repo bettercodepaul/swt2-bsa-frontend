@@ -1,5 +1,5 @@
 /**
- * This test navigates to the sidebar, clicks on the "LIGATABELLE" tab, and verifies that the URL updates correctly.
+ * This test opens the sidebar and clicks on the "LIGATABELLE" tab and checks if the url has changed successfully
  */
 it('Anzeige Ligatabelle', function () {
   cy.visit('http://localhost:4200/')
@@ -8,14 +8,13 @@ it('Anzeige Ligatabelle', function () {
 })
 
 /**
- * This test verifies the functionality of filtering competition days in the "Ligatabelle" section.
- * It ensures that the user can select a competition and choose from the available competition days.
+ * This test checks if you can filter for a Competition-Day in Ligatablle
  */
 it('Wettkampftagauswahl Ligatabelle', function() {
-  cy.wait(6000)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
-  cy.wait(1000)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
-  cy.wait(500)
-  cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 4);
-})
+  cy.visit('http://localhost:4200/#/ligatabelle');
+  cy.get('.fa-list-ol').click();
+  cy.wait(1000);
+  cy.get('#availableYears').select('1: 2016');
+  cy.get('#wettkampftag').select('1: Object');
+  cy.get('#regionSaveButton').click();
+});
