@@ -1,62 +1,105 @@
-// Test: Opens the sidebar, clicks on "WETTKAEMPFE" tab, and verifies URL change
+/**
+ * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
+ */
 it('Anzeige Wettkampf Ergebnisse', function() {
-  cy.visit('http://localhost:4200/');
-  cy.get('[data-cy=sidebar-wettkampf-button]').click();
-  cy.url().should('include', '#/wettkaempfe');
-});
+  cy.visit('http://localhost:4200/')
+  cy.get('[data-cy=sidebar-wettkampf-button]').click()
+  cy.url().should('include', '#/wettkaempfe')
+})
 
-// Test: Selects Sportjahr, Liga, and Mannschaft and verifies functionality
-it('Auswahl Sportjahr Liga und Mannschaft', function() {
+/**
+ * This test checks if the selection of Sportjahr Liga and Mannschaft works
+ */
+it('Auswahl Sportjahr, Liga und Mannschaft', function () {
   cy.wait(8000);
-  cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2016');
+
+  // Jahr auswählen
+  cy.get('#jahr').select('2016');  // Direkt auswählen ohne .click()
   cy.wait(5000);
-  cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2018');
+  cy.get('#jahr').select('2018');
+
+  // Veranstaltung auswählen
   cy.wait(5000);
-  cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('4: Object');
+  cy.get('#veranstaltungen').select('4: Object');
+
+  // Verein auswählen
   cy.wait(5000);
-  cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('17: Object');
+  cy.get('#vereine').select('17: Object');
 });
 
-// Test: Displays Gesamtstatistik results in Wettkaempfe
+
+/**
+ * This test checks if the gesamtstatistik in Wettkaempfe show results
+ */
 it('Gesamtstatistik anzeigen', function() {
-  cy.wait(3000);
-  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken')
-    .select('gesamtstatistik');
-  cy.wait(5000);
-  // TODO: Add check to verify that data is present
-});
-
-// Test: Displays Matchstatistik of Schützen in Wettkaempfe
+  cy.wait(3000)
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik')
+  cy.wait(5000)
+  // required: add check if data is present in selected statistik
+})
+/**
+ * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
+ */
 it('Matchstatistik anzeigen', function() {
-  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken')
-    .select('schuetzenstatistikMatch');
-  cy.wait(500);
-});
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch')
+  cy.wait(500)
+})
+/**
+ * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+ */
+it('Wettkampftagestatistik anzeigen', function() {
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikWettkampftage', {force: true})
+  cy.wait(1500)
+})
 
-// Test: Displays Einzelstatistik of Schützen in Wettkaempfe
+/**
+ * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+ */
 it('Einzelstatistik anzeigen', function() {
-  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken')
-    .select('einzelstatistik', { force: true });
-  cy.wait(1500);
-});
-
-// Test: Displays statistics for a Schütze over the last five years
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+  cy.wait(1500)
+})
+/**
+ * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+ */
 it('Statistik eines Schützen über die letzten fünf Jahre', function() {
-  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken')
-    .select('letztejahre', { force: true });
-  cy.wait(1500);
-});
-
-// Test: Displays the Mannschaftstabellenverlauf over a Veranstaltung
-it('Mannschafttabellenverlauf', function() {
-  cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken')
-    .select('tabellenverlauf_statistik_wettkampftage', { force: true });
-  cy.wait(1500);
-});
-
-// Test: Displays the current Mannschaften
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('letztejahre', {force: true})
+  cy.wait(1500)
+})
+/**
+ * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
+ */
+it('Wettkampftagauswahl Wettkampfergebnisse', function() {
+  cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+  cy.wait(2000)
+  cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
+})
+/**
+ * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
+ */
+it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
+  cy.wait(5000)
+  cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+  cy.wait(1500)
+})
+/**
+ * This test checks if the Aktuelle Mannschaften shows results
+ */
 it('Aktuelle Mannschaften anzeigen', function() {
-  cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken')
-    .select('aktuelle_mannschaft', { force: true });
-  cy.wait(1500);
-});
+  cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('aktuelle_mannschaft', {force: true})
+  cy.wait(1500)
+})
+/**
+ * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
+ */
+it('Mannschafttabellenverlauf', function() {
+  cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_wettkampftage', {force: true})
+  cy.wait(1500)
+})
+/**
+ * This test checks if the all Mannschaften shows results
+ */
+it('Alle Mannschaften anzeigen', function() {
+  cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('alle_mannschaften', {force: true})
+  cy.wait(1500)
+})
