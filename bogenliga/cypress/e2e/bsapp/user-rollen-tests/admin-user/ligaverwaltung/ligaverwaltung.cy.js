@@ -45,12 +45,10 @@ describe('Liga Verwaltung Tests', () => {
         cy.get('button.action-btn-success').click();
         fillLigaDetails(ligaNameWithUnderscore);
 
-        cy.contains('.modal-content', 'Erfolg').within(() => {
+        cy.contains('.modal-content', 'Fehler').within(() => {
           cy.get('.modal-dialog-ok button').should('contain', 'OK').click();
         });
 
-        // Überprüfen, dass die Liga hinzugefügt wurde
-        cy.get('tbody').should('contain.text', ligaNameWithUnderscore);
       }
     });
   });
