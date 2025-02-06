@@ -122,7 +122,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
             this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
             this.loadRegions(); // Request all regions from backend
             this.loadUsers();
-            this.loadByLowest(this.currentLiga.id); // check if current Liga one of Lowest
+            if (this.currentLiga.id !== undefined && this.currentLiga.id !== null) {
+              this.loadByLowest(this.currentLiga.id); }
 
             this.loading = false;
             this.deleteLoading = false;
