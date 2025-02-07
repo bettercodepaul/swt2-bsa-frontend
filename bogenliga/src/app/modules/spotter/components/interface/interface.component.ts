@@ -188,7 +188,7 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   async triggerBackendRequest(matchDOExt: MatchDOExt, passeID: number, tagretZielScheibenNumber: number) {
     try {
-      const data: unknown = await this.spotterService.nextSet(
+      const data: unknown = await this.spotterService.createOrUpdatePasse(
         matchDOExt,
         this.matchLS,
         passeID,
