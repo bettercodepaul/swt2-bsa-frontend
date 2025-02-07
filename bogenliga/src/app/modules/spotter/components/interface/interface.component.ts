@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Match } from './../../types/match';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import {MatchDOExt} from "@wkdurchfuehrung/types/match-do-ext.class";
+import {MatchDOExt} from '@wkdurchfuehrung/types/match-do-ext.class';
 import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 import {TabletSessionDO} from '@wkdurchfuehrung/types/tablet-session-do.class';
 import {Session} from 'protractor';
@@ -16,7 +16,7 @@ import {TabletSessionProviderService} from '@wkdurchfuehrung/services/tablet-ses
   templateUrl: './interface.component.html',
   styleUrls: ['./interface.component.scss']
 })
-export class InterfaceComponent implements OnInit, OnDestroy{
+export class InterfaceComponent implements OnInit, OnDestroy {
 
   faArrowCircleLeft = faArrowCircleLeft;
 
@@ -70,9 +70,9 @@ export class InterfaceComponent implements OnInit, OnDestroy{
       this.wkID = urlParts.wkId;
       this.scheibe = parseInt(urlParts.schreibe);
     } catch (error) {
-      console.error("Fehler beim parsen von WettkampfId und Scheibe Nummer", error);
+      console.error('Fehler beim parsen von WettkampfId und Scheibe Nummer', error);
     }
-    console.log("tabletsession:", this.tabletSession); // Check here if it's still undefined
+    console.log('tabletsession:', this.tabletSession); // Check here if it's still undefined
     // Fetch tablet session with wkID and scheibe
     this.fetchTabletSession(this.wkID, this.scheibe);
     this.initMatches();
@@ -85,46 +85,49 @@ export class InterfaceComponent implements OnInit, OnDestroy{
           .then((response) => {
             if (response.result === RequestResult.SUCCESS) {
               this.session = response.payload;
-              console.log("Session fetched successfully:", this.session);
+              console.log('Session fetched successfully:', this.session);
 
               // Check session state
               this.handleSessionState(this.session.isActive);
             } else {
-              console.error("Failed to fetch the session:", response);
+              console.error('Failed to fetch the session:', response);
             }
           })
-          .catch(error => {
-            console.error("Error fetching the session:", error);
+          .catch((error) => {
+            console.error('Error fetching the session:', error);
           });
     } else {
-      console.error("tabletSession service is not defined!");
+      console.error('tabletSession service is not defined!');
     }
   }
-  private handleSessionState(isActive: boolean) {
-    if (isActive == null || !isActive) {
-      // If the session is not active (null or false), block the page load
-      alert(`Session for Scheibe ${this.scheibe} and Wettkampf ${this.wkID} is already active.`);
-      console.log(`Session for Scheibe ${this.scheibe} and Wettkampf ${this.wkID} is already active.`);
-      // Redirect to a blocked page or show a message, depending on your flow
-      this.router.navigate(['/blocked']);  // This can be a page where users are informed
+  private handleSessionState(isActiveAndUnused: boolean) {
+    const link = `/wkdurchfuehrung/tabletadmin/${this.wkID}`;
+
+
+    if (isActiveAndUnused == null || !isActiveAndUnused) {
+      // Zeige ein modales Fenster mit Button-Optionen
+      const confirmClose = confirm(`Session für Scheibe ${this.scheibe} und Wettkampf ${this.wkID} ist bereits aktiv. Möchten Sie die Seite verlassen?`);
+
+      if (confirmClose) {
+        this.router.navigateByUrl(link); // navigiert zurück zum tablet setup
+      }
     } else {
-      // If the session is active, allow loading and set it to true
-      console.log('Session is active, allowing page load.');
-      this.initMatches(); // Load the page content
-      this.tabletSession.toggleSessionActiveState(this.session,  false).then(() => {
-        console.log('Session set to inactive (false) on page load');
-      }).catch((error) => {
-        console.error('Error setting session to inactive:', error);
-      });
+      console.log('Session ist aktiv, Laden erlaubt.');
+      this.initMatches();
+
+      this.tabletSession.toggleSessionActiveState(this.session, false)
+          .then(() => console.log('Session auf inactive (false) gesetzt'))
+          .catch((error) => console.error('Fehler beim Setzen auf inactive:', error));
     }
   }
+
   private async initMatches() {
     try {
       const data: unknown = await this.spotterService.findMatch(this.wkID);
       // @ts-ignore
       this.matchDOs = data.payload;
     } catch (error) {
-      console.error("Fehler beim Abrufen der Matches:", error);
+      console.error('Fehler beim Abrufen der Matches:', error);
     }
 
     for (const element of this.matchDOs) {
@@ -140,7 +143,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
     if (this.session) {
       this.tabletSession.toggleSessionActiveState(this.session, true).then(() => {
         console.log('Session set back to active (true) when leaving the page');
-      }).catch(error => {
+      }).catch((error) => {
         console.error('Error setting session back to active:', error);
       });
     }
@@ -260,7 +263,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
             await this.triggerBackendRequest(currentMatchDO, currentPlay.passeId, currentPlay.number);
           }
         } catch (error) {
-          console.log("Error beim hinzufügen der Passe ID", error);
+          console.log('Error beim hinzufügen der Passe ID', error);
         }
         // Set the data in Local Storage Cache
         if (currentPlay) {
@@ -279,7 +282,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
             this.handleError(error);
           });
         } else {
-          console.error("Current play or set is not valid");
+          console.error('Current play or set is not valid');
         }
       }
     } else {
@@ -321,14 +324,12 @@ export class InterfaceComponent implements OnInit, OnDestroy{
       }
 
       let control = true;
-      for (let i=0; i < 6; i++){
-        if(currentSet.play(i).final == null)
-        {
+      for (let i = 0; i < 6; i++) {
+        if (currentSet.play(i).final == null) {
           control = false;
         }
       }
-      if(control === true && this.finish === false)
-      {
+      if (control === true && this.finish === false) {
         this.finish = true;
       }
     }
@@ -356,7 +357,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
     this.editing = true;
     this.selectedValue = this.matchLS.set().play(play).result;
     this.editedPlay = play;
-    if(play === 6){
+    if (play === 6) {
       this.finish = true;
     }
   }
@@ -419,7 +420,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
 
     console.log(this.spotterMatches[this.matchLS.currentMatchNumber]);
     localStorage.setItem('match', JSON.stringify(this.matchLS));
-    console.log("this.match.currentMatchNumber", this.matchLS.currentMatchNumber);
+    console.log('this.match.currentMatchNumber', this.matchLS.currentMatchNumber);
 
 
   }
