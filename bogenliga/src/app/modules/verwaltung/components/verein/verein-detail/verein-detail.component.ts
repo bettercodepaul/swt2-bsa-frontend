@@ -598,9 +598,21 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   private addTableAttributes(mannschaft: DsbMannschaftDO) {
-    this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
-        .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
-        .catch((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
+    if (mannschaft.veranstaltungId != null) {
+      this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
+        .then((response: BogenligaResponse<VeranstaltungDTO>) => {
+          if (response.payload && response.payload.name) {
+            mannschaft.veranstaltungName = response.payload.name;
+          } else {
+            mannschaft.veranstaltungName = 'Unknown';
+          }
+        })
+        .catch(() => {
+          mannschaft.veranstaltungName = '';
+        });
+    } else {
+      mannschaft.veranstaltungName = 'Not Specified';
+    }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
   }
 
