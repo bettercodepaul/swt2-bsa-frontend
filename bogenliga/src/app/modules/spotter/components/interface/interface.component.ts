@@ -43,7 +43,6 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   TabletSession: TabletSessionProviderService;
   session: TabletSessionDO;
   finish: boolean;
-  navigatebackRoute: String;
 
   constructor(private router: Router, private spotterService: SpotterService, private tabletSession: TabletSessionProviderService ) {
     this.spotterMatches = [];
@@ -101,11 +100,11 @@ export class InterfaceComponent implements OnInit, OnDestroy {
       console.error('tabletSession service is not defined!');
     }
   }
-  private handleSessionState(isActive: boolean) {
+  private handleSessionState(isActiveAndUnused: boolean) {
     const link = `/wkdurchfuehrung/tabletadmin/${this.wkID}`;
 
 
-    if (isActive == null || !isActive) {
+    if (isActiveAndUnused == null || !isActiveAndUnused) {
       // Zeige ein modales Fenster mit Button-Optionen
       const confirmClose = confirm(`Session für Scheibe ${this.scheibe} und Wettkampf ${this.wkID} ist bereits aktiv. Möchten Sie die Seite verlassen?`);
 
