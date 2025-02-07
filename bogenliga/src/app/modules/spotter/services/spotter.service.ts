@@ -59,10 +59,10 @@ export class SpotterService {
     });
 
   }
-  public nextSet(matchDOExt: MatchDOExt, match: Match, passeId, currentPasse) {
+  public createOrUpdatePasse(matchDOExt: MatchDOExt, match: Match, passeId, currentPasse) {
     this.matchDTOExt = MatchMapperExt.matchToDTO(matchDOExt);
 
-    this.addPasse(matchDOExt, match, passeId, currentPasse);
+    this.handlePasse(matchDOExt, match, passeId, currentPasse);
     // tslint:disable-next-line:no-shadowed-variable
     return new Promise((resolve, reject) => {
       this.restClient
@@ -101,7 +101,7 @@ export class SpotterService {
 
 
 
-  public addPasse(matchDOExt: MatchDOExt, match: Match, passeId, currentTrefferScheibe) {
+  public handlePasse(matchDOExt: MatchDOExt, match: Match, passeId, currentTrefferScheibe) {
     if(passeId !== null) {
       // tslint:disable-next-line:radix
       passeId  = parseInt(passeId);
