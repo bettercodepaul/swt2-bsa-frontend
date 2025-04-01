@@ -93,9 +93,21 @@
                 <bla-actionbutton (click)="onButtonTabletClick()"
                                   [color]="ActionButtonColors.PRIMARY"
                                   [iconClass]="'table'"
-                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SPOTTER' | translate }}
                 </bla-actionbutton>
+
+
               </div>
+              <bla-actionbutton
+                id="setupTabletSchusszettel"
+                style="width: 35rem;"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'table'"
+                [disabled]="isDisabled()">
+                {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+              </bla-actionbutton>
+
+
 
 
               <ng-template #onlineSetupTables
