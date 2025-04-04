@@ -3,15 +3,15 @@ import { Router } from '@angular/router';
 import { SchusszettelService } from '../schusszettel.service';
 
 @Component({
-  selector: 'app-maske3aktualisierung',
-  templateUrl: './maske3aktualisierung.component.html',
-  styleUrls: ['./maske3aktualisierung.component.scss']
+  selector:    'bla-maske3aktualisierung',
+  templateUrl: './warte-bestaetigung.component.html',
+  styleUrls:   ['./warte-bestaetigung.component.scss']
 })
-export class Maske3AktualisierungComponent {
+export class WarteBestaetigungComponent {
   constructor(private service: SchusszettelService, private router: Router) {}
 
-  update() {
-    this.service.checkBothTeamsSubmitted().subscribe(ready => {
+  update(): void {
+    this.service.checkBothTeamsSubmitted().subscribe((ready) => {
       if (ready) {
         this.router.navigate(['/schusszettel/eingabe']);
       }

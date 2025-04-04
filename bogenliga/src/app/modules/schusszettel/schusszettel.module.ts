@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { Maske1RegistrierungComponent } from './maske1registrierung/maske1registrierung.component';
-import { Maske2EingabeComponent } from './maske2eingabe/maske2eingabe.component';
-import { Maske3AktualisierungComponent } from './maske3aktualisierung/maske3aktualisierung.component';
+import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
+import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
+import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
 
 @NgModule({
   declarations: [
-    Maske1RegistrierungComponent,
-    Maske2EingabeComponent,
-    Maske3AktualisierungComponent
+    RegisterRueckennummerComponent,
+    PasseEingabeComponent,
+    WarteBestaetigungComponent
   ],
   imports: [
     CommonModule,
@@ -19,9 +19,9 @@ import { Maske3AktualisierungComponent } from './maske3aktualisierung/maske3aktu
     RouterModule
   ],
   exports: [
-    Maske1RegistrierungComponent,
-    Maske2EingabeComponent,
-    Maske3AktualisierungComponent
+    RegisterRueckennummerComponent,
+    PasseEingabeComponent,
+    WarteBestaetigungComponent
   ]
 })
 export class SchusszettelModule { }
