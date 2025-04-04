@@ -93,10 +93,9 @@
                 <bla-actionbutton (click)="onButtonTabletClick()"
                                   [color]="ActionButtonColors.PRIMARY"
                                   [iconClass]="'table'"
-                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SPOTTER' | translate }}
                 </bla-actionbutton>
               </div>
-
 
               <ng-template #onlineSetupTables
                            id="onlineSetupTables">
@@ -108,6 +107,28 @@
                   </bla-actionbutton>
                 </div>
               </ng-template>
+
+              <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
+              <bla-actionbutton
+                id="setupTabletSchusszettel"
+                style="width: 35rem;"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'table'"
+                [disabled]="isDisabled()">
+                {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+              </bla-actionbutton>
+            </ng-container>
+
+              <ng-template #offlineSchusszettelSetup>
+                <bla-actionbutton
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'table'"
+                  [disabled]="true">
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                </bla-actionbutton>
+              </ng-template>
+
             </bla-col-layout>
           </bla-expand>
         </bla-row-layout>
