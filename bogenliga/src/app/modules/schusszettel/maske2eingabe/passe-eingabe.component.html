@@ -1,0 +1,33 @@
+<div class="schusszettel-container">
+  <div class="info-box">Tragen Sie hier die Treffer der Schützen ein</div>
+  <div class="title-block">
+    <h1>Schusszettel</h1>
+    <p>Team : _______<br>Datum : _______<br>Match vs.: _______<br>Pass Nr.: {{state.passNr}}</p>
+  </div>
+
+  <table class="input-table">
+    <thead>
+    <tr>
+      <th>Schütze</th>
+      <th *ngFor="let arrow of schuesse[0]; let j = index">Pfeil {{ j + 1 }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of schuesse; let i = index">
+      <td class="label">
+          <span [ngClass]="{ 'red': i === 0, 'blue': i === 1, 'yellow': i === 2 }">
+            {{ state.rueckennummern[i] || 'Schütze ' + (i + 1) }}
+          </span>
+      </td>
+      <td *ngFor="let val of row; let j = index">
+        <input type="text" [(ngModel)]="schuesse[i][j]">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button class="confirm-button" (click)="confirmPass()">
+    EINGABE BESTÄTIGEN
+    <span class="arrow">→</span>
+  </button>
+</div>

@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Maske1RegistrierungComponent } from './maske1registrierung/maske1registrierung.component';
-import { Maske2EingabeComponent } from './maske2eingabe/maske2eingabe.component';
-import { Maske3AktualisierungComponent } from './maske3aktualisierung/maske3aktualisierung.component';
+import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
+import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
+import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
+import { SchusszettelSetupGuard } from './schusszettel-setup.guard';
+import { SchusszettelInitComponent } from './setup/schusszettel-init.component';
 
 const routes: Routes = [
-  { path: 'schusszettel/registrierung', component: Maske1RegistrierungComponent },
-  { path: 'schusszettel/eingabe', component: Maske2EingabeComponent },
-  { path: 'schusszettel/aktualisierung', component: Maske3AktualisierungComponent },
+  { path: 'setup', component: SchusszettelInitComponent },
+  { path: 'registrierung', component: RegisterRueckennummerComponent },
+  { path: 'eingabe', component: PasseEingabeComponent, canActivate: [SchusszettelSetupGuard] },
+  { path: 'aktualisierung', component: WarteBestaetigungComponent, canActivate: [SchusszettelSetupGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SchusszettelRoutingModule { }
+export class SchusszettelRoutingModule {}
