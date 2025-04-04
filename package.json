@@ -20,6 +20,7 @@
   "dependencies": {
     "@stomp/stompjs": "^7.0.0",
     "@tinymce/tinymce-angular": "^7.0.0",
+    "cypress": "^12.1.0",
     "tinymce": "^6.4.2",
     "websocket": "^1.0.34"
   }
