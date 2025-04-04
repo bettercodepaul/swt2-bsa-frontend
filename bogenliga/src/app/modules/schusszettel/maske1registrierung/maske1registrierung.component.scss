@@ -1,0 +1,57 @@
+.schusszettel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 2rem;
+  font-family: sans-serif;
+
+  .info-box {
+    background: #ddd;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .title-block {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .input-grid {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .shooter {
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 2px solid black;
+    }
+    .red { border-color: red; }
+    .blue { border-color: blue; }
+    .yellow { border-color: olive; }
+  }
+
+  .confirm-button {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid red;
+    background: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+
+    .arrow {
+      margin-left: 0.5rem;
+    }
+  }
+}
