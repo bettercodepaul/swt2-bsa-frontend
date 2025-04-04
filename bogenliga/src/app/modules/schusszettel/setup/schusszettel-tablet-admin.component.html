@@ -1,0 +1,26 @@
+<h2>Tabletverwaltung für Schusszettel – Wettkampftag {{ wettkampfId }}</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Team</th>
+    <th>QR-Code</th>
+    <th>Link</th>
+    <th>Aktionen</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let team of teams">
+    <td>{{ team.name }}</td>
+    <td>
+      <qrcode [qrdata]="getQrUrl(team)" [width]="100"></qrcode>
+    </td>
+    <td>
+      <code style="word-break: break-all">{{ getQrUrl(team) }}</code>
+    </td>
+    <td>
+      <button (click)="resetSession(team.teamId)">🔁 Reset</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

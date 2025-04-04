@@ -42,6 +42,7 @@ import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import { SchusszettelTabletDialogComponent } from '@wkdurchfuehrung/components/schusszettel/setup/schusszettel-tablet-dialog.component';
 
 @Component({
   selector: 'bla-wkdurchfuehrung',
@@ -834,5 +835,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       )
     );
     window.open(url, '_blank');
+  }
+
+  openSchusszettelTabletAdmin(wettkampfId: number): void {
+    this.dialog.open(SchusszettelTabletDialogComponent, {
+      width: '80vw',
+      data: { wettkampfId }
+    });
   }
 }

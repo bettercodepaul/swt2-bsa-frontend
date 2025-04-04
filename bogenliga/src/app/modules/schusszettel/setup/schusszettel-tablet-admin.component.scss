@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  code {
+    font-size: 0.8rem;
+    background: #f4f4f4;
+    padding: 0.25rem;
+    display: inline-block;
+  }
+
+  button {
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+  }
+}

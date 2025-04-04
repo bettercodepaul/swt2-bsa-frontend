@@ -109,15 +109,17 @@
               </ng-template>
 
               <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
-              <bla-actionbutton
-                id="setupTabletSchusszettel"
-                style="width: 35rem;"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'table'"
-                [disabled]="isDisabled()">
-                {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-              </bla-actionbutton>
-            </ng-container>
+                <bla-actionbutton
+                  id="setupTabletSchusszettel"
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'table'"
+                  [disabled]="isDisabled()"
+                  (click)="openSchusszettelTabletAdmin(selectedWettkampfId)">
+
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                </bla-actionbutton>
+              </ng-container>
 
               <ng-template #offlineSchusszettelSetup>
                 <bla-actionbutton
