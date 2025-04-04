@@ -62,7 +62,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public selectedVeranstaltungId: number;
   public selectedDTOs: VeranstaltungDO[];
   private selectedWettkampf: string;
-  private selectedWettkampfId: number;
+  public selectedWettkampfId: number;
   private selectedWettkampfListeIndex: number;
   private selectedMatchId: number;
   public multipleSelections = true;
