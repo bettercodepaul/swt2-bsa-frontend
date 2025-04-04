@@ -215,7 +215,9 @@
       "KONTROLLLISTE": "Bogenkontrollliste",
       "MELDEZETTEL": "Meldezettel",
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
-      "TABLE_SETUP": "Setup Tablets",
+      "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
+      "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
+
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
