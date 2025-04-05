@@ -8,6 +8,8 @@ import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.compo
 import {WkdurchfuehrungGuard} from './guards/wkdurchfuehrung.guard';
 import {FullscreenComponent} from './components/fullscreen/fullscreen.component';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
+import {SchusszettelTabletAdminComponent} from '@schusszettel/setup/schusszettel-tablet-admin.component';
+import {SchusszettelSetupGuard} from '@schusszettel/schusszettel-setup.guard';
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
@@ -22,5 +24,6 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent},
   {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent },
+  {path: 'tablet-setup-schusszettel/:wettkampfId', pathMatch: 'full', component: SchusszettelTabletAdminComponent}
 ];
 
