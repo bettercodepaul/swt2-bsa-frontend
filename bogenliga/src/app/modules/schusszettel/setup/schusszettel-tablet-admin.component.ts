@@ -15,7 +15,10 @@ export class SchusszettelTabletAdminComponent implements OnInit {
 
   teams: { teamId: number; name: string; token: string }[] = [];
 
-  constructor(private dsbMannschaftService: DsbMannschaftDataProviderService) {}
+  constructor(
+    private matchService: MatchDataProviderService,
+    private dsbMannschaftService: DsbMannschaftDataProviderService
+  ) {}
 
   ngOnInit(): void {
     this.loadTeams();
@@ -60,7 +63,6 @@ export class SchusszettelTabletAdminComponent implements OnInit {
       }
     );
   }
-
 
   checkToken(teamId: number): string {
     // TODO: echten Token vom Backend holen oder erstellen lassen
