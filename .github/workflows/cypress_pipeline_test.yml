@@ -8,3 +8,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
+        with:
+          install: false
