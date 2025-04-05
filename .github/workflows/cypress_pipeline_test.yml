@@ -9,4 +9,4 @@ jobs:
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
         with:
-        path: C:\Users\mki4\swt2-projekt\frontend\bogenliga\cypress
+          project: C:\Users\mki4\swt2-projekt\frontend\bogenliga\cypress
