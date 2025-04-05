@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatchDataProviderService } from '@verwaltung/services/match-data-provider.service';
+import { DsbMannschaftDataProviderService } from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import { MatchDO } from '@verwaltung/types/match-do.class';
+import { BogenligaResponse } from '@shared/data-provider/types/bogenliga-response.interface';
+import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -11,43 +15,55 @@ export class SchusszettelTabletAdminComponent implements OnInit {
 
   teams: { teamId: number; name: string; token: string }[] = [];
 
-  constructor(private matchService: MatchDataProviderService) {}
+  constructor(private dsbMannschaftService: DsbMannschaftDataProviderService) {}
 
   ngOnInit(): void {
-    this.loadTeamsFromMatches();
+    this.loadTeams();
   }
 
-  loadTeamsFromMatches(): void {
-    this.matchService.findAllWettkampfMatchesById(this.wettkampfId).then(response => {
-      const matches = response.result;
-      const seen = new Set<number>();
-      const uniqueTeams: { teamId: number; name: string; token: string }[] = [];
+  loadTeams(): void {
+    this.matchService.findAllWettkampfMatchesById(this.wettkampfId).then(
+      async (response: BogenligaResponse<MatchDO[]>) => {
+        const matches = response.payload ?? [];
+        const seenTeamIds = new Set<number>();
+        const teamsMap = new Map<number, string>(); // teamId -> teamName
+        const teamsList: { teamId: number; name: string; token: string }[] = [];
 
-      for (const match of matches) {
-        if (!seen.has(match.teamIdA)) {
-          seen.add(match.teamIdA);
-          uniqueTeams.push({
-            teamId: match.teamIdA,
-            name: match.teamNameA,
-            token: this.generateMockToken(match.teamIdA)
-          });
+        for (const match of matches) {
+          const teamId = match.mannschaftId;
+
+          if (!seenTeamIds.has(teamId)) {
+            seenTeamIds.add(teamId);
+
+            try {
+              const teamResponse = await this.dsbMannschaftService.findById(teamId);
+              const teamName = teamResponse.payload?.name ?? `Team ${teamId}`;
+
+              teamsMap.set(teamId, teamName);
+
+              teamsList.push({
+                teamId,
+                name: teamName,
+                token: this.checkToken(teamId)
+              });
+
+            } catch (error) {
+              console.warn(`Team ${teamId} konnte nicht geladen werden`, error);
+            }
+          }
         }
-        if (!seen.has(match.teamIdB)) {
-          seen.add(match.teamIdB);
-          uniqueTeams.push({
-            teamId: match.teamIdB,
-            name: match.teamNameB,
-            token: this.generateMockToken(match.teamIdB)
-          });
-        }
+
+        this.teams = teamsList;
+      },
+      (error) => {
+        console.error('Fehler beim Laden der Matches für Wettkampf', this.wettkampfId, error);
       }
-
-      this.teams = uniqueTeams;
-    });
+    );
   }
 
-  generateMockToken(teamId: number): string {
-    // TODO, check if token exists in backend, get it, or create a new one
+
+  checkToken(teamId: number): string {
+    // TODO: echten Token vom Backend holen oder erstellen lassen
     return `mock-${teamId}-${Math.floor(Math.random() * 10000)}`;
   }
 
@@ -56,8 +72,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   }
 
   resetSession(teamId: number): void {
-    // TODO, tell backend to delete and create new token for team in this wettkampf, and return it
+    // TODO: Token beim Backend zurücksetzen
     alert(`(Mock) Session for team ${teamId} reset.`);
   }
 }
-

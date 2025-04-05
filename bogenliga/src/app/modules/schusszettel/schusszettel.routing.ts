@@ -5,6 +5,7 @@ import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
 import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
 import { SchusszettelSetupGuard } from './schusszettel-setup.guard';
 import { SchusszettelInitComponent } from './setup/schusszettel-init.component';
+import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
 
 const routes: Routes = [
   { path: 'setup', component: SchusszettelInitComponent },
