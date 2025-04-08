@@ -10,8 +10,7 @@ jobs:
         run: npm install cypress --save-dev
       - name: Install dependencies
         run: npm ci
-      - name: Config File
-        path: ./bogenliga
-        config-file: cypress.config.ts
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
+        path: ./bogenliga
+        config-file: cypress.config.ts
