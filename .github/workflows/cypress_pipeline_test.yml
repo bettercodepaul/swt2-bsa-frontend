@@ -7,10 +7,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Cypress
-        working-directory: ./frontend
+        working-directory: frontend
         run: npm install cypress --save-dev
       - name: Install dependencies
-        working-directory: ./frontend
+        working-directory: frontend
         run: npm ci
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
