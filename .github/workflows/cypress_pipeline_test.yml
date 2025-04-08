@@ -12,5 +12,3 @@ jobs:
         run: npm ci
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
-        with:
-          project: working-directory
