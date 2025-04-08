@@ -6,14 +6,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Cypresss
+      - name: Install Cypress
         run: npm install cypress --save-dev
       - name: Install dependencies
         run: npm ci
-      - name: Run Cypress
-        build: npm run build
-        start: npm start
+      - name: Config File
+        uses: frontend
+        config-file: cypress.config.ts
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
-        with:
-          config-file: cypress.config.ts
