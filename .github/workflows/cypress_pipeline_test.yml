@@ -12,6 +12,9 @@ jobs:
       - name: Install dependencies
         working-directory: bogenliga
         run: npm ci
-      - name: Cypress Pipeline
-        uses: cypress-io/github-action@v6
+      - name: Run Cypress
+        working-directory: bogenliga
+        run: npx cypress open
+      #- name: Cypress Pipeline
+        #uses: cypress-io/github-action@v6
 
