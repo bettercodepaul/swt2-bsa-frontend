@@ -14,7 +14,7 @@ jobs:
         run: npm ci
       - name: Run Cypress
         working-directory: bogenliga
-        run: npx cypress open
+        run: npx cypress run
       #- name: Cypress Pipeline
         #uses: cypress-io/github-action@v6
 
