@@ -13,4 +13,4 @@ jobs:
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
         with:
-          config-file: cypress.config.ts
+          config-file: .\frontend
