@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Cypress
+      - name: Install Cypresss
         run: npm install cypress --save-dev
       - name: Install dependencies
         run: npm ci
