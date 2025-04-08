@@ -11,7 +11,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Config File
-        uses: C:\Users\mki4\swt2-projekt\frontend\bogenliga
+        path: ./bogenliga
         config-file: cypress.config.ts
       - name: Cypress Pipeline
         uses: cypress-io/github-action@v6
