@@ -112,7 +112,7 @@
                 </div>
               </ng-template>
 
-
+                <div style="min-width: 14rem; max-width: 14rem; white-space: nowrap;">
                 <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
                   <bla-actionbutton
                     id="setupTabletSchusszettel"
@@ -122,6 +122,7 @@
                     {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
                   </bla-actionbutton>
                 </ng-container>
+                </div>
 
 
 
