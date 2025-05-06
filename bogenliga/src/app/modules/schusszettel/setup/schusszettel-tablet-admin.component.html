@@ -17,6 +17,7 @@
     </td>
     <td>
       <code style="word-break: break-all">{{ getQrUrl(team) }}</code>
+      <button (click)="copyToClipboard(getQrUrl(team))">Kopieren</button>
     </td>
     <td>
       <button (click)="resetSession(team.teamId)">🔁 Reset</button>

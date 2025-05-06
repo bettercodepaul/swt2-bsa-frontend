@@ -77,4 +77,13 @@ export class SchusszettelTabletAdminComponent implements OnInit {
     // TODO: Token beim Backend zurücksetzen
     alert(`(Mock) Session for team ${teamId} reset.`);
   }
+
+  copyToClipboard(text: string): void {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Link wurde kopiert!');
+    }).catch((err) => {
+      console.error('Fehler beim Kopieren', err);
+    });
+  }
+
 }

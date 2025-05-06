@@ -13,13 +13,15 @@ import { RegisterRueckennummerComponent } from './maske1registrierung/register-r
 import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
 import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
 import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
+import { WettkampfleiterTabletViewComponent } from './wettkampfleiter-tablet-view/wettkampfleiter-tablet-view.component';
 
 @NgModule({
   declarations: [
     RegisterRueckennummerComponent,
     PasseEingabeComponent,
     WarteBestaetigungComponent,
-    SchusszettelTabletAdminComponent
+    SchusszettelTabletAdminComponent,
+    WettkampfleiterTabletViewComponent
   ],
   imports: [
     CommonModule,

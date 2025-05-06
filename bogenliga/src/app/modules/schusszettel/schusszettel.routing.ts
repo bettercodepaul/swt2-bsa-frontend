@@ -6,12 +6,14 @@ import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaet
 import { SchusszettelSetupGuard } from './schusszettel-setup.guard';
 import { SchusszettelInitComponent } from './setup/schusszettel-init.component';
 import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
+import { WettkampfleiterTabletViewComponent } from './wettkampfleiter-tablet-view/wettkampfleiter-tablet-view.component';
 
 const routes: Routes = [
   { path: 'setup', component: SchusszettelInitComponent },
   { path: 'registrierung', component: RegisterRueckennummerComponent },
   { path: 'eingabe', component: PasseEingabeComponent, canActivate: [SchusszettelSetupGuard] },
   { path: 'aktualisierung', component: WarteBestaetigungComponent, canActivate: [SchusszettelSetupGuard] },
+  {path: 'wettkampfleiter-tablet-view', component: WettkampfleiterTabletViewComponent},
 ];
 
 @NgModule({
