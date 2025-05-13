@@ -13,7 +13,10 @@
   <tr *ngFor="let team of teams">
     <td>{{ team.name }}</td>
     <td>
-      <qrcode [qrdata]="getQrUrl(team)" [width]="100"></qrcode>
+      <button class="qr-button" (click)="openQrPopup(getQrUrl(team))">
+        <span class="plus-icon">+</span>
+      </button>
+
     </td>
     <td>
       <code style="word-break: break-all">{{ getQrUrl(team) }}</code>
@@ -25,3 +28,11 @@
   </tr>
   </tbody>
 </table>
+
+<div *ngIf="selectedQrUrl" class="popup-overlay" (click)="closeQrPopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <qrcode [qrdata]="selectedQrUrl" [size]="300"></qrcode>
+    <br />
+    <button (click)="closeQrPopup()">Schließen</button>
+  </div>
+</div>
