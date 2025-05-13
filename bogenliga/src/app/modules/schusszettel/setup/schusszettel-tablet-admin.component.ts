@@ -86,4 +86,15 @@ export class SchusszettelTabletAdminComponent implements OnInit {
     });
   }
 
+  selectedQrUrl: string | null = null;
+
+  openQrPopup(url: string) {
+    this.selectedQrUrl = url;
+  }
+
+  closeQrPopup() {
+    this.selectedQrUrl = null;
+  }
+
+
 }
