@@ -13,8 +13,8 @@
   <tr *ngFor="let team of teams">
     <td>{{ team.name }}</td>
     <td>
-      <button class="qr-button" (click)="openQrPopup(getQrUrl(team))">
-        <span class="plus-icon">+</span>
+      <button class="qr-button" (click)="openQrPopup(getQrUrl(team))" title="QR Code anzeigen">
+        <img src="assets/img/Icons/QR_Code_anzeigen_zum_scan.png" alt="QR Icon" class="icon-img" />
       </button>
 
     </td>
@@ -29,10 +29,17 @@
   </tbody>
 </table>
 
-<div *ngIf="selectedQrUrl" class="popup-overlay" (click)="closeQrPopup()">
-  <div class="popup-content" (click)="$event.stopPropagation()">
-    <qrcode [qrdata]="selectedQrUrl" [size]="300"></qrcode>
-    <br />
-    <button (click)="closeQrPopup()">Schließen</button>
+<bla-modal-dialog [visible]="selectedQrUrl !== null" (onClose)="closeQrPopup()">
+  <h5 class="modal-dialog-header">
+    <i class="fa fa-qrcode"></i>
+    QR-Code
+  </h5>
+
+  <div class="modal-dialog-content">
+    <qrcode
+      [qrdata]="selectedQrUrl"
+      [width]="256"
+      [errorCorrectionLevel]="'M'">
+    </qrcode>
   </div>
-</div>
+</bla-modal-dialog>

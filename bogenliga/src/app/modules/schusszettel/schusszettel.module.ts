@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
+import { SharedModule } from '@shared/shared.module';
 import { QRCodeModule } from 'angularx-qrcode';
 
 import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
@@ -30,6 +30,7 @@ import { WettkampfleiterTabletViewComponent } from './wettkampfleiter-tablet-vie
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
+    SharedModule,
     QRCodeModule
   ],
   exports: [

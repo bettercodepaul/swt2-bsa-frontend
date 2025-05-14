@@ -4,6 +4,7 @@ import { DsbMannschaftDataProviderService } from '@verwaltung/services/dsb-manns
 import { MatchDO } from '@verwaltung/types/match-do.class';
 import { BogenligaResponse } from '@shared/data-provider/types/bogenliga-response.interface';
 import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
+import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -12,6 +13,7 @@ import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
 })
 export class SchusszettelTabletAdminComponent implements OnInit {
   @Input() wettkampfId!: number;
+  public ActionButtonColors = ActionButtonColors;
 
   teams: { teamId: number; name: string; token: string }[] = [];
 
