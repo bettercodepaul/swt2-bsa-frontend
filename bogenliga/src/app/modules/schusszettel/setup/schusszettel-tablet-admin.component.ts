@@ -5,6 +5,7 @@ import { MatchDO } from '@verwaltung/types/match-do.class';
 import { BogenligaResponse } from '@shared/data-provider/types/bogenliga-response.interface';
 import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
+import { TabletSessionProviderService } from '@wkdurchfuehrung/services/tablet-session-provider.service';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -16,10 +17,11 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   public ActionButtonColors = ActionButtonColors;
 
   teams: { teamId: number; name: string; token: string }[] = [];
-
+  selectedQrUrl: string | null = null;
   constructor(
     private matchService: MatchDataProviderService,
-    private dsbMannschaftService: DsbMannschaftDataProviderService
+    private dsbMannschaftService: DsbMannschaftDataProviderService,
+    private tabletSessionService: TabletSessionProviderService
   ) {}
 
   ngOnInit(): void {
@@ -27,41 +29,12 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   }
 
   loadTeams(): void {
-    this.matchService.findAllWettkampfMatchesById(this.wettkampfId).then(
-      async (response: BogenligaResponse<MatchDO[]>) => {
-        const matches = response.payload ?? [];
-        const seenTeamIds = new Set<number>();
-        const teamsMap = new Map<number, string>(); // teamId -> teamName
-        const teamsList: { teamId: number; name: string; token: string }[] = [];
-
-        for (const match of matches) {
-          const teamId = match.mannschaftId;
-
-          if (!seenTeamIds.has(teamId)) {
-            seenTeamIds.add(teamId);
-
-            try {
-              const teamResponse = await this.dsbMannschaftService.findById(teamId);
-              const teamName = teamResponse.payload?.name ?? `Team ${teamId}`;
-
-              teamsMap.set(teamId, teamName);
-
-              teamsList.push({
-                teamId,
-                name: teamName,
-                token: this.checkToken(teamId)
-              });
-
-            } catch (error) {
-              console.warn(`Team ${teamId} konnte nicht geladen werden`, error);
-            }
-          }
-        }
-
-        this.teams = teamsList;
+    this.tabletSessionService.findTeams(this.wettkampfId).then(
+      (response: BogenligaResponse<any[]>) => {
+        this.teams = response.payload ?? [];
       },
       (error) => {
-        console.error('Fehler beim Laden der Matches für Wettkampf', this.wettkampfId, error);
+        console.error('Fehler beim Laden der Teams für Wettkampf', this.wettkampfId, error);
       }
     );
   }
@@ -88,15 +61,12 @@ export class SchusszettelTabletAdminComponent implements OnInit {
     });
   }
 
-  selectedQrUrl: string | null = null;
-
-  openQrPopup(url: string) {
+  openQrPopup(url: string): void {
     this.selectedQrUrl = url;
   }
 
-  closeQrPopup() {
+  closeQrPopup(): void {
     this.selectedQrUrl = null;
   }
-
 
 }
