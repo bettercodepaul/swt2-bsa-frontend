@@ -8,12 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '@shared/shared.module';
 import { QRCodeModule } from 'angularx-qrcode';
-
+import {SchusszettelInitComponent} from '@schusszettel/setup/schusszettel-init.component';
 import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
 import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
 import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
 import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
-import { WettkampfleiterTabletViewComponent } from './wettkampfleiter-tablet-view/wettkampfleiter-tablet-view.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,7 @@ import { WettkampfleiterTabletViewComponent } from './wettkampfleiter-tablet-vie
     PasseEingabeComponent,
     WarteBestaetigungComponent,
     SchusszettelTabletAdminComponent,
-    WettkampfleiterTabletViewComponent
+    SchusszettelInitComponent
   ],
   imports: [
     CommonModule,

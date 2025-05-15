@@ -163,4 +163,26 @@ export class TabletSessionProviderService extends DataProviderService {
                  throw error; // Rethrow the error for handling in the caller
                });
   }
+
+  public findTeams(wettkampfId: number): Promise<BogenligaResponse<any[]>> {
+    const api_url = new UriBuilder()
+      .fromPath('/api/v1/tablet-setup')
+      .path(wettkampfId.toString())
+      .path('teams')
+      .build(); // /api/v1/tablet-setup/:wettkampfId/teams
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<any[]>(api_url) // GET/api/v1/tablet-setup/:wettkampfId/teams
+          .then((data: any[]) => {
+            resolve({ result: RequestResult.SUCCESS, payload: data }); // ERFOLGREICH: wird das empfangene Array als payload zurückgegeben
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({ result: RequestResult.CONNECTION_PROBLEM }); // NICHT ERFOLGREICH: Fehlermeldung zeigen
+            } else {
+              reject({ result: RequestResult.FAILURE });
+            }
+          });
+    });
+  }
+
 }
