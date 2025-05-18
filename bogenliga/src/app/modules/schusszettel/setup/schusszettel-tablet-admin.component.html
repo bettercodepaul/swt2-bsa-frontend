@@ -23,7 +23,9 @@
       <button (click)="copyToClipboard(getQrUrl(team))">Kopieren</button>
     </td>
     <td>
-      <button (click)="resetSession(team.teamId)">🔁 Reset</button>
+      <button class="action-button" (click)="resetSession(team.teamId)" title="Reset Token">
+        <img src="assets/img/Icons/Reset_Button.png" alt="Reset Icon" class="icon-img" />
+      </button>
     </td>
   </tr>
   </tbody>
