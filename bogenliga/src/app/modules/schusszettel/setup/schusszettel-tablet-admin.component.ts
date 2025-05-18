@@ -6,6 +6,7 @@ import { BogenligaResponse } from '@shared/data-provider/types/bogenliga-respons
 import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
 import { TabletSessionProviderService } from '@wkdurchfuehrung/services/tablet-session-provider.service';
+import { SchusszettelProviderService } from '@wkdurchfuehrung/services/schusszettel-provider.service';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -21,7 +22,8 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   constructor(
     private matchService: MatchDataProviderService,
     private dsbMannschaftService: DsbMannschaftDataProviderService,
-    private tabletSessionService: TabletSessionProviderService
+    private tabletSessionService: TabletSessionProviderService,
+    private schusszettelService: SchusszettelProviderService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +52,15 @@ export class SchusszettelTabletAdminComponent implements OnInit {
 
   resetSession(teamId: number): void {
     // TODO: Token beim Backend zurücksetzen
-    alert(`(Mock) Session for team ${teamId} reset.`);
+      this.schusszettelService.resetTabletToken(this.wettkampfId, teamId).then(
+        () => {
+          alert('Token wurde erfolgreich zurückgesetzt!');
+          this.loadTeams();
+        },
+        (error) => {
+          console.error('Fehler beim Zurücksetzen des Tokens:', error);
+        }
+      );
   }
 
   copyToClipboard(text: string): void {

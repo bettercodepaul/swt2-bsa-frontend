@@ -148,7 +148,7 @@ export class TabletSessionProviderService extends DataProviderService {
 
   public toggleSessionActiveState(session: TabletSessionDO, isActive: boolean): Promise<BogenligaResponse<TabletSessionDO>> {
     if (isActive === null || isActive === undefined) {
-      console.error("Invalid isActive value. It must be true or false.");
+      console.error('Invalid isActive value. It must be true or false.');
       isActive = false;  // Default to false if isActive is invalid
     }
 

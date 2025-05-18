@@ -43,3 +43,19 @@ table {
   width: 44px;
   height: 44px;
 }
+
+.action-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+
+  img {
+    width: 3rem;
+    height: 3rem;
+    display: block;
+  }
+}
+
