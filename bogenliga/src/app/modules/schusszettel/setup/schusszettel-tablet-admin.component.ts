@@ -47,7 +47,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   }
 
   getQrUrl(team: { teamId: number; token: string }): string {
-    return `${location.origin}/schusszettel/setup?token=${team.token}`;
+    return `${location.origin}/tablet?token=${team.token}&teamid=${team.teamId}&wettkampfid=${this.wettkampfId}`;
   }
 
   resetSession(teamId: number): void {
