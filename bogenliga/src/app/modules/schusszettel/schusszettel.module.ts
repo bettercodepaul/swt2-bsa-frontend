@@ -13,6 +13,10 @@ import { RegisterRueckennummerComponent } from './maske1registrierung/register-r
 import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
 import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
 import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
+import { TabletComponent } from './tablet/tablet.component';
+import { WettkampfbeendetComponent } from './maske4wettkampfbeendet/wettkampfbeendet.component';
+import { NotAllowedComponent } from './maske5not-allowed/not-allowed.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +24,10 @@ import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-ad
     PasseEingabeComponent,
     WarteBestaetigungComponent,
     SchusszettelTabletAdminComponent,
-    SchusszettelInitComponent
+    SchusszettelInitComponent,
+    TabletComponent,
+    NotAllowedComponent,
+    WettkampfbeendetComponent
   ],
   imports: [
     CommonModule,

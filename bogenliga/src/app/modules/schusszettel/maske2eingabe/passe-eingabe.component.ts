@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { SchusszettelService } from '../schusszettel.service';
 import { MatchStateService } from '../match-state.service';
@@ -10,7 +10,7 @@ import { MatchStateService } from '../match-state.service';
 })
 export class PasseEingabeComponent implements OnInit {
   schuesse: string[][] = [];
-
+  @Input() infos: any;
   constructor(
     private service: SchusszettelService,
     private router: Router,

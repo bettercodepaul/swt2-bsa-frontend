@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { SchusszettelService } from '../schusszettel.service';
 import { MatchStateService } from '../match-state.service';
@@ -10,7 +10,7 @@ import { MatchStateService } from '../match-state.service';
 })
 export class RegisterRueckennummerComponent {
   rueckennummern: string[] = ['', '', ''];
-
+  @Input() infos: any;
   constructor(private service: SchusszettelService, private router: Router, private state: MatchStateService) {}
 
   confirmInput(): void {

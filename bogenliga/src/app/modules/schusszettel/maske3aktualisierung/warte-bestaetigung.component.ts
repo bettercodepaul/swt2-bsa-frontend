@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import { SchusszettelService } from '../schusszettel.service';
 
@@ -8,6 +8,7 @@ import { SchusszettelService } from '../schusszettel.service';
   styleUrls:   ['./warte-bestaetigung.component.scss']
 })
 export class WarteBestaetigungComponent {
+  @Input() infos: any;
   constructor(private service: SchusszettelService, private router: Router) {}
 
   update(): void {
