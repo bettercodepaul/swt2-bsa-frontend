@@ -14,10 +14,20 @@ export class RegisterRueckennummerComponent {
   constructor(private service: SchusszettelService, private router: Router, private state: MatchStateService) {}
 
   confirmInput(): void {
-    this.service.confirmRueckennummern(this.rueckennummern).subscribe((success) => {
-      if (success) {
+    const payload = {
+      token: this.infos?.token,
+      teamid: this.infos?.teamid,
+      wettkampfid: this.infos?.wettkampfid,
+      rueckennummern: this.rueckennummern
+    };
+
+    this.service.sendRueckennummern(payload).subscribe({
+      next: () => {
         this.state.rueckennummern = this.rueckennummern;
-        this.router.navigate(['/schusszettel/eingabe']);
+        window.location.reload();
+      },
+      error: (err) => {
+        console.error('Fehler beim Senden der Rückennummern:', err);
       }
     });
   }

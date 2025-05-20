@@ -1,11 +1,6 @@
 <ng-container [ngSwitch]="status">
   <!-- je nach Status wird die passende Komponente angezeigt-->
 
-  <bla-maske3aktualisierung
-    *ngSwitchCase="'warte'"
-    [infos]="data">
-  </bla-maske3aktualisierung>
-
   <bla-maske1registrierung
     *ngSwitchCase="'schutzenmeldung'"
     [infos]="data">
@@ -15,6 +10,11 @@
     *ngSwitchCase="'schusszettel'"
     [infos]="data">
   </bla-maske2eingabe>
+
+  <bla-maske3aktualisierung
+    *ngSwitchCase="'warte'"
+    [infos]="data">
+  </bla-maske3aktualisierung>
 
   <bla-maske4wettkampbeendet
     *ngSwitchCase="'wettkampf_beendet'"

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class SchusszettelService {
-
-  // Mock: simulate backend confirming registration
-  confirmRueckennummern(data: string[]): Observable<boolean> {
-    console.log('Sending Rückennummern to backend:', data);
-    return of(true); // Simulate success
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
   // Mock: fetch next pass number
@@ -26,5 +25,8 @@ export class SchusszettelService {
   checkBothTeamsSubmitted(): Observable<boolean> {
     console.log('Checking if both teams submitted data...');
     return of(true); // Simulate both confirmed
+  }
+  sendRueckennummern(payload: any) {
+    return this.http.post('/v1/tablet-schusszettel', payload);
   }
 }
