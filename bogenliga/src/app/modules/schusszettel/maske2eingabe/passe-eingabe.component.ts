@@ -25,7 +25,7 @@ export class PasseEingabeComponent implements OnInit {
   confirmPass() {
     this.service.submitPassData(this.schuesse).subscribe((success) => {
       if (success) {
-        this.router.navigate(['/schusszettel/aktualisierung']);
+        this.router.navigate(['/schusszettel/tablet']);
       }
     });
   }
