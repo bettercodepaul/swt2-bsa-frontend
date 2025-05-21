@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
-import { Router } from '@angular/router';
-import { SchusszettelService } from '../schusszettel.service';
-import { MatchStateService } from '../match-state.service';
+import {Router} from '@angular/router';
+import {SchusszettelService} from '../schusszettel.service';
 
 @Component({
   selector:    'bla-maske1registrierung',
@@ -11,7 +10,7 @@ import { MatchStateService } from '../match-state.service';
 export class RegisterRueckennummerComponent {
   rueckennummern: string[] = ['', '', ''];
   @Input() infos: any;
-  constructor(private service: SchusszettelService, private router: Router, private state: MatchStateService) {}
+  constructor(private service: SchusszettelService, private router: Router) {}
 
   confirmInput(): void {
     const payload = {
@@ -23,7 +22,9 @@ export class RegisterRueckennummerComponent {
 
     this.service.sendRueckennummern(payload).subscribe({
       next: () => {
-        this.state.rueckennummern = this.rueckennummern;
+
+        // state call
+
         window.location.reload();
       },
       error: (err) => {

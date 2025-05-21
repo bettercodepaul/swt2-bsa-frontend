@@ -1,21 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '@shared/shared.module';
-import { QRCodeModule } from 'angularx-qrcode';
-import {SchusszettelInitComponent} from '@schusszettel/setup/schusszettel-init.component';
-import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
-import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
-import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
-import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
-import { TabletComponent } from './tablet/tablet.component';
-import { WettkampfbeendetComponent } from './maske4wettkampfbeendet/wettkampfbeendet.component';
-import { NotAllowedComponent } from './maske5not-allowed/not-allowed.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {SharedModule} from '@shared/shared.module';
+import {QRCodeModule} from 'angularx-qrcode';
+import {RegisterRueckennummerComponent} from './maske1registrierung/register-rueckennummer.component';
+import {PasseEingabeComponent} from './maske2eingabe/passe-eingabe.component';
+import {WarteBestaetigungComponent} from './maske3aktualisierung/warte-bestaetigung.component';
+import {SchusszettelTabletAdminComponent} from './setup/schusszettel-tablet-admin.component';
+import {TabletComponent} from './tablet/tablet.component';
+import {WettkampfbeendetComponent} from './maske4wettkampfbeendet/wettkampfbeendet.component';
+import {NotAllowedComponent} from './maske5not-allowed/not-allowed.component';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { NotAllowedComponent } from './maske5not-allowed/not-allowed.component';
     PasseEingabeComponent,
     WarteBestaetigungComponent,
     SchusszettelTabletAdminComponent,
-    SchusszettelInitComponent,
     TabletComponent,
     NotAllowedComponent,
     WettkampfbeendetComponent

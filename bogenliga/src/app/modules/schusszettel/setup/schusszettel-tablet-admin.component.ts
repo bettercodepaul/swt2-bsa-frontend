@@ -1,13 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatchDataProviderService } from '@verwaltung/services/match-data-provider.service';
-import { DsbMannschaftDataProviderService } from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import { MatchDO } from '@verwaltung/types/match-do.class';
-import { BogenligaResponse } from '@shared/data-provider/types/bogenliga-response.interface';
-import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
-import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
-import { TabletSessionProviderService } from '@wkdurchfuehrung/services/tablet-session-provider.service';
-import { SchusszettelProviderService } from '@wkdurchfuehrung/services/schusszettel-provider.service';
-import {ActivatedRoute } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {BogenligaResponse} from '@shared/data-provider/types/bogenliga-response.interface';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {TabletSessionProviderService} from '@wkdurchfuehrung/services/tablet-session-provider.service';
+import {SchusszettelProviderService} from '@wkdurchfuehrung/services/schusszettel-provider.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',

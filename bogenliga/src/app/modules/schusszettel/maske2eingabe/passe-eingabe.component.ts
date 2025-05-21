@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { SchusszettelService } from '../schusszettel.service';
-import { MatchStateService } from '../match-state.service';
+import {Router} from '@angular/router';
+import {SchusszettelService} from '../schusszettel.service';
 
 @Component({
   selector:    'bla-maske2eingabe',
@@ -14,11 +13,9 @@ export class PasseEingabeComponent implements OnInit {
   constructor(
     private service: SchusszettelService,
     private router: Router,
-    public state: MatchStateService
   ) {}
 
   ngOnInit(): void {
-    const arrows = this.state.arrowsPerShooter;
     this.schuesse = Array.from({ length: 3 }, () => Array(arrows).fill(''));
   }
 
