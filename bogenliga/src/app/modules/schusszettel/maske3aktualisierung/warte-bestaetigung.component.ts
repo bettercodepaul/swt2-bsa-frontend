@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import { Router } from '@angular/router';
-import { SchusszettelService } from '../schusszettel.service';
+import {Router} from '@angular/router';
+import {SchusszettelService} from '../schusszettel.service';
 
 @Component({
   selector:    'bla-maske3aktualisierung',

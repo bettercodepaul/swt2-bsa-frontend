@@ -1,17 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RegisterRueckennummerComponent } from './maske1registrierung/register-rueckennummer.component';
-import { PasseEingabeComponent } from './maske2eingabe/passe-eingabe.component';
-import { WarteBestaetigungComponent } from './maske3aktualisierung/warte-bestaetigung.component';
-import { SchusszettelGuard } from '../wkdurchfuehrung/guards/schusszettel.guard';
-import { SchusszettelInitComponent } from './setup/schusszettel-init.component';
-import { SchusszettelTabletAdminComponent } from './setup/schusszettel-tablet-admin.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SchusszettelTabletAdminComponent} from './setup/schusszettel-tablet-admin.component';
 import {TabletComponent} from './tablet/tablet.component';
+
 const routes: Routes = [
-  { path: 'setup', component: SchusszettelInitComponent },
-  { path: 'registrierung', component: RegisterRueckennummerComponent },
-  { path: 'eingabe', component: PasseEingabeComponent, canActivate: [SchusszettelGuard] },
-  { path: 'aktualisierung', component: WarteBestaetigungComponent, canActivate: [SchusszettelGuard] },
   {path: 'wettkampfleiter-tablet-view/:id', component: SchusszettelTabletAdminComponent},
   {path: 'tablet', component: TabletComponent}
 ];
