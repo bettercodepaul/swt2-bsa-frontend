@@ -7,6 +7,7 @@ import { DsbMannschaftDO } from '@verwaltung/types/dsb-mannschaft-do.class';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
 import { TabletSessionProviderService } from '@wkdurchfuehrung/services/tablet-session-provider.service';
 import { SchusszettelProviderService } from '@wkdurchfuehrung/services/schusszettel-provider.service';
+import {ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -17,23 +18,40 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   @Input() wettkampfId!: number;
   public ActionButtonColors = ActionButtonColors;
 
-  teams: { teamId: number; name: string; token: string }[] = [];
+  teams: { teamId: number; name: string; token: string; status?: string }[] = [];
   selectedQrUrl: string | null = null;
   constructor(
     private matchService: MatchDataProviderService,
     private dsbMannschaftService: DsbMannschaftDataProviderService,
     private tabletSessionService: TabletSessionProviderService,
-    private schusszettelService: SchusszettelProviderService
+    private schusszettelService: SchusszettelProviderService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('wettkampfId');
+
+    if (!id || isNaN(+id)) {
+      console.error('Keine oder ungültige Wettkampf-ID in der URL gefunden');
+      return;
+    }
+
+    this.wettkampfId = +id;
+    console.log('Wettkampf-ID geladen:', this.wettkampfId);
     this.loadTeams();
   }
 
   loadTeams(): void {
     this.tabletSessionService.findTeams(this.wettkampfId).then(
       (response: BogenligaResponse<any[]>) => {
-        this.teams = response.payload ?? [];
+        console.log('TEAM-DATEN:', response.payload);
+        this.teams = (response.payload ?? []).map((dto) => ({
+          teamId: dto.matchId,
+          name: `Match ${dto.matchId}`,
+          token: dto.accessToken,
+          status: dto.active ? 'aktiv' : 'inaktiv'
+          })
+        );
       },
       (error) => {
         console.error('Fehler beim Laden der Teams für Wettkampf', this.wettkampfId, error);
@@ -47,7 +65,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   }
 
   getQrUrl(team: { teamId: number; token: string }): string {
-    return `${location.origin}/tablet?token=${team.token}&teamid=${team.teamId}&wettkampfid=${this.wettkampfId}`;
+    return `${location.origin}/#/wkdurchfuehrung/tablet?token=${team.token}&teamid=${team.teamId}&wettkampfid=${this.wettkampfId}`;
   }
 
   resetSession(teamId: number): void {
