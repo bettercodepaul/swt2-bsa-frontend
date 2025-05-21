@@ -13,12 +13,8 @@
   <tbody>
   <tr *ngFor="let team of teams">
     <td>{{ team.name }}</td>
+    <td>{{team.status || 'unbekannt'}}</td>
 
-    <td>
-      <!-- Mock: -->
-      <span>Aktiv</span>
-      <span>Inaktiv</span>
-    </td>
 
     <td>
       <code style="word-break: break-all">{{ getQrUrl(team) }}</code>
@@ -36,10 +32,7 @@
       </button>
     </td>
 
-    <!-- Access Token -->
-    <td>
-
-    </td>
+    <td>{{team.token}}</td>
   </tr>
   </tbody>
 </table>

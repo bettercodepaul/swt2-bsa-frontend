@@ -164,20 +164,20 @@ export class TabletSessionProviderService extends DataProviderService {
                });
   }
 
-  public findTeams(wettkampfId: number): Promise<BogenligaResponse<any[]>> {
+  public findTeams(wettkampfId: number): Promise<BogenligaResponse<TabletSessionDO[]>> {
     const api_url = new UriBuilder()
-      .fromPath('/api/v1/tablet-setup')
+      .fromPath(this.getUrl()) // entspricht 'v1/tabletsessions'
       .path(wettkampfId.toString())
-      .path('teams')
-      .build(); // /api/v1/tablet-setup/:wettkampfId/teams
+      .build(); // ergibt z.B. v1/tabletsessions/1
 
     return new Promise((resolve, reject) => {
-      this.restClient.GET<any[]>(api_url) // GET/api/v1/tablet-setup/:wettkampfId/teams
-          .then((data: any[]) => {
-            resolve({ result: RequestResult.SUCCESS, payload: data }); // ERFOLGREICH: wird das empfangene Array als payload zurückgegeben
+      this.restClient.GET<TabletSessionDTO[]>(api_url)
+          .then((data: TabletSessionDTO[]) => {
+            const sessions = data.map((dto) => TabletSessionMapper.tabletSessionToDO(dto));
+            resolve({ result: RequestResult.SUCCESS, payload: sessions });
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
-              reject({ result: RequestResult.CONNECTION_PROBLEM }); // NICHT ERFOLGREICH: Fehlermeldung zeigen
+              reject({ result: RequestResult.CONNECTION_PROBLEM });
             } else {
               reject({ result: RequestResult.FAILURE });
             }

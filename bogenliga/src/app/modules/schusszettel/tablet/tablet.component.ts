@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { SchusszettelService } from '../schusszettel.service';
 
 @Component({
   selector: 'bla-tablet',
@@ -15,7 +16,12 @@ export class TabletComponent implements OnInit {
   status: string | null = null;
   data: any = null; // status ist z.b. warte, schutzemeldung ...
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private schusszettelService: SchusszettelService
+  ) {
+  }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token');
@@ -23,12 +29,21 @@ export class TabletComponent implements OnInit {
     this.wettkampfId = this.route.snapshot.queryParamMap.get('wettkampfid');
 
     if (this.token && this.teamId && this.wettkampfId) {
-      const url = `/v1/tablet-schusszettel?token=${this.token}&teamid=${this.teamId}&wettkampfid=${this.wettkampfId}`;
+      const token = this.token;
+      const teamId = Number(this.teamId);
+      const wettkampfId = Number(this.wettkampfId);
 
-      this.http.get(url).subscribe((response: any) => {
-        this.status = response.status;
-        this.data = response;
-      });
+      this.schusszettelService.getSchusszettel(token, wettkampfId, teamId)
+          .subscribe({
+            next:  (response: any) => {
+              this.status = response.status;
+              this.data = response;
+              console.log('Empfangene Daten vom Backend:', response);
+            },
+            error: (err) => {
+              console.error('Fehler beim Laden der Daten:', err);
+            }
+          });
     }
   }
 }
