@@ -8,13 +8,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {SharedModule} from '@shared/shared.module';
 import {QRCodeModule} from 'angularx-qrcode';
-import {RegisterRueckennummerComponent} from './maske1registrierung/register-rueckennummer.component';
-import {PasseEingabeComponent} from './maske2eingabe/passe-eingabe.component';
-import {WarteBestaetigungComponent} from './maske3aktualisierung/warte-bestaetigung.component';
-import {SchusszettelTabletAdminComponent} from './setup/schusszettel-tablet-admin.component';
-import {TabletComponent} from './tablet/tablet.component';
-import {WettkampfbeendetComponent} from './maske4wettkampfbeendet/wettkampfbeendet.component';
-import {NotAllowedComponent} from './maske5not-allowed/not-allowed.component';
+import {RegisterRueckennummerComponent} from './components/maske1registrierung/register-rueckennummer.component';
+import {PasseEingabeComponent} from './components/maske2eingabe/passe-eingabe.component';
+import {WarteBestaetigungComponent} from './components/maske3aktualisierung/warte-bestaetigung.component';
+import {SchusszettelTabletAdminComponent} from './components/setup/schusszettel-tablet-admin.component';
+import {TabletComponent} from './components/tablet/tablet.component';
+import {WettkampfbeendetComponent} from './components/maske4wettkampfbeendet/wettkampfbeendet.component';
+import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.component';
 
 
 @NgModule({

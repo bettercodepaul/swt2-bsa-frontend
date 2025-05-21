@@ -163,26 +163,4 @@ export class TabletSessionProviderService extends DataProviderService {
                  throw error; // Rethrow the error for handling in the caller
                });
   }
-
-  public findTeams(wettkampfId: number): Promise<BogenligaResponse<TabletSessionDO[]>> {
-    const api_url = new UriBuilder()
-      .fromPath(this.getUrl()) // entspricht 'v1/tabletsessions'
-      .path(wettkampfId.toString())
-      .build(); // ergibt z.B. v1/tabletsessions/1
-
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<TabletSessionDTO[]>(api_url)
-          .then((data: TabletSessionDTO[]) => {
-            const sessions = data.map((dto) => TabletSessionMapper.tabletSessionToDO(dto));
-            resolve({ result: RequestResult.SUCCESS, payload: sessions });
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({ result: RequestResult.CONNECTION_PROBLEM });
-            } else {
-              reject({ result: RequestResult.FAILURE });
-            }
-          });
-    });
-  }
-
 }

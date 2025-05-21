@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {SchusszettelService} from '../schusszettel.service';
+import {SchusszettelService} from '@schusszettel/services/schusszettel.service';
+
 
 @Component({
   selector:    'bla-maske2eingabe',
