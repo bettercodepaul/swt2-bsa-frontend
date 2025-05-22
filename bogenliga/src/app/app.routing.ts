@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 
 import {HomeComponent} from '@home/components/home/home.component';
-import { SchusszettelTabletAdminComponent } from '@schusszettel/setup/schusszettel-tablet-admin.component';
+import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},

@@ -3,9 +3,8 @@ import {MatchDataProviderService} from '@verwaltung/services/match-data-provider
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {BogenligaResponse} from '@shared/data-provider/types/bogenliga-response.interface';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-import {TabletSessionProviderService} from '@wkdurchfuehrung/services/tablet-session-provider.service';
-import {SchusszettelProviderService} from '@wkdurchfuehrung/services/schusszettel-provider.service';
 import {ActivatedRoute} from '@angular/router';
+import { SchusszettelService } from '@schusszettel/services/schusszettel.service';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -20,9 +19,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   selectedQrUrl: string | null = null;
   constructor(
     private matchService: MatchDataProviderService,
-    private dsbMannschaftService: DsbMannschaftDataProviderService,
-    private tabletSessionService: TabletSessionProviderService,
-    private schusszettelService: SchusszettelProviderService,
+    private schusszettelService: SchusszettelService,
     private route: ActivatedRoute,
   ) {}
 
@@ -40,19 +37,18 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   }
 
   loadTeams(): void {
-    this.tabletSessionService.findTeams(this.wettkampfId).then(
-      (response: BogenligaResponse<any[]>) => {
-        console.log('TEAM-DATEN:', response.payload);
-        this.teams = (response.payload ?? []).map((dto) => ({
-          teamId: dto.matchId,
-          name: `Match ${dto.matchId}`,
-          token: dto.accessToken,
-          status: dto.active ? 'aktiv' : 'inaktiv'
+    this.schusszettelService.getSessions(this.wettkampfId).subscribe(
+      (session) => {
+        this.teams = session.map((s) => ({
+          teamId: s.teamId,
+          name: s.teamName,
+          token: s.token,
+          status: s.status
           })
         );
       },
       (error) => {
-        console.error('Fehler beim Laden der Teams für Wettkampf', this.wettkampfId, error);
+        console.error('Fehler beim Laden der Sessions', error);
       }
     );
   }
@@ -65,7 +61,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
   getQrUrl(team: { teamId: number; token: string }): string {
     return `${location.origin}/#/wkdurchfuehrung/tablet?token=${team.token}&teamid=${team.teamId}&wettkampfid=${this.wettkampfId}`;
   }
-
+/*
   resetSession(teamId: number): void {
     // TODO: Token beim Backend zurücksetzen
       this.schusszettelService.resetTabletToken(this.wettkampfId, teamId).then(
@@ -78,6 +74,7 @@ export class SchusszettelTabletAdminComponent implements OnInit {
         }
       );
   }
+  */
 
   copyToClipboard(text: string): void {
     navigator.clipboard.writeText(text).then(() => {
