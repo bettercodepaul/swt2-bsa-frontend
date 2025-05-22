@@ -21,7 +21,12 @@ export class RegisterRueckennummerComponent {
       rueckennummern: this.rueckennummern
     };
 
-    this.service.sendRueckennummern(payload).subscribe({
+    this.service.sendRueckennummern(
+      this.infos?.token,
+      this.infos?.wettkampfId,
+      this.infos?.teamid,
+      this.rueckennummern
+    ).subscribe({
       next: () => {
 
         // state call

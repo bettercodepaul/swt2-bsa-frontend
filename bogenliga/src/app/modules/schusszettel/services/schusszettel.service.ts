@@ -1,7 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {TabletSessionSingMapper} from '../mapper/tablet-session-sing-mapper';
+import {TabletSessionSingDO} from '../types/tablet-session-sing-do.class';
+import {TabletSessionSingDTO} from '../types/datatransfer/tablet-session-sing-dto.class';
+import {Observable} from 'rxjs';
+import {TabletSessionInfoDTO} from '../types/datatransfer/tablet-session-info-dto.class';
+import {map} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
+
 export class SchusszettelService {
   constructor(
     private http: HttpClient
@@ -34,30 +41,21 @@ export class SchusszettelService {
     return this.http.get('/api/tablet-schusszettel', { params });
   }
 
-  /* @Youmna You need to create the DO class for the schusszettel and implement the mapper like I did in the Backend
-  public findTeams(wettkampfId: number): Promise<BogenligaResponse<TabletSessionDO[]>> {
-    const api_url = new UriBuilder()
-      .fromPath(this.getUrl()) // entspricht 'v1/tabletsessions'
-      .path(wettkampfId.toString())
-      .build(); // ergibt z.B. v1/tabletsessions/1
-
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<TabletSessionDTO[]>(api_url)
-          .then((data: TabletSessionDTO[]) => {
-            const sessions = data.map((dto) => TabletSessionMapper.tabletSessionToDO(dto));
-            resolve({ result: RequestResult.SUCCESS, payload: sessions });
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({ result: RequestResult.CONNECTION_PROBLEM });
-            } else {
-              reject({ result: RequestResult.FAILURE });
-            }
-          });
-    });
-  }
-  */
   submitPassData(passe: any) {
     return this.http.post('/v1/passen', passe);
   }
 
+  getSessions(wettkampfId: number): Observable<TabletSessionSingDO[]> {
+    const params = new HttpParams().set('wettkampfid', wettkampfId.toString());
+
+    return this.http.get<TabletSessionInfoDTO>(
+      '/v1/tablet-schusszettel/sessions',
+      { params }
+    ).pipe(
+      map((response) => {
+        const dtos: TabletSessionSingDTO[] = response.tabletSessionSingDTOs;
+        return dtos.map((dto) => TabletSessionSingMapper.fromDTO(dto));
+      })
+    );
+  }
 }
