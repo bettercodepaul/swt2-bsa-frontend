@@ -17,6 +17,7 @@ export class PasseEingabeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const arrows = 6;
     this.schuesse = Array.from({ length: 3 }, () => Array(arrows).fill(''));
   }
 

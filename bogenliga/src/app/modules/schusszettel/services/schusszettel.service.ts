@@ -7,10 +7,21 @@ export class SchusszettelService {
     private http: HttpClient
   ) {
   }
-  sendRueckennummern(payload: any) {
-    // @Youmna: make sure the type of payload is correct, so that the backend knows its SCHUETZENMELDUNG
-    return this.http.post('/v1/tablet-schusszettel', payload);
+
+  sendRueckennummern(token: string, wettkampfId: number, teamId: number, meldungen: any[]) {
+    const payload = {
+      typ: 'SCHUETZENMELDUNG',
+      meldungen
+    };
+
+    const params = new HttpParams()
+      .set('token', token)
+      .set('wettkampfid', wettkampfId.toString())
+      .set('teamid', teamId.toString());
+
+    return this.http.post('/api/tablet-schusszettel', payload, { params });
   }
+
   getTabletSessions() {
     return this.http.get<any[]>('/v1/tablet-schusszettel/sessions');
   }
@@ -45,4 +56,8 @@ export class SchusszettelService {
     });
   }
   */
+  submitPassData(passe: any) {
+    return this.http.post('/v1/passen', passe);
+  }
+
 }

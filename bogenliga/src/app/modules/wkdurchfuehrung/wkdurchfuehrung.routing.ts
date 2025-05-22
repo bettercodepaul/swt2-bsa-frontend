@@ -8,8 +8,8 @@ import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.compo
 import {WkdurchfuehrungGuard} from './guards/wkdurchfuehrung.guard';
 import {FullscreenComponent} from './components/fullscreen/fullscreen.component';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
-import {SchusszettelTabletAdminComponent} from '@schusszettel/setup/schusszettel-tablet-admin.component';
-import {SchusszettelSetupGuard} from '@schusszettel/schusszettel-setup.guard';
+import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
+
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
