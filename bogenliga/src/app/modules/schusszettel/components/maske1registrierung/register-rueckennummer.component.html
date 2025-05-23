@@ -1,16 +1,62 @@
 <div class="schusszettel-container">
-  <div class="info-box">Tragen Sie hier mit einem Tap auf die Boxen die Rückennummern der Schützen ein, und bestätigen Sie</div>
-  <div class="title-block">
-    <h1>Rückennummern</h1>
-    <p>Team : _______<br>Datum : _______<br>Match vs.: _______</p>
+
+  <bla-match-kontext [infos]="infos"></bla-match-kontext>
+
+  <div class="info-box">
+    Select a field, then click a shooter from the list to fill its ID.
   </div>
-  <div class="input-grid">
-    <input type="text" [(ngModel)]="rueckennummern[0]" placeholder="Schütze 1" class="shooter red">
-    <input type="text" [(ngModel)]="rueckennummern[1]" placeholder="Schütze 2" class="shooter blue">
-    <input type="text" [(ngModel)]="rueckennummern[2]" placeholder="Schütze 3" class="shooter yellow">
-  </div>
-  <button class="confirm-button" (click)="confirmInput()">
-    EINGABE BESTÄTIGEN
-    <span class="arrow">→</span>
-  </button>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="register-layout">
+
+      <!-- Shooter List with Filter -->
+      <div class="schuetzen-list">
+        <input
+          formControlName="filter"
+          placeholder="Filter shooters…"
+          aria-label="Filter shooters"
+        />
+        <div class="list">
+          <div
+            *ngFor="let sh of filteredShooters; trackBy: trackById"
+            class="schuetze-item"
+            tabindex="0"
+            (click)="selectShooter(sh)"
+            (keydown.enter)="selectShooter(sh)"
+          >
+            {{ sh.schuetzenId }} – {{ sh.name }}
+          </div>
+        </div>
+      </div>
+
+      <!-- ID Input Slots -->
+      <div class="input-grid" formArrayName="ids">
+        <div *ngFor="let ctrl of ids.controls; let i = index">
+          <input
+            [formControlName]="i"
+            type="text"
+            placeholder="Slot {{ i + 1 }} ID"
+            aria-label="Rückennummer slot {{ i + 1 }}"
+            (focus)="setActiveInput(i)"
+          />
+          <div
+            class="error"
+            *ngIf="ctrl.invalid && ctrl.touched"
+          >
+            Enter a valid numeric ID
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="confirm-button"
+    >
+      CONFIRM
+      <span class="arrow">→</span>
+    </button>
+  </form>
 </div>

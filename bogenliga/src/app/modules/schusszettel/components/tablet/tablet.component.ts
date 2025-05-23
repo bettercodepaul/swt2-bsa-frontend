@@ -1,49 +1,95 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {SchusszettelService} from '../../services/schusszettel.service';
+import {
+  Component,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SchusszettelService } from '../../services/schusszettel.service';
+import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
+import { SchuetzenSatzDTO } from '../../types/datatransfer/satz-eingabe-dto';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'bla-tablet',
   templateUrl: './tablet.component.html',
   styleUrls: ['./tablet.component.scss']
 })
-export class TabletComponent implements OnInit {
-  token: string | null = null;
-  teamId: string | null = null;
-  wettkampfId: string | null = null;
+export class TabletComponent implements OnInit, OnDestroy {
+  token!: string;
+  teamId!: number;
+  wettkampfId!: number;
+  data?: TabletSchusszettel;
 
-  status: string | null = null;
-  data: any = null; // status ist z.b. warte, schutzemeldung ...
+  loading = false;
+  errorMsg: string | null = null;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private schusszettelService: SchusszettelService
-  ) {
-  }
+    private schussService: SchusszettelService
+  ) {}
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.queryParamMap.get('token');
-    this.teamId = this.route.snapshot.queryParamMap.get('teamid');
-    this.wettkampfId = this.route.snapshot.queryParamMap.get('wettkampfid');
+    this.route.queryParamMap
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((params) => {
+          this.token       = params.get('token')!;
+          this.teamId      = Number(params.get('teamid'));
+          this.wettkampfId = Number(params.get('wettkampfid'));
+          this.load();
+        });
+  }
 
-    if (this.token && this.teamId && this.wettkampfId) {
-      const token = this.token;
-      const teamId = Number(this.teamId);
-      const wettkampfId = Number(this.wettkampfId);
-
-      this.schusszettelService.getSchusszettel(token, wettkampfId, teamId)
-          .subscribe({
-            next:  (response: any) => {
-              this.status = response.status;
-              this.data = response;
-              console.log('Empfangene Daten vom Backend:', response);
-            },
-            error: (err) => {
-              console.error('Fehler beim Laden der Daten:', err);
-            }
-          });
+  load(): void {
+    // validate params
+    if (!this.token || isNaN(this.teamId) || isNaN(this.wettkampfId)) {
+      this.errorMsg = 'Ungültige URL-Parameter.';
+      return;
     }
+
+    this.loading  = true;
+    this.errorMsg = null;
+
+    this.schussService
+        .getSchusszettel(this.token, this.wettkampfId, this.teamId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (resp) => {
+            this.data    = resp;
+            this.loading = false;
+          },
+          error: (err) => {
+            console.error('Fehler beim Laden:', err);
+            this.errorMsg = 'Daten konnten nicht geladen werden. Bitte später erneut versuchen.';
+            this.loading  = false;
+          }
+        });
+  }
+
+  onRegister(meldungen: number[]): void {
+    this.schussService
+        .postSchuetzenMeldung(this.token, this.wettkampfId, this.teamId, meldungen)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: ()  => this.load(),
+          error: (err) => console.error('Registrierungsfehler:', err)
+        });
+  }
+
+  onSatz(satzeingabe: SchuetzenSatzDTO[]): void {
+    this.schussService
+        .postSatzEingabe(this.token, this.wettkampfId, this.teamId, satzeingabe)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: ()  => this.load(),
+          error: (err) => console.error('Eingabefehler:', err)
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,63 +1,80 @@
+// Variables (you can move these to a shared file)
+$highlight-color: rgba(30, 136, 229, 0.1);
+$error-color: #b00020;
+
 .schusszettel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
   padding: 2rem;
 
-  .info-box {
-    background: #ddd;
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
-    max-width: 400px;
-    text-align: center;
-  }
+  .passe-info {
+    margin-bottom: 1rem;
 
-  .title-block {
-    text-align: center;
-    margin-bottom: 2rem;
-
-    h1 {
-      font-size: 2rem;
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
     }
   }
 
-  .input-table {
-    border-collapse: collapse;
-    margin-bottom: 2rem;
+  form {
+    width: 100%;
+    max-width: 800px;
+  }
 
-    th, td {
+  .table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .treffer-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
       border: 1px solid #999;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem;
       text-align: center;
     }
 
     input {
       width: 60px;
       text-align: center;
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
 
-    .label span {
-      font-weight: bold;
+    /* Highlight focused row */
+    tr.active-row,
+    tr:focus-within {
+      background-color: $highlight-color;
     }
-    .red { color: red; }
-    .blue { color: blue; }
-    .yellow { color: olive; }
+  }
+
+  .error {
+    color: $error-color;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
   }
 
   .confirm-button {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid red;
-    background: white;
     font-weight: bold;
     font-size: 1rem;
-    cursor: pointer;
+    padding: 0.75rem 1.5rem;
 
     .arrow {
       margin-left: 0.5rem;
     }
   }
+}
+
+/* Accessibility helper */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

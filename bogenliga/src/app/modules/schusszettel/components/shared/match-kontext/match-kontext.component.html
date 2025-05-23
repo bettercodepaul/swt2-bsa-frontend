@@ -1,0 +1,18 @@
+<!-- only render once infos is available -->
+<div *ngIf="infos" class="match-kontext" role="group" aria-labelledby="mk-heading">
+  <div class="title-block">
+    <h2 id="mk-heading">Match Context</h2>
+
+    <!-- use definition list for semantic labels -->
+    <dl>
+      <dt>Team</dt>
+      <dd>{{ infos.eigenesTeam.teamName }}</dd>
+
+      <dt>Date</dt>
+      <dd>{{ today | date: 'dd.MM.yyyy' }}</dd>
+
+      <dt>Opponent</dt>
+      <dd>{{ infos.gegnerischesTeam.teamName }}</dd>
+    </dl>
+  </div>
+</div>

@@ -1,13 +1,19 @@
-<div class="schusszettel-container">
+<!-- only show once infos is available -->
+<div *ngIf="infos" class="warte-container" role="status" aria-live="polite">
+  <!-- shared header -->
+  <bla-match-kontext [infos]="infos"></bla-match-kontext>
+
   <div class="info-box">
-    Drücken Sie den Aktualisieren-Knopf, wenn Sie davon ausgehen, dass das andere Team bestätigt hat
+    <mat-spinner diameter="40" aria-hidden="true"></mat-spinner>
+    <p id="wait-msg">Waiting for the opponent team to be ready…</p>
   </div>
-  <div class="wait-text">
-    <h1>... warten auf<br>Schusszettel-Eingabe-Bestätigung<br>beider Teams</h1>
-  </div>
-  <div class="target-icon">🎯</div>
-  <button class="confirm-button" (click)="update()">
-    AKTUALISIEREN
-    <span class="arrow">→</span>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onRefreshClick()"
+    aria-labelledby="wait-msg"
+  >
+    Refresh Status
   </button>
 </div>
