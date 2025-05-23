@@ -50,7 +50,10 @@
                       [selectedItem]=this.selectedWettkampftag
                       [expanded]=!isDisabled()
                       (itemSelected)="expandMenu2.onItemSelected($event)">
-            <bla-col-layout [style]="'flex-wrap: wrap'">
+            <bla-col-layout >
+              <div style="display: flex; flex-wrap: wrap;">
+
+
 
               <bla-download-actionbutton
                 [id]="'downloadSetzliste'"
@@ -89,6 +92,7 @@
               </bla-download-actionbutton>
 
               <div id="setupTable"
+                   style="min-width: 14rem; max-width: 14rem; white-space: nowrap;"
                    *ngIf="(!isOffline()); else onlineSetupTables">
                 <bla-actionbutton (click)="onButtonTabletClick()"
                                   [color]="ActionButtonColors.PRIMARY"
@@ -108,26 +112,29 @@
                 </div>
               </ng-template>
 
-              <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
-              <bla-actionbutton
-                id="setupTabletSchusszettel"
-                style="width: 35rem;"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'table'"
-                [disabled]="isDisabled()">
-                {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-              </bla-actionbutton>
-            </ng-container>
 
-              <ng-template #offlineSchusszettelSetup>
-                <bla-actionbutton
-                  style="width: 35rem;"
-                  [color]="ActionButtonColors.PRIMARY"
-                  [iconClass]="'table'"
-                  [disabled]="true">
-                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-                </bla-actionbutton>
-              </ng-template>
+                <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
+                  <bla-actionbutton
+                    id="setupTabletSchusszettel"
+                    [color]="ActionButtonColors.PRIMARY"
+                    [iconClass]="'table'"
+                    [disabled]="isDisabled()">
+                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                  </bla-actionbutton>
+                </ng-container>
+
+
+
+
+                <ng-template #offlineSchusszettelSetup>
+                  <bla-actionbutton
+                    [color]="ActionButtonColors.PRIMARY"
+                    [iconClass]="'table'"
+                    [disabled]="true">
+                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                  </bla-actionbutton>
+                </ng-template>
+              </div>
 
             </bla-col-layout>
           </bla-expand>
