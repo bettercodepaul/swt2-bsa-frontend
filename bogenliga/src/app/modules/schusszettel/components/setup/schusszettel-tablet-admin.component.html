@@ -48,7 +48,12 @@
       QR Code
     </h5>
     <div class="modal-dialog-content">
-      <qrcode [qrdata]="selectedQrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      <qrcode
+        *ngIf="selectedQrUrl"
+        [qrdata]="selectedQrUrl"
+        [width]="256"
+        [errorCorrectionLevel]="'M'">
+      </qrcode>
     </div>
   </bla-modal-dialog>
 </div>
