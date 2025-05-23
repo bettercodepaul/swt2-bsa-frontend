@@ -1,10 +1,22 @@
-import {Component, Input} from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
 
 @Component({
-  selector:    'bla-maske4wettkampbeendet',
+  selector: 'bla-maske4wettkampbeendet',
   templateUrl: './wettkampfbeendet.component.html',
-  styleUrls:   ['./wettkampfbeendet.component.scss']
+  styleUrls: ['./wettkampfbeendet.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WettkampfbeendetComponent {
-  @Input() infos: any;
+  /** full tablet state; only render when set */
+  @Input() infos: TabletSchusszettel | null = null;
+
+  /** allow user to reload or navigate away */
+  reload(): void {
+    window.location.reload();
+  }
 }

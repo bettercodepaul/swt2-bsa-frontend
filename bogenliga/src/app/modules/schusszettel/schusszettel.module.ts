@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -15,7 +15,9 @@ import {SchusszettelTabletAdminComponent} from './components/setup/schusszettel-
 import {TabletComponent} from './components/tablet/tablet.component';
 import {WettkampfbeendetComponent} from './components/maske4wettkampfbeendet/wettkampfbeendet.component';
 import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.component';
-
+import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/maske4zustand.component';
+import { MatchKontextComponent } from './components/shared/match-kontext/match-kontext.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -25,22 +27,23 @@ import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.co
     SchusszettelTabletAdminComponent,
     TabletComponent,
     NotAllowedComponent,
-    WettkampfbeendetComponent
+    WettkampfbeendetComponent,
+    Maske4ZustandComponent,
+    MatchKontextComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
     SharedModule,
-    QRCodeModule
+    QRCodeModule,
+    MatProgressSpinnerModule
   ],
   exports: [
-    RegisterRueckennummerComponent,
-    PasseEingabeComponent,
-    WarteBestaetigungComponent,
     SchusszettelTabletAdminComponent
   ]
 })

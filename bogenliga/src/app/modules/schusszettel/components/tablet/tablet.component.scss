@@ -1,0 +1,23 @@
+.tablet-wrapper {
+  position: relative;
+  min-height: 300px;
+  padding: 1rem;
+
+  .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .error-box {
+    margin: 1rem auto;
+    padding: 0.75rem 1rem;
+    max-width: 400px;
+    background: #fdecea;
+    color: #b00020;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    text-align: center;
+  }
+}

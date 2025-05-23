@@ -4,7 +4,9 @@ import {SchusszettelTabletAdminComponent} from './components/setup/schusszettel-
 import {TabletComponent} from './components/tablet/tablet.component';
 
 const routes: Routes = [
-  {path: 'wettkampfleiter-tablet-view/:id', component: SchusszettelTabletAdminComponent},
+  { path: 'wkdurchfuehrung/tablet‐setup‐schusszettel/:wettkampfid',
+    component: SchusszettelTabletAdminComponent
+  },
   {path: 'tablet', component: TabletComponent}
 ];
 

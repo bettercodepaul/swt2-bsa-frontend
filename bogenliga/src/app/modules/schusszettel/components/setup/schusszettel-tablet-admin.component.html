@@ -1,53 +1,54 @@
-<h2>Tabletverwaltung für Schusszettel – Wettkampftag {{ wettkampfId }}</h2>
+<div class="admin-container">
+  <h2>Tablet Administration – Wettkampftag {{ wettkampfId }}</h2>
 
-<table>
-  <thead>
-  <tr>
-    <th>Team</th>
-    <th>Status</th>
-    <th>Link</th>
-    <th>Aktionen</th>
-    <th>Access Token</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let team of teams">
-    <td>{{ team.name }}</td>
-    <td>{{team.status || 'unbekannt'}}</td>
-
-
-    <td>
-      <code style="word-break: break-all">{{ getQrUrl(team) }}</code>
-      <button (click)="copyToClipboard(getQrUrl(team))">Kopieren</button>
-    </td>
-
-    <td class="action-cell">
-      <button class="qr-button" (click)="openQrPopup(getQrUrl(team))" title="QR Code anzeigen">
-        <img src="assets/img/Icons/QR_Code_anzeigen_zum_scan.png" alt="QR Icon" class="icon-img" />
-      </button>
-
-
-      <button class="action-button" (click)="resetSession(team.teamId)" title="Reset Token">
-        <img src="assets/img/Icons/Reset_Button.png" alt="Reset Icon" class="icon-img" />
-      </button>
-    </td>
-
-    <td>{{team.token}}</td>
-  </tr>
-  </tbody>
-</table>
-
-<bla-modal-dialog [visible]="selectedQrUrl !== null" (onClose)="closeQrPopup()">
-  <h5 class="modal-dialog-header">
-    <i class="fa fa-qrcode"></i>
-    QR-Code
-  </h5>
-
-  <div class="modal-dialog-content">
-    <qrcode
-      [qrdata]="selectedQrUrl"
-      [width]="256"
-      [errorCorrectionLevel]="'M'">
-    </qrcode>
+  <div *ngIf="loading" class="spinner">
+    <mat-spinner diameter="40"></mat-spinner>
   </div>
-</bla-modal-dialog>
+
+  <div *ngIf="errorMsg" class="error-box">
+    {{ errorMsg }}
+  </div>
+
+  <table *ngIf="!loading && !errorMsg" class="session-table">
+    <caption>Session Overview</caption>
+    <thead>
+    <tr>
+      <th>Team ID</th>
+      <th>Team Name</th>
+      <th>Status</th>
+      <th>Token</th>
+      <th>Current Passe</th>
+      <th>Next Opponent</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let t of teams; trackBy: trackByTeam">
+      <td>{{ t.teamId }}</td>
+      <td>{{ t.teamName }}</td>
+      <td>{{ t.status }}</td>
+      <td><code>{{ t.token }}</code></td>
+      <td>{{ t.currentPasse }}</td>
+      <td>{{ t.naechsterGegnerName || '-' }}</td>
+      <td class="action-cell">
+        <button mat-icon-button (click)="openQrPopup(getQrUrl(t))" matTooltip="Show QR">
+          <mat-icon>qr_code</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="resetSession(t.teamId)" matTooltip="Reset Token">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <bla-modal-dialog [visible]="selectedQrUrl !== null" (onClose)="closeQrPopup()">
+    <h5 class="modal-dialog-header">
+      <mat-icon>qr_code</mat-icon>
+      QR Code
+    </h5>
+    <div class="modal-dialog-content">
+      <qrcode [qrdata]="selectedQrUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+  </bla-modal-dialog>
+</div>

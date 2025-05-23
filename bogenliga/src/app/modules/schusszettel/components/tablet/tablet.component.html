@@ -1,29 +1,57 @@
-<ng-container [ngSwitch]="status">
-  <!-- je nach Status wird die passende Komponente angezeigt-->
+<div class="tablet-wrapper">
 
-  <bla-maske1registrierung
-    *ngSwitchCase="'schutzenmeldung'"
-    [infos]="data">
-  </bla-maske1registrierung>
+  <!-- 1) Loading spinner -->
+  <div *ngIf="loading" class="spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
 
-  <bla-maske2eingabe
-    *ngSwitchCase="'schusszettel'"
-    [infos]="data">
-  </bla-maske2eingabe>
+  <!-- 2) Error message -->
+  <div *ngIf="errorMsg" class="error-box">
+    {{ errorMsg }}
+  </div>
 
-  <bla-maske3aktualisierung
-    *ngSwitchCase="'warte'"
-    [infos]="data">
-  </bla-maske3aktualisierung>
+  <!-- 3) Main content only when loaded and no error -->
+  <ng-container *ngIf="!loading && data">
+    <ng-container [ngSwitch]="data.status">
 
-  <bla-maske4wettkampbeendet
-    *ngSwitchCase="'wettkampf_beendet'"
-    [infos]="data">
-  </bla-maske4wettkampbeendet>
+      <!-- Not allowed -->
+      <bla-maske5not-allowed
+        *ngSwitchCase="'NOT_ALLOWED'"
+        [infos]="data">
+      </bla-maske5not-allowed>
 
-  <bla-maske5not-allowed
-    *ngSwitchDefault
-    [infos]="data">
-  </bla-maske5not-allowed>
+      <!-- Waiting -->
+      <bla-maske3aktualisierung
+        *ngSwitchCase="'WARTE'"
+        [infos]="data"
+        (refresh)="load()">
+      </bla-maske3aktualisierung>
 
-</ng-container>
+      <!-- Register start numbers -->
+      <bla-maske1registrierung
+        *ngSwitchCase="'SCHUETZENMELDUNG'"
+        [infos]="data"
+        (submit)="onRegister($event)">
+      </bla-maske1registrierung>
+
+      <!-- Enter scores -->
+      <bla-maske2eingabe
+        *ngSwitchCase="'SATZEINGABE'"
+        [infos]="data"
+        (satzSubmit)="onSatz($event)">
+      </bla-maske2eingabe>
+
+      <!-- Competition ended -->
+      <bla-maske4wettkampbeendet
+        *ngSwitchCase="'WETTKAMPF_BEENDET'"
+        [infos]="data">
+      </bla-maske4wettkampbeendet>
+
+      <!-- Unexpected status -->
+      <div *ngSwitchDefault class="error-box">
+        Unbekannter Status "{{ data.status }}". Bitte wenden Sie sich an den Support.
+      </div>
+
+    </ng-container>
+  </ng-container>
+</div>

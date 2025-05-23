@@ -2,53 +2,94 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 2rem;
-  font-family: sans-serif;
+  padding: 1.5rem;
 
   .info-box {
-    background: #ddd;
-    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #eef;
+    padding: 0.75rem 1rem;
     border-radius: 4px;
-    margin-bottom: 1.5rem;
-    max-width: 400px;
     text-align: center;
+    width: 100%;
+    max-width: 800px;
   }
 
-  .title-block {
-    text-align: center;
-    margin-bottom: 2rem;
-
-    h1 {
-      font-size: 2rem;
-    }
-  }
-
-  .input-grid {
+  .register-layout {
     display: flex;
     gap: 1rem;
-    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 800px;
 
-    .shooter {
-      width: 100px;
-      height: 100px;
-      text-align: center;
-      font-size: 1.5rem;
-      border: 2px solid black;
+    .schuetzen-list {
+      flex: 0 0 200px;
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .list {
+        max-height: 250px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .schuetze-item {
+        padding: 0.5rem;
+        cursor: pointer;
+        &:hover,
+        &:focus {
+          background: #def;
+          outline: none;
+        }
+      }
     }
-    .red { border-color: red; }
-    .blue { border-color: blue; }
-    .yellow { border-color: olive; }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      flex: 1;
+
+      input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #999;
+        border-radius: 4px;
+      }
+
+      .error {
+        color: #b00020;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+    }
   }
 
   .confirm-button {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid red;
-    background: white;
+    margin-top: 1rem;
     font-weight: bold;
     font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 2px solid #1e88e5;
+    color: #1e88e5;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #e3f2fd;
+    }
 
     .arrow {
       margin-left: 0.5rem;
