@@ -19,6 +19,7 @@ import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.co
 import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/maske4zustand.component';
 import {MatchKontextComponent} from './components/shared/match-kontext/match-kontext.component';
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.modu
     NotAllowedComponent,
     WettkampfbeendetComponent,
     Maske4ZustandComponent,
-    MatchKontextComponent
+    MatchKontextComponent,
   ],
   imports: [
     CommonModule,
@@ -41,12 +42,18 @@ import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.modu
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
     SharedModule,
     QRCodeModule,
     MatProgressSpinnerModule
   ],
   exports: [
-    SchusszettelTabletAdminComponent
+    SchusszettelTabletAdminComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
   ]
 })
 export class SchusszettelModule { }

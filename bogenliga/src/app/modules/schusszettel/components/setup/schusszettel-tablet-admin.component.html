@@ -1,25 +1,29 @@
 <div class="admin-container">
-  <h2>Tablet Administration – Wettkampftag {{ wettkampfId }}</h2>
+  <!-- Hauptüberschrift mit Wettkampftag -->
+  <h2>Tablet‑Schusszettel‑Verwaltung – Wettkampftag {{ wettkampfId }}</h2>
 
+  <!-- Ladeanimation anzeigen, wenn Daten geladen werden -->
   <div *ngIf="loading" class="spinner">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 
+  <!-- Fehlermeldung anzeigen, falls vorhanden -->
   <div *ngIf="errorMsg" class="error-box">
     {{ errorMsg }}
   </div>
 
+  <!-- Tabelle der Sessions, sobald geladen und ohne Fehler -->
   <table *ngIf="!loading && !errorMsg" class="session-table">
-    <caption>Session Overview</caption>
+    <caption>Sitzungsübersicht</caption>
     <thead>
     <tr>
-      <th>Team ID</th>
-      <th>Team Name</th>
+      <th>Team‑ID</th>
+      <th>Teamname</th>
       <th>Status</th>
       <th>Token</th>
-      <th>Current Passe</th>
-      <th>Next Opponent</th>
-      <th>Actions</th>
+      <th>Aktuelle Passe</th>
+      <th>Nächster Gegner</th>
+      <th>Aktionen</th>
     </tr>
     </thead>
     <tbody>
@@ -31,29 +35,51 @@
       <td>{{ t.currentPasse }}</td>
       <td>{{ t.naechsterGegnerName || '-' }}</td>
       <td class="action-cell">
-        <button mat-icon-button (click)="openQrPopup(getQrUrl(t))" matTooltip="Show QR">
-          <mat-icon>qr_code</mat-icon>
+        <!-- QR‑Code‑Modal öffnen -->
+        <button mat-icon-button (click)="openQrPopup(getQrUrl(t))">
+          <fa-icon [icon]="faQrcode"></fa-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="resetSession(t.teamId)" matTooltip="Reset Token">
-          <mat-icon>refresh</mat-icon>
+
+        <!-- Token zurücksetzen -->
+        <button mat-icon-button (click)="resetSession(t.teamId)">
+          <fa-icon [icon]="faTrash"></fa-icon>
         </button>
       </td>
     </tr>
     </tbody>
   </table>
 
-  <bla-modal-dialog [visible]="selectedQrUrl !== null" (onClose)="closeQrPopup()">
+  <!-- Modal für QR‑Code Darstellung -->
+  <bla-modal-dialog
+    [visible]="selectedQrUrl !== null"
+    (onClose)="closeQrPopup()"
+  >
     <h5 class="modal-dialog-header">
-      <mat-icon>qr_code</mat-icon>
-      QR Code
+      <fa-icon [icon]="faQrcode"></fa-icon>
+      QR-Code
     </h5>
+
     <div class="modal-dialog-content">
+      <!-- 1) QR-Grafik -->
       <qrcode
         *ngIf="selectedQrUrl"
         [qrdata]="selectedQrUrl"
         [width]="256"
-        [errorCorrectionLevel]="'M'">
-      </qrcode>
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+
+      <!-- 2) Roh-Link + Kopieren-Button -->
+      <div class="qr-link-container">
+        <code class="qr-link-text">{{ selectedQrUrl }}</code>
+        <button
+          mat-button
+          color="primary"
+          (click)="copyToClipboard(selectedQrUrl!)"
+          matTooltip="Link kopieren"
+        >
+          Kopieren
+        </button>
+      </div>
     </div>
   </bla-modal-dialog>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
 
 import { TabletSchusszettelDTO } from '../types/tablet-schusszettel-dto';
 import { TabletSchusszettelMapper } from '../mapper/tablet-schusszettel-mapper';
@@ -72,6 +72,8 @@ export class SchusszettelService {
     teamid: number,
     meldungen: number[]
   ): Observable<void> {
+    console.log('[Service] sending meldungen:', meldungen);
+
     const params = new HttpParams()
       .set('token', token)
       .set('wettkampfid', wettkampfid.toString())
@@ -79,10 +81,18 @@ export class SchusszettelService {
 
     const payload = {
       typ: 'SCHUETZENMELDUNG' as const,
-      meldungen
+      gemeldeteSchuetzen: meldungen,
     };
 
-    return this.http.post<void>(this.baseUrl, payload, { params });
+    return this.http
+               .post<void>(this.baseUrl, payload, { params })
+               .pipe(
+                 tap(() => console.log('[Service] postSchuetzenMeldung OK')),
+                 catchError((err) => {
+                   console.error('[Service] postSchuetzenMeldung ERROR:', err.error);
+                   return throwError(() => err);
+                 })
+               );
   }
 
   /**
