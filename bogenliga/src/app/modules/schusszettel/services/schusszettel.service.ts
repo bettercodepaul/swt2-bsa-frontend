@@ -11,10 +11,14 @@ import { SatzEingabeDTO, SchuetzenSatzDTO } from '../types/datatransfer/satz-ein
 import { TabletSessionInfoDTO } from '../types/datatransfer/tablet-session-info-dto.class';
 import { TabletSessionSingDO } from '../types/tablet-session-sing-do.class';
 import { TabletSessionSingMapper } from '../mapper/tablet-session-sing-mapper';
+import {DataProviderService} from '@shared/data-provider';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SchusszettelService {
-  private readonly baseUrl = '/v1/tablet-schusszettel';
+
+  private readonly baseUrl = `${environment.backendBaseUrl}/v1/tablet-schusszettel`;
 
   constructor(private http: HttpClient) {}
 

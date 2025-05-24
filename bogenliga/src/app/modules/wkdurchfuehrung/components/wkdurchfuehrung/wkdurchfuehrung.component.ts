@@ -835,4 +835,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     );
     window.open(url, '_blank');
   }
+
+  // Navigiert den User zur Schusszettel-Admin-Seite
+  public openSchusszettelAdmin(): void {
+    if (!this.selectedWettkampfId) {
+      console.warn('No Wettkampf selected yet');
+      return;
+    }
+    this.router.navigate([
+      '/schusszettel',
+      'tablet-setup',
+      this.selectedWettkampfId
+    ]);
+  }
 }
