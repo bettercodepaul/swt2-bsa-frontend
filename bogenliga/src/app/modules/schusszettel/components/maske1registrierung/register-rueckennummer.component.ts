@@ -21,7 +21,7 @@ import { VerfuegbarerSchuetzeDTO } from '../../types/inside/verfuegbarer-schuetz
 })
 export class RegisterRueckennummerComponent implements OnInit {
   @Input() infos!: TabletSchusszettel;
-  @Output() submit = new EventEmitter<number[]>();
+  @Output() register = new EventEmitter<number[]>();
 
   form!: FormGroup;
   /** which input slot (0-2) is active */
@@ -94,6 +94,6 @@ export class RegisterRueckennummerComponent implements OnInit {
     }
     const values = this.ids.value.map((v: string) => Number(v));
     console.log('Submitting Rückennummern:', values);
-    this.submit.emit(values);
+    this.register.emit(values);
   }
 }
