@@ -115,7 +115,8 @@
                   [color]="ActionButtonColors.PRIMARY"
                   [iconClass]="'table'"
                   [disabled]="isDisabled()"
-                  [routerLink]="['/wkdurchfuehrung/tablet-setup-schusszettel', selectedWettkampfId]">
+                  (click)="openSchusszettelAdmin()"
+                >
                   {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
                 </bla-actionbutton>
               </ng-container>

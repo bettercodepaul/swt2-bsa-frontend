@@ -24,5 +24,4 @@ export const ROUTES: Routes = [
   {path: 'schusszettel', loadChildren: () => import('./modules/schusszettel/schusszettel.module').then((m) => m.SchusszettelModule)},
   {path: 'hilfe', loadChildren: () => import('src/app/modules/hilfe/hilfe.module').then((m) => m.HilfeModule)},
   {path: 'wkdurchfuehrung/tabletadmin/:id/:id/:id', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
-  {path: 'wkdurchfuehrung/tablet-setup-schusszettel/:wettkampfId', component: SchusszettelTabletAdminComponent}
 ];
