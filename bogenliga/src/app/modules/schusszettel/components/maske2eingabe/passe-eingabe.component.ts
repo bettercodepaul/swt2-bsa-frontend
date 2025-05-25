@@ -24,31 +24,61 @@ import { Subject } from 'rxjs';
 export class PasseEingabeComponent implements OnInit, OnDestroy {
   @Input() infos!: TabletSchusszettel;
   @Output() satzSubmit = new EventEmitter<SchuetzenSatzDTO[]>();
-
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder) {}
 
-  /** compute the active passe based on history */
+  /** Compute the current passe */
   public get currentPasse(): number {
-    return this.infos.satzErgebnisse.length + 1;
+    const totalPasses = this.infos?.satzErgebnisse?.length || 0;
+    const passeInCurrentSet = (totalPasses % 5) + 1;
+
+    console.log('Calculated passe:', passeInCurrentSet, 'from total passes:', totalPasses);
+    return passeInCurrentSet;
   }
 
   ngOnInit(): void {
-    console.log('Initializing PasseEingabeComponent, currentPasse=', this.currentPasse);
+    console.log('=== DEBUGGING PASSE EINGABE ===');
+    console.log('Full infos object:', this.infos);
+    console.log('schuetzeStammDaten:', this.infos?.schuetzeStammDaten);
+    console.log('schuetzeStammDaten length:', this.infos?.schuetzeStammDaten?.length);
 
-    // create one FormGroup per shooter
-    const groups = this.infos.schuetzeStammDaten.map(() =>
-      this.fb.group({
+    if (this.infos?.schuetzeStammDaten) {
+      this.infos.schuetzeStammDaten.forEach((schuetze, index) => {
+        console.log(`Shooter ${index}:`, {
+          id: schuetze.schuetzenId,
+          name: `${schuetze.vorname} ${schuetze.nachname}`,
+          rueckennummer: schuetze.rueckennummer
+        });
+      });
+    }
+
+    console.log('currentPasse=', this.currentPasse);
+
+    // Safety check: ensure schuetzeStammDaten exists and has data
+    if (!this.infos?.schuetzeStammDaten || this.infos.schuetzeStammDaten.length === 0) {
+      console.error('schuetzeStammDaten is missing or empty!', this.infos);
+      return;
+    }
+
+    // Log how many form groups we're creating
+    console.log('Creating', this.infos.schuetzeStammDaten.length, 'form groups');
+
+    // create one FormGroup per shooter - only 2 arrows per shooter (matching backend ARROWS_PER_SHOOTER = 2)
+    const groups = this.infos.schuetzeStammDaten.map((schuetze, index) => {
+      console.log(`Creating form group ${index} for shooter ${schuetze.schuetzenId}`);
+      return this.fb.group({
         schuss1: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
         schuss2: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
-        schuss3: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
-      })
-    );
+      });
+    });
 
+    console.log('Created', groups.length, 'form groups');
     this.form = this.fb.group({ schuesse: this.fb.array(groups) });
+    console.log('Form created with schuesse array length:', this.schuesse.length);
+    console.log('=== END DEBUGGING ===');
   }
 
   get schuesse(): FormArray {
@@ -67,28 +97,34 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     console.log('Row blur, clearing highlight');
   }
 
-  /** trackBy shooter ID for performance */
-  trackByShooter(_: number, __: any): number {
-    return this.infos.schuetzeStammDaten[_].schuetzenId;
+  /** trackBy shooter ID for performance with safety checks */
+  trackByShooter(index: number, _: any): number {
+    // Use the index to get the shooter data, since we're tracking FormControl items
+    // but the actual data is in schuetzeStammDaten
+    if (this.infos?.schuetzeStammDaten && this.infos.schuetzeStammDaten[index]) {
+      return this.infos.schuetzeStammDaten[index].schuetzenId;
+    }
+    // Fallback to index if data is not available
+    return index;
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
+    if (!this.infos?.schuetzeStammDaten || this.form.invalid) {
       this.form.markAllAsTouched();
-      console.error('Form invalid, cannot submit', this.form.value);
+      console.error('Form invalid or missing data, cannot submit', this.form.value);
       return;
     }
 
+    // Create payload matching updated SchuetzenSatzDTO (only 2 arrows per shooter)
     const payload: SchuetzenSatzDTO[] = this.infos.schuetzeStammDaten.map((s, i) => {
       const grp = this.schuesse.at(i) as FormGroup;
       return {
         schuetzenId: s.schuetzenId,
         schuss1: grp.value.schuss1,
         schuss2: grp.value.schuss2,
-        schuss3: grp.value.schuss3,
+        // No schuss3 - only 2 arrows per shooter to match backend ARROWS_PER_SHOOTER = 2
       };
     });
-
     console.log('Emitting satzeingabe payload:', payload);
     this.satzSubmit.emit(payload);
   }

@@ -1,14 +1,11 @@
-import {
-  TabletSchusszettelDTO,
-  TabletSchusszettelStatus
-} from '../types/tablet-schusszettel-dto';
-import { TabletSchusszettel } from '../models/tablet-schusszettel.model';
-import { TeamInfoDTO } from '../types/inside/team-info-dto';
-import { SchuetzeMatchPunkteDTO } from '../types/inside/schuetze-match-punkte-dto';
-import { SchuetzeStammdatenDTO } from '../types/inside/schuetze-stammdaten-dto';
-import { SatzErgebnisDTO } from '../types/inside/satz-ergebnis-dto';
-import { TeamMatchInfoDTO } from '../types/inside/team-match-info-dto';
-import { VerfuegbarerSchuetzeDTO } from '../types/inside/verfuegbarer-schuetze-dto';
+import {TabletSchusszettelDTO, TabletSchusszettelStatus} from '@schusszettel/types/tablet-schusszettel-dto';
+import {TabletSchusszettel} from '@schusszettel/models/tablet-schusszettel.model';
+import {TeamInfoDTO} from '@schusszettel/types/inside/team-info-dto';
+import {SchuetzeMatchPunkteDTO} from '@schusszettel/types/inside/schuetze-match-punkte-dto';
+import {SchuetzeStammdatenDTO} from '@schusszettel/types/inside/schuetze-stammdaten-dto';
+import {SatzErgebnisDTO} from '@schusszettel/types/inside/satz-ergebnis-dto';
+import {VerfuegbarerSchuetzeDTO} from '@schusszettel/types/inside/verfuegbarer-schuetze-dto';
+import {TeamMatchInfoDTO} from '@schusszettel/types/inside/team-match-info-dto';
 
 export class TabletSchusszettelMapper {
   /**
@@ -16,7 +13,36 @@ export class TabletSchusszettelMapper {
    * Adds safety for null/undefined arrays and logs input/output for debugging
    */
   static fromDTO(dto: TabletSchusszettelDTO): TabletSchusszettel {
+    console.log('=== MAPPER ===');
     console.log('[Mapper] fromDTO input:', dto);
+    console.log('[Mapper] status:', dto.status);
+
+    // Debug the shooter data specifically
+    console.log('[Mapper] Raw schuetzeStammDaten from backend:', dto.schuetzeStammDaten);
+    console.log('[Mapper] schuetzeStammDaten length:', dto.schuetzeStammDaten?.length);
+
+    if (dto.schuetzeStammDaten) {
+      dto.schuetzeStammDaten.forEach((s, index) => {
+        console.log(`[Mapper] Raw shooter ${index}:`, {
+          id: s.schuetzenId,
+          rueckennummer: s.rueckennummer,
+          vorname: s.vorname,
+          nachname: s.nachname
+        });
+      });
+    }
+
+    console.log('[Mapper] Raw verfuegbareSchuetzen from backend:', dto.verfuegbareSchuetzen);
+    console.log('[Mapper] verfuegbareSchuetzen length:', dto.verfuegbareSchuetzen?.length);
+
+    if (dto.verfuegbareSchuetzen) {
+      dto.verfuegbareSchuetzen.forEach((v, index) => {
+        console.log(`[Mapper] Available shooter ${index}:`, {
+          id: v.schuetzenId,
+          name: v.name
+        });
+      });
+    }
 
     const eigenesTeam = dto.eigenesTeam ?? { teamId: 0, teamName: '' } as TeamInfoDTO;
     const gegnerTeam = dto.gegnerischesTeam ?? { teamId: 0, teamName: '' } as TeamInfoDTO;
@@ -67,7 +93,10 @@ export class TabletSchusszettelMapper {
       verfuegbareSchuetzen
     };
 
+    console.log('[Mapper] Mapped schuetzeStammDaten output:', result.schuetzeStammDaten);
+    console.log('[Mapper] Mapped verfuegbareSchuetzen output:', result.verfuegbareSchuetzen);
     console.log('[Mapper] fromDTO output:', result);
+    console.log('=== END MAPPER ===');
     return result;
   }
 }

@@ -1,5 +1,6 @@
 /**
  * Einzelne Satzdaten eines Schützen für die SATZEINGABE-POST.
+ * Updated to match backend ARROWS_PER_SHOOTER = 2
  */
 export interface SchuetzenSatzDTO {
   /** ID des Schützen */
@@ -8,8 +9,7 @@ export interface SchuetzenSatzDTO {
   schuss1: number;
   /** Punkte des zweiten Schusses */
   schuss2: number;
-  /** Punkte des dritten Schusses */
-  schuss3: number;
+  // Removed schuss3 to match backend ARROWS_PER_SHOOTER = 2
 }
 
 /**
