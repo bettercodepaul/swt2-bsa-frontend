@@ -4,6 +4,10 @@
   align-items: center;
   padding: 2rem;
   text-align: center;
+  /*für Hoch- und Querkant*/
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   .info-box {
     display: flex;
