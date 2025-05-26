@@ -7,6 +7,11 @@ $error-color: #b00020;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  /*für Hoch- und Querkant*/
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
 
   .passe-info {
     margin-bottom: 1rem;
@@ -62,10 +67,6 @@ $error-color: #b00020;
     font-weight: bold;
     font-size: 1rem;
     padding: 0.75rem 1.5rem;
-
-    .arrow {
-      margin-left: 0.5rem;
-    }
   }
 }
 
