@@ -53,88 +53,87 @@
             <bla-col-layout >
               <div style="display: flex; flex-wrap: wrap;">
 
+                <bla-download-actionbutton
+                  [id]="'downloadSetzliste'"
+                  [downloadUrl]="onButtonDownload('pdf/setzliste')"
+                  [fileName]="'setzliste.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+                </bla-download-actionbutton>
 
+                <bla-download-actionbutton
+                  [id]="'downloadSchusszettel'"
+                  [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+                  [fileName]="'schusszettel.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+                </bla-download-actionbutton>
 
-              <bla-download-actionbutton
-                [id]="'downloadSetzliste'"
-                [downloadUrl]="onButtonDownload('pdf/setzliste')"
-                [fileName]="'setzliste.pdf'"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'file-download'"
-                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
-              </bla-download-actionbutton>
+                <bla-download-actionbutton
+                  [id]="'downloadBogenkontrollliste'"
+                  [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+                  [fileName]="'bogenkontrollliste.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+                </bla-download-actionbutton>
 
-              <bla-download-actionbutton
-                [id]="'downloadSchusszettel'"
-                [downloadUrl]="onButtonDownload('pdf/schusszettel')"
-                [fileName]="'schusszettel.pdf'"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'file-download'"
-                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
-              </bla-download-actionbutton>
+                <bla-download-actionbutton
+                  [id]="'downloadMeldezettel'"
+                  [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+                  [fileName]="'meldezettel.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+                </bla-download-actionbutton>
 
-              <bla-download-actionbutton
-                [id]="'downloadBogenkontrollliste'"
-                [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-                [fileName]="'bogenkontrollliste.pdf'"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'file-download'"
-                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
-              </bla-download-actionbutton>
-
-              <bla-download-actionbutton
-                [id]="'downloadMeldezettel'"
-                [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-                [fileName]="'meldezettel.pdf'"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'file-download'"
-                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
-              </bla-download-actionbutton>
-
-              <div id="setupTable"
-                   style="min-width: 14rem; max-width: 14rem; white-space: nowrap;"
-                   *ngIf="(!isOffline()); else onlineSetupTables">
-                <bla-actionbutton (click)="onButtonTabletClick()"
-                                  [color]="ActionButtonColors.PRIMARY"
-                                  [iconClass]="'table'"
-                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SPOTTER' | translate }}
-                </bla-actionbutton>
-              </div>
-
-              <ng-template #onlineSetupTables
-                           id="onlineSetupTables">
-                <div>
+                <div id="setupTable"
+                     style="min-width: 14rem; max-width: 14rem; white-space: nowrap;"
+                     *ngIf="(!isOffline()); else onlineSetupTables">
                   <bla-actionbutton (click)="onButtonTabletClick()"
                                     [color]="ActionButtonColors.PRIMARY"
                                     [iconClass]="'table'"
-                                    [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                                    [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SPOTTER' | translate }}
                   </bla-actionbutton>
                 </div>
-              </ng-template>
-                
-              <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
-                <bla-actionbutton
-                  id="setupTabletSchusszettel"
-                  style="width: 35rem;"
-                  [color]="ActionButtonColors.PRIMARY"
-                  [iconClass]="'table'"
-                  [disabled]="isDisabled()"
-                  (click)="openSchusszettelAdmin()"
-                >
-                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-                </bla-actionbutton>
-              </ng-container>
 
-              <ng-template #offlineSchusszettelSetup>
-                <bla-actionbutton
-                  style="width: 35rem;"
-                  [color]="ActionButtonColors.PRIMARY"
-                  [iconClass]="'table'"
-                  [disabled]="true">
-                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-                </bla-actionbutton>
-              </ng-template>
+                <ng-template #onlineSetupTables
+                             id="onlineSetupTables">
+                  <div>
+                    <bla-actionbutton (click)="onButtonTabletClick()"
+                                      [color]="ActionButtonColors.PRIMARY"
+                                      [iconClass]="'table'"
+                                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                    </bla-actionbutton>
+                  </div>
+                </ng-template>
 
+                <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
+                  <bla-actionbutton
+                    id="setupTabletSchusszettel"
+                    style="width: 35rem;"
+                    [color]="ActionButtonColors.PRIMARY"
+                    [iconClass]="'table'"
+                    [disabled]="isDisabled()"
+                    (click)="openSchusszettelAdmin()"
+                  >
+                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                  </bla-actionbutton>
+                </ng-container>
+
+                <ng-template #offlineSchusszettelSetup>
+                  <bla-actionbutton
+                    style="width: 35rem;"
+                    [color]="ActionButtonColors.PRIMARY"
+                    [iconClass]="'table'"
+                    [disabled]="true">
+                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                  </bla-actionbutton>
+                </ng-template>
+
+              </div> <!-- This closes the flex container div -->
             </bla-col-layout>
           </bla-expand>
         </bla-row-layout>
