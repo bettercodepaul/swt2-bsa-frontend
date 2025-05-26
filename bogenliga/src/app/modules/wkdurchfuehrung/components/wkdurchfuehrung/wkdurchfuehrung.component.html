@@ -111,30 +111,29 @@
                   </bla-actionbutton>
                 </div>
               </ng-template>
+                
+              <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
+                <bla-actionbutton
+                  id="setupTabletSchusszettel"
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'table'"
+                  [disabled]="isDisabled()"
+                  (click)="openSchusszettelAdmin()"
+                >
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                </bla-actionbutton>
+              </ng-container>
 
-
-                <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
-                  <bla-actionbutton
-                    id="setupTabletSchusszettel"
-                    [color]="ActionButtonColors.PRIMARY"
-                    [iconClass]="'table'"
-                    [disabled]="isDisabled()">
-                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-                  </bla-actionbutton>
-                </ng-container>
-
-
-
-
-                <ng-template #offlineSchusszettelSetup>
-                  <bla-actionbutton
-                    [color]="ActionButtonColors.PRIMARY"
-                    [iconClass]="'table'"
-                    [disabled]="true">
-                    {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
-                  </bla-actionbutton>
-                </ng-template>
-              </div>
+              <ng-template #offlineSchusszettelSetup>
+                <bla-actionbutton
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'table'"
+                  [disabled]="true">
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
+                </bla-actionbutton>
+              </ng-template>
 
             </bla-col-layout>
           </bla-expand>

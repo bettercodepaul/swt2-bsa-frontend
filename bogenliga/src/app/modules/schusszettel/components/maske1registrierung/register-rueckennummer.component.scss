@@ -1,0 +1,98 @@
+.schusszettel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+
+  .info-box {
+    margin-bottom: 1rem;
+    background: #eef;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .register-layout {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+
+    .schuetzen-list {
+      flex: 0 0 200px;
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .list {
+        max-height: 250px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .schuetze-item {
+        padding: 0.5rem;
+        cursor: pointer;
+        &:hover,
+        &:focus {
+          background: #def;
+          outline: none;
+        }
+      }
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      flex: 1;
+
+      input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #999;
+        border-radius: 4px;
+      }
+
+      .error {
+        color: #b00020;
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+
+  .confirm-button {
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 2px solid #1e88e5;
+    color: #1e88e5;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #e3f2fd;
+    }
+
+    .arrow {
+      margin-left: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<div class="admin-container">
+  <!-- Hauptüberschrift mit Wettkampftag -->
+  <h2>Tablet‑Schusszettel‑Verwaltung – Wettkampftag {{ wettkampfId }}</h2>
+
+  <!-- Ladeanimation anzeigen, wenn Daten geladen werden -->
+  <div *ngIf="loading" class="spinner">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Fehlermeldung anzeigen, falls vorhanden -->
+  <div *ngIf="errorMsg" class="error-box">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Tabelle der Sessions, sobald geladen und ohne Fehler -->
+  <table *ngIf="!loading && !errorMsg" class="session-table">
+    <caption>Sitzungsübersicht</caption>
+    <thead>
+    <tr>
+      <th>Team‑ID</th>
+      <th>Teamname</th>
+      <th>Status</th>
+      <th>Token</th>
+      <th>Aktuelle Passe</th>
+      <th>Nächster Gegner</th>
+      <th>Aktionen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let t of teams; trackBy: trackByTeam">
+      <td>{{ t.teamId }}</td>
+      <td>{{ t.teamName }}</td>
+      <td>{{ t.status }}</td>
+      <td><code>{{ t.token }}</code></td>
+      <td>{{ t.currentPasse }}</td>
+      <td>{{ t.naechsterGegnerName || '-' }}</td>
+      <td class="action-cell">
+        <!-- QR‑Code‑Modal öffnen -->
+        <button mat-icon-button (click)="openQrPopup(getQrUrl(t))">
+          <fa-icon [icon]="faQrcode"></fa-icon>
+        </button>
+
+        <!-- Token zurücksetzen -->
+        <button mat-icon-button (click)="resetSession(t.teamId)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal für QR‑Code Darstellung -->
+  <bla-modal-dialog
+    [visible]="selectedQrUrl !== null"
+    (onClose)="closeQrPopup()"
+  >
+    <h5 class="modal-dialog-header">
+      <fa-icon [icon]="faQrcode"></fa-icon>
+      QR-Code
+    </h5>
+
+    <div class="modal-dialog-content">
+      <!-- 1) QR-Grafik -->
+      <qrcode
+        *ngIf="selectedQrUrl"
+        [qrdata]="selectedQrUrl"
+        [width]="256"
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+
+      <!-- 2) Roh-Link + Kopieren-Button -->
+      <div class="qr-link-container">
+        <code class="qr-link-text">{{ selectedQrUrl }}</code>
+        <button
+          mat-button
+          color="primary"
+          (click)="copyToClipboard(selectedQrUrl!)"
+          matTooltip="Link kopieren"
+        >
+          Kopieren
+        </button>
+      </div>
+    </div>
+  </bla-modal-dialog>
+</div>

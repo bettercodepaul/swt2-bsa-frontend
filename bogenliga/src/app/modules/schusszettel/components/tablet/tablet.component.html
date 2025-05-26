@@ -1,0 +1,57 @@
+<div class="tablet-wrapper">
+
+  <!-- 1) Loading spinner -->
+  <div *ngIf="loading" class="spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- 2) Error message -->
+  <div *ngIf="errorMsg" class="error-box">
+    {{ errorMsg }}
+  </div>
+
+  <!-- 3) Main content only when loaded and no error -->
+  <ng-container *ngIf="!loading && data">
+    <ng-container [ngSwitch]="data.status">
+
+      <!-- Not allowed -->
+      <bla-maske5not-allowed
+        *ngSwitchCase="'NOT_ALLOWED'"
+        [infos]="data">
+      </bla-maske5not-allowed>
+
+      <!-- Waiting -->
+      <bla-maske3aktualisierung
+        *ngSwitchCase="'WARTE'"
+        [infos]="data"
+        (refresh)="load()">
+      </bla-maske3aktualisierung>
+
+      <!-- Register start numbers -->
+      <bla-maske1registrierung
+        *ngSwitchCase="'SCHUETZENMELDUNG'"
+        [infos]="data"
+        (register)="onRegister($event)">
+      </bla-maske1registrierung>
+
+      <!-- Enter scores -->
+      <bla-maske2eingabe
+        *ngSwitchCase="'SATZEINGABE'"
+        [infos]="data"
+        (satzSubmit)="onSatz($event)">
+      </bla-maske2eingabe>
+
+      <!-- Competition ended -->
+      <bla-maske4wettkampbeendet
+        *ngSwitchCase="'WETTKAMPF_BEENDET'"
+        [infos]="data">
+      </bla-maske4wettkampbeendet>
+
+      <!-- Unexpected status -->
+      <div *ngSwitchDefault class="error-box">
+        Unbekannter Status "{{ data.status }}". Bitte wenden Sie sich an den Support.
+      </div>
+
+    </ng-container>
+  </ng-container>
+</div>

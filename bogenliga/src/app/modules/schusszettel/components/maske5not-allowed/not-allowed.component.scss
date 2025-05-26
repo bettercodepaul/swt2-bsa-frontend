@@ -1,0 +1,32 @@
+.not-allowed-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+
+  .message-box {
+    text-align: center;
+    background: #fdecea;
+    border: 1px solid #f5c2c7;
+    color: #b00020;
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    max-width: 400px;
+    width: 100%;
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.75rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      line-height: 1.4;
+    }
+
+    button {
+      font-weight: bold;
+    }
+  }
+}

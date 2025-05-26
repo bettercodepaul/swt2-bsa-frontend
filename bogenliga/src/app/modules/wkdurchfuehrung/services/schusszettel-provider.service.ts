@@ -80,8 +80,8 @@ export class SchusszettelProviderService extends DataProviderService {
     db.transaction('rw', db.passeTabelle, async (tx) => {
       let id = 0;
 
-      //Mapt eine vorhandene Offline Passen.Id auf Passen.passenIds damit beim speichern die passeId nicht verloren gehen
-      let offlinePasseMap = new Map();
+      // Mapt eine vorhandene Offline Passen.Id auf Passen.passenIds damit beim speichern die passeId nicht verloren gehen
+      const offlinePasseMap = new Map();
 
       await db.passeTabelle.toArray()
         .then((passen) => {
@@ -90,14 +90,14 @@ export class SchusszettelProviderService extends DataProviderService {
             offlinePasseMap.set(passe.id, passe.passeId);
 
             if (passe.id >= id) {
-              //Findet die höchste ID
+              // Findet die höchste ID
               id = passe.id;
             }
           });
         });
       match.passen.filter((v) => v).forEach((passe) => {
 
-        //Zählt die ID hoch falls ein neuer Eintrag in der Index Datenbank erstellt wird
+        // Zählt die ID hoch, falls ein neuer Eintrag in der Index Datenbank erstellt wird
         if (passe.id === null) {
           id = id + 1;
         }
@@ -187,5 +187,18 @@ export class SchusszettelProviderService extends DataProviderService {
           });
       }));
     }
+  }
+  public resetTabletToken(wettkampfId: number, teamId: number): Promise<BogenligaResponse<any>> {
+    const api_url = '/api/tablet-schusszettel/reset-token';
+    const payload = {
+      wettkampfid: wettkampfId,
+      teamid: teamId
+    };
+
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<any>(api_url, payload)
+          .then((data) => resolve({ result: RequestResult.SUCCESS, payload: data }))
+          .catch((error) => reject({ result: RequestResult.FAILURE, error }));
+    });
   }
 }

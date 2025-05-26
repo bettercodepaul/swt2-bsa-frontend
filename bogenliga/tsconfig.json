@@ -12,7 +12,8 @@
       "@user/*": ["src/app/modules/user/*"],
       "@verwaltung/*": ["src/app/modules/verwaltung/*"],
       "@wettkampf/*": ["src/app/modules/wettkampf/*"],
-      "@vereine/*": ["src/app/modules/vereine/*"]
+      "@vereine/*": ["src/app/modules/vereine/*"],
+      "@schusszettel/*": ["src/app/modules/schusszettel/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
