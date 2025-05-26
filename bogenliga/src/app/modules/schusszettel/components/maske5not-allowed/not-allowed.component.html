@@ -1,0 +1,19 @@
+<div class="not-allowed-container">
+  <!-- shared header for context -->
+  <bla-match-kontext [infos]="infos"></bla-match-kontext>
+
+  <div class="message-box" role="alert">
+    <h2>Access Denied</h2>
+    <p>
+      Your access token or team assignment is invalid.<br>
+      Please make sure you scanned the correct QR code or contact your event organizer.
+    </p>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="retry()"
+    >
+      Retry
+    </button>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<!-- only show once infos is available -->
+<div *ngIf="infos" class="warte-container" role="status" aria-live="polite">
+  <!-- shared header -->
+  <bla-match-kontext [infos]="infos"></bla-match-kontext>
+
+  <div class="info-box">
+    <mat-spinner diameter="40" aria-hidden="true"></mat-spinner>
+    <p id="wait-msg">Waiting for the opponent team to be ready…</p>
+  </div>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onRefreshClick()"
+    aria-labelledby="wait-msg"
+  >
+    Refresh Status
+  </button>
+</div>
