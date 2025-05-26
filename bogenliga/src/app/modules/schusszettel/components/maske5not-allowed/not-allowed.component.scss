@@ -3,6 +3,10 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  /*für Hoch- und Querkant*/
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   .message-box {
     text-align: center;
