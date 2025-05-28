@@ -1,22 +1,21 @@
 // Optional: define theme variables or pull from a global theme
-$bg-color: #f5f5f5;
+$bg-color: #ffffff;
 $padding: 1rem;
 
 .match-kontext {
-  display: block;
-  width: 100%;
-  margin-bottom: $padding;
+  position: fixed;
+  top: 0.1rem;
+  right: 20rem;
+  z-index: 1050;
+  border-radius: 8px;
+  font-size: 0.8rem;
+
 
   .title-block {
-    background: $bg-color;
-    padding: $padding 0.5rem;
+    padding: 0.2rem 0.3rem;
     border-radius: 4px;
     text-align: center;
 
-    h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.25rem;
-    }
 
     dl {
       display: grid;
@@ -40,3 +39,10 @@ $padding: 1rem;
 :host {
   display: block;
 }
+
+@media (max-width: 700px) {
+  .match-kontext {
+    display: none;
+  }
+}
+
