@@ -20,6 +20,11 @@ import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/mas
 import {MatchKontextComponent} from './components/shared/match-kontext/match-kontext.component';
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {WkdurchfuehrungModule} from '@wkdurchfuehrung/wkdurchfuehrung.module';
+import {TabletSchusszettelStatus} from '@schusszettel/types/tablet-schusszettel-dto';
+import {
+  SchusszettelWrapperComponent
+} from '@schusszettel/components/schusszettel-wrapper/schusszettel-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     WettkampfbeendetComponent,
     Maske4ZustandComponent,
     MatchKontextComponent,
+    SchusszettelWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +53,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTooltipModule,
     SharedModule,
     QRCodeModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    // For Zustand Tablet
+    WkdurchfuehrungModule
   ],
   exports: [
     SchusszettelTabletAdminComponent,

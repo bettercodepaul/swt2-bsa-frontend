@@ -14,7 +14,7 @@ export enum TabletSchusszettelStatus {
   SCHUETZENMELDUNG  = 'SCHUETZENMELDUNG',
   WARTE             = 'WARTE',
   NOT_ALLOWED       = 'NOT_ALLOWED',
-  WETTKAMPF_BEENDET = 'WETTKAMPF_BEENDET'  // Changed from WETTKAMPF_ENDE to match component
+  WETTKAMPF_BEENDET = 'WETTKAMPF_BEENDET'
 }
 
 /**
@@ -25,10 +25,9 @@ export interface TabletSchusszettelDTO {
   eigenesTeam: TeamInfoDTO;
   gegnerischesTeam: TeamInfoDTO;
   schuetzenMatchPunkte: SchuetzeMatchPunkteDTO[];
-  schuetzeStammDaten: SchuetzeStammdatenDTO[];  // Ensure consistent naming
+  schuetzeStammDaten: SchuetzeStammdatenDTO[];
   satzErgebnisse: SatzErgebnisDTO[];
   matchErgebnis: TeamMatchInfoDTO[];
   verfuegbareSchuetzen: VerfuegbarerSchuetzeDTO[];
-  wettkampfInfo?: WettkampfInfoDTO;  // Add optional wettkampfInfo
+  wettkampfInfo?: WettkampfInfoDTO;
 }
-

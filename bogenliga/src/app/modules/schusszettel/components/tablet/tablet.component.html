@@ -1,18 +1,24 @@
 <div class="tablet-wrapper">
-
-  <!-- 1) Loading spinner -->
+  <!-- Loading spinner -->
   <div *ngIf="loading" class="spinner">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
 
-  <!-- 2) Error message -->
+  <!-- Error message -->
   <div *ngIf="errorMsg" class="error-box">
     {{ errorMsg }}
   </div>
 
-  <!-- 3) Main content only when loaded and no error -->
+  <!-- Main content -->
   <ng-container *ngIf="!loading && data">
-    <ng-container [ngSwitch]="data.status">
+    <ng-container [ngSwitch]="getCurrentDisplayMode()">
+
+      <!-- Zustand Display Mode -->
+      <bla-schusszettel-zustand
+        *ngSwitchCase="'ZUSTAND'"
+        [infos]="data"
+        (weiter)="onZustandWeiter()">
+      </bla-schusszettel-zustand>
 
       <!-- Not allowed -->
       <bla-maske5not-allowed

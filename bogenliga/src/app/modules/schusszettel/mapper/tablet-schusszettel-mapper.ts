@@ -122,11 +122,13 @@ export class TabletSchusszettelMapper {
       status: mappedStatus,
       eigenesTeam: {
         teamId: eigenesTeam.teamId,
-        teamName: eigenesTeam.teamName
+        teamName: eigenesTeam.teamName,
+        matchID: eigenesTeam.matchID ,
       },
       gegnerischesTeam: {
         teamId: gegnerTeam.teamId,
-        teamName: gegnerTeam.teamName
+        teamName: gegnerTeam.teamName,
+        matchID: gegnerTeam.matchID,
       },
       schuetzenMatchPunkte,
       schuetzeStammDaten,

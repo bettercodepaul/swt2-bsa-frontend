@@ -1,41 +1,16 @@
+<!-- maske4zustand.component.html -->
 <div *ngIf="infos" class="maske4-zustand" role="main">
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <section class="team-scores" aria-labelledby="score-heading">
-    <h3 id="score-heading">Current Match Score</h3>
-    <dl>
-      <dt>{{ infos.eigenesTeam.teamName }}:</dt>
-      <dd>{{ getMatchpunkte(infos.eigenesTeam.teamId) }}</dd>
+  <section class="schusszettel-section">
+    <bla-schusszettel-wrapper
+      *ngIf="canViewSchusszettel()"
+      [infos]="infos">
+    </bla-schusszettel-wrapper>
 
-      <dt>{{ infos.gegnerischesTeam.teamName }}:</dt>
-      <dd>{{ getMatchpunkte(infos.gegnerischesTeam.teamId) }}</dd>
-    </dl>
-  </section>
-
-  <section class="passe-info">
-    <p aria-live="polite">
-      Next Passe: <strong>{{ currentPasse }}</strong>
-    </p>
-  </section>
-
-  <section class="table-wrapper">
-    <table class="satz-tabelle">
-      <caption>Set Results</caption>
-      <thead>
-      <tr>
-        <th scope="col">Satz</th>
-        <th scope="col">{{ infos.eigenesTeam.teamName }}</th>
-        <th scope="col">{{ infos.gegnerischesTeam.teamName }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let s of infos.satzErgebnisse">
-        <th scope="row">{{ s.satzNr }}</th>
-        <td>{{ s.team1Punkte }}</td>
-        <td>{{ s.team2Punkte }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div *ngIf="!canViewSchusszettel()" class="permission-message">
+      <p>Sie haben nicht die erforderlichen Berechtigungen, um den derzeitigen Schusszettel hier anzuzeigen.</p>
+    </div>
   </section>
 
   <button

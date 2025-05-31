@@ -5,4 +5,5 @@
 export interface TeamInfoDTO {
   teamId: number;
   teamName: string;
+  matchID: number;
 }
