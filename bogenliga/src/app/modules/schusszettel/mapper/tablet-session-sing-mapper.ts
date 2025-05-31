@@ -1,5 +1,5 @@
-import { TabletSessionSingDTO } from '../types/datatransfer/tablet-session-sing-dto.class';
-import { TabletSessionSingDO } from '../types/tablet-session-sing-do.class';
+import {TabletSessionSingDTO} from '../types/datatransfer/tablet-session-sing-dto.class';
+import {TabletSessionSingDO} from '../types/tablet-session-sing-do.class';
 
 export class TabletSessionSingMapper {
   static fromDTO(dto: TabletSessionSingDTO): TabletSessionSingDO {
@@ -9,18 +9,20 @@ export class TabletSessionSingMapper {
       dto.status,
       dto.token,
       dto.currentPasse,
-      dto.naechsterGegnerName
+      dto.naechsterGegnerName,  // Use consistent field name
+      dto.wettkampfInfo
     );
   }
 
   static toDTO(doObj: TabletSessionSingDO): TabletSessionSingDTO {
-    return {
-      teamId: doObj.teamId,
-      teamName: doObj.teamName,
-      status: doObj.status,
-      token: doObj.token,
-      currentPasse: doObj.currentPasse,
-      naechsterGegnerName: doObj.naechsterGegnerName
-    };
+    return new TabletSessionSingDTO(
+      doObj.teamId,
+      doObj.teamName,
+      doObj.status,
+      doObj.token,
+      doObj.currentPasse,
+      doObj.naechsterGegnerName,  // Use consistent field name
+      doObj.wettkampfInfo
+    );
   }
 }

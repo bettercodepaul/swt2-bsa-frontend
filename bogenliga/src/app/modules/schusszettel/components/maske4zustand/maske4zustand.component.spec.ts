@@ -1,8 +1,8 @@
-import { strict as assert } from 'assert';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Maske4ZustandComponent } from './maske4zustand.component';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
-import { By } from '@angular/platform-browser';
+import {strict as assert} from 'assert';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {Maske4ZustandComponent} from './maske4zustand.component';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
+import {By} from '@angular/platform-browser';
 
 describe('Maske4ZustandComponent', () => {
   let component: Maske4ZustandComponent;

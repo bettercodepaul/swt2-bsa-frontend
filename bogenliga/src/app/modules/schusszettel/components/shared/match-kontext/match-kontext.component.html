@@ -1,17 +1,21 @@
-<!-- only render once infos is available -->
-<div *ngIf="infos" class="match-kontext" role="group" aria-labelledby="mk-heading">
-  <div class="title-block">
+<header
+  *ngIf="infos as i"
+  class="match-context"
+  role="region"
+  aria-labelledby="match-context-heading"
+>
+  <h2 id="match-context-heading" class="visually-hidden">
+    Wettkampf-Informationen
+  </h2>
 
-    <!-- use definition list for semantic labels -->
-    <dl>
-      <dt>Team</dt>
-      <dd>{{ infos.eigenesTeam.teamName }}</dd>
-
-      <dt>Date</dt>
-      <dd>{{ today | date: 'dd.MM.yyyy' }}</dd>
-
-      <dt>Opponent</dt>
-      <dd>{{ infos.gegnerischesTeam.teamName }}</dd>
-    </dl>
-  </div>
-</div>
+  <dl class="match-context__list">
+    <div class="pair"><dt>Datum</dt><dd>{{ today }}</dd></div>
+    <div class="pair"><dt>Liga</dt><dd>{{ ligaName }}</dd></div>
+    <div class="pair"><dt>Veranstaltung</dt><dd>{{ veranstaltungName }} {{ sportjahr }}</dd></div>
+    <div class="pair"><dt>Wettkampf-Tag</dt><dd>{{ wettkampfTag }}</dd></div>
+    <div class="pair"><dt>Beginn</dt><dd>{{ beginn }}</dd></div>
+    <div class="pair"><dt>Ort</dt><dd>{{ ort }}</dd></div>
+    <div class="pair"><dt>Team</dt><dd>{{ i.eigenesTeam.teamName }}</dd></div>
+    <div class="pair"><dt>Gegner</dt><dd>{{ i.gegnerischesTeam.teamName }}</dd></div>
+  </dl>
+</header>

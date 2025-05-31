@@ -1,11 +1,5 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 
 @Component({
   selector: 'bla-maske4zustand',
@@ -32,7 +26,7 @@ export class Maske4ZustandComponent {
   /** accumulated match points for a given team */
   getMatchpunkte(teamId: number): number {
     return (
-      this.infos?.matchErgebnis.find(m => m.teamId === teamId)?.matchpunkte ?? 0
+      this.infos?.matchErgebnis.find((m) => m.teamId === teamId)?.matchpunkte ?? 0
     );
   }
 }

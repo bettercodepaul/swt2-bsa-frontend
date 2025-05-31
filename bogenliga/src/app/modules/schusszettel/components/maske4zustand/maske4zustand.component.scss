@@ -1,91 +1,80 @@
+$gap: 1.5rem;
+$pad: 1.5rem;
+$border: #999;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
 .maske4-zustand {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1.5rem;
-  /*für Hoch- und Querkant*/
-  width: 100%;
+  gap: $gap;
+  padding: $pad;
+  margin: 0 auto 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+}
 
-  /* Score section */
-  .team-scores {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 1rem;
+.team-scores {
+  max-width: 24rem;
+  margin-inline: auto;
 
-    h3 {
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    dl {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 0.25rem 1rem;
-
-      dt {
-        font-weight: bold;
-        text-align: right;
-      }
-
-      dd {
-        margin: 0;
-        text-align: left;
-      }
-    }
+  h3 {
+    margin: 0 0 .5rem;
+    text-align: center;
   }
 
-  /* Next passe info */
-  .passe-info {
-    margin-bottom: 1rem;
-    p {
-      font-size: 1.1rem;
-    }
-  }
+  dl {
+    display: grid;
+    gap: .25rem 1rem;
+    grid-template-columns: auto 1fr;
 
-  /* Responsive table */
-  .table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin-bottom: 1rem;
-
-    .satz-tabelle {
-      width: 100%;
-      border-collapse: collapse;
-
-      caption {
-        caption-side: top;
-        text-align: left;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-
-      th,
-      td {
-        border: 1px solid #999;
-        padding: 0.5rem;
-        text-align: center;
-      }
-
-      th[scope="row"] {
-        text-align: left;
-      }
-
-      tr:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-    }
-  }
-
-  /* Continue button */
-  button {
-    font-weight: bold;
-    padding: 0.75rem 1.5rem;
+    dt { font-weight: 600; text-align: right; }
+    dd { margin: 0; }
   }
 }
 
-/* full-width host */
-:host {
-  display: block;
+@media (orientation: portrait), (max-width: 600px) {
+  .team-scores dl {
+    grid-template-columns: 1fr;
+
+    dt { text-align: left; margin-bottom: .25rem; }
+  }
+}
+
+.passe-info p { font-size: 1.1rem; margin: 0; }
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  .satz-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+
+    th, td {
+      border: 1px solid $border;
+      padding: .5rem;
+      text-align: center;
+    }
+
+    th[scope='row'] { text-align: left; }
+
+    tr:nth-child(even) { background: #f9f9f9; }
+  }
+}
+
+button[mat-raised-button] {
+  align-self: center;
+  font-weight: 700;
+  padding: .75rem 1.5rem;
 }

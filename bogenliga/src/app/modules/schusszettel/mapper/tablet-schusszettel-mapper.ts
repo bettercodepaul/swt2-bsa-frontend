@@ -1,3 +1,5 @@
+// Update your tablet-schusszettel-mapper.ts to include wettkampfInfo mapping
+
 import {TabletSchusszettelDTO, TabletSchusszettelStatus} from '@schusszettel/types/tablet-schusszettel-dto';
 import {TabletSchusszettel} from '@schusszettel/models/tablet-schusszettel.model';
 import {TeamInfoDTO} from '@schusszettel/types/inside/team-info-dto';
@@ -16,6 +18,25 @@ export class TabletSchusszettelMapper {
     console.log('=== MAPPER ===');
     console.log('[Mapper] fromDTO input:', dto);
     console.log('[Mapper] status:', dto.status);
+
+    // Validate required fields
+    if (!dto) {
+      throw new Error('TabletSchusszettelDTO is null or undefined');
+    }
+
+    // Map status with fallback
+    let mappedStatus: TabletSchusszettelStatus;
+    try {
+      // Handle backend sending WETTKAMPF_ENDE vs frontend expecting WETTKAMPF_BEENDET
+      if (dto.status === 'WETTKAMPF_ENDE' as any) {
+        mappedStatus = TabletSchusszettelStatus.WETTKAMPF_BEENDET;
+      } else {
+        mappedStatus = dto.status as TabletSchusszettelStatus;
+      }
+    } catch (e) {
+      console.warn('[Mapper] Invalid status, defaulting to NOT_ALLOWED:', dto.status);
+      mappedStatus = TabletSchusszettelStatus.NOT_ALLOWED;
+    }
 
     // Debug the shooter data specifically
     console.log('[Mapper] Raw schuetzeStammDaten from backend:', dto.schuetzeStammDaten);
@@ -44,40 +65,61 @@ export class TabletSchusszettelMapper {
       });
     }
 
-    const eigenesTeam = dto.eigenesTeam ?? { teamId: 0, teamName: '' } as TeamInfoDTO;
-    const gegnerTeam = dto.gegnerischesTeam ?? { teamId: 0, teamName: '' } as TeamInfoDTO;
+    console.log('[Mapper] Raw wettkampfInfo from backend:', dto.wettkampfInfo);
 
+    // Provide safe defaults for team info
+    const eigenesTeam = dto.eigenesTeam ?? { teamId: 0, teamName: 'Unknown Team' } as TeamInfoDTO;
+    const gegnerTeam = dto.gegnerischesTeam ?? { teamId: 0, teamName: 'Unknown Opponent' } as TeamInfoDTO;
+
+    // Safe mapping with null checks and defaults
     const schuetzenMatchPunkte = (dto.schuetzenMatchPunkte ?? []).map((p: SchuetzeMatchPunkteDTO) => ({
-      schuetzenId: p.schuetzenId,
-      punkteBisher: p.punkteBisher
+      schuetzenId: p.schuetzenId ?? 0,
+      punkteBisher: p.punkteBisher ?? 0
     }));
 
     const schuetzeStammDaten = (dto.schuetzeStammDaten ?? []).map((s: SchuetzeStammdatenDTO) => ({
-      schuetzenId:  s.schuetzenId,
-      rueckennummer: s.rueckennummer,
-      vorname:       s.vorname,
-      nachname:      s.nachname
+      schuetzenId: s.schuetzenId ?? 0,
+      rueckennummer: s.rueckennummer ?? 0,
+      vorname: s.vorname ?? '',
+      nachname: s.nachname ?? ''
     }));
 
     const satzErgebnisse = (dto.satzErgebnisse ?? []).map((e: SatzErgebnisDTO) => ({
-      satzNr:      e.satzNr,
-      team1Punkte: e.team1Punkte,
-      team2Punkte: e.team2Punkte
+      satzNr: e.satzNr ?? 0,
+      team1Punkte: e.team1Punkte ?? 0,
+      team2Punkte: e.team2Punkte ?? 0
     }));
 
     const matchErgebnis = (dto.matchErgebnis ?? []).map((m: TeamMatchInfoDTO) => ({
-      teamId:      m.teamId,
-      teamName:    m.teamName,
-      matchpunkte: m.matchpunkte
+      teamId: m.teamId ?? 0,
+      teamName: m.teamName ?? '',
+      matchpunkte: m.matchpunkte ?? 0
     }));
 
     const verfuegbareSchuetzen = (dto.verfuegbareSchuetzen ?? []).map((v: VerfuegbarerSchuetzeDTO) => ({
-      schuetzenId: v.schuetzenId,
-      name:        v.name
+      schuetzenId: v.schuetzenId ?? 0,
+      name: v.name ?? ''
     }));
 
+    // Map wettkampfInfo if available
+    const wettkampfInfo = dto.wettkampfInfo ? {
+      wettkampfId: dto.wettkampfInfo.wettkampfId ?? 0,
+      wettkampfTag: dto.wettkampfInfo.wettkampfTag ?? 0,
+      wettkampfDatum: dto.wettkampfInfo.wettkampfDatum ?? '',
+      wettkampfBeginn: dto.wettkampfInfo.wettkampfBeginn ?? '',
+      wettkampfOrtsname: dto.wettkampfInfo.wettkampfOrtsname ?? '',
+      wettkampfOrtsinfo: dto.wettkampfInfo.wettkampfOrtsinfo ?? '',
+      wettkampfStrasse: dto.wettkampfInfo.wettkampfStrasse ?? '',
+      wettkampfPlz: dto.wettkampfInfo.wettkampfPlz ?? '',
+      veranstaltungId: dto.wettkampfInfo.veranstaltungId ?? 0,
+      veranstaltungName: dto.wettkampfInfo.veranstaltungName ?? '',
+      veranstaltungSportjahr: dto.wettkampfInfo.veranstaltungSportjahr ?? 0,
+      ligaName: dto.wettkampfInfo.ligaName ?? '',
+      wettkampftypName: dto.wettkampfInfo.wettkampftypName ?? ''
+    } : undefined;
+
     const result: TabletSchusszettel = {
-      status: dto.status as TabletSchusszettelStatus,
+      status: mappedStatus,
       eigenesTeam: {
         teamId: eigenesTeam.teamId,
         teamName: eigenesTeam.teamName
@@ -90,11 +132,13 @@ export class TabletSchusszettelMapper {
       schuetzeStammDaten,
       satzErgebnisse,
       matchErgebnis,
-      verfuegbareSchuetzen
+      verfuegbareSchuetzen,
+      wettkampfInfo  // Add wettkampfInfo to the result
     };
 
     console.log('[Mapper] Mapped schuetzeStammDaten output:', result.schuetzeStammDaten);
     console.log('[Mapper] Mapped verfuegbareSchuetzen output:', result.verfuegbareSchuetzen);
+    console.log('[Mapper] Mapped wettkampfInfo output:', result.wettkampfInfo);
     console.log('[Mapper] fromDTO output:', result);
     console.log('=== END MAPPER ===');
     return result;

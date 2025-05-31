@@ -5,6 +5,7 @@ import {SchuetzeStammdatenDTO} from '@schusszettel/types/inside/schuetze-stammda
 import {SatzErgebnisDTO} from '@schusszettel/types/inside/satz-ergebnis-dto';
 import {TeamMatchInfoDTO} from '@schusszettel/types/inside/team-match-info-dto';
 import {VerfuegbarerSchuetzeDTO} from '@schusszettel/types/inside/verfuegbarer-schuetze-dto';
+import {WettkampfInfoDTO} from '@schusszettel/types/inside/wettkampf-info-dto';
 
 export interface TabletSchusszettel {
   status: TabletSchusszettelStatus;
@@ -15,4 +16,5 @@ export interface TabletSchusszettel {
   satzErgebnisse: SatzErgebnisDTO[];
   matchErgebnis: TeamMatchInfoDTO[];
   verfuegbareSchuetzen: VerfuegbarerSchuetzeDTO[];
+  wettkampfInfo?: WettkampfInfoDTO;  // Optional wettkampf information
 }
