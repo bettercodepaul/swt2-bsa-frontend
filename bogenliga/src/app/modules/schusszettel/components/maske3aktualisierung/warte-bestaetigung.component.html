@@ -8,12 +8,12 @@
     <p id="wait-msg">Waiting for the opponent team to be ready…</p>
   </div>
 
-  <img
-    src="assets/img/Icons/aktualisieren-button.png"
-    alt="Refresh status"
-    role="button"
+  <button
+    mat-raised-button
+    color="primary"
     (click)="onRefreshClick()"
     aria-labelledby="wait-msg"
-    style="width: 170px; height: 80px;"
-  />
+  >
+    Refresh Status
+  </button>
 </div>
