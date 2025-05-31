@@ -78,18 +78,16 @@
         </tbody>
       </table>
     </div>
-    <button
-      mat-raised-button
-      type="submit"
-      [disabled]="form.invalid"
-      class="confirm-button"
-    >
-      <img
-        src="assets/img/Icons/bestaetigen-button.png"
-        alt="Bestaetigen-Button"
-        style="width: 170px; height: 80px;"
-      />
-    </button>
+   <button
+     mat-raised-button
+     color="primary"
+     type="submit"
+     [disabled]="form.invalid"
+     class="confirm-button"
+   >
+    Eingabe bestätigen
+    <span class="arrow">→</span>
+   </button>
   </form>
 </div>
 <!-- Loading template -->

@@ -14,10 +14,8 @@
 
   <!-- Tabelle der Sessions, sobald geladen und ohne Fehler -->
   <table *ngIf="!loading && !errorMsg" class="session-table">
-    <caption>Sitzungsübersicht</caption>
     <thead>
     <tr>
-      <th>Team‑ID</th>
       <th>Teamname</th>
       <th>Status</th>
       <th>Token</th>
@@ -28,7 +26,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let t of teams; trackBy: trackByTeam">
-      <td>{{ t.teamId }}</td>
       <td>{{ t.teamName }}</td>
       <td>{{ t.status }}</td>
       <td><code>{{ t.token }}</code></td>
