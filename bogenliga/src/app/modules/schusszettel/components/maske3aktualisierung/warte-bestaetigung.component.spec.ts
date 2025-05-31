@@ -1,10 +1,10 @@
-import { strict as assert } from 'assert';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WarteBestaetigungComponent } from './warte-bestaetigung.component';
-import { By } from '@angular/platform-browser';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {strict as assert} from 'assert';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {WarteBestaetigungComponent} from './warte-bestaetigung.component';
+import {By} from '@angular/platform-browser';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('WarteBestaetigungComponent', () => {
   let component: WarteBestaetigungComponent;

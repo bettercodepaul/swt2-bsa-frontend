@@ -1,9 +1,5 @@
-import {
-  Component,
-  Input,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 
 @Component({
   selector: 'bla-maske4wettkampbeendet',
