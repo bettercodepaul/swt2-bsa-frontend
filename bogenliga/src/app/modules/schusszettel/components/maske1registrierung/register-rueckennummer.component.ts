@@ -1,38 +1,42 @@
 import {
   Component,
-  Input,
-  Output,
   EventEmitter,
-  OnInit
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
 } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  Validators
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
-import { VerfuegbarerSchuetzeDTO } from '../../types/inside/verfuegbarer-schuetze-dto';
+import { SchuetzeStammdatenDTO } from '../../types/inside/schuetze-stammdaten-dto';
 
 @Component({
   selector: 'bla-maske1registrierung',
   templateUrl: './register-rueckennummer.component.html',
   styleUrls: ['./register-rueckennummer.component.scss']
 })
-export class RegisterRueckennummerComponent implements OnInit {
+export class RegisterRueckennummerComponent implements OnChanges {
   @Input() infos!: TabletSchusszettel;
   @Output() register = new EventEmitter<number[]>();
 
   form!: FormGroup;
-  /** which input slot (0-2) is active */
   activeInputIndex = -1;
+  private formBuilt = false;
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-    console.log('RegisterRueckennummerComponent initialized');
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['infos'] &&
+      this.infos?.schuetzeStammDaten?.length > 0 &&
+      !this.formBuilt
+    ) {
+      this.buildForm();
+      this.formBuilt = true;
+    }
+  }
 
-    // Build FormArray of three ID controls + a filter
+  private buildForm(): void {
     this.form = this.fb.group({
       filter: [''],
       ids: this.fb.array(
@@ -54,46 +58,59 @@ export class RegisterRueckennummerComponent implements OnInit {
     return this.form.get('filter')!;
   }
 
-  /** mark slot i as active */
   setActiveInput(i: number): void {
     this.activeInputIndex = i;
-    console.log('Active input slot set to', i);
   }
 
-  /** when user clicks a shooter, fill the active slot */
-  selectShooter(sh: VerfuegbarerSchuetzeDTO): void {
+  selectShooter(sh: SchuetzeStammdatenDTO): void {
     if (this.activeInputIndex < 0) {
       return;
     }
     const ctrl = this.ids.at(this.activeInputIndex);
-    ctrl.setValue(sh.schuetzenId.toString());
+    ctrl.setValue(sh.rueckennummer.toString());
     ctrl.markAsTouched();
-    console.log(`Inserted shooterId=${sh.schuetzenId} into slot ${this.activeInputIndex}`);
   }
 
-  /** filter the shooter list by ID or name */
-  get filteredShooters(): VerfuegbarerSchuetzeDTO[] {
-    const term = this.filterControl.value.toLowerCase();
-    return this.infos.verfuegbareSchuetzen.filter((sh) =>
-      sh.name.toLowerCase().includes(term) ||
-      sh.schuetzenId.toString().includes(term)
-    );
+  get filteredShooters(): SchuetzeStammdatenDTO[] {
+    if (!this.infos?.schuetzeStammDaten) {
+      return [];
+    }
+    const term = this.filterControl.value.toLowerCase().trim();
+    if (!term) {
+      return this.infos.schuetzeStammDaten;
+    }
+    return this.infos.schuetzeStammDaten.filter((sh) => {
+      const fullName = `${sh.vorname} ${sh.nachname}`.toLowerCase();
+      return (
+        fullName.includes(term) ||
+        sh.rueckennummer.toString().includes(term)
+      );
+    });
   }
 
-  /** trackBy for performance */
-  trackById(_: number, sh: VerfuegbarerSchuetzeDTO): number {
+  trackById(_: number, sh: SchuetzeStammdatenDTO): number {
     return sh.schuetzenId;
   }
 
-  /** submit three numeric IDs */
   onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      console.error('Invalid Rückennummer form:', this.form.value);
+    if (!this.form || this.form.invalid) {
+      this.form?.markAllAsTouched();
       return;
     }
-    const values = this.ids.value.map((v: string) => Number(v));
-    console.log('Submitting Rückennummern:', values);
-    this.register.emit(values);
+
+    const rnums: number[] = this.ids.value.map((v: string) => Number(v));
+    const mappedIds: (number | null)[] = rnums.map((rn) => {
+      const found = this.infos.schuetzeStammDaten.find(
+        (sh) => sh.rueckennummer === rn
+      );
+      return found ? found.schuetzenId : null;
+    });
+
+    const invalidIdx = mappedIds.findIndex((id) => id === null);
+    if (invalidIdx > -1) {
+      return;
+    }
+
+    this.register.emit(mappedIds as number[]);
   }
 }

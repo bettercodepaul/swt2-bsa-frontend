@@ -1,6 +1,34 @@
 <div class="admin-container">
-  <!-- Hauptüberschrift mit Wettkampftag -->
-  <h2>Tablet‑Schusszettel‑Verwaltung – Wettkampftag {{ wettkampfId }}</h2>
+  <!-- Hauptüberschrift mit Wettkampfinformationen -->
+  <div class="header-section" *ngIf="wettkampfInfo">
+    <h2>Tablet‑Schusszettel‑Verwaltung</h2>
+    <div class="wettkampf-info">
+      <h3>{{ wettkampfInfo.veranstaltungName }} {{ wettkampfInfo.veranstaltungSportjahr }}</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Liga:</strong> {{ wettkampfInfo.ligaName }}
+        </div>
+        <div class="info-item">
+          <strong>Wettkampftag:</strong> {{ wettkampfInfo.wettkampfTag }}
+        </div>
+        <div class="info-item">
+          <strong>Datum:</strong> {{ wettkampfInfo.wettkampfDatum | date:'dd.MM.yyyy' }}
+        </div>
+        <div class="info-item">
+          <strong>Beginn:</strong> {{ wettkampfInfo.wettkampfBeginn }}
+        </div>
+        <div class="info-item">
+          <strong>Ort:</strong> {{ wettkampfInfo.wettkampfOrtsname }}
+        </div>
+        <div class="info-item" *ngIf="wettkampfInfo.wettkampfOrtsinfo">
+          <strong>Zusatzinfo:</strong> {{ wettkampfInfo.wettkampfOrtsinfo }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fallback header wenn wettkampfInfo nicht verfügbar -->
+  <h2 *ngIf="!wettkampfInfo">Tablet‑Schusszettel‑Verwaltung – Wettkampftag {{ wettkampfId }}</h2>
 
   <!-- Ladeanimation anzeigen, wenn Daten geladen werden -->
   <div *ngIf="loading" class="spinner">
@@ -14,13 +42,14 @@
 
   <!-- Tabelle der Sessions, sobald geladen und ohne Fehler -->
   <table *ngIf="!loading && !errorMsg" class="session-table">
+    <caption>Sitzungsübersicht</caption>
     <thead>
     <tr>
       <th>Teamname</th>
       <th>Status</th>
       <th>Token</th>
-      <th>Aktuelle Passe</th>
-      <th>Nächster Gegner</th>
+      <th>Aktuelle Passe</th>
+      <th>Nächster Gegner</th>
       <th>Aktionen</th>
     </tr>
     </thead>

@@ -1,19 +1,19 @@
-<div class="not-allowed-container">
-  <!-- shared header for context -->
+<div class="not-allowed-container" role="main">
+  <!-- match header ALWAYS first -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <div class="message-box" role="alert">
-    <h2>Access Denied</h2>
+  <!-- alert card ALWAYS second -->
+  <div class="message-box" role="alert" aria-live="assertive">
+    <h2>Das System hat nicht genug Zielwasser getrunken.</h2>
     <p>
-      Your access token or team assignment is invalid.<br>
-      Please make sure you scanned the correct QR code or contact your event organizer.
+      Bitte lade die Seite nochmal, scan den QR-Code erneut oder kontaktiere jemand Verantwortlichen.
     </p>
     <button
       mat-raised-button
       color="warn"
       (click)="retry()"
     >
-      Retry
+      Nochmal versuchen
     </button>
   </div>
 </div>

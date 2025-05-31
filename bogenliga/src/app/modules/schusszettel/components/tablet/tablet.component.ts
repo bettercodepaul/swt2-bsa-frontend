@@ -1,14 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SchusszettelService } from '../../services/schusszettel.service';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
-import { SchuetzenSatzDTO } from '../../types/datatransfer/satz-eingabe-dto';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {SchusszettelService} from '../../services/schusszettel.service';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
+import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'bla-tablet',

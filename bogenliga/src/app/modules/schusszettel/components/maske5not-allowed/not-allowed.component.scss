@@ -1,36 +1,49 @@
+$gap: 1.5rem; // space between header and alert
+$pad: 1rem;
+$warn-bg: #fff3f3;
+$warn-border: #ffcccc;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* -------- vertical stack -------- */
 .not-allowed-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  /*für Hoch- und Querkant*/
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: $gap;
 
-  .message-box {
-    text-align: center;
-    background: #fdecea;
-    border: 1px solid #f5c2c7;
-    color: #b00020;
-    padding: 1.5rem;
-    border-radius: 4px;
-    margin-top: 1rem;
-    max-width: 400px;
-    width: 100%;
+  /* bottom buffer under the whole mask */
+  margin-bottom: 2rem;
+}
 
-    h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.75rem;
-    }
+/* -------- alert card -------- */
+.message-box {
+  background: $warn-bg;
+  border: 1px solid $warn-border;
+  padding: $pad;
+  border-radius: 0.5rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .07);
 
-    p {
-      margin: 0 0 1rem;
-      line-height: 1.4;
-    }
-
-    button {
-      font-weight: bold;
-    }
+  h2 {
+    margin: 0 0 .5rem;
+    font-size: 1.25rem;
   }
+  p {
+    margin: 0 0 1rem;
+  }
+  button[mat-raised-button] {
+    font-weight: 600;
+  }
+}
+
+/* -------- orientation queries kept for future tweaks -------- */
+@media (orientation: landscape) {
+  /* still a column layout – order never changes */
+}
+
+@media (orientation: portrait) {
+  /* still a column layout – order never changes */
 }
