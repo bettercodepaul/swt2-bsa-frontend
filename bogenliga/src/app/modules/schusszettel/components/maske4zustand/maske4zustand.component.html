@@ -1,7 +1,4 @@
-<!-- only render when infos is defined -->
-<div *ngIf="infos" class="maske4-zustand">
-
-  <!-- shared header for context -->
+<div *ngIf="infos" class="maske4-zustand" role="main">
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
   <section class="team-scores" aria-labelledby="score-heading">
@@ -32,7 +29,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let s of infos.satzErgebnisse; let i = index">
+      <tr *ngFor="let s of infos.satzErgebnisse">
         <th scope="row">{{ s.satzNr }}</th>
         <td>{{ s.team1Punkte }}</td>
         <td>{{ s.team2Punkte }}</td>

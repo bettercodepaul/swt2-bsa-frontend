@@ -1,65 +1,63 @@
-<div class="schusszettel-container">
-
+<div *ngIf="infos; else loading" class="schusszettel-container" role="main">
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <div class="info-box">
-    Select a field, then click a shooter from the list to fill its ID.
-  </div>
+  <ng-container *ngIf="infos.schuetzeStammDaten?.length; else emptyData">
+    <p class="info-box">
+      Wähle ein Feld, dann klicke auf einen Schützen, um die Rückennummer einzufügen.
+    </p>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="register-layout">
-
-      <!-- Shooter List with Filter -->
-      <div class="schuetzen-list">
-        <input
-          formControlName="filter"
-          placeholder="Filter shooters…"
-          aria-label="Filter shooters"
-        />
-        <div class="list">
-          <div
-            *ngFor="let sh of filteredShooters; trackBy: trackById"
-            class="schuetze-item"
-            tabindex="0"
-            (click)="selectShooter(sh)"
-            (keydown.enter)="selectShooter(sh)"
-          >
-            {{ sh.schuetzenId }} – {{ sh.name }}
-          </div>
-        </div>
-      </div>
-
-      <!-- ID Input Slots -->
-      <div class="input-grid" formArrayName="ids">
-        <div *ngFor="let ctrl of ids.controls; let i = index">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="register-layout">
+        <div class="schuetzen-list">
           <input
-            [formControlName]="i"
-            type="text"
-            placeholder="Slot {{ i + 1 }} ID"
-            aria-label="Rückennummer slot {{ i + 1 }}"
-            (focus)="setActiveInput(i)"
+            formControlName="filter"
+            placeholder="Schützen filtern…"
+            aria-label="Filter Schützen (Name oder Rückennummer)"
           />
-          <div
-            class="error"
-            *ngIf="ctrl.invalid && ctrl.touched"
-          >
-            Enter a valid numeric ID
+          <div class="list">
+            <div
+              *ngFor="let sh of filteredShooters; trackBy: trackById"
+              class="schuetze-item"
+              tabindex="0"
+              (click)="selectShooter(sh)"
+              (keydown.enter)="selectShooter(sh)"
+            >
+              {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
+            </div>
+          </div>
+        </div>
+
+        <div class="input-grid" formArrayName="ids">
+          <div *ngFor="let ctrl of ids.controls; let i = index" class="slot-container">
+            <input
+              [formControlName]="i"
+              type="text"
+              placeholder="Slot {{ i + 1 }} Rückennummer"
+              aria-label="Rückennummer Slot {{ i + 1 }}"
+              (focus)="setActiveInput(i)"
+            />
+            <div class="error" *ngIf="ctrl.invalid && ctrl.touched">
+              Bitte eine gültige numerische Rückennummer eingeben
+            </div>
           </div>
         </div>
       </div>
 
-    </div>
+      <button type="submit" [disabled]="form.invalid" class="confirm-button">
+        BESTÄTIGEN <span class="arrow">→</span>
+      </button>
+    </form>
+  </ng-container>
 
-    <button
-      type="submit"
-      [disabled]="form.invalid"
-      class="confirm-button"
-    >
-      <img
-        src="assets/img/Icons/bestaetigen-button.png"
-        alt="Bestaetigen-Button"
-        style="width: 170px; height: 80px;"
-      />
-    </button>
-  </form>
+  <ng-template #emptyData>
+    <div class="no-data">
+      <p>Keine Schützendaten verfügbar.</p>
+    </div>
+  </ng-template>
 </div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <p>Lade Schützendaten …</p>
+  </div>
+</ng-template>

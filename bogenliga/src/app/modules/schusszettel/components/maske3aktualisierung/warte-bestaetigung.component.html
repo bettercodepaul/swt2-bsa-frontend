@@ -1,6 +1,4 @@
-<!-- only show once infos is available -->
 <div *ngIf="infos" class="warte-container" role="status" aria-live="polite">
-  <!-- shared header -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
   <div class="info-box">
@@ -8,12 +6,12 @@
     <p id="wait-msg">Waiting for the opponent team to be ready…</p>
   </div>
 
-  <img
-    src="assets/img/Icons/aktualisieren-button.png"
-    alt="Refresh status"
-    role="button"
+  <button
+    mat-raised-button
+    color="primary"
     (click)="onRefreshClick()"
     aria-labelledby="wait-msg"
-    style="width: 170px; height: 80px;"
-  />
+  >
+    Refresh Status
+  </button>
 </div>

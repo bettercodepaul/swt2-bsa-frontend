@@ -1,78 +1,59 @@
-// Variables (you can move these to a shared file)
-$highlight-color: rgba(30, 136, 229, 0.1);
-$error-color: #b00020;
+$gap: 1.5rem;
+$pad: 2rem;
+$highlight: rgba(30, 136, 229, .1);
+$error: #b00020;
+$border: #999;
+
+:host {
+  display: block;
+  width: 100%;
+}
 
 .schusszettel-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  /*für Hoch- und Querkant*/
-  width: 100%;
+  gap: $gap;
+  padding: $pad;
+  margin: 0 auto 2rem;
   max-width: 1200px;
-  margin: 0 auto;
-
-
-  .passe-info {
-    margin-bottom: 1rem;
-
-    h2 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-  }
-
-  form {
-    width: 100%;
-    max-width: 800px;
-  }
-
-  .table-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .treffer-table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th,
-    td {
-      border: 1px solid #999;
-      padding: 0.5rem;
-      text-align: center;
-    }
-
-    input {
-      width: 60px;
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    /* Highlight focused row */
-    tr.active-row,
-    tr:focus-within {
-      background-color: $highlight-color;
-    }
-  }
-
-  .error {
-    color: $error-color;
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
-  }
-
-  .confirm-button {
-    font-weight: bold;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    margin-left: auto;
-    display: block;
-  }
+  width: 100%;
 }
 
-/* Accessibility helper */
+.passe-info h2 { margin: 0; font-size: 1.5rem; }
+
+form { width: 100%; max-width: 800px; }
+
+.table-wrapper { overflow-x: auto; }
+
+.treffer-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid $border;
+    padding: .5rem;
+    text-align: center;
+  }
+
+  input {
+    width: 60px;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  tr.active-row,
+  tr:focus-within { background: $highlight; }
+}
+
+.error { color: $error; font-size: .8rem; margin-top: .25rem; }
+
+.confirm-button {
+  align-self: flex-end;
+  font-weight: 700;
+  margin-top: 1rem;
+  padding: .75rem 1.5rem;
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px;

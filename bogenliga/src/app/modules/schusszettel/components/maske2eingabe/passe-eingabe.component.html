@@ -1,11 +1,11 @@
-<div class="schusszettel-container" *ngIf="infos?.schuetzeStammDaten?.length; else loadingTemplate">
-  <!-- Shared match context header -->
+<div *ngIf="infos?.schuetzeStammDaten?.length; else loading" class="schusszettel-container" role="main">
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
-  <!-- Current passe indicator -->
+
   <div class="passe-info">
     <h2>Passe {{ currentPasse }}</h2>
   </div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="form">
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="table-wrapper">
       <table class="treffer-table">
         <caption class="visually-hidden">
@@ -15,8 +15,8 @@
         <tr>
           <th scope="col">Schütze</th>
           <th scope="col">Rückennr.</th>
-          <th scope="col">Schuss 1</th>
-          <th scope="col">Schuss 2</th>
+          <th scope="col">Schuss&nbsp;1</th>
+          <th scope="col">Schuss&nbsp;2</th>
         </tr>
         </thead>
         <tbody formArrayName="schuesse">
@@ -30,71 +30,53 @@
             {{ infos.schuetzeStammDaten[i]?.nachname }}
           </td>
           <td>{{ infos.schuetzeStammDaten[i]?.rueckennummer }}</td>
+
           <td>
-            <label class="visually-hidden"
-                   for="schuss1-{{i}}">Schuss 1 für
-              {{ infos.schuetzeStammDaten[i]?.vorname }}
+            <label class="visually-hidden" for="schuss1-{{ i }}">
+              Schuss 1
             </label>
             <input
-              id="schuss1-{{i}}"
+              id="schuss1-{{ i }}"
               type="number"
               formControlName="schuss1"
               min="0"
               max="10"
-              aria-label="Schuss 1"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
             />
-            <div
-              class="error"
-              *ngIf="schuesse.at(i)?.get('schuss1')?.invalid && schuesse.at(i)?.get('schuss1')?.touched"
-            >
-              Enter a number 0–10
+            <div class="error" *ngIf="schuesse.at(i).get('schuss1')?.invalid && schuesse.at(i).get('schuss1')?.touched">
+              0–10
             </div>
           </td>
+
           <td>
-            <label class="visually-hidden"
-                   for="schuss2-{{i}}">Schuss 2 für
-              {{ infos.schuetzeStammDaten[i]?.vorname }}
+            <label class="visually-hidden" for="schuss2-{{ i }}">
+              Schuss 2
             </label>
             <input
-              id="schuss2-{{i}}"
+              id="schuss2-{{ i }}"
               type="number"
               formControlName="schuss2"
               min="0"
               max="10"
-              aria-label="Schuss 2"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
             />
-            <div
-              class="error"
-              *ngIf="schuesse.at(i)?.get('schuss2')?.invalid && schuesse.at(i)?.get('schuss2')?.touched"
-            >
-              Enter a number 0–10
+            <div class="error" *ngIf="schuesse.at(i).get('schuss2')?.invalid && schuesse.at(i).get('schuss2')?.touched">
+              0–10
             </div>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-    <button
-      mat-raised-button
-      type="submit"
-      [disabled]="form.invalid"
-      class="confirm-button"
-    >
-      <img
-        src="assets/img/Icons/bestaetigen-button.png"
-        alt="Bestaetigen-Button"
-        style="width: 170px; height: 80px;"
-      />
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="confirm-button">
+      Eingabe bestätigen <span class="arrow">→</span>
     </button>
   </form>
 </div>
-<!-- Loading template -->
-<ng-template #loadingTemplate>
-  <div class="loading-container">
-    <p>Lade Schützendaten...</p>
-  </div>
+
+<ng-template #loading>
+  <div class="loading-container"><p>Lade Schützendaten …</p></div>
 </ng-template>

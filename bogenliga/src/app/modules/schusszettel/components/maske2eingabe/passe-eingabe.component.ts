@@ -1,20 +1,8 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
-import { SchuetzenSatzDTO } from '../../types/datatransfer/satz-eingabe-dto';
-import { Subject } from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
+import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'bla-maske2eingabe',

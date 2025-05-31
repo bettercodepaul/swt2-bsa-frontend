@@ -1,7 +1,7 @@
-import { strict as assert } from 'assert';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatchKontextComponent } from './match-kontext.component';
-import { By } from '@angular/platform-browser';
+import {strict as assert} from 'assert';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {MatchKontextComponent} from './match-kontext.component';
+import {By} from '@angular/platform-browser';
 import {TabletSchusszettel} from '@schusszettel/models/tablet-schusszettel.model';
 
 

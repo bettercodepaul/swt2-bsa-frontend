@@ -1,17 +1,12 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
-} from '@angular/core';
-import { ActivatedRoute, ParamMap, Router, UrlSegment } from '@angular/router';
-import { SchusszettelService } from '@schusszettel/services/schusszettel.service';
-import { TabletSessionSingDO } from '@schusszettel/types/tablet-session-sing-do.class';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { faTrash, faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {SchusszettelService} from '@schusszettel/services/schusszettel.service';
+import {TabletSessionSingDO} from '@schusszettel/types/tablet-session-sing-do.class';
+import {WettkampfInfoDTO} from '@schusszettel/types/inside/wettkampf-info-dto'; // Add this import
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {faQrcode, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'bla-schusszettel-tablet-admin',
@@ -25,6 +20,9 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
 
   /** Identifier for the current Wettkampf */
   public wettkampfId!: number;
+
+  /** Wettkampf information extracted from first team session */
+  public wettkampfInfo: WettkampfInfoDTO | null = null;
 
   /** URL for displaying QR code in the modal */
   public selectedQrUrl: string | null = null;
@@ -84,6 +82,13 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (sessions) => {
             this.teams = sessions;
+
+            // Extract wettkampfInfo from the first team session (all teams share the same wettkampf info)
+            if (sessions.length > 0 && sessions[0].wettkampfInfo) {
+              this.wettkampfInfo = sessions[0].wettkampfInfo;
+              console.log('[SchusszettelAdmin] Extracted wettkampfInfo:', this.wettkampfInfo);
+            }
+
             this.loading = false;
             this.cd.markForCheck(); // update view after data arrival
           },

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
+import {Component, Input} from '@angular/core';
+import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 
 @Component({
   selector: 'bla-maske5not-allowed',
