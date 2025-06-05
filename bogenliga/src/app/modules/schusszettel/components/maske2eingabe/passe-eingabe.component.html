@@ -44,6 +44,7 @@
               max="10"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
+              (input)="onInputDelay(i, 'schuss1')"
             />
             <div class="error" *ngIf="schuesse.at(i).get('schuss1')?.invalid && schuesse.at(i).get('schuss1')?.touched">
               0–10
@@ -63,6 +64,7 @@
               max="10"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
+              (input)="onInputDelay(i, 'schuss2')"
             />
             <div class="error" *ngIf="schuesse.at(i).get('schuss2')?.invalid && schuesse.at(i).get('schuss2')?.touched">
               0–10
