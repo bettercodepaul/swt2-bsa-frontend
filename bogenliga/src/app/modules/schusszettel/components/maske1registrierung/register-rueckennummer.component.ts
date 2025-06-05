@@ -4,18 +4,21 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
 import { SchuetzeStammdatenDTO } from '../../types/inside/schuetze-stammdaten-dto';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'bla-maske1registrierung',
   templateUrl: './register-rueckennummer.component.html',
   styleUrls: ['./register-rueckennummer.component.scss']
 })
-export class RegisterRueckennummerComponent implements OnChanges {
+export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDestroy {
   @Input() infos!: TabletSchusszettel;
   @Output() register = new EventEmitter<number[]>();
 
@@ -23,7 +26,7 @@ export class RegisterRueckennummerComponent implements OnChanges {
   activeInputIndex = -1;
   private formBuilt = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private app: AppComponent) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
@@ -34,6 +37,13 @@ export class RegisterRueckennummerComponent implements OnChanges {
       this.buildForm();
       this.formBuilt = true;
     }
+  }
+
+  ngOnInit(): void {
+    this.app.fullscreen = true; //  Navbar und Footer ausblenden
+  }
+  ngOnDestroy(): void {
+    this.app.fullscreen = false; //  Beim Verlassen wieder anzeigen
   }
 
   private buildForm(): void {
