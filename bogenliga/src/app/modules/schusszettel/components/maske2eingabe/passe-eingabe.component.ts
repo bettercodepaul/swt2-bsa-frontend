@@ -15,6 +15,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
+  timeoutId: any = null;
 
   constructor(private fb: FormBuilder) {}
 
@@ -121,4 +122,36 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+
+  onInputDelay(i: number, field: 'schuss1' | 'schuss2') {
+    // Clear alten Timer
+    clearTimeout(this.timeoutId);
+
+    // Starte neuen Timer
+    this.timeoutId = setTimeout(() => {
+      const inputEl = document.getElementById(`${field}-${i}`) as HTMLInputElement;
+      const value = parseInt(inputEl?.value || '', 10);
+
+      // Nur wenn Wert gültig ist: Feld wechseln
+      if (!isNaN(value) && value >= 0 && value <= 10) {
+        this.focusNextField(i, field);
+      } else {
+        console.warn('Ungültiger Wert – kein automatischer Wechsel:', value);
+      }
+    }, 700);
+  }
+
+  focusNextField(i: number, field: 'schuss1' | 'schuss2') {
+    const nextFieldId =
+      field === 'schuss1'
+        ? `schuss2-${i}`
+        : `schuss1-${i + 1}`; // zum nächsten Schützen
+
+    const nextInput = document.getElementById(nextFieldId);
+    if (nextInput) {
+      (nextInput as HTMLElement).focus();
+    }
+  }
+
 }
