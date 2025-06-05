@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
 import {Subject} from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'bla-maske2eingabe',
@@ -17,7 +18,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   timeoutId: any = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private app: AppComponent) {}
 
   /** Compute the current passe */
   public get currentPasse(): number {
@@ -68,6 +69,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({ schuesse: this.fb.array(groups) });
     console.log('Form created with schuesse array length:', this.schuesse.length);
     console.log('=== END DEBUGGING ===');
+    this.app.fullscreen = true; // Navbar & Footer ausblenden
   }
 
   get schuesse(): FormArray {
@@ -121,6 +123,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.app.fullscreen = false; // Beim Verlassen wieder (footer und header) einblenden
   }
 
 

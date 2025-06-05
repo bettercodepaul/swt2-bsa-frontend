@@ -12,8 +12,9 @@ import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {ActivatedRoute, NavigationStart} from '@angular/router';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {isUndefined} from '@shared/functions';
-import {ligaID} from '../sidebar/sidebar.component'
+import {ligaID} from '../sidebar/sidebar.component';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 const ID_PATH_PARAM = 'id';
@@ -34,20 +35,26 @@ export class NavbarComponent implements OnInit, DoCheck {
   public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
-  public ligaName: string = '';
+  public ligaName = '';
 
   public providedID: number;
   public hasID: boolean;
 
   public previousSelectedLigaID: number;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider,  private router: Router) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
-      .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
+         .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
     store.pipe(select((state) => state.userState))
-      .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
+         .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.updateVisibility(event.urlAfterRedirects);
+      }
+    });
   }
 
   ngOnInit() {
@@ -56,11 +63,11 @@ export class NavbarComponent implements OnInit, DoCheck {
 
   }
 
-  ngDoCheck () {
+  ngDoCheck() {
     const currentSelectedLigaID = this.selectedLigaDataprovider.getSelectedLigaID();
 
 
-    if(currentSelectedLigaID !== this.previousSelectedLigaID) {
+    if (currentSelectedLigaID !== this.previousSelectedLigaID) {
       this.previousSelectedLigaID = currentSelectedLigaID;
 
 
@@ -72,7 +79,7 @@ export class NavbarComponent implements OnInit, DoCheck {
 
       } else {
         this.hasID = false;
-        this.ligaName = "";
+        this.ligaName = '';
       }
 
 
@@ -100,7 +107,7 @@ export class NavbarComponent implements OnInit, DoCheck {
     this.isUserDropdownVisible = !this.isUserDropdownVisible;
   }
 
-  public isOffline(): Boolean {
+  public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
 
@@ -108,32 +115,47 @@ export class NavbarComponent implements OnInit, DoCheck {
 private async loadLigaName(ligaID: number) {
   await this.ligaDataProvider.findById(this.providedID)
 .then((response: BogenligaResponse<LigaDO>) => this.setLigaName(response))
-.catch()
+.catch();
 }
-  private setLigaName(response: BogenligaResponse<LigaDO>) : void {
-    if(this.providedID) {
+  private setLigaName(response: BogenligaResponse<LigaDO>): void {
+    if (this.providedID) {
       this.ligaName = response.payload.name;
     } else {
-      this.ligaName = "";
+      this.ligaName = '';
     }
-    //console.log("Liga name = " + this.ligaName)
+    // console.log("Liga name = " + this.ligaName)
   }
 
-  public getLigaName() : string {
+  public getLigaName(): string {
     return this.ligaName;
   }
 
-  static toggleColor(): void{
-    const navbar = document.getElementById("navbar");
-    navbar.style.backgroundColor = "#b2b2b2";
-    navbar.style.pointerEvents = "none";
+  static toggleColor(): void {
+    const navbar = document.getElementById('navbar');
+    navbar.style.backgroundColor = '#b2b2b2';
+    navbar.style.pointerEvents = 'none';
   }
-  static toggleColorAgain(): void{
-    const navbar = document.getElementById("navbar");
-    navbar.style.backgroundColor = "#ffffff";
-    navbar.style.pointerEvents = "auto";
+  static toggleColorAgain(): void {
+    const navbar = document.getElementById('navbar');
+    navbar.style.backgroundColor = '#ffffff';
+    navbar.style.pointerEvents = 'auto';
 
   }
+  public showNavbar = true;
+
+  private updateVisibility(url: string) {
+    // Pfade, bei denen die Navbar ausgeblendet werden soll
+    const hiddenRoutes = [
+      './components/maske1registrierung/register-rueckennummer.component',
+     './components/maske2eingabe/passe-eingabe.component',
+     './components/maske3aktualisierung/warte-bestaetigung.component',
+      './components/maske4wettkampfbeendet/wettkampfbeendet.component',
+      './components/maske5not-allowed/not-allowed.component'
+    ];
+
+    this.showNavbar = !hiddenRoutes.some((path) => url.includes(path));
+  }
+
 
 }
 
