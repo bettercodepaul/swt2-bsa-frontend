@@ -20,7 +20,7 @@ const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 export class LoginComponent implements OnInit {
 
   public credentials = new CredentialsDO();
-  public accessCode: '';
+  public accessCode = '';
 
   public loading = false;
   public loginResult: LoginResult = LoginResult.PENDING;
