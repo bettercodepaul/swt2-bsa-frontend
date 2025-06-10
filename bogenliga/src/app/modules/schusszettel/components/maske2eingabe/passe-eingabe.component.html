@@ -32,10 +32,12 @@
           <td>{{ infos.schuetzeStammDaten[i]?.rueckennummer }}</td>
 
           <td>
+
             <label class="visually-hidden" for="schuss1-{{ i }}">
               Schuss 1
             </label>
             <input
+              #inputField
               id="schuss1-{{ i }}"
               type="number"
               inputmode="numeric"
@@ -56,6 +58,7 @@
               Schuss 2
             </label>
             <input
+              #inputField
               id="schuss2-{{ i }}"
               type="number"
               inputmode="numeric"
