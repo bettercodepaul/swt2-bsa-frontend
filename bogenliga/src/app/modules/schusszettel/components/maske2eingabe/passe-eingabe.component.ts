@@ -3,7 +3,8 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
 import {Subject} from 'rxjs';
-import { AppComponent } from 'src/app/app.component';
+import {AppComponent} from 'src/app/app.component';
+import {QueryList, ViewChildren, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'bla-maske2eingabe',
@@ -20,6 +21,12 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private app: AppComponent) {}
 
+  @ViewChildren('inputField') inputFields: QueryList<ElementRef>;
+
+  getInputElement(field: string, i: number): ElementRef | undefined {
+    const id = `${field}-${i}`;
+    return this.inputFields.find((ref) => ref.nativeElement.id === id);
+  }
   /** Compute the current passe */
   public get currentPasse(): number {
     const totalPasses = this.infos?.satzErgebnisse?.length || 0;
@@ -133,8 +140,8 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
 
     // Starte neuen Timer
     this.timeoutId = setTimeout(() => {
-      const inputEl = document.getElementById(`${field}-${i}`) as HTMLInputElement;
-      const value = parseInt(inputEl?.value || '', 10);
+      const inputEl = this.getInputElement(field, i);
+      const value = parseInt(inputEl?.nativeElement.value || '', 10);
 
       // Nur wenn Wert gültig ist: Feld wechseln
       if (!isNaN(value) && value >= 0 && value <= 10) {
@@ -151,10 +158,9 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
         ? `schuss2-${i}`
         : `schuss1-${i + 1}`; // zum nächsten Schützen
 
-    const nextInput = document.getElementById(nextFieldId);
+    const nextInput = this.inputFields.find((ref) => ref.nativeElement.id === nextFieldId);
     if (nextInput) {
-      (nextInput as HTMLElement).focus();
+      nextInput.nativeElement.focus();
     }
   }
-
 }
