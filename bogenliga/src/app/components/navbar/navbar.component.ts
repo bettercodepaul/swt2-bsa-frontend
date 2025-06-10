@@ -43,18 +43,13 @@ export class NavbarComponent implements OnInit, DoCheck {
   public previousSelectedLigaID: number;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider,  private router: Router) {
+  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
          .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
     store.pipe(select((state) => state.userState))
          .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.updateVisibility(event.urlAfterRedirects);
-      }
-    });
   }
 
   ngOnInit() {
@@ -83,7 +78,9 @@ export class NavbarComponent implements OnInit, DoCheck {
       }
 
 
-      this.hasID ? this.loadLigaName(this.providedID) : null;
+      if (this.hasID) {
+        this.loadLigaName(this.providedID);
+      }
     }
 
   }
@@ -141,21 +138,5 @@ private async loadLigaName(ligaID: number) {
     navbar.style.pointerEvents = 'auto';
 
   }
-  public showNavbar = true;
-
-  private updateVisibility(url: string) {
-    // Pfade, bei denen die Navbar ausgeblendet werden soll
-    const hiddenRoutes = [
-      './components/maske1registrierung/register-rueckennummer.component',
-     './components/maske2eingabe/passe-eingabe.component',
-     './components/maske3aktualisierung/warte-bestaetigung.component',
-      './components/maske4wettkampfbeendet/wettkampfbeendet.component',
-      './components/maske5not-allowed/not-allowed.component'
-    ];
-
-    this.showNavbar = !hiddenRoutes.some((path) => url.includes(path));
-  }
-
-
 }
 
