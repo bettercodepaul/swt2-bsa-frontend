@@ -28,6 +28,7 @@ import {element} from 'protractor';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import { RecentLigaService, RecentLigaEntry } from '@shared/services';
 //for notification
 import {
   CurrentUserService,
@@ -87,6 +88,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
+  public recentLigas: RecentLigaEntry[] = [];
 
   public VereinsID: number;
   public providedID: number;
@@ -110,7 +112,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService,
-    private selectedLigaDataprovider: SelectedLigaDataprovider) {
+    private selectedLigaDataprovider: SelectedLigaDataprovider,
+    private recentLigaService: RecentLigaService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
 
@@ -148,6 +151,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.findByVeranstalungsIds();
       this.setCorrectID();
     }
+
+    this.recentLigas = this.recentLigaService.getAll();
 
 
     //to get if of liga from route path
@@ -334,6 +339,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.selectedLigaDetailFileName=response.payload.ligaDetailFileName;
       this.selectedLigaDetailFileType=response.payload.ligaDetailFileType;
       this.loadedLigaData=true;
+      this.recentLigaService.add({id: this.selectedLigaID, name: this.selectedLigaName});
+      this.recentLigas = this.recentLigaService.getAll();
       if(this.hasLigaNameInUrl){
         const link = '/home/' + this.selectedLigaID;
         this.router.navigateByUrl(link);

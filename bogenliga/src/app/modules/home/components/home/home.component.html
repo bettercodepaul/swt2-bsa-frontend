@@ -4,6 +4,14 @@
   <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (!hasLigaNameInUrl)" data-cy=welcome-banner>
     <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+    <div *ngIf="recentLigas.length > 0">
+      <h2>{{ 'HOME.HOME.RECENT_TITLE' | translate }}</h2>
+      <ul class="recent-liga-list">
+        <li *ngFor="let liga of recentLigas">
+          <a [routerLink]="['/home', liga.id]">{{ liga.name }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <!--Ligadetail Page Title-->
