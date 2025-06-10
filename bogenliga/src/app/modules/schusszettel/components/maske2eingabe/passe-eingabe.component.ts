@@ -3,6 +3,8 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
 import {Subject} from 'rxjs';
+import {AppComponent} from 'src/app/app.component';
+import {QueryList, ViewChildren, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'bla-maske2eingabe',
@@ -15,9 +17,16 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
+  timeoutId: any = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private app: AppComponent) {}
 
+  @ViewChildren('inputField') inputFields: QueryList<ElementRef>;
+
+  getInputElement(field: string, i: number): ElementRef | undefined {
+    const id = `${field}-${i}`;
+    return this.inputFields.find((ref) => ref.nativeElement.id === id);
+  }
   /** Compute the current passe */
   public get currentPasse(): number {
     const totalPasses = this.infos?.satzErgebnisse?.length || 0;
@@ -67,6 +76,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({ schuesse: this.fb.array(groups) });
     console.log('Form created with schuesse array length:', this.schuesse.length);
     console.log('=== END DEBUGGING ===');
+    this.app.fullscreen = true; // Navbar & Footer ausblenden
   }
 
   get schuesse(): FormArray {
@@ -120,5 +130,37 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.app.fullscreen = false; // Beim Verlassen wieder (footer und header) einblenden
+  }
+
+
+  onInputDelay(i: number, field: 'schuss1' | 'schuss2') {
+    // Clear alten Timer
+    clearTimeout(this.timeoutId);
+
+    // Starte neuen Timer
+    this.timeoutId = setTimeout(() => {
+      const inputEl = this.getInputElement(field, i);
+      const value = parseInt(inputEl?.nativeElement.value || '', 10);
+
+      // Nur wenn Wert gültig ist: Feld wechseln
+      if (!isNaN(value) && value >= 0 && value <= 10) {
+        this.focusNextField(i, field);
+      } else {
+        console.warn('Ungültiger Wert – kein automatischer Wechsel:', value);
+      }
+    }, 700);
+  }
+
+  focusNextField(i: number, field: 'schuss1' | 'schuss2') {
+    const nextFieldId =
+      field === 'schuss1'
+        ? `schuss2-${i}`
+        : `schuss1-${i + 1}`; // zum nächsten Schützen
+
+    const nextInput = this.inputFields.find((ref) => ref.nativeElement.id === nextFieldId);
+    if (nextInput) {
+      nextInput.nativeElement.focus();
+    }
   }
 }
