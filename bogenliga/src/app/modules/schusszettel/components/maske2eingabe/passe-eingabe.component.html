@@ -32,17 +32,21 @@
           <td>{{ infos.schuetzeStammDaten[i]?.rueckennummer }}</td>
 
           <td>
+
             <label class="visually-hidden" for="schuss1-{{ i }}">
               Schuss 1
             </label>
             <input
+              #inputField
               id="schuss1-{{ i }}"
               type="number"
+              inputmode="numeric"
               formControlName="schuss1"
               min="0"
               max="10"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
+              (input)="onInputDelay(i, 'schuss1')"
             />
             <div class="error" *ngIf="schuesse.at(i).get('schuss1')?.invalid && schuesse.at(i).get('schuss1')?.touched">
               0–10
@@ -54,13 +58,16 @@
               Schuss 2
             </label>
             <input
+              #inputField
               id="schuss2-{{ i }}"
               type="number"
+              inputmode="numeric"
               formControlName="schuss2"
               min="0"
               max="10"
               (focus)="onFocusRow(i)"
               (blur)="onBlurRow()"
+              (input)="onInputDelay(i, 'schuss2')"
             />
             <div class="error" *ngIf="schuesse.at(i).get('schuss2')?.invalid && schuesse.at(i).get('schuss2')?.touched">
               0–10
