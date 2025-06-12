@@ -366,8 +366,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.router.navigateByUrl(link);
   }
   public goToLigaDetails() {
-    console.log('IDDD' + this.providedID);
-    const link = '/home/' +  this.providedID;
+    // use the ligaId of the currently selected Veranstaltung to build the route
+    const ligaId = this.selectedVeranstaltung?.ligaId ?? this.providedID;
+    console.log('IDDD' + ligaId);
+    const link = '/home/' + ligaId;
     this.router.navigateByUrl(link);
   }
 }
