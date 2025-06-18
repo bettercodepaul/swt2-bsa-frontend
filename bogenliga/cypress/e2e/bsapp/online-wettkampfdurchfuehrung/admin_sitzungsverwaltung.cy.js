@@ -30,20 +30,50 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
   });
 
   it('zeigt Tabelle mit Teams', () => {
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('getSessions');
+    cy.intercept('GET', '**/tablet-schusszettel/sessions*');
 
     cy.get('.session-table', { timeout: 10000 }).should('exist');
     cy.get('.session-table tbody tr').its('length').should('be.gte', 1);
   });
 
-  it('öffnet QR-Code-Modal', () => {
-    cy.get('.session-table tbody tr', { timeout: 10000 })
+  it('öffnet QR-Code-Modal und Link kopierbar', () => {
+    cy.get('.session-table tbody tr', {timeout: 10000})
       .should('have.length.at.least', 1);
-
-
     cy.get('.session-table tbody tr').first().find('button').first().click();
-
     cy.get('bla-modal-dialog').should('be.visible');
     cy.get('qrcode').should('exist');
+
+    cy.get('.qr-link-text')
+      .should('be.visible')
+      .invoke('text');
+
+    cy.contains('button', 'Kopieren').click();
   });
+
+  it('setzt Token zurück und zeigt neuen Wert an', () => {
+    cy.get('.session-table', { timeout: 10000 }).should('exist');
+    cy.get('.session-table tbody tr').should('have.length.at.least', 1);
+
+    let originalToken = '';
+    cy.get('.session-table tbody tr').first()
+      .find('td')
+      .eq(2)
+      .invoke('text')
+      .then((originalToken) => {
+        originalToken = originalToken.trim();
+      });
+        // Reset-Button klicken
+        cy.get('.session-table tbody tr').first()
+          .find('button').eq(1).click();
+
+        // Warten, bis der Token sich ändert
+        cy.get('.session-table tbody tr').first()
+          .find('td')
+          .eq(2)
+          .should(($td) => {
+            const newToken = $td.text().trim();
+            expect(newToken).to.not.equal(originalToken);
+          });
+    });
+
 });
