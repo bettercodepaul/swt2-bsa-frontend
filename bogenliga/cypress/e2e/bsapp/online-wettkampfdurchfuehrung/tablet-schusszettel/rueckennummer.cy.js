@@ -36,33 +36,39 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
 
           // Simuliere das Öffnen in neuem Tab
           cy.visit(linkText.trim());
-          cy.get('button').then(($btns) => {
-            const buttons = Array.from($btns);
+          // Wähle exakt 3 unterschiedliche Schützen
+          cy.get('.schuetze-item').then(($items) => {
+            const usedNames = new Set();
+            const uniqueItems = [];
 
-            const schuetzenButtons = buttons.filter(btn =>
-              btn.innerText.includes('SWT2_')
-            );
-
-            // Warte, bis die Schützen geladen sind
-            cy.get('.schuetze-item').should('have.length', 3);
-
-            cy.get('.schuetze-item').each(($el, index) => {
-              cy.wrap($el).click();
-
-              cy.get('.slot-container input').eq(index).click();
-              cy.get('.schuetze-item').eq(index).click();
-              cy.get('.slot-container input').eq(index)
-                .should(($input) => {
-                  const val = $input.val();
-                  expect(val, `Slot ${index + 1} sollte gefüllt sein`).to.not.be.empty;
-                });
+            $items.each((i, el) => {
+              const name = el.innerText.trim();
+              if (!usedNames.has(name) && uniqueItems.length < 3) {
+                usedNames.add(name);
+                uniqueItems.push(el);
+              }
             });
 
-              // "BESTÄTIGEN" Button klicken
-            cy.get('button.confirm-button').should('not.be.disabled').click();
-          });
+            expect(uniqueItems.length).to.eq(3, 'Genau 3 unterschiedliche Schützen gefunden');
 
-          });
+            // Weise die Schützen den Slots zu (synchron & kontrolliert)
+            uniqueItems.forEach((el, index) => {
+              const name = el.innerText.trim();
+              const rueckennummer = name.split('–')[0].trim();
+              cy.log(`Slot ${index + 1}: ${name}`);
+
+              cy.get('.slot-container input').eq(index).click();    // Slot aktivieren
+              cy.wrap(el).click();                                  // Schütze zuweisen
+
+              // Wertprüfung
+              cy.get('.slot-container input').eq(index)
+                .should('have.value', rueckennummer);
+            });
+
+          // Abschließen
+          cy.get('button.confirm-button').should('not.be.disabled').click();
+        });
+      });
     });
   });
 });
