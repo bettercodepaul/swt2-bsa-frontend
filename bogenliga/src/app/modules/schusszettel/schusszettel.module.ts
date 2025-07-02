@@ -20,8 +20,8 @@ import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.co
 import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/maske4zustand.component';
 import {MatchKontextComponent} from './components/shared/match-kontext/match-kontext.component';
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
-import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    WkdurchfuehrungModule,
     // Use routing module to register feature routes
     SchusszettelRoutingModule,
     MatDialogModule,
@@ -52,6 +51,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     SharedModule,
     QRCodeModule,
     MatProgressSpinnerModule
+  ],
+  providers: [
+    MatchProviderService
   ],
   exports: [
     SchusszettelTabletAdminComponent,
