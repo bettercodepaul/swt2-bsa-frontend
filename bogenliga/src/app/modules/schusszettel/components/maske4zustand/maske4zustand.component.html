@@ -38,6 +38,20 @@
     </table>
   </section>
 
+  <section *ngIf="infos.schuetzenMatchPunkte?.length > 0" class="shooter-scores">
+    <h3>Individual Shooter Scores</h3>
+    <div class="shooter-grid">
+      <div *ngFor="let shooter of infos.schuetzenMatchPunkte" class="shooter-card">
+        <div class="shooter-name">
+          {{ getShooterName(shooter.schuetzenId) }}
+        </div>
+        <div class="shooter-points">
+          {{ shooter.punkteBisher }} Punkte
+        </div>
+      </div>
+    </div>
+  </section>
+
   <button
     mat-raised-button
     color="primary"

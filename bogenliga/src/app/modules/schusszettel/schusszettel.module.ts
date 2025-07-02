@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -37,6 +38,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
     // Use routing module to register feature routes
     SchusszettelRoutingModule,
     MatDialogModule,

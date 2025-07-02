@@ -39,4 +39,10 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
       this.infos?.matchErgebnis.find((m) => m.teamId === teamId)?.matchpunkte ?? 0
     );
   }
+
+  /** get shooter name by ID */
+  getShooterName(schuetzenId: number): string {
+    const shooter = this.infos?.schuetzeStammDaten?.find(s => s.schuetzenId === schuetzenId);
+    return shooter ? `${shooter.vorname} ${shooter.nachname}` : `Schütze ${schuetzenId}`;
+  }
 }
