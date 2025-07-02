@@ -38,7 +38,7 @@ const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
 const PLATZHALTER = 'Platzhalter';
-const FALSCHER_SCHUETZE = ''
+const FALSCHER_SCHUETZE = '';
 
 
 @Component({
@@ -114,12 +114,12 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDOExt(null, null, null, null,1, 1, 1, 1, [], 0, 0, null, null);
+    this.match1 = new MatchDOExt(null, null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match1.matchNr = 1;
     this.match1.schuetzen = [];
     this.match1singlesatzpoints = [];
 
-    this.match2 = new MatchDOExt(null, null, null, null,1, 1, 1, 1, [], 0, 0, null, null);
+    this.match2 = new MatchDOExt(null, null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match2.matchNr = 1;
     this.match2.schuetzen = [];
     this.match2singlesatzpoints = [];
@@ -304,7 +304,7 @@ export class SchusszettelComponent implements OnInit {
     let mitglied = null;
 
     try {
-      if(value != null){
+      if (value != null) {
         mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
       }
     } catch (e) {

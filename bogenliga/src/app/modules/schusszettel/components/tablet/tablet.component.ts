@@ -19,6 +19,7 @@ export class TabletComponent implements OnInit, OnDestroy {
 
   loading = false;
   errorMsg: string | null = null;
+  showZustandFirst = true;
 
   private destroy$ = new Subject<void>();
 
@@ -55,6 +56,7 @@ export class TabletComponent implements OnInit, OnDestroy {
           next: (resp) => {
             this.data    = resp;
             this.loading = false;
+            this.showZustandFirst = true;
           },
           error: (err) => {
             console.error('Fehler beim Laden:', err);
@@ -82,6 +84,10 @@ export class TabletComponent implements OnInit, OnDestroy {
           next: ()  => this.load(),
           error: (err) => console.error('Eingabefehler:', err)
         });
+  }
+
+  onZustandWeiter(): void {
+    this.showZustandFirst = false;
   }
 
   ngOnDestroy(): void {

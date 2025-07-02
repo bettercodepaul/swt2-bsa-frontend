@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -20,6 +21,7 @@ import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/mas
 import {MatchKontextComponent} from './components/shared/match-kontext/match-kontext.component';
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
     // Use routing module to register feature routes
     SchusszettelRoutingModule,
     MatDialogModule,
