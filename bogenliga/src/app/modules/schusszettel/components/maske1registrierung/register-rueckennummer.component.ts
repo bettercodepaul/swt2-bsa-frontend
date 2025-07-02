@@ -11,6 +11,7 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TabletSchusszettel } from '../../models/tablet-schusszettel.model';
 import { SchuetzeStammdatenDTO } from '../../types/inside/schuetze-stammdaten-dto';
+import { ShooterOrderService } from '../../services/shooter-order.service';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
@@ -26,7 +27,11 @@ export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDest
   activeInputIndex = -1;
   private formBuilt = false;
 
-  constructor(private fb: FormBuilder, private app: AppComponent) {}
+  constructor(
+    private fb: FormBuilder,
+    private app: AppComponent,
+    private shooterOrderService: ShooterOrderService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
