@@ -28,18 +28,32 @@
       </bla-maske3aktualisierung>
 
       <!-- Register start numbers -->
-      <bla-maske1registrierung
-        *ngSwitchCase="'SCHUETZENMELDUNG'"
-        [infos]="data"
-        (register)="onRegister($event)">
-      </bla-maske1registrierung>
+      <ng-container *ngSwitchCase="'SCHUETZENMELDUNG'">
+        <bla-maske4zustand
+          *ngIf="showZustandFirst"
+          [infos]="data"
+          (weiter)="onZustandWeiter()">
+        </bla-maske4zustand>
+        <bla-maske1registrierung
+          *ngIf="!showZustandFirst"
+          [infos]="data"
+          (register)="onRegister($event)">
+        </bla-maske1registrierung>
+      </ng-container>
 
       <!-- Enter scores -->
-      <bla-maske2eingabe
-        *ngSwitchCase="'SATZEINGABE'"
-        [infos]="data"
-        (satzSubmit)="onSatz($event)">
-      </bla-maske2eingabe>
+      <ng-container *ngSwitchCase="'SATZEINGABE'">
+        <bla-maske4zustand
+          *ngIf="showZustandFirst"
+          [infos]="data"
+          (weiter)="onZustandWeiter()">
+        </bla-maske4zustand>
+        <bla-maske2eingabe
+          *ngIf="!showZustandFirst"
+          [infos]="data"
+          (satzSubmit)="onSatz($event)">
+        </bla-maske2eingabe>
+      </ng-container>
 
       <!-- Competition ended -->
       <bla-maske4wettkampbeendet

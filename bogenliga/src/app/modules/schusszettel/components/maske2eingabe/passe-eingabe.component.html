@@ -19,17 +19,20 @@
           <th scope="col">Schuss&nbsp;2</th>
         </tr>
         </thead>
-        <tbody formArrayName="schuesse">
+        <tbody formArrayName="schuesse" cdkDropList (cdkDropListDropped)="onRowDrop($event)">
         <tr
           *ngFor="let grp of schuesse.controls; let i = index; trackBy: trackByShooter"
           [formGroupName]="i"
           [class.active-row]="activeRow === i"
+          cdkDrag
+          class="draggable-row"
         >
-          <td>
-            {{ infos.schuetzeStammDaten[i]?.vorname }}
-            {{ infos.schuetzeStammDaten[i]?.nachname }}
+          <td class="drag-handle">
+            <span cdkDragHandle class="drag-icon">⋮⋮</span>
+            {{ orderedShooters[i]?.vorname }}
+            {{ orderedShooters[i]?.nachname }}
           </td>
-          <td>{{ infos.schuetzeStammDaten[i]?.rueckennummer }}</td>
+          <td>{{ orderedShooters[i]?.rueckennummer }}</td>
 
           <td>
 
