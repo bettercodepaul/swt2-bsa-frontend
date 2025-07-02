@@ -48,8 +48,24 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
     return shooter?.rueckennummer || 0;
   }
 
-  /** get current satz number */
+  /** get current satz number by finding the latest passe with actual data */
   getCurrentSatzNr(): number {
-    return (this.infos?.satzErgebnisse?.length || 0) + 1;
+    if (!this.infos?.satzErgebnisse || this.infos.satzErgebnisse.length === 0) {
+      return 1;
+    }
+
+    // Find the highest satzNr that has actual data (non-zero points)
+    let highestSatzWithData = 0;
+
+    for (const satz of this.infos.satzErgebnisse) {
+      // Check if this Satz has any actual points (not just empty/zero)
+      if (satz.team1Punkte > 0 || satz.team2Punkte > 0) {
+        highestSatzWithData = Math.max(highestSatzWithData, satz.satzNr);
+      }
+    }
+
+    // If we found Sätze with data, the current one is the next
+    // If no Sätze have data yet, we're still on Satz 1
+    return highestSatzWithData > 0 ? highestSatzWithData + 1 : 1;
   }
 }
