@@ -56,6 +56,9 @@ import {QRCodeModule} from 'angularx-qrcode';
     SchusszettelGuard,
     TableteingabeGuard,
     TabletadminGuard
+  ],
+  exports: [
+    SchusszettelComponent
   ]
 })
 
