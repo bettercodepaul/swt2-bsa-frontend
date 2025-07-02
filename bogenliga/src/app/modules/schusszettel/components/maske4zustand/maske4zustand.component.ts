@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {MatchProviderService} from '../../../wkdurchfuehrung/services/match-provider.service';
@@ -10,7 +10,7 @@ import { AppComponent } from 'src/app/app.component';
   styleUrls: ['./maske4zustand.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Maske4ZustandComponent implements OnInit, OnDestroy {
+export class Maske4ZustandComponent implements OnInit, OnDestroy, OnChanges {
   /** full tablet state; wait for it via *ngIf */
   @Input() infos: TabletSchusszettel | null = null;
 
@@ -29,7 +29,12 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.app.fullscreen = true; //  Navbar und Footer ausblenden
-    this.loadMatchIds();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['infos'] && this.infos) {
+      this.loadMatchIds();
+    }
   }
 
   private async loadMatchIds(): Promise<void> {
