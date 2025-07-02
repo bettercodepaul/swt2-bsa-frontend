@@ -52,9 +52,6 @@ import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.s
     QRCodeModule,
     MatProgressSpinnerModule
   ],
-  providers: [
-    MatchProviderService
-  ],
   exports: [
     SchusszettelTabletAdminComponent,
     MatButtonModule,

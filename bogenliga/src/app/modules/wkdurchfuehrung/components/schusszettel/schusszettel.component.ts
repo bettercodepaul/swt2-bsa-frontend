@@ -85,7 +85,6 @@ export class SchusszettelComponent implements OnInit {
   allowedMitglieder1: number[];
   allowedMitglieder2: number[];
   isSaved = false;
-  isIframeMode = false;
 
 
 
@@ -113,8 +112,6 @@ export class SchusszettelComponent implements OnInit {
    * then reads the matchIds from url and gets them via schusszettel-service.
    */
   ngOnInit() {
-    // Check if this is iframe mode based on URL
-    this.isIframeMode = this.router.url.includes('schusszettel-iframe');
     // initialwert schützen inputs
 
     this.match1 = new MatchDOExt(null, null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
