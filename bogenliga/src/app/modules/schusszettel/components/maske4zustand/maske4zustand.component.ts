@@ -3,6 +3,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {MatchProviderService} from '../../../wkdurchfuehrung/services/match-provider.service';
 import { AppComponent } from 'src/app/app.component';
+import {RequestResult} from '../../../shared/data-provider';
 
 @Component({
   selector: 'bla-maske4zustand',
@@ -47,19 +48,18 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy, OnChanges {
     try {
       // Get all matches for this wettkampf
       const response = await this.matchProviderService.findAllWettkampfMatchesAndNamesById(this.infos.wettkampfInfo.wettkampfId);
-      
-      if (response.result === 'SUCCESS' && response.payload) {
+
+      if (response.result === RequestResult.SUCCESS && response.payload) {
         // Find our team's match
-        const ourMatch = response.payload.find(match => 
-          match.mannschaftId === this.infos?.eigenesTeam.teamId || 
-          match.mannschaftGegnerID === this.infos?.eigenesTeam.teamId
+        const ourMatch = response.payload.find((match) =>
+          match.mannschaftId === this.infos?.eigenesTeam.teamId
         );
 
         if (ourMatch) {
           // Get the match pair
           const pairResponse = await this.matchProviderService.pair(ourMatch.id);
-          
-          if (pairResponse.result === 'SUCCESS' && pairResponse.payload) {
+
+          if (pairResponse.result === RequestResult.SUCCESS && pairResponse.payload) {
             this.match1Id = pairResponse.payload[0];
             this.match2Id = pairResponse.payload[1];
           }
@@ -93,7 +93,7 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy, OnChanges {
 
   /** get shooter name by ID */
   getShooterName(schuetzenId: number): string {
-    const shooter = this.infos?.schuetzeStammDaten?.find(s => s.schuetzenId === schuetzenId);
+    const shooter = this.infos?.schuetzeStammDaten?.find((s) => s.schuetzenId === schuetzenId);
     return shooter ? `${shooter.vorname} ${shooter.nachname}` : `Schütze ${schuetzenId}`;
   }
 
