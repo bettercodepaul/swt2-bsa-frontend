@@ -118,9 +118,10 @@ button[mat-raised-button] {
 
   .schusszettel-iframe {
     width: 100%;
-    height: 800px;
+    height: 600px;
     border: 1px solid $border;
     border-radius: 4px;
+    min-height: 400px;
   }
 }
 
@@ -134,4 +135,207 @@ button[mat-raised-button] {
   margin-top: 2rem !important;
   z-index: 1000;
   position: relative;
+}
+
+// Manual Schusszettel Styles
+.manual-schusszettel {
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid $border;
+  border-radius: 4px;
+  padding: 1.5rem;
+  background: #fff;
+}
+
+.manual-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+
+  .manual-indicator {
+    font-weight: 600;
+    color: #666;
+  }
+}
+
+.iframe-controls {
+  margin-bottom: 0.5rem;
+  text-align: right;
+}
+
+.schusszettel-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0 0 1rem;
+    color: #333;
+  }
+
+  .teams-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    .team {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #2c5aa0;
+    }
+
+    .vs {
+      font-weight: 400;
+      color: #666;
+    }
+  }
+}
+
+.match-summary {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+
+    th, td {
+      border: 1px solid $border;
+      padding: 0.5rem;
+      text-align: center;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+
+    .team-row {
+      &:nth-child(odd) {
+        background: #f9f9f9;
+      }
+
+      td:first-child {
+        text-align: left;
+        font-weight: 600;
+      }
+    }
+
+    .summary-cell {
+      background: #e3f2fd !important;
+      font-weight: 600;
+    }
+
+    .match-points {
+      background: #c8e6c9 !important;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+}
+
+.current-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .value {
+      font-weight: 700;
+      color: #2c5aa0;
+    }
+  }
+}
+
+.shooter-performance {
+  margin: 1.5rem 0;
+
+  h3 {
+    margin: 0 0 1rem;
+    text-align: center;
+    color: #333;
+  }
+
+  .shooter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .shooter-card.detailed {
+    border: 1px solid $border;
+    border-radius: 4px;
+    padding: 1rem;
+    background: #f9f9f9;
+
+    .shooter-header {
+      margin-bottom: 0.75rem;
+
+      .shooter-name {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333;
+      }
+    }
+
+    .shooter-stats {
+      .stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        label {
+          font-size: 0.9rem;
+          margin: 0;
+        }
+
+        .points {
+          font-weight: 700;
+          color: #2c5aa0;
+        }
+      }
+    }
+  }
+}
+
+.manual-instructions {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #856404;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: #2c5aa0;
+    text-decoration: underline;
+
+    &:hover {
+      color: #1a365d;
+    }
+  }
 }

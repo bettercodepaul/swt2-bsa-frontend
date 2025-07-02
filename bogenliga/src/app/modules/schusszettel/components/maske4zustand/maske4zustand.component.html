@@ -1,76 +1,60 @@
 <div *ngIf="infos" class="maske4-zustand" role="main">
+  <!-- Match Context -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <!-- Loading indicator while getting match IDs -->
-  <div *ngIf="matchIdsLoading" class="loading-matches">
-    <p>Loading match data...</p>
-  </div>
+  <!-- Current Match Status -->
+  <div class="match-status">
+    <div class="match-header">
+      <h2>Match Status</h2>
+      <div class="current-satz">Satz {{ getCurrentSatzNr() }} von 5</div>
+    </div>
 
-  <!-- Embedded Schusszettel via iframe when match IDs are available -->
-  <div *ngIf="match1Id && match2Id && !matchIdsLoading" class="embedded-schusszettel">
-    <iframe 
-      [src]="getSchusszettelUrl()" 
-      class="schusszettel-iframe"
-      frameborder="0"
-      sandbox="allow-scripts allow-same-origin">
-    </iframe>
-  </div>
-
-  <!-- Fallback to original display if match IDs can't be loaded -->
-  <div *ngIf="!matchIdsLoading && (!match1Id || !match2Id)" class="fallback-display">
-    <section class="team-scores" aria-labelledby="score-heading">
-      <h3 id="score-heading">Current Match Score</h3>
-      <dl>
-        <dt>{{ infos.eigenesTeam.teamName }}:</dt>
-        <dd>{{ getMatchpunkte(infos.eigenesTeam.teamId) }}</dd>
-
-        <dt>{{ infos.gegnerischesTeam.teamName }}:</dt>
-        <dd>{{ getMatchpunkte(infos.gegnerischesTeam.teamId) }}</dd>
-      </dl>
-    </section>
-
-    <section class="passe-info">
-      <p aria-live="polite">
-        Next Passe: <strong>{{ currentPasse }}</strong>
-      </p>
-    </section>
-
-    <section class="table-wrapper">
-      <table class="satz-tabelle">
-        <caption>Set Results</caption>
-        <thead>
-        <tr>
-          <th scope="col">Satz</th>
-          <th scope="col">{{ infos.eigenesTeam.teamName }}</th>
-          <th scope="col">{{ infos.gegnerischesTeam.teamName }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let s of infos.satzErgebnisse">
-          <th scope="row">{{ s.satzNr }}</th>
-          <td>{{ s.team1Punkte }}</td>
-          <td>{{ s.team2Punkte }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section *ngIf="infos.schuetzenMatchPunkte?.length > 0" class="shooter-scores">
-      <h3>Individual Shooter Scores</h3>
-      <div class="shooter-grid">
-        <div *ngFor="let shooter of infos.schuetzenMatchPunkte" class="shooter-card">
-          <div class="shooter-name">
-            {{ getShooterName(shooter.schuetzenId) }}
-          </div>
-          <div class="shooter-points">
-            {{ shooter.punkteBisher }} Punkte
-          </div>
-        </div>
+    <!-- Team Scores -->
+    <div class="team-scores">
+      <div class="team-score own-team">
+        <div class="team-name">{{ infos.eigenesTeam.teamName }}</div>
+        <div class="match-points">{{ getMatchpunkte(infos.eigenesTeam.teamId) }}</div>
       </div>
-    </section>
+      <div class="vs">VS</div>
+      <div class="team-score opponent-team">
+        <div class="team-name">{{ infos.gegnerischesTeam.teamName }}</div>
+        <div class="match-points">{{ getMatchpunkte(infos.gegnerischesTeam.teamId) }}</div>
+      </div>
+    </div>
   </div>
 
-  <!-- Always visible Weiter button -->
+  <!-- Active Shooters -->
+  <div class="active-shooters" *ngIf="infos.schuetzenMatchPunkte?.length > 0">
+    <h3>Active Shooters</h3>
+    <div class="shooters-list">
+      <div *ngFor="let shooter of infos.schuetzenMatchPunkte" class="shooter-item">
+        <div class="shooter-info">
+          <div class="shooter-number">{{ getShooterRueckennummer(shooter.schuetzenId) }}</div>
+          <div class="shooter-name">{{ getShooterName(shooter.schuetzenId) }}</div>
+        </div>
+        <div class="shooter-points">{{ shooter.punkteBisher }} Punkte</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Satz Results -->
+  <div class="satz-results" *ngIf="infos.satzErgebnisse?.length > 0">
+    <h3>Set Results</h3>
+    <div class="results-table">
+      <div class="result-row header">
+        <div class="satz">Satz</div>
+        <div class="team">{{ infos.eigenesTeam.teamName }}</div>
+        <div class="team">{{ infos.gegnerischesTeam.teamName }}</div>
+      </div>
+      <div *ngFor="let satz of infos.satzErgebnisse" class="result-row">
+        <div class="satz">{{ satz.satzNr }}</div>
+        <div class="team">{{ satz.team1Punkte }}</div>
+        <div class="team">{{ satz.team2Punkte }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weiter Button -->
   <button
     mat-raised-button
     color="primary"

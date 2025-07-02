@@ -22,7 +22,6 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: ':wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
   {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
-  {path: 'schusszettel-iframe/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent},
   {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent },
 ];
