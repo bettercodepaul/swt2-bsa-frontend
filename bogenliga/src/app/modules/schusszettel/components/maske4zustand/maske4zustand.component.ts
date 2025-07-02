@@ -63,7 +63,6 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy, OnChanges {
 
       if (response.result === RequestResult.SUCCESS && response.payload) {
         console.log('Found matches:', response.payload);
-        
         // Find our team's match
         const ourMatch = response.payload.find((match) =>
           match.mannschaftId === this.infos?.eigenesTeam.teamId
@@ -128,7 +127,7 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy, OnChanges {
 
   /** get safe URL for embedded schusszettel */
   getSchusszettelUrl(): SafeResourceUrl {
-    const url = `/wkdurchfuehrung/schusszettel/${this.match1Id}/${this.match2Id}`;
+    const url = `/wkdurchfuehrung/schusszettel-iframe/${this.match1Id}/${this.match2Id}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
