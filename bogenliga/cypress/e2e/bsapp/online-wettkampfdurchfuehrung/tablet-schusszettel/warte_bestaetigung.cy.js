@@ -91,6 +91,7 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
 
   it('öffnet Gegner-QR-Link und führt Schützenmeldung aus', () => {
     öffneQrCodeDesGegnersDerWarteSession(() => {
+      cy.get('button.weiter-button').click();
       cy.get('.schuetze-item').then(($items) => {
         const used = new Set();
         const uniqueItems = [];
@@ -118,6 +119,7 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
 
   it('öffnet Gegner-QR-Link und führt Satzeingabe aus', () => {
     öffneQrCodeDesGegnersDerWarteSession((teamName) => {
+      cy.get('button.weiter-button').click();
       cy.get('table.treffer-table tbody tr').eq(0).within(() => {
         cy.get('input[id^="schuss1"]').clear().type('10');
         cy.get('input[id^="schuss2"]').clear().type('9');
