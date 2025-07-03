@@ -13,8 +13,8 @@ it('Anzeige Ligatabelle', function () {
 it('Wettkampftagauswahl Ligatabelle', function() {
   cy.visit('http://localhost:4200/#/ligatabelle');
   cy.get('.fa-list-ol').click();
-  cy.wait(1000);
-  cy.get('#availableYears').select('1: 2016');
+  cy.wait(3000);
+  cy.get('#availableYears').select('2016');
   cy.get('#wettkampftag').select('1: Object');
   cy.get('#regionSaveButton').click();
 });
