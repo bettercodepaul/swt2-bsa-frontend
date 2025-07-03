@@ -34,7 +34,7 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
         .invoke('text')
         .then((linkText) => {
           cy.visit(linkText.trim());
-
+          cy.get('button.weiter-button').click();
           cy.get('table.treffer-table tbody tr').should('have.length.at.least', 2);
 
           // Erste Zeile prüfen
