@@ -36,6 +36,7 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
 
           // Simuliere das Öffnen in neuem Tab
           cy.visit(linkText.trim());
+          cy.get('button.weiter-button').click();
           // Wähle exakt 3 unterschiedliche Schützen
           cy.get('.schuetze-item').then(($items) => {
             const usedNames = new Set();
