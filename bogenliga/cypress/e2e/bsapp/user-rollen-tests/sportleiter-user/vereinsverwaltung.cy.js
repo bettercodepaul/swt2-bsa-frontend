@@ -1,5 +1,6 @@
 
 it('Login erfolgreich', function() {
+  cy.clearLocalStorage()
   cy.visit('http://localhost:4200/#/home');
   cy.get('[data-cy=login-button]').click();
   cy.get('p:nth-child(8) #undefined').click();

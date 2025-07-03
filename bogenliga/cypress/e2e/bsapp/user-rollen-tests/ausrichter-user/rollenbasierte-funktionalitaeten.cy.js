@@ -24,6 +24,7 @@ describe('testvontest', function () {
   })
 
   it('Ausrichter - Regionen anzeigen, über Verwaltung', () => {
+    cy.wait(3000)
     cy.get('.fa-cogs').click();
     cy.get('[data-cy=verwaltung-regionen-button]').click();
     cy.get('[id=payload-id-0]');
