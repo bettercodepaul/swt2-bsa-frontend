@@ -1,5 +1,6 @@
 /*Test hilfeicon */
 it('test hilfeicon', function() {
+  cy.clearLocalStorage()
   cy.visit('http://localhost:4200/')
   cy.get('[data-cy=login-button]').click()
   cy.url().should('include', '#/user/login')
