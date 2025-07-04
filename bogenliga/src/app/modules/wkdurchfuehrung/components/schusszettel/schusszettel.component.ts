@@ -152,7 +152,7 @@ export class SchusszettelComponent implements OnInit {
       }
 
 
-        this.schusszettelService.findMatches(match1id, match2id)
+        this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
             this.match1 = data.payload[0];
