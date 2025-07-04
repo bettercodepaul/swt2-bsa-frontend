@@ -2,21 +2,19 @@
   <!-- Match Context -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <!-- Schusszettel Navigation Section -->
-  <div class="schusszettel-section" *ngIf="shouldShowSchusszettel()">
+  <!-- Embedded Schusszettel Component -->
+  <div class="embedded-schusszettel-section" *ngIf="shouldShowSchusszettel()">
     <div class="row">
-      <div class="col-12 text-center">
-        <h3 class="section-title">Digitaler Schusszettel</h3>
-        <p class="info-text">Hier können Sie den aktuellen digitalen Schusszettel für dieses Match einsehen und bearbeiten.</p>
-        <a 
-          class="btn btn-primary btn-lg schusszettel-link"
-          [routerLink]="getSchusszettelRoute()"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Digitalen Schusszettel öffnen">
-          <mat-icon>description</mat-icon>
-          Schusszettel öffnen
-        </a>
+      <div class="col-12">
+        <h3 class="section-title text-center mb-4">Digitaler Schusszettel</h3>
+        <div class="schusszettel-container">
+          <bla-schusszettel 
+            [match1Id]="infos.eigenesTeamMatchId" 
+            [match2Id]="infos.gegnerischesTeamMatchId"
+            [embeddedMode]="true"
+            [readOnlyMode]="false">
+          </bla-schusszettel>
+        </div>
       </div>
     </div>
   </div>

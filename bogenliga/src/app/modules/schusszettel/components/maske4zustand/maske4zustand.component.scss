@@ -362,6 +362,71 @@ $border: #dee2e6;
   }
 }
 
+// Embedded Schusszettel Section
+.embedded-schusszettel-section {
+  margin-bottom: 20px;
+  
+  .section-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $primary;
+  }
+  
+  .schusszettel-container {
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    // Override some styles for embedded mode to make it compact
+    ::ng-deep {
+      .wettkaempfe {
+        margin: 0;
+        padding: 0;
+        
+        .container {
+          max-width: 100%;
+          padding: 0;
+        }
+      }
+      
+      // Make embedded schusszettel more compact
+      .match1, .match2 {
+        .row {
+          margin-bottom: 10px;
+        }
+      }
+      
+      // Hide or adjust navigation in embedded mode
+      #buttonContainer {
+        .embedded-actions {
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+    }
+  }
+}
+
+// Match Summary fallback
+.match-summary {
+  margin-bottom: 20px;
+  
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    
+    mat-icon {
+      color: #007bff;
+    }
+  }
+}
+
 @media print {
   .weiter-button {
     display: none;
@@ -370,5 +435,12 @@ $border: #dee2e6;
   .match-container {
     border: 2px solid #000;
     page-break-inside: avoid;
+  }
+  
+  .embedded-schusszettel-section {
+    .schusszettel-container {
+      border: 1px solid #000;
+      box-shadow: none;
+    }
   }
 }
