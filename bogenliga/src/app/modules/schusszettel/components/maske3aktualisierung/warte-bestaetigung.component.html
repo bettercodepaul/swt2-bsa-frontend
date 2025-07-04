@@ -6,11 +6,75 @@
     <p id="wait-msg">Waiting for the opponent team to be ready…</p>
   </div>
 
+  <!-- Shooter Statistics Section -->
+  <div class="statistics-section" *ngIf="getAverageShooterPoints().length > 0">
+    <h3 class="stats-title">Team Performance</h3>
+    
+    <!-- Team Summary -->
+    <div class="team-summary" *ngIf="getTeamStatistics() as teamStats">
+      <div class="summary-card">
+        <div class="summary-item">
+          <span class="label">Current Passe:</span>
+          <span class="value">{{ teamStats.currentPasse }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Team Average:</span>
+          <span class="value">{{ teamStats.teamAverage | number:'1.1-1' }} pts/passe</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Team Performance:</span>
+          <span class="value">{{ teamStats.teamPercentage | number:'1.1-1' }}%</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Total Points:</span>
+          <span class="value">{{ teamStats.totalPoints }} / {{ teamStats.totalPossiblePoints }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Individual Shooter Statistics -->
+    <div class="shooters-stats">
+      <h4 class="section-subtitle">Individual Performance</h4>
+      <div class="shooters-grid">
+        <div class="shooter-card" *ngFor="let shooter of getAverageShooterPoints()">
+          <div class="shooter-header">
+            <span class="rueckennummer">#{{ shooter.rueckennummer }}</span>
+            <span class="shooter-name">{{ shooter.name }}</span>
+          </div>
+          <div class="shooter-stats">
+            <div class="stat-row">
+              <span class="stat-label">Total Points:</span>
+              <span class="stat-value">{{ shooter.punkteBisher }}</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Avg/Passe:</span>
+              <span class="stat-value">{{ shooter.averagePerPasse | number:'1.1-1' }}</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Avg/Arrow:</span>
+              <span class="stat-value">{{ shooter.averagePerArrow | number:'1.1-1' }}</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Performance:</span>
+              <span class="stat-value" [ngClass]="{'excellent': shooter.percentage >= 80, 'good': shooter.percentage >= 60, 'average': shooter.percentage >= 40, 'poor': shooter.percentage < 40}">
+                {{ shooter.percentage | number:'1.0-0' }}%
+              </span>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="shooter.percentage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <button
     mat-raised-button
     color="primary"
     (click)="onRefreshClick()"
     aria-labelledby="wait-msg"
+    class="refresh-button"
   >
     Refresh Status
   </button>

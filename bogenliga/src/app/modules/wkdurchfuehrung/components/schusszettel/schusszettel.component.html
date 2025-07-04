@@ -423,7 +423,8 @@
     </div>
   </div>
 
-  <div>
+  <!-- Navigation buttons only shown in standalone mode -->
+  <div *ngIf="!embeddedMode">
 
     <div id="buttonContainer" > <!-- Spalte mit Buttons zum speichern/drucken links -->
 
@@ -460,6 +461,15 @@
            <!--        style="width: 100px; height: 40px; margin-left: 20px; margin-top: 3px" --->
 
     </div>
+  </div>
+
+  <!-- Save button only for embedded mode -->
+  <div *ngIf="embeddedMode" class="embedded-actions text-center mt-3">
+    <bla-actionbutton
+      (onClick)="save()"
+      [iconClass]="'save'"
+      class="btn-primary"
+    >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SPEICHERN' | translate }}</bla-actionbutton>
   </div>
 
 

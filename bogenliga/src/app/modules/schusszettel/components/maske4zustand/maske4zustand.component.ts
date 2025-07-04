@@ -30,17 +30,9 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
     this.weiter.emit();
   }
 
-  /** Check if we should show the wkdurchfuehrung schusszettel component */
+  /** Check if we should show the embedded wkdurchfuehrung schusszettel component */
   shouldShowSchusszettel(): boolean {
     return !!(this.infos?.eigenesTeamMatchId && this.infos?.gegnerischesTeamMatchId);
-  }
-
-  /** Get the route to the wkdurchfuehrung schusszettel */
-  getSchusszettelRoute(): string[] {
-    if (this.infos?.eigenesTeamMatchId && this.infos?.gegnerischesTeamMatchId) {
-      return ['/wkdurchfuehrung/schusszettel', this.infos.eigenesTeamMatchId.toString(), this.infos.gegnerischesTeamMatchId.toString()];
-    }
-    return [];
   }
 
 

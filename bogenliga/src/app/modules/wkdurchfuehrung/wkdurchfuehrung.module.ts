@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {wkdurchfuehrung_ROUTES} from './wkdurchfuehrung.routing';
-import { SchusszettelModule } from '@schusszettel/schusszettel.module';
 
 import {
   WkdurchfuehrungComponent,
@@ -30,7 +29,6 @@ import { TabletAdminPopUpComponent } from './components/tablet-admin/tablet-admi
 import {QRCodeModule} from 'angularx-qrcode';
 @NgModule({
   imports: [
-    SchusszettelModule,
     CommonModule,
     RouterModule.forChild(wkdurchfuehrung_ROUTES),
     SharedModule.forChild(),
