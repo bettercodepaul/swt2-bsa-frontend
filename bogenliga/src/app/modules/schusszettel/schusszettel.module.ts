@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -39,6 +40,7 @@ import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.s
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     DragDropModule,
     // Use routing module to register feature routes
     SchusszettelRoutingModule,

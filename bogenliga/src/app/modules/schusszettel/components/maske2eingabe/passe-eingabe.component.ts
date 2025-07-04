@@ -38,10 +38,15 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   }
   /** Compute the current passe */
   public get currentPasse(): number {
-    // satzErgebnisse contains completed passes, so next passe is length + 1
+    // Use backend-provided currentPasseNumber if available, fallback to local calculation
+    if (this.infos?.currentPasseNumber != null) {
+      console.log('Using backend-provided currentPasseNumber:', this.infos.currentPasseNumber);
+      return this.infos.currentPasseNumber;
+    }
+    
+    // Fallback to local calculation for backward compatibility
     const completedPasses = this.infos?.satzErgebnisse?.length || 0;
     const nextPasse = completedPasses + 1;
-
     console.log('Calculated next passe:', nextPasse, 'from completed passes:', completedPasses);
     return nextPasse;
   }
