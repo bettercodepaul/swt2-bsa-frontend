@@ -51,4 +51,20 @@ export class MatchKontextComponent {
   get sportjahr(): number | string {
     return this.infos?.wettkampfInfo?.veranstaltungSportjahr || 'Unbekannt';
   }
+
+  /** Get current passe number using backend-provided value with fallback */
+  getCurrentPasse(): number {
+    // Use backend-provided currentPasseNumber if available
+    if (this.infos?.currentPasseNumber != null && this.infos.currentPasseNumber > 0) {
+      return this.infos.currentPasseNumber;
+    }
+    
+    // Fallback calculation if backend value not available
+    if (!this.infos?.satzErgebnisse || this.infos.satzErgebnisse.length === 0) {
+      return 1;
+    }
+    
+    const completedPasses = this.infos.satzErgebnisse.length;
+    return completedPasses + 1;
+  }
 }

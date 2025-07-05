@@ -133,7 +133,10 @@ export class TabletSchusszettelMapper {
       satzErgebnisse,
       matchErgebnis,
       verfuegbareSchuetzen,
-      wettkampfInfo  // Add wettkampfInfo to the result
+      wettkampfInfo,  // Add wettkampfInfo to the result
+      currentPasseNumber: dto.currentPasseNumber,        // Backend-provided passe number
+      eigenesTeamMatchId: dto.eigenesTeamMatchId,        // Own team match ID
+      gegnerischesTeamMatchId: dto.gegnerischesTeamMatchId  // Enemy team match ID
     };
 
     console.log('[Mapper] Mapped schuetzeStammDaten output:', result.schuetzeStammDaten);

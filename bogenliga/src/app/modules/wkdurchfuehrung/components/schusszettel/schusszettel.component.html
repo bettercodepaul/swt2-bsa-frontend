@@ -14,6 +14,7 @@
         <h2>{{match1.mannschaftName}}</h2>
         <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.GEGEN' | translate }}</h2>
         <h2>{{match2.mannschaftName}}</h2>
+        <h3 *ngIf="embeddedMode" class="tablet-mode-indicator">Tablet-Modus</h3>
       </div>
       <div class="small_Table col-6" class="tabelle">
         <table class="table table-responsive thead-light table-striped"
@@ -208,7 +209,7 @@
 
   </div> <!-- ende match1 -->
 
-  <div class="print signature s1">
+  <div class="print signature s1" *ngIf="!embeddedMode">
     <div class="m1">
       <h1>{{match2.mannschaftName}}</h1>
       <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>
@@ -221,7 +222,7 @@
   <!-- Print Trennlinie -->
   <hr class="print">
 
-  <!-- match2 -->
+  <!-- match2 - Now shown in embedded mode too -->
   <div class="match2 print">
     <div class="row">
       <div id="henlo" class="match_col-3">
@@ -423,7 +424,8 @@
     </div>
   </div>
 
-  <div>
+  <!-- Navigation buttons only shown in standalone mode -->
+  <div *ngIf="!embeddedMode">
 
     <div id="buttonContainer" > <!-- Spalte mit Buttons zum speichern/drucken links -->
 
@@ -463,51 +465,6 @@
   </div>
 
 
-
-<!--  BACKUP-->
-<!--  <div class="row">-->
-<!--    <div class="col-sm-7"> &lt;!&ndash; Spalte mit Buttons zum speichern/drucken links &ndash;&gt;-->
-
-<!--      <button (click)=" back()"-->
-<!--              class="btn btn-primary backButton">Zurück-->
-<!--      </button>-->
-
-<!--      <button (click)="save()"-->
-<!--              class="btn btn-primary saveButton">Speichern-->
-<!--      </button>-->
-
-<!--      <bla-download-button-->
-<!--        class="btn"-->
-<!--        [id]="'downloadMatchSchusszettel'"-->
-<!--        [downloadUrl]="onButtonDownload('pdf/schusszettel_matches')"-->
-<!--        [fileName]="'match_schusszettel.pdf'"-->
-<!--        [disabled]="false">Drucken-->
-
-<!--      </bla-download-button>-->
-<!--    </div>-->
-
-<!--    <div class="col-sm-5"> &lt;!&ndash; Spalte nächstes Match rechts &ndash;&gt;-->
-
-<!--      <button (click)="next()"-->
-<!--              class="btn btn-primary nextButton">Vorheriges Match-->
-<!--      </button>-->
-
-<!--      <button (click)="next()"-->
-<!--              class="btn btn-primary nextButton">Nächstes Match-->
-<!--      </button>-->
-<!--    </div>-->
-
-
-<!--  </div>-->
-
-
-
-
-
-
-
-
-
  <div class ="schuetze-popup"*ngIf="popupSelberTag">
     <div class="popup">
       <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PRUEF_D_SCHUETZEN' | translate }}</h2>
@@ -536,7 +493,7 @@
 
   </div>
 
-  <div class="print signature">
+  <div class="print signature" *ngIf="!embeddedMode">
     <div class="m1">
       <h1>{{match2.mannschaftName}}</h1>
       <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>

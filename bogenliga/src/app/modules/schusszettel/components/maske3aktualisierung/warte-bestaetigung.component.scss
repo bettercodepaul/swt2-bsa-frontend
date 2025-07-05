@@ -31,8 +31,22 @@ $box-bg: #eef6fd;
   p { margin: 0; font-size: 1rem; line-height: 1.4; }
 }
 
+
 button[mat-raised-button] {
   align-self: center;
   font-weight: 700;
   padding: .75rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.refresh-button {
+  background: #007bff !important;
+  border-color: #007bff !important;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .warte-container {
+    padding: 1rem;
+  }
 }

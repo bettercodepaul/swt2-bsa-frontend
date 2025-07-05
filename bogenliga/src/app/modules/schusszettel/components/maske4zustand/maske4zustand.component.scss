@@ -15,13 +15,36 @@ $border: #dee2e6;
 }
 
 .maske4-zustand {
-  margin-top: 10px;
+  margin: 10px auto;
   padding: 15px;
   min-height: 100vh;
   overflow-y: auto;
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
 
   &.container {
-    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  // Ensure proper flow and centered layout
+  > .row {
+    margin: 0 auto 20px auto;
+    clear: both;
+    width: 100%;
+    
+    > .col-12 {
+      padding: 0 15px;
+      margin: 0 auto;
+    }
+  }
+
+  // Center the weiter button section
+  .text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -36,50 +59,50 @@ $border: #dee2e6;
 // Match Header Section - Compact for tablets
 .match-header-section {
   margin-bottom: 15px;
-  
+
   .team-title {
     font-size: 18px;
     color: #333;
     margin-bottom: 5px;
   }
-  
+
   .match-info {
     font-size: 14px;
     color: #666;
   }
-  
+
   .teams-display {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    
+
     .team {
       font-size: 16px;
       font-weight: 600;
       color: $primary-dark;
       margin: 0;
     }
-    
+
     .vs {
       font-size: 14px;
       color: #666;
       font-weight: 400;
     }
   }
-  
+
   .current-status-box {
     background: #f8f9fa;
     padding: 8px 12px;
     border-radius: 4px;
     text-align: center;
-    
+
     .status-label {
       font-size: 12px;
       color: #666;
       margin-bottom: 3px;
     }
-    
+
     .status-value {
       font-size: 14px;
       font-weight: 600;
@@ -92,22 +115,22 @@ $border: #dee2e6;
 .match-summary-section {
   margin-bottom: 15px;
   overflow-x: auto;
-  
+
   .match-summary-table {
     width: 100%;
     margin-bottom: 0;
     font-size: 13px;
-    
+
     thead {
       background: #f8f9fa;
-      
+
       th {
         border: 1px solid $border;
         padding: 6px 4px;
         text-align: center;
         font-weight: 600;
         font-size: 12px;
-        
+
         &.team-header {
           text-align: left;
           min-width: 120px;
@@ -116,24 +139,24 @@ $border: #dee2e6;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        
+
         &.match-points-header {
           background: #e3f2fd;
         }
       }
     }
-    
+
     tbody {
       tr.team-row {
         &:nth-child(even) {
           background: #f9f9f9;
         }
-        
+
         td {
           border: 1px solid $border;
           padding: 6px 4px;
           text-align: center;
-          
+
           &.team-name-cell {
             text-align: left;
             font-weight: 600;
@@ -142,12 +165,12 @@ $border: #dee2e6;
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          
+
           &.summary-cell {
             background: #e3f2fd;
             font-weight: 600;
           }
-          
+
           &.match-points {
             background: #c8e6c9;
             font-weight: 700;
@@ -162,14 +185,14 @@ $border: #dee2e6;
 // Shooters Section - Compact for tablets
 .shooters-section {
   margin-bottom: 15px;
-  
+
   .section-title {
     text-align: center;
     margin-bottom: 10px;
     color: #333;
     font-size: 16px;
   }
-  
+
   .shooters-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -177,26 +200,26 @@ $border: #dee2e6;
     max-height: 200px;
     overflow-y: auto;
   }
-  
+
   .shooter-card {
     border: 1px solid $border;
     border-radius: 3px;
     padding: 8px;
     background: #f9f9f9;
-    
+
     .shooter-header {
       display: flex;
       align-items: center;
       gap: 8px;
       margin-bottom: 8px;
-      
+
       .rueckennummer {
         font-size: 16px;
         font-weight: 700;
         color: $primary-dark;
         min-width: 30px;
       }
-      
+
       .shooter-name {
         font-size: 13px;
         font-weight: 600;
@@ -206,18 +229,18 @@ $border: #dee2e6;
         text-overflow: ellipsis;
       }
     }
-    
+
     .shooter-stats {
       .stat-item {
         display: flex;
         justify-content: space-between;
         margin-bottom: 4px;
-        
+
         .stat-label {
           font-size: 11px;
           color: #666;
         }
-        
+
         .stat-value {
           font-weight: 600;
           color: $primary-dark;
@@ -231,30 +254,30 @@ $border: #dee2e6;
 // Satz Details Section - Compact for tablets
 .satz-details-section {
   margin-bottom: 15px;
-  
+
   .section-title {
     text-align: center;
     margin-bottom: 10px;
     color: #333;
     font-size: 16px;
   }
-  
+
   .satz-details-table {
     width: 100%;
     font-size: 12px;
     max-height: 200px;
     overflow-y: auto;
     display: block;
-    
+
     thead, tbody {
       display: table;
       width: 100%;
       table-layout: fixed;
     }
-    
+
     thead {
       background: #f8f9fa;
-      
+
       th {
         border: 1px solid $border;
         padding: 6px 4px;
@@ -263,34 +286,34 @@ $border: #dee2e6;
         font-size: 11px;
       }
     }
-    
+
     tbody {
       tr {
         &:nth-child(even) {
           background: #f9f9f9;
         }
-        
+
         td {
           border: 1px solid $border;
           padding: 6px 4px;
           text-align: center;
-          
+
           .badge {
             padding: 2px 6px;
             font-size: 10px;
             border-radius: 2px;
             white-space: nowrap;
-            
+
             &.badge-success {
               background-color: #28a745;
               color: white;
             }
-            
+
             &.badge-danger {
               background-color: #dc3545;
               color: white;
             }
-            
+
             &.badge-secondary {
               background-color: #6c757d;
               color: white;
@@ -303,15 +326,22 @@ $border: #dee2e6;
 }
 
 
-// Weiter Button - Compact for tablets
+// Weiter Button - Positioned to avoid overlap
 .weiter-button {
+  margin: 20px auto;
   font-weight: 700;
-  padding: 8px 20px;
-  font-size: 14px;
-  margin-top: 10px;
-  position: sticky;
-  bottom: 10px;
-  z-index: 100;
+  padding: 12px 30px;
+  font-size: 16px;
+  position: relative;
+  z-index: 10;
+  display: block;
+  min-width: 150px;
+  
+  // Ensure it doesn't stick and cause overlap issues
+  &:not(.mobile-sticky) {
+    position: relative;
+    bottom: auto;
+  }
 }
 
 // Tablet optimizations
@@ -319,11 +349,11 @@ $border: #dee2e6;
   .maske4-zustand {
     padding: 10px;
   }
-  
+
   .match-container {
     padding: 8px;
   }
-  
+
   .shooters-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 8px;
@@ -336,29 +366,292 @@ $border: #dee2e6;
     .teams-display {
       flex-direction: column;
       gap: 5px;
-      
+
       .team {
         font-size: 14px;
       }
     }
   }
-  
+
   .shooters-grid {
     grid-template-columns: 1fr 1fr;
     max-height: 150px;
   }
-  
+
   .match-summary-table {
     font-size: 11px;
-    
+
     td.match-points {
       font-size: 12px;
     }
   }
-  
+
   .satz-details-table {
     font-size: 10px;
     max-height: 150px;
+  }
+}
+
+// Embedded Schusszettel Section - Matching native styling
+.embedded-schusszettel-section {
+  margin: 30px auto;
+  clear: both;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+
+  .section-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $primary;
+    text-align: center;
+  }
+
+  .schusszettel-container {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: visible;
+
+    // Preserve native schusszettel styling while fixing layout issues
+    ::ng-deep {
+      .wettkaempfe {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        .container {
+          max-width: 100%;
+          padding: 0;
+          margin: 0 auto;
+        }
+      }
+
+      // Maintain original styling but fix positioning
+      .match1 {
+        margin-top: 20px; // Keep original margin
+        margin-bottom: 40px; // Add space to prevent overlap
+        border: 2px solid rgba(0, 0, 0, .1); // Keep original border
+        position: relative;
+      }
+
+      .match2 {
+        margin-top: 40px; // Remove negative margin that causes overlap
+        margin-bottom: 20px; // Keep original margin
+        border: 2px solid rgba(0, 0, 0, .1); // Keep original border
+        position: relative;
+      }
+
+      // Keep original input styling
+      input {
+        height: 55px;
+        width: 55px;
+        font-size: 30px;
+        text-align: center;
+        -moz-appearance: textfield;
+        display: block;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        &:focus {
+          -webkit-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+          -moz-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+          box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+        }
+      }
+
+      // Keep original label styling
+      label {
+        font-size: 10px;
+        display: block;
+      }
+
+      // Keep original table styling
+      tr, th, td {
+        alignment: center;
+        text-align: center;
+        margin: 10px;
+        font-size: 10px;
+        padding: 5px;
+      }
+
+      td {
+        font-size: 16px;
+      }
+
+      // Keep original special styling
+      .split {
+        border-left-width: 3px;
+        border-left-color: #4a4a4a;
+        border-left-style: solid;
+      }
+
+      .schuetzensumme {
+        font-size: 30px;
+      }
+
+      // Keep original team headers but ensure visibility
+      .mannschaften_col-3 {
+        width: 200px;
+        margin-left: 4em;
+        margin-top: 5em;
+
+        h2 {
+          font-size: 1.2rem; // Slightly larger for readability
+        }
+      }
+
+      .match_col-3 {
+        h2 {
+          font-size: 1.2rem;
+        }
+      }
+
+      // Keep original spacing classes
+      .tabelle {
+        margin-left: 35px;
+        margin-top: 10px;
+      }
+
+      .offset-9 {
+        margin-top: 10px;
+        margin-left: 82%;
+        margin-bottom: 15px;
+      }
+
+      .schusstabelle {
+        margin-left: 60px;
+      }
+
+      .fehlerpunktetabelle {
+        margin-left: 100px;
+      }
+
+      .col-4 {
+        margin-right: 10px;
+        width: 80px;
+      }
+
+      // Show separator line but make it visible
+      hr.print {
+        visibility: visible;
+        margin: 30px 0;
+        border: 0;
+        height: 2px;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      // Make signature visible but compact
+      .signature {
+        visibility: visible;
+        margin: 20px 0;
+        font-size: 12px;
+        
+        h1 {
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+        
+        p {
+          font-size: 11px;
+          margin: 0;
+        }
+      }
+
+      // Hide navigation buttons in embedded mode
+      #buttonContainer {
+        display: none;
+      }
+
+      // Tablet mode indicator styling
+      h3.tablet-mode-indicator {
+        font-size: 12px;
+        color: #666;
+        margin: 5px 0;
+        font-weight: normal;
+      }
+    }
+  }
+
+  // Responsive adjustments while maintaining proportions
+  @media (max-width: 1024px) {
+    .schusszettel-container {
+      padding: 15px;
+      
+      ::ng-deep {
+        input {
+          height: 45px;
+          width: 45px;
+          font-size: 24px;
+        }
+        
+        .schuetzensumme {
+          font-size: 24px;
+        }
+        
+        .mannschaften_col-3 {
+          margin-left: 2em;
+          margin-top: 3em;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .schusszettel-container {
+      padding: 10px;
+      
+      ::ng-deep {
+        input {
+          height: 35px;
+          width: 35px;
+          font-size: 18px;
+        }
+        
+        .schuetzensumme {
+          font-size: 20px;
+        }
+        
+        .mannschaften_col-3 {
+          margin-left: 1em;
+          margin-top: 2em;
+          width: 150px;
+        }
+        
+        .schusstabelle {
+          margin-left: 20px;
+        }
+        
+        .fehlerpunktetabelle {
+          margin-left: 40px;
+        }
+      }
+    }
+  }
+}
+
+// Match Summary fallback
+.match-summary {
+  margin-bottom: 20px;
+
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+
+    mat-icon {
+      color: #007bff;
+    }
   }
 }
 
@@ -366,9 +659,16 @@ $border: #dee2e6;
   .weiter-button {
     display: none;
   }
-  
+
   .match-container {
     border: 2px solid #000;
     page-break-inside: avoid;
+  }
+
+  .embedded-schusszettel-section {
+    .schusszettel-container {
+      border: 1px solid #000;
+      box-shadow: none;
+    }
   }
 }

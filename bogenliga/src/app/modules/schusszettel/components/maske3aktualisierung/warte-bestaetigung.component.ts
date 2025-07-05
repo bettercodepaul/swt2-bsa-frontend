@@ -30,6 +30,7 @@ export class WarteBestaetigungComponent implements OnInit, OnDestroy {
     console.log('User requested status refresh');
     this.refresh.emit();
   }
+
   ngOnInit(): void {
     this.app.fullscreen = true; //  Navbar und Footer ausblenden
   }
