@@ -51,8 +51,8 @@ export class SchusszettelComponent implements OnInit {
   // Input properties for embedding in tablet zustand component
   @Input() match1Id?: number;
   @Input() match2Id?: number;
-  @Input() embeddedMode?: boolean = false;
-  @Input() readOnlyMode?: boolean = false;
+  @Input() embeddedMode = false;
+  @Input() readOnlyMode = false;
 
   match1: MatchDOExt;
   match2: MatchDOExt;
@@ -152,7 +152,7 @@ export class SchusszettelComponent implements OnInit {
       }
 
 
-        this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
+      this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
             this.match1 = data.payload[0];

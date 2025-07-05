@@ -2,15 +2,30 @@
   <!-- Match Context -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
+  <!-- Weiter Button - Moved above schusszettel for better UX flow -->
+  <div class="row">
+    <div class="col-12 text-center mt-4 mb-4">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onWeiter()"
+        aria-label="Weiter zum nächsten Bildschirm"
+        class="weiter-button"
+      >
+        Weiter
+      </button>
+    </div>
+  </div>
+
   <!-- Embedded Schusszettel Component -->
   <div class="embedded-schusszettel-section" *ngIf="shouldShowSchusszettel()">
     <div class="row">
       <div class="col-12">
-        <h3 class="section-title text-center mb-4">Digitaler Schusszettel</h3>
+        <h3 class="section-title">Schusszettel-Übersicht</h3>
         <div class="schusszettel-container">
           <bla-schusszettel 
-            [match1Id]="infos.eigenesTeamMatchId" 
-            [match2Id]="infos.gegnerischesTeamMatchId"
+            [match1Id]="infos?.eigenesTeamMatchId" 
+            [match2Id]="infos?.gegnerischesTeamMatchId"
             [embeddedMode]="true"
             [readOnlyMode]="false">
           </bla-schusszettel>
@@ -30,21 +45,6 @@
           <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Weiter Button -->
-  <div class="row">
-    <div class="col-12 text-center mt-4">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="onWeiter()"
-        aria-label="Weiter zum nächsten Bildschirm"
-        class="weiter-button"
-      >
-        Weiter
-      </button>
     </div>
   </div>
 </div>
