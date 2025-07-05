@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {AppComponent} from 'src/app/app.component';
 
 @Component({
   selector: 'bla-maske4zustand',
   templateUrl: './maske4zustand.component.html',
-  styleUrls: ['./maske4zustand.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./maske4zustand.component.scss']
+  // Removed OnPush strategy to allow proper change detection for embedded async components
 })
 export class Maske4ZustandComponent implements OnInit, OnDestroy {
   /** full tablet state; wait for it via *ngIf */
@@ -37,7 +37,6 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
 
 
   // COMMENTED OUT: Original custom implementation - using wkdurchfuehrung schusszettel component instead
-  
   /** get current satz number by finding the latest passe with actual data */
   // getCurrentSatzNr(): number {
   //   if (!this.infos?.satzErgebnisse || this.infos.satzErgebnisse.length === 0) {

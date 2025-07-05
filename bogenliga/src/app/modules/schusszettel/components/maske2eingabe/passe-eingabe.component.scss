@@ -35,6 +35,12 @@ form { width: 100%; max-width: 800px; }
     text-align: center;
   }
 
+  // Left-align the Schütze column (first column)
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+
   input {
     width: 60px;
     text-align: center;
