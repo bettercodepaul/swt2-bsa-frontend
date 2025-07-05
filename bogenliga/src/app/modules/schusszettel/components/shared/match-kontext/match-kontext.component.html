@@ -17,5 +17,6 @@
     <div class="pair"><dt>Ort</dt><dd>{{ ort }}</dd></div>
     <div class="pair"><dt>Team</dt><dd>{{ i.eigenesTeam.teamName }}</dd></div>
     <div class="pair"><dt>Gegner</dt><dd>{{ i.gegnerischesTeam.teamName }}</dd></div>
+    <div class="pair" *ngIf="getCurrentPasse() > 0"><dt>Aktuelle Passe</dt><dd>{{ getCurrentPasse() }}</dd></div>
   </dl>
 </header>

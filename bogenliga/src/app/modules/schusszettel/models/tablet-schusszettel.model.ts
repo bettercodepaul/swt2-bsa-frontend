@@ -17,4 +17,7 @@ export interface TabletSchusszettel {
   matchErgebnis: TeamMatchInfoDTO[];
   verfuegbareSchuetzen: VerfuegbarerSchuetzeDTO[];
   wettkampfInfo?: WettkampfInfoDTO;  // Optional wettkampf information
+  currentPasseNumber?: number;       // Backend-provided current passe number
+  eigenesTeamMatchId?: number;       // Match ID for own team
+  gegnerischesTeamMatchId?: number;  // Match ID for enemy team
 }

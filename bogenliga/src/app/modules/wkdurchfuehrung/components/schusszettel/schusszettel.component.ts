@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
@@ -47,6 +47,12 @@ const FALSCHER_SCHUETZE = '';
   styleUrls:   ['./schusszettel.component.scss']
 })
 export class SchusszettelComponent implements OnInit {
+
+  // Input properties for embedding in tablet zustand component
+  @Input() match1Id?: number;
+  @Input() match2Id?: number;
+  @Input() embeddedMode = false;
+  @Input() readOnlyMode = false;
 
   match1: MatchDOExt;
   match2: MatchDOExt;
@@ -130,12 +136,11 @@ export class SchusszettelComponent implements OnInit {
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
 
-    this.route.params.subscribe((params) => {
-      if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
-        const match1id = params['match1id'];
-        const match2id = params['match2id'];
+    // Handle both input properties (embedded mode) and route parameters
+    const loadMatches = (match1id: number, match2id: number) => {
 
-        // Notification while preparing
+      // Only show loading notification in standalone mode
+      if (!this.embeddedMode) {
         this.notificationService.showNotification({
           id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
           title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
@@ -144,9 +149,10 @@ export class SchusszettelComponent implements OnInit {
           origin:      NotificationOrigin.USER,
           userAction:  NotificationUserAction.PENDING
         });
+      }
 
 
-        this.schusszettelService.findMatches(match1id, match2id)
+      this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
             this.match1 = data.payload[0];
@@ -226,7 +232,9 @@ export class SchusszettelComponent implements OnInit {
               this.initSumSatz();
               this.setPoints();
             }
-            this.notificationService.discardNotification();
+            if (!this.embeddedMode) {
+              this.notificationService.discardNotification();
+            }
             const stringMatch1 = this.match1.mannschaftName;
             const stringMatch2 = this.match2.mannschaftName;
 
@@ -261,9 +269,21 @@ export class SchusszettelComponent implements OnInit {
           .catch((error) => {
             console.error(error);
           });
+    };
 
-      }
-    });
+    // Check for input properties first (embedded mode)
+    if (this.match1Id && this.match2Id) {
+      loadMatches(this.match1Id, this.match2Id);
+    } else {
+      // Fallback to route parameters (standalone mode)
+      this.route.params.subscribe((params) => {
+        if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
+          const match1id = params['match1id'];
+          const match2id = params['match2id'];
+          loadMatches(match1id, match2id);
+        }
+      });
+    }
     /*
     this.getAllMannschaften();
     this.getAllVerein();

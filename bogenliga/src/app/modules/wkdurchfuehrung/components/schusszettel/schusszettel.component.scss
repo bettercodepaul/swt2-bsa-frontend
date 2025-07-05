@@ -247,3 +247,33 @@ label {
   display: flex;
   justify-content: space-between;
 }
+
+// Embedded mode styling for tablet view
+.tablet-mode-indicator {
+  color: #666;
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+// Ensure both teams are visible in embedded mode
+.match1, .match2 {
+  margin-bottom: 2rem;
+}
+
+// Responsive adjustments for tablet embedded view
+@media (max-width: 1024px) {
+  input {
+    height: 45px;
+    width: 45px;
+    font-size: 24px;
+  }
+  
+  .mannschaften_col-3 h2 {
+    font-size: 1.5rem;
+  }
+  
+  .tablet-mode-indicator {
+    font-size: 12px;
+  }
+}

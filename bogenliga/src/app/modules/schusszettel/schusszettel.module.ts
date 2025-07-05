@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {MatDialogModule} from '@angular/material/dialog';
@@ -22,6 +23,7 @@ import {MatchKontextComponent} from './components/shared/match-kontext/match-kon
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.service';
+import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.s
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     DragDropModule,
     // Use routing module to register feature routes
     SchusszettelRoutingModule,
@@ -50,7 +53,8 @@ import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.s
     MatTooltipModule,
     SharedModule,
     QRCodeModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    WkdurchfuehrungModule
   ],
   exports: [
     SchusszettelTabletAdminComponent,

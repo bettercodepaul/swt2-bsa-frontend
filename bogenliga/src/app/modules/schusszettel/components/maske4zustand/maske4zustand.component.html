@@ -2,131 +2,9 @@
   <!-- Match Context -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <!-- Main Match Container -->
-  <div class="match-container">
-    <!-- Match Header -->
-    <div class="row match-header-section">
-      <div class="col-md-4">
-        <h2 class="team-title">{{ getTeamName(true) }}</h2>
-        <h3 class="match-info">{{ getMatchNr() }}. Match</h3>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="teams-display">
-          <h2 class="team">{{ getTeamName(true) }}</h2>
-          <span class="vs">VS</span>
-          <h2 class="team">{{ getTeamName(false) }}</h2>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="current-status-box">
-          <div class="status-label">Aktueller Stand</div>
-          <div class="status-value">Satz {{ getCurrentSatzNr() }} von 5</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Match Points Summary Table -->
-    <div class="row match-summary-section">
-      <div class="col-12">
-        <table class="table table-bordered match-summary-table">
-          <thead>
-            <tr>
-              <th rowspan="2" class="team-header">Mannschaft</th>
-              <th colspan="5" class="text-center">Sätze</th>
-              <th rowspan="2" class="text-center">Satzpunkte</th>
-              <th rowspan="2" class="text-center match-points-header">Matchpunkte</th>
-            </tr>
-            <tr>
-              <th class="text-center" *ngFor="let i of [1,2,3,4,5]">{{ i }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="team-row">
-              <td class="team-name-cell">{{ getTeamName(true) }}</td>
-              <td class="text-center" *ngFor="let satz of getSatzResults(true)">
-                {{ satz }}
-              </td>
-              <td class="text-center summary-cell">{{ getSatzpunkte(true) }}</td>
-              <td class="text-center match-points">{{ getMatchpunkte(true) }}</td>
-            </tr>
-            <tr class="team-row">
-              <td class="team-name-cell">{{ getTeamName(false) }}</td>
-              <td class="text-center" *ngFor="let satz of getSatzResults(false)">
-                {{ satz }}
-              </td>
-              <td class="text-center summary-cell">{{ getSatzpunkte(false) }}</td>
-              <td class="text-center match-points">{{ getMatchpunkte(false) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Shooters Performance Section -->
-    <div class="row shooters-section" *ngIf="getActiveShooters().length > 0">
-      <div class="col-12">
-        <h3 class="section-title">Schützenleistung</h3>
-        <div class="shooters-grid">
-          <div class="shooter-card" *ngFor="let shooter of getActiveShooters()">
-            <div class="shooter-header">
-              <span class="rueckennummer">#{{ shooter.rueckennummer }}</span>
-              <span class="shooter-name">{{ shooter.name }}</span>
-            </div>
-            <div class="shooter-stats">
-              <div class="stat-item">
-                <span class="stat-label">Punkte bisher:</span>
-                <span class="stat-value">{{ shooter.punkteBisher }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Durchschnitt:</span>
-                <span class="stat-value">{{ shooter.durchschnitt }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Detailed Satz Results Table -->
-    <div class="row satz-details-section" *ngIf="getSatzErgebnisse().length > 0">
-      <div class="col-12">
-        <h3 class="section-title">Satzergebnisse im Detail</h3>
-        <table class="table table-striped table-bordered satz-details-table">
-          <thead>
-            <tr>
-              <th>Satz</th>
-              <th>{{ getTeamName(true) }}</th>
-              <th>{{ getTeamName(false) }}</th>
-              <th>Gewinner</th>
-              <th>Punkte</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let satz of getSatzErgebnisse()">
-              <td class="text-center">{{ satz.satzNr }}</td>
-              <td class="text-center">{{ satz.team1Punkte }}</td>
-              <td class="text-center">{{ satz.team2Punkte }}</td>
-              <td class="text-center">
-                <span class="badge" [ngClass]="{
-                  'badge-success': satz.winner === 'team1',
-                  'badge-danger': satz.winner === 'team2',
-                  'badge-secondary': satz.winner === 'draw'
-                }">
-                  {{ satz.winnerName }}
-                </span>
-              </td>
-              <td class="text-center">{{ satz.points }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Weiter Button -->
+  <!-- Weiter Button - Moved above schusszettel for better UX flow -->
   <div class="row">
-    <div class="col-12 text-center mt-4">
+    <div class="col-12 text-center mt-4 mb-4">
       <button
         mat-raised-button
         color="primary"
@@ -136,6 +14,37 @@
       >
         Weiter
       </button>
+    </div>
+  </div>
+
+  <!-- Embedded Schusszettel Component -->
+  <div class="embedded-schusszettel-section" *ngIf="shouldShowSchusszettel()">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="section-title">Schusszettel-Übersicht</h3>
+        <div class="schusszettel-container">
+          <bla-schusszettel 
+            [match1Id]="infos?.eigenesTeamMatchId" 
+            [match2Id]="infos?.gegnerischesTeamMatchId"
+            [embeddedMode]="true"
+            [readOnlyMode]="false">
+          </bla-schusszettel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fallback: Show basic match info if schusszettel links are not available -->
+  <div class="match-summary" *ngIf="!shouldShowSchusszettel()">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-info">
+          <mat-icon>info</mat-icon>
+          <strong>Match-Übersicht</strong><br>
+          {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }} vs {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }}<br>
+          <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
+        </div>
+      </div>
     </div>
   </div>
 </div>
