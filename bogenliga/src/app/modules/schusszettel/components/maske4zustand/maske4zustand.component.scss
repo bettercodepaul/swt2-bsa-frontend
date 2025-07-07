@@ -33,7 +33,7 @@ $border: #dee2e6;
     margin: 0 auto 20px auto;
     clear: both;
     width: 100%;
-    
+
     > .col-12 {
       padding: 0 15px;
       margin: 0 auto;
@@ -336,7 +336,7 @@ $border: #dee2e6;
   z-index: 10;
   display: block;
   min-width: 150px;
-  
+
   // Ensure it doesn't stick and cause overlap issues
   &:not(.mobile-sticky) {
     position: relative;
@@ -471,7 +471,6 @@ $border: #dee2e6;
         max-width: 55px !important;
         font-size: 30px !important;
         text-align: center;
-        -moz-appearance: textfield;
         display: block;
         flex-shrink: 0;
         box-sizing: border-box;
@@ -585,12 +584,12 @@ $border: #dee2e6;
         visibility: visible;
         margin: 20px 0;
         font-size: 12px;
-        
+
         h1 {
           font-size: 14px;
           margin-bottom: 5px;
         }
-        
+
         p {
           font-size: 11px;
           margin: 0;
