@@ -31,8 +31,11 @@
   <h2 *ngIf="!wettkampfInfo">Tablet‑Schusszettel‑Verwaltung – Wettkampftag {{ wettkampfId }}</h2>
 
   <!-- Ladeanimation anzeigen, wenn Daten geladen werden -->
-  <div *ngIf="loading" class="spinner">
+  <div *ngIf="loading" class="loading-container">
     <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">
+      Das System geht in Grundstellung, visiert den Wettkampftag an und spannt die digitalen Schusszettel schussbereit ein.
+    </p>
   </div>
 
   <!-- Fehlermeldung anzeigen, falls vorhanden -->
@@ -49,7 +52,7 @@
       <th>Status</th>
       <th>Token</th>
       <th>Aktuelle Passe</th>
-      <th>Nächster Gegner</th>
+      <th>Gegner</th>
       <th>Aktionen</th>
     </tr>
     </thead>

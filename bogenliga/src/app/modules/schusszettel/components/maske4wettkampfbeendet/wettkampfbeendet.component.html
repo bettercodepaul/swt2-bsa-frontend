@@ -1,35 +1,17 @@
-<div *ngIf="infos" class="wettkampfbeendet-container" role="main">
-  <bla-match-kontext [infos]="infos"></bla-match-kontext>
-
+<div class="wettkampfbeendet-container" role="main">
   <div class="message-box" role="status" aria-live="polite">
-    <h2>Competition Finished</h2>
-    <p>The match is complete. Final team match points:</p>
-
-    <div class="result-table-wrapper">
-      <table class="result-table">
-        <caption class="visually-hidden">Final team match points</caption>
-        <thead>
-        <tr>
-          <th scope="col">Team</th>
-          <th scope="col">Match Points</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let t of infos.matchErgebnis">
-          <td>{{ t.teamName }}</td>
-          <td>{{ t.matchpunkte }}</td>
-        </tr>
-        </tbody>
-      </table>
+    <h2>Der Wettkampftag ist beendet</h2>
+    <p>Das System hat keine weiteren Matches für Sie gefunden.</p>
+    
+    <div class="button-container">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onWeiter()"
+        aria-label="Weiter zur finalen Übersicht"
+        class="weiter-button">
+        Weiter
+      </button>
     </div>
-
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="reload()"
-      class="reload-button"
-    >
-      Start Again
-    </button>
   </div>
 </div>
