@@ -1,68 +1,56 @@
-$gap: 1.5rem;
-$pad: 2rem;
-$border: #a5d6a7;
-
 :host {
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 .wettkampfbeendet-container {
   display: flex;
-  flex-direction: column;
-  gap: $gap;
-  padding: $pad;
-  margin: 0 auto 2rem;
-  max-width: 1200px;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
 .message-box {
   background: #e8f5e9;
   border: 1px solid #c8e6c9;
   color: #2e7d32;
-  padding: 1.5rem;
-  border-radius: 4px;
+  padding: 3rem 2rem;
+  border-radius: 8px;
   max-width: 600px;
   width: 100%;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   h2 {
-    margin: 0 0 .5rem;
-    font-size: 1.75rem;
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+    font-weight: 600;
   }
 
-  p { margin: .5rem 0 1rem; }
-
-  .result-table-wrapper {
-    overflow-x: auto;
-    margin-bottom: 1rem;
-
-    .result-table {
-      width: 100%;
-      border-collapse: collapse;
-
-      th, td {
-        border: 1px solid $border;
-        padding: .5rem;
-        text-align: center;
-      }
-
-      tr:nth-child(even) { background: #f1f8e9; }
-    }
-  }
-
-  .reload-button {
-    font-weight: 700;
-    padding: .75rem 1.5rem;
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
   }
 }
 
-.visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+// Responsive design
+@media (max-width: 768px) {
+  .wettkampfbeendet-container {
+    padding: 1rem;
+  }
+
+  .message-box {
+    padding: 2rem 1.5rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
 }

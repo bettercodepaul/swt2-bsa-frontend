@@ -56,10 +56,18 @@
       </ng-container>
 
       <!-- Competition ended -->
-      <bla-maske4wettkampbeendet
-        *ngSwitchCase="'WETTKAMPF_BEENDET'"
-        [infos]="data">
-      </bla-maske4wettkampbeendet>
+      <ng-container *ngSwitchCase="'WETTKAMPF_BEENDET'">
+        <bla-maske4zustand
+          *ngIf="showZustandFirst"
+          [infos]="data"
+          (weiter)="onZustandWeiter()">
+        </bla-maske4zustand>
+        <bla-maske4wettkampbeendet
+          *ngIf="!showZustandFirst"
+          [infos]="data"
+          (weiter)="onZustandWeiter()">
+        </bla-maske4wettkampbeendet>
+      </ng-container>
 
       <!-- Unexpected status -->
       <div *ngSwitchDefault class="error-box">
