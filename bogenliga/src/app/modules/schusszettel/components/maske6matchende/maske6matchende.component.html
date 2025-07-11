@@ -2,57 +2,26 @@
   <!-- Match Context -->
   <bla-match-kontext [infos]="infos"></bla-match-kontext>
 
-  <!-- Match Completed Header -->
-  <div class="row">
-    <div class="col-12 text-center">
-      <div class="match-completed-header">
-        <mat-icon class="completed-icon">check_circle</mat-icon>
-        <h2 class="completed-title">Match beendet!</h2>
-        <div class="match-result-summary">
-          <strong>{{ getMatchResultSummary() }}</strong>
-        </div>
-        <div class="winner-info" *ngIf="getWinnerInfo().hasWinner">
-          <mat-icon [class]="getWinnerInfo().isDraw ? 'draw-icon' : 'winner-icon'">
-            {{ getWinnerInfo().isDraw ? 'equalizer' : 'emoji_events' }}
-          </mat-icon>
-          <span class="winner-text">
-            {{ getWinnerInfo().isDraw ? 'Unentschieden' : 'Gewinner: ' + getWinnerInfo().winnerName }}
-          </span>
-        </div>
-        <div class="sets-completed">
-          {{ getCompletedSetsCount() }} von 5 Sätzen gespielt
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Weiter Button - Prominent placement for next match progression -->
+  <!-- Weiter Button - Moved above schusszettel for better UX flow -->
   <div class="row">
     <div class="col-12 text-center mt-4 mb-4">
       <button
         mat-raised-button
         color="primary"
         (click)="onWeiter()"
-        aria-label="Weiter zum nächsten Match oder Wettkampfende"
-        class="weiter-button-large"
+        aria-label="Weiter zum nächsten Bildschirm"
+        class="weiter-button"
       >
-        <mat-icon>arrow_forward</mat-icon>
         Weiter
       </button>
-      <div class="weiter-hint">
-        <small>Klicken Sie hier, um zum nächsten Match zu gelangen</small>
-      </div>
     </div>
   </div>
 
-  <!-- Embedded Schusszettel Component for Completed Match Review -->
+  <!-- Embedded Schusszettel Component -->
   <div class="embedded-schusszettel-section" *ngIf="shouldShowSchusszettel()">
     <div class="row">
       <div class="col-12">
-        <h3 class="section-title">
-          <mat-icon>assignment</mat-icon>
-          Schusszettel-Übersicht (Beendetes Match)
-        </h3>
+        <h3 class="section-title">Schusszettel-Übersicht</h3>
         <div class="schusszettel-container">
           <bla-schusszettel 
             [match1Id]="infos?.eigenesTeamMatchId" 
@@ -65,79 +34,17 @@
     </div>
   </div>
 
-  <!-- Fallback: Show detailed match results if schusszettel links are not available -->
-  <div class="match-details-fallback" *ngIf="!shouldShowSchusszettel()">
+  <!-- Fallback: Show basic match info if schusszettel links are not available -->
+  <div class="match-summary" *ngIf="!shouldShowSchusszettel()">
     <div class="row">
       <div class="col-12">
-        <h3 class="section-title">
-          <mat-icon>assessment</mat-icon>
-          Match-Details
-        </h3>
-        
-        <!-- Set Results Table -->
-        <div class="set-results-table" *ngIf="infos?.satzErgebnisse && infos.satzErgebnisse.length > 0">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Satz</th>
-                <th>{{ infos?.eigenesTeam?.teamName || 'Team 1' }}</th>
-                <th>{{ infos?.gegnerischesTeam?.teamName || 'Team 2' }}</th>
-                <th>Gewinner</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let satz of infos.satzErgebnisse; let i = index">
-                <td>{{ satz.satzNr }}</td>
-                <td class="team-points">{{ satz.team1Punkte }}</td>
-                <td class="team-points">{{ satz.team2Punkte }}</td>
-                <td class="winner-cell">
-                  <mat-icon *ngIf="satz.team1Punkte > satz.team2Punkte" class="winner-icon">emoji_events</mat-icon>
-                  <mat-icon *ngIf="satz.team2Punkte > satz.team1Punkte" class="winner-icon">emoji_events</mat-icon>
-                  <mat-icon *ngIf="satz.team1Punkte === satz.team2Punkte && satz.team1Punkte > 0" class="draw-icon">equalizer</mat-icon>
-                  <span *ngIf="satz.team1Punkte > satz.team2Punkte">{{ infos?.eigenesTeam?.teamName || 'Team 1' }}</span>
-                  <span *ngIf="satz.team2Punkte > satz.team1Punkte">{{ infos?.gegnerischesTeam?.teamName || 'Team 2' }}</span>
-                  <span *ngIf="satz.team1Punkte === satz.team2Punkte && satz.team1Punkte > 0">Unentschieden</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Final Match Result -->
-        <div class="final-match-result" *ngIf="infos?.matchErgebnis && infos.matchErgebnis.length >= 2">
-          <h4>Endergebnis</h4>
-          <div class="result-cards">
-            <div class="team-result-card" *ngFor="let team of infos.matchErgebnis">
-              <div class="team-name">{{ team.teamId === infos?.eigenesTeam?.teamId ? infos?.eigenesTeam?.teamName : infos?.gegnerischesTeam?.teamName || 'Team ' + team.teamId }}</div>
-              <div class="team-score">{{ team.matchpunkte }} Satzpunkte</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Info message if no detailed data available -->
-        <div class="alert alert-info" *ngIf="!infos?.satzErgebnisse || infos.satzErgebnisse.length === 0">
+        <div class="alert alert-info">
           <mat-icon>info</mat-icon>
-          <strong>Match beendet</strong><br>
-          Das Match zwischen {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }} und {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }} wurde erfolgreich abgeschlossen.<br>
-          <small>Detaillierte Satz-Ergebnisse sind derzeit nicht verfügbar.</small>
+          <strong>Match-Übersicht</strong><br>
+          {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }} vs {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }}<br>
+          <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Second Weiter Button at bottom for better accessibility -->
-  <div class="row">
-    <div class="col-12 text-center mt-4 mb-5">
-      <button
-        mat-stroked-button
-        color="primary"
-        (click)="onWeiter()"
-        aria-label="Weiter zum nächsten Match oder Wettkampfende"
-        class="weiter-button-secondary"
-      >
-        <mat-icon>arrow_forward</mat-icon>
-        Weiter
-      </button>
     </div>
   </div>
 </div>

@@ -1,298 +1,384 @@
+/* Farbkonzept from wkdurchfuehrung */
+$primary: #02bdd5;
+$primary-light: #b4ffff;
+$primary-dark: #007c91;
+$secondary: #ffc107;
+$secondary-light: #fff350;
+$secondary-dark: #ff833a;
+$border: #dee2e6;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .maske6-matchende {
-  padding: 20px;
+  margin: 10px auto;
+  padding: 15px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-}
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
 
-/* Match Completed Header Styling */
-.match-completed-header {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  color: white;
-  padding: 30px 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.completed-icon {
-  font-size: 48px;
-  height: 48px;
-  width: 48px;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-.completed-title {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 15px 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.match-result-summary {
-  font-size: 1.3rem;
-  margin: 15px 0;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  backdrop-filter: blur(5px);
-}
-
-.winner-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.winner-icon {
-  color: #ffd700;
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
-}
-
-.draw-icon {
-  color: #ffffff;
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
-}
-
-.sets-completed {
-  font-size: 1rem;
-  opacity: 0.9;
-  margin-top: 10px;
-}
-
-/* Button Styling */
-.weiter-button-large {
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border-radius: 8px;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  &.container {
+    margin: 0 auto;
+    width: 100%;
   }
 
-  mat-icon {
-    margin-right: 8px;
-  }
-}
+  // Ensure proper flow and centered layout
+  > .row {
+    margin: 0 auto 20px auto;
+    clear: both;
+    width: 100%;
 
-.weiter-button-secondary {
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 6px;
-  min-width: 150px;
-
-  mat-icon {
-    margin-right: 6px;
-  }
-}
-
-.weiter-hint {
-  margin-top: 10px;
-  color: #666;
-  font-style: italic;
-}
-
-/* Section Titles */
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #4caf50;
-
-  mat-icon {
-    color: #4caf50;
-  }
-}
-
-/* Embedded Schusszettel Container */
-.embedded-schusszettel-section {
-  margin: 30px 0;
-}
-
-.schusszettel-container {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-}
-
-/* Fallback Match Details */
-.match-details-fallback {
-  margin: 30px 0;
-}
-
-.set-results-table {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-
-  .table {
-    margin-bottom: 0;
-
-    th {
-      background-color: #f8f9fa;
-      font-weight: 600;
-      border-top: none;
-      color: #333;
-    }
-
-    .team-points {
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .winner-cell {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
+    > .col-12 {
+      padding: 0 15px;
+      margin: 0 auto;
     }
   }
-}
 
-.final-match-result {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-
-  h4 {
-    color: #333;
-    margin-bottom: 15px;
-    font-weight: 600;
-  }
-}
-
-.result-cards {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.team-result-card {
-  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-
-  .team-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-
-  .team-score {
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* Alert Styling */
-.alert {
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-
-  mat-icon {
-    margin-top: 2px;
-  }
-
-  &.alert-info {
-    background-color: #e3f2fd;
-    border: 1px solid #2196f3;
-    color: #1565c0;
-
-    mat-icon {
-      color: #2196f3;
-    }
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .maske6-matchende {
-    padding: 15px;
-  }
-
-  .completed-title {
-    font-size: 1.8rem;
-  }
-
-  .match-result-summary {
-    font-size: 1.1rem;
-  }
-
-  .weiter-button-large {
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    min-width: 180px;
-  }
-
-  .result-cards {
-    flex-direction: column;
+  // Center the weiter button section
+  .text-center {
+    display: flex;
+    justify-content: center;
     align-items: center;
   }
+}
 
-  .team-result-card {
-    min-width: 250px;
-  }
+.match-container {
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-  .section-title {
-    font-size: 1.3rem;
+// Weiter Button - Positioned to avoid overlap
+.weiter-button {
+  margin: 20px auto;
+  font-weight: 700;
+  padding: 12px 30px;
+  font-size: 16px;
+  position: relative;
+  z-index: 10;
+  display: block;
+  min-width: 150px;
+
+  // Ensure it doesn't stick and cause overlap issues
+  &:not(.mobile-sticky) {
+    position: relative;
+    bottom: auto;
   }
 }
 
-@media (max-width: 480px) {
-  .completed-title {
-    font-size: 1.5rem;
+// Tablet optimizations
+@media (max-width: 1024px) {
+  .maske6-matchende {
+    padding: 10px;
   }
 
-  .match-result-summary {
-    font-size: 1rem;
+  .match-container {
+    padding: 8px;
   }
+}
 
-  .weiter-button-large {
+// Mobile adjustments
+@media (max-width: 768px) {
+  .weiter-button {
+    font-size: 14px;
     padding: 10px 25px;
-    font-size: 1rem;
-    min-width: 160px;
+  }
+}
+
+// Embedded Schusszettel Section - Dynamically scaled to container
+.embedded-schusszettel-section {
+  margin: 30px auto;
+  clear: both;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .section-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $primary;
+    text-align: center;
+    width: 100%;
   }
 
-  .team-result-card {
-    min-width: 200px;
+  .schusszettel-container {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    padding: 20px;
+    width: 1200px;
+    height: fit-content;
+    position: relative;
+    transform-origin: center center;
+    margin: 0;
+
+    // Fixed layout that prevents squishing
+    ::ng-deep {
+      .wettkaempfe {
+        margin: 0;
+        padding: 0;
+        width: 1160px;
+        min-width: 1160px;
+        position: relative;
+
+        .container {
+          width: 1160px;
+          min-width: 1160px;
+          max-width: 1160px;
+          padding: 0;
+          margin: 0;
+        }
+      }
+
+      // Fixed positioning to prevent overlap
+      .match1 {
+        margin-top: 20px;
+        margin-bottom: 60px;
+        border: 2px solid rgba(0, 0, 0, .1);
+        position: relative;
+        width: 100%;
+        min-height: 300px;
+      }
+
+      .match2 {
+        margin-top: 60px;
+        margin-bottom: 20px;
+        border: 2px solid rgba(0, 0, 0, .1);
+        position: relative;
+        width: 100%;
+        min-height: 300px;
+      }
+
+      // Fixed input styling - absolute dimensions
+      input {
+        height: 55px !important;
+        width: 55px !important;
+        min-height: 55px !important;
+        min-width: 55px !important;
+        max-height: 55px !important;
+        max-width: 55px !important;
+        font-size: 30px !important;
+        text-align: center;
+        display: block;
+        flex-shrink: 0;
+        box-sizing: border-box;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        &:focus {
+          -webkit-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+          -moz-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+          box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+        }
+      }
+
+      // Keep original label styling
+      label {
+        font-size: 10px;
+        display: block;
+      }
+
+      // Keep original table styling
+      tr, th, td {
+        alignment: center;
+        text-align: center;
+        margin: 10px;
+        font-size: 10px;
+        padding: 5px;
+      }
+
+      td {
+        font-size: 16px;
+      }
+
+      // Keep original special styling
+      .split {
+        border-left-width: 3px;
+        border-left-color: #4a4a4a;
+        border-left-style: solid;
+      }
+
+      .schuetzensumme {
+        font-size: 30px;
+      }
+
+      // Fixed team headers with absolute positioning
+      .mannschaften_col-3 {
+        width: 200px !important;
+        min-width: 200px !important;
+        margin-left: 64px !important;
+        margin-top: 80px !important;
+        position: relative;
+
+        h2 {
+          font-size: 1.2rem !important;
+          white-space: nowrap;
+        }
+      }
+
+      .match_col-3 {
+        h2 {
+          font-size: 1.2rem !important;
+          white-space: nowrap;
+        }
+      }
+
+      // Fixed spacing with absolute values
+      .tabelle {
+        margin-left: 35px !important;
+        margin-top: 10px !important;
+        position: relative;
+      }
+
+      .offset-9 {
+        margin-top: 10px !important;
+        margin-left: 950px !important;
+        margin-bottom: 15px !important;
+        position: absolute;
+      }
+
+      .schusstabelle {
+        margin-left: 60px !important;
+        position: relative;
+      }
+
+      .fehlerpunktetabelle {
+        margin-left: 100px !important;
+        position: relative;
+      }
+
+      .col-4 {
+        margin-right: 10px !important;
+        width: 80px !important;
+        min-width: 80px !important;
+        flex-shrink: 0;
+      }
+
+      // Show separator line but make it visible
+      hr.print {
+        visibility: visible;
+        margin: 30px 0;
+        border: 0;
+        height: 2px;
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      // Make signature visible but compact
+      .signature {
+        visibility: visible;
+        margin: 20px 0;
+        font-size: 12px;
+
+        h1 {
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+
+        p {
+          font-size: 11px;
+          margin: 0;
+        }
+      }
+
+      // Hide navigation buttons in embedded mode
+      #buttonContainer {
+        display: none;
+      }
+
+      // Tablet mode indicator styling
+      h3.tablet-mode-indicator {
+        font-size: 12px;
+        color: #666;
+        margin: 5px 0;
+        font-weight: normal;
+      }
+    }
+  }
+
+  // Responsive scaling with media queries
+  @media (min-width: 1600px) {
+    .schusszettel-container {
+      transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 1199px) {
+    .schusszettel-container {
+      transform: scale(0.9);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .schusszettel-container {
+      transform: scale(0.8);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .schusszettel-container {
+      transform: scale(0.7);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .schusszettel-container {
+      transform: scale(0.6);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .schusszettel-container {
+      transform: scale(0.5);
+      padding: 10px;
+    }
+  }
+}
+
+// Match Summary fallback
+.match-summary {
+  margin-bottom: 20px;
+
+  .alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+
+    mat-icon {
+      color: #007bff;
+    }
+  }
+}
+
+@media print {
+  .weiter-button {
+    display: none;
+  }
+
+  .match-container {
+    border: 2px solid #000;
+    page-break-inside: avoid;
+  }
+
+  .embedded-schusszettel-section {
+    .schusszettel-container {
+      border: 1px solid #000;
+      box-shadow: none;
+    }
   }
 }
