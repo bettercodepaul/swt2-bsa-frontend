@@ -90,6 +90,14 @@ export class TabletComponent implements OnInit, OnDestroy {
     this.showZustandFirst = false;
   }
 
+  /**
+   * Handle "Weiter" button click from MATCH_ENDE state.
+   * This triggers a GET request to advance to the next match or tournament end.
+   */
+  onMatchEndeWeiter(): void {
+    this.load(); // Trigger GET request to advance state on backend
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
