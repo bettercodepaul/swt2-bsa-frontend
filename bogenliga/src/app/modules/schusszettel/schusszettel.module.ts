@@ -19,10 +19,10 @@ import {TabletComponent} from './components/tablet/tablet.component';
 import {WettkampfbeendetComponent} from './components/maske4wettkampfbeendet/wettkampfbeendet.component';
 import {NotAllowedComponent} from './components/maske5not-allowed/not-allowed.component';
 import {Maske4ZustandComponent} from '@schusszettel/components/maske4zustand/maske4zustand.component';
+import {Maske6MatchendeComponent} from './components/maske6matchende/maske6matchende.component';
 import {MatchKontextComponent} from './components/shared/match-kontext/match-kontext.component';
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatchProviderService} from '../wkdurchfuehrung/services/match-provider.service';
 import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
 
 @NgModule({
@@ -35,6 +35,7 @@ import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
     NotAllowedComponent,
     WettkampfbeendetComponent,
     Maske4ZustandComponent,
+    Maske6MatchendeComponent,
     MatchKontextComponent,
   ],
   imports: [

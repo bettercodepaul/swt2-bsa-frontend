@@ -55,6 +55,13 @@
         </bla-maske2eingabe>
       </ng-container>
 
+      <!-- Match ended - show completed match results -->
+      <bla-maske6matchende
+        *ngSwitchCase="'MATCH_ENDE'"
+        [infos]="data"
+        (weiter)="onMatchEndeWeiter()">
+      </bla-maske6matchende>
+
       <!-- Competition ended -->
       <ng-container *ngSwitchCase="'WETTKAMPF_BEENDET'">
         <bla-maske4zustand
