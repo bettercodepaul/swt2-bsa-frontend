@@ -13,6 +13,7 @@ export enum TabletSchusszettelStatus {
   SATZEINGABE       = 'SATZEINGABE',
   SCHUETZENMELDUNG  = 'SCHUETZENMELDUNG',
   WARTE             = 'WARTE',
+  MATCH_ENDE        = 'MATCH_ENDE',
   NOT_ALLOWED       = 'NOT_ALLOWED',
   WETTKAMPF_BEENDET = 'WETTKAMPF_BEENDET'  // Changed from WETTKAMPF_ENDE to match component
 }

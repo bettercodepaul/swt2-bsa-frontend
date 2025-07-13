@@ -94,7 +94,11 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.error('[SchusszettelAdmin] loadSessions error:', err);
-            this.errorMsg = 'Fehler beim Laden der Sessions.';
+            if (err.status === 404) {
+              this.errorMsg = 'Das System hat keine Begegnungen für diesen Wettkampf gefunden. Stellen Sie sicher, dass Sie die Matches gegeneriert haben, bevor Sie die Schusszettel Tablet Sessions ausgeben.';
+            } else {
+              this.errorMsg = 'Fehler beim Laden der Sessions.';
+            }
             this.loading = false;
             this.cd.markForCheck(); // update view on error
           }

@@ -1,0 +1,50 @@
+<div *ngIf="infos" class="maske6-matchende container" role="main">
+  <!-- Match Context -->
+  <bla-match-kontext [infos]="infos"></bla-match-kontext>
+
+  <!-- Weiter Button - Moved above schusszettel for better UX flow -->
+  <div class="row">
+    <div class="col-12 text-center mt-4 mb-4">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onWeiter()"
+        aria-label="Weiter zum nächsten Bildschirm"
+        class="weiter-button"
+      >
+        Weiter
+      </button>
+    </div>
+  </div>
+
+  <!-- Embedded Schusszettel Component -->
+  <div class="embedded-schusszettel-section" *ngIf="shouldShowSchusszettel()">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="section-title">Schusszettel-Übersicht</h3>
+        <div class="schusszettel-container">
+          <bla-schusszettel 
+            [match1Id]="infos?.eigenesTeamMatchId" 
+            [match2Id]="infos?.gegnerischesTeamMatchId"
+            [embeddedMode]="true"
+            [readOnlyMode]="true">
+          </bla-schusszettel>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fallback: Show basic match info if schusszettel links are not available -->
+  <div class="match-summary" *ngIf="!shouldShowSchusszettel()">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-info">
+          <mat-icon>info</mat-icon>
+          <strong>Match-Übersicht</strong><br>
+          {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }} vs {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }}<br>
+          <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
