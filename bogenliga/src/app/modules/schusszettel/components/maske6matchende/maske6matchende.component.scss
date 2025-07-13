@@ -14,7 +14,7 @@ $border: #dee2e6;
   overflow-y: auto;
 }
 
-.maske4-zustand {
+.maske6-matchende {
   margin: 10px auto;
   padding: 15px;
   min-height: 100vh;
@@ -55,272 +55,6 @@ $border: #dee2e6;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-// Match Header Section - Compact for tablets
-.match-header-section {
-  margin-bottom: 15px;
-
-  .team-title {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 5px;
-  }
-
-  .match-info {
-    font-size: 14px;
-    color: #666;
-  }
-
-  .teams-display {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-
-    .team {
-      font-size: 16px;
-      font-weight: 600;
-      color: $primary-dark;
-      margin: 0;
-    }
-
-    .vs {
-      font-size: 14px;
-      color: #666;
-      font-weight: 400;
-    }
-  }
-
-  .current-status-box {
-    background: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 4px;
-    text-align: center;
-
-    .status-label {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 3px;
-    }
-
-    .status-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: $primary-dark;
-    }
-  }
-}
-
-// Match Summary Table - Compact for tablets
-.match-summary-section {
-  margin-bottom: 15px;
-  overflow-x: auto;
-
-  .match-summary-table {
-    width: 100%;
-    margin-bottom: 0;
-    font-size: 13px;
-
-    thead {
-      background: #f8f9fa;
-
-      th {
-        border: 1px solid $border;
-        padding: 6px 4px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 12px;
-
-        &.team-header {
-          text-align: left;
-          min-width: 120px;
-          max-width: 140px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        &.match-points-header {
-          background: #e3f2fd;
-        }
-      }
-    }
-
-    tbody {
-      tr.team-row {
-        &:nth-child(even) {
-          background: #f9f9f9;
-        }
-
-        td {
-          border: 1px solid $border;
-          padding: 6px 4px;
-          text-align: center;
-
-          &.team-name-cell {
-            text-align: left;
-            font-weight: 600;
-            max-width: 140px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          &.summary-cell {
-            background: #e3f2fd;
-            font-weight: 600;
-          }
-
-          &.match-points {
-            background: #c8e6c9;
-            font-weight: 700;
-            font-size: 14px;
-          }
-        }
-      }
-    }
-  }
-}
-
-// Shooters Section - Compact for tablets
-.shooters-section {
-  margin-bottom: 15px;
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 16px;
-  }
-
-  .shooters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 10px;
-  }
-
-  .shooter-card {
-    border: 1px solid $border;
-    border-radius: 3px;
-    padding: 8px;
-    background: #f9f9f9;
-
-    .shooter-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-
-      .rueckennummer {
-        font-size: 16px;
-        font-weight: 700;
-        color: $primary-dark;
-        min-width: 30px;
-      }
-
-      .shooter-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: #333;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .shooter-stats {
-      .stat-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 4px;
-
-        .stat-label {
-          font-size: 11px;
-          color: #666;
-        }
-
-        .stat-value {
-          font-weight: 600;
-          color: $primary-dark;
-          font-size: 12px;
-        }
-      }
-    }
-  }
-}
-
-// Satz Details Section - Compact for tablets
-.satz-details-section {
-  margin-bottom: 15px;
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 16px;
-  }
-
-  .satz-details-table {
-    width: 100%;
-    font-size: 12px;
-    display: block;
-
-    thead, tbody {
-      display: table;
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    thead {
-      background: #f8f9fa;
-
-      th {
-        border: 1px solid $border;
-        padding: 6px 4px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 11px;
-      }
-    }
-
-    tbody {
-      tr {
-        &:nth-child(even) {
-          background: #f9f9f9;
-        }
-
-        td {
-          border: 1px solid $border;
-          padding: 6px 4px;
-          text-align: center;
-
-          .badge {
-            padding: 2px 6px;
-            font-size: 10px;
-            border-radius: 2px;
-            white-space: nowrap;
-
-            &.badge-success {
-              background-color: #28a745;
-              color: white;
-            }
-
-            &.badge-danger {
-              background-color: #dc3545;
-              color: white;
-            }
-
-            &.badge-secondary {
-              background-color: #6c757d;
-              color: white;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
 // Weiter Button - Positioned to avoid overlap
 .weiter-button {
   margin: 20px auto;
@@ -341,47 +75,20 @@ $border: #dee2e6;
 
 // Tablet optimizations
 @media (max-width: 1024px) {
-  .maske4-zustand {
+  .maske6-matchende {
     padding: 10px;
   }
 
   .match-container {
     padding: 8px;
   }
-
-  .shooters-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 8px;
-  }
 }
 
 // Mobile adjustments
 @media (max-width: 768px) {
-  .match-header-section {
-    .teams-display {
-      flex-direction: column;
-      gap: 5px;
-
-      .team {
-        font-size: 14px;
-      }
-    }
-  }
-
-  .shooters-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .match-summary-table {
-    font-size: 11px;
-
-    td.match-points {
-      font-size: 12px;
-    }
-  }
-
-  .satz-details-table {
-    font-size: 10px;
+  .weiter-button {
+    font-size: 14px;
+    padding: 10px 25px;
   }
 }
 
