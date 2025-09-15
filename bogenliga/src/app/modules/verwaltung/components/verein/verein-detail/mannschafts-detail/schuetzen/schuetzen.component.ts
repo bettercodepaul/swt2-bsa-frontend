@@ -186,8 +186,9 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
             this.memberToAdd.rueckennummer = teamMembers.length + 1;
             this.createLizenzForMember(memberId);
           } else {
-            this.showMemberInTooManyTeams();
-          }
+            this.memberToAdd.dsbMitgliedEingesetzt = 1;
+            this.memberToAdd.rueckennummer = teamMembers.length + 1;
+            this.createLizenzForMember(memberId);          }
         })
         .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           console.log('Failure: ' + response.payload);
