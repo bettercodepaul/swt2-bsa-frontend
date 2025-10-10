@@ -3,7 +3,7 @@ SWT2 - Bogenliga Application - Angular Oberfläche
 
 SoSem 2019
 
-## Quickstart
+## Quickstart 
 
 Run `npm ci` to install all dependencies.
 
