@@ -5,8 +5,7 @@ import {SchusszettelProviderService} from '../../services/schusszettel-provider.
 import {BogenligaResponse, RequestResult, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '@shared/functions';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
-import { filter } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   Notification,
   NotificationOrigin,
