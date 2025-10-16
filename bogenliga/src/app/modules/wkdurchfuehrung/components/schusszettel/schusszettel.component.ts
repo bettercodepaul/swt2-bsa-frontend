@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit,AfterViewInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
@@ -46,7 +46,7 @@ const FALSCHER_SCHUETZE = '';
   templateUrl: './schusszettel.component.html',
   styleUrls:   ['./schusszettel.component.scss']
 })
-export class SchusszettelComponent implements OnInit {
+export class SchusszettelComponent implements OnInit, AfterViewInit {
 
   // Input properties for embedding in tablet zustand component
   @Input() match1Id?: number;
@@ -291,6 +291,11 @@ export class SchusszettelComponent implements OnInit {
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
     */
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      document.querySelector('.wrapper')?.scrollTo(0, 0);
+    }, 0);
   }
 
   /**
