@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,AfterViewInit} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
@@ -46,7 +46,7 @@ const FALSCHER_SCHUETZE = '';
   templateUrl: './schusszettel.component.html',
   styleUrls:   ['./schusszettel.component.scss']
 })
-export class SchusszettelComponent implements OnInit, AfterViewInit {
+export class SchusszettelComponent implements OnInit {
 
   // Input properties for embedding in tablet zustand component
   @Input() match1Id?: number;
@@ -282,8 +282,10 @@ export class SchusszettelComponent implements OnInit, AfterViewInit {
           const match2id = params['match2id'];
           loadMatches(match1id, match2id);
         }
+        document.querySelector('.wrapper')?.scrollTo(0, 0);
       });
     }
+
     /*
     this.getAllMannschaften();
     this.getAllVerein();
@@ -292,11 +294,7 @@ export class SchusszettelComponent implements OnInit, AfterViewInit {
     this.getAllVeranstaltungen();
     */
   }
-  ngAfterViewInit() {
-    setTimeout(() => {
-      document.querySelector('.wrapper')?.scrollTo(0, 0);
-    }, 0);
-  }
+
 
   /**
    * Called when ngModel for passe.ringzahlPfeilx changes.
