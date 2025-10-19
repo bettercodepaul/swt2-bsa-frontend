@@ -194,6 +194,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.saveLoading = true;
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
+    this.currentMannschaft.benutzerId = this.currentUserService.getUserId();
     this.currentMannschaft.veranstaltungId = null;
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case

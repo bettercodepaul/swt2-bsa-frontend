@@ -290,7 +290,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).
-      path('copymannschaftID/' + mannschaftID).build())
+      path('copyMannschaftID/' + mannschaftID).build())
         .then((data: VersionedDataTransferObject) => {
           resolve({result: RequestResult.SUCCESS});
 
