@@ -194,18 +194,12 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.saveLoading = true;
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
-    this.currentMannschaft.benutzerId = 1;
+    this.currentMannschaft.benutzerId = this.currentUserService.getUserId();
     this.currentMannschaft.veranstaltungId = null;
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case
-    if (!this.existsMannschaftsNummer(this.currentMannschaft.nummer)) {
-      // then save the new Mannschaft
-      this.saveMannschaft();
-    } else {
-      this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
-      this.saveLoading = false;
+    this.saveMannschaft();
     }
-  }
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;

@@ -281,7 +281,30 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           });
     });
   }
-// Backend-Aufruf um eine Mannschaft eienr Veransatltung zuzuweisen.
+
+  // Gets executed when button "+" in Tabelle of Mannschaften is pressed
+  public copyMannschaft(mannschaftID: string | number): Promise<BogenligaResponse<void>> {
+
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).
+      path('copyMannschaftID/' + mannschaftID).build())
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS});
+
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
+  // Backend-Aufruf um eine Mannschaft eienr Veransatltung zuzuweisen.
   public assignMannschaftToVeranstaltung(currentVeranstaltungID: string | number, mannschaftID: string | number): Promise<BogenligaResponse<void>> {
 
     // return promise

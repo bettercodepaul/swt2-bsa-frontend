@@ -1162,6 +1162,10 @@
           "TITLE": "Mannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft wirklich löschen? Die Mannschaft ist danach nicht mehr verfügbar."
         },
+        "COPY": {
+          "TITLE": "Mannschaft kopieren",
+          "DESCRIPTION": "Wollen Sie die Mannschaft wirklich kopieren? Die Mannschaft wird  mit dem selben Namen und der selben Nummer erstellt."
+        },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Mannschaft wurde erfolgreich gelöscht."
