@@ -52,6 +52,7 @@ const NOTIFICATION_DELETE_VEREIN_FAILURE = 'verein_detail_delete_failure';
 const NOTIFICATION_SAVE_VEREIN = 'verein_detail_save';
 const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
+const NOTIFICATION_COPY_MANNSCHAFT = 'mannschaft_detail_copy';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
@@ -349,6 +350,41 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
                                     }
 
                                   });
+
+    this.notificationService.showNotification(notification);
+  }
+
+  public onCopyMannschaft(versionedDataObject: VersionedDataObject): void {
+
+    this.notificationService.discardNotification();
+
+    const id = versionedDataObject.id;
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+
+    const notification: Notification = {
+      id:               NOTIFICATION_COPY_MANNSCHAFT + id,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.COPY.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.COPY.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFT + id)
+      .subscribe((myNotification) => {
+
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.mannschaftsDataProvider.copyMannschaft(id)
+            .then((response) => this.loadMannschaften())
+            .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+        } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+          this.rows = hideLoadingIndicator(this.rows, id);
+          notificationEvent.unsubscribe();
+        }
+
+      });
 
     this.notificationService.showNotification(notification);
   }

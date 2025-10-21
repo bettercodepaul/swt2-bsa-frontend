@@ -30,10 +30,11 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       },
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER, TableActionType.ADD],
       width:       6
     },
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
-    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER]
+    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER],
+    addPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER]
 
 };
