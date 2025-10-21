@@ -1168,6 +1168,10 @@
             "TITLE": "Delete Team",
             "DESCRIPTION": "Are you sure, you want to delete the team? This can not be undone."
           },
+          "COPY": {
+            "TITLE": "Copy Team",
+            "DESCRIPTION": "Are you sure, you want to copy the team? This will create a new team with the same name and members."
+          },
           "DELETE_SUCCESS": {
             "TITLE": "Success",
             "DESCRIPTION": "Successfully deleted team."
