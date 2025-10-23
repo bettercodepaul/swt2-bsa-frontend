@@ -37,6 +37,7 @@ import {
 export const HOME_ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent, canActivate: [HomeGuard]},
+  // TODO: Hier die-Link Formulierung anpassen
   {path: 'home/:id', component: HomeComponent, canActivate: [HomeGuard]},
   {path: 'impressum', component: ImpressumComponent, canActivate: [HomeGuard]},
   //{path: '**', component: HomeComponent, canActivate: [HomeGuard]}

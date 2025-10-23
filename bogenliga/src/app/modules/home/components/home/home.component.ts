@@ -342,6 +342,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.recentLigaService.add({id: this.selectedLigaID, name: this.selectedLigaName});
       this.recentLigas = this.recentLigaService.getAll();
       if(this.hasLigaNameInUrl){
+        // TODO: Hier die-Link Formulierung anpassen
         const link = '/home/' + this.selectedLigaID;
         this.router.navigateByUrl(link);
       }
