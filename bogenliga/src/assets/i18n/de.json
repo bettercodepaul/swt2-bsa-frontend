@@ -17,6 +17,7 @@
     "REGIONEN": "Regionen",
     "VEREINE": "Vereine",
     "WKDURCHFUEHRUNG": "Wettkampfdurchführung",
+    "LIGAUEBERSICHT": "Ligaübersicht",
     "MANNSCHAFTEN": "Ligatabelle",
     "SETTINGS": "Einstellungen",
     "PLAYGROUND": "Playground",
@@ -2010,5 +2011,10 @@
     "HILFE": {
       "TITLE": "Hilfestellungen"
     }
+  },
+  "LIGAUEBERSICHT": {
+    "TITLE": "Ligaübersicht",
+    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Ligen mit ihren hierarchischen Strukturen.",
+    "PLACEHOLDER": "Die Ligaübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze."
   }
 }
