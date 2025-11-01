@@ -106,8 +106,24 @@ export class SidebarComponent implements OnInit {
 
     this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
 
+    // Analytics-Event für Navigation tracken
+    this.trackNavigationClick(route);
+
     return result;
     }
+
+  /**
+   * Tracked Navigationsklicks für Analytics (Matomo/Piwik)
+   * 
+   * @param route Die aufgerufene Route
+   */
+  private trackNavigationClick(route: string): void {
+    if (typeof window !== 'undefined' && (window as any)._paq) {
+      if (route === '/liga') {
+        (window as any)._paq.push(['trackEvent', 'Navigation', 'nav_ligauebersicht_click']);
+      }
+    }
+  }
 
 
   public getSidebarCollapseIcon(): string {
