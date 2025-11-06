@@ -79,6 +79,32 @@ export class LigaDataProviderService  extends DataProviderService {
       });
   }
 
+  /**
+   * Findet eine Liga per Slug/Liganame.
+   * Backend: GET v1/liga/checkExistsLigaName/{liganame}
+   * @param slug Slug oder Liganame
+   */
+  public findBySlug(slug: string): Promise<BogenligaResponse<LigaDO>> {
+    return new Promise((resolve, reject) => {
+      this.restClient
+        .GET<VersionedDataTransferObject>(
+          new UriBuilder()
+            .fromPath(this.getUrl())
+            .path('checkExistsLigaName')
+            .path(slug)
+            .build()
+        )
+        .then((data: VersionedDataTransferObject) => {
+          resolve({ result: RequestResult.SUCCESS, payload: fromPayload(data) });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
+    });
+  }
 
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise

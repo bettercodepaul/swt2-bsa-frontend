@@ -2,11 +2,27 @@ import {Routes} from '@angular/router';
 
 import {HomeComponent} from '@home/components/home/home.component';
 import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
+import {CurrentLigaGuard} from "@verwaltung/guards/current-liga.guard";
+import {LigaContextResolver} from "@shared/resolvers/liga-context.resolver";
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
-  {path: 'home/:id', component: HomeComponent},
+  {
+    path: 'home/:id',
+    canActivate: [CurrentLigaGuard],
+    resolve: { ligaContext: LigaContextResolver },
+    component: HomeComponent,
+  },
+  // Liga-Home via Deeplink: nutzt Guard (setzt CurrentLiga) + Resolver (baut Basis-Kontext)
+  {
+    path: 'home/:ligaId',
+    canActivate: [CurrentLigaGuard],
+    resolve: { ligaContext: LigaContextResolver },
+    component: HomeComponent,
+  },
+  // Optional: kompatibler Alias (falls ihr später auf /liga/:ligaId wechseln wollt)
+  // { path: 'liga/:ligaId', redirectTo: 'home/:ligaId', pathMatch: 'full' },
   {path: 'wettkaempfe', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},

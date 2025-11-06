@@ -28,6 +28,11 @@ import {element} from 'protractor';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import { LigaContext } from '@shared/resolvers/liga-context.resolver';
+import { MatchDO } from '@verwaltung/types/match-do.class';
+import { LigatabelleErgebnisDO } from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import { LigatabelleDataProviderService } from '../../../ligatabelle/services/ligatabelle-data-provider.service';
+import { MatchDataProviderService as WettkampfMatchDataProviderService } from '@wettkampf/services/match-data-provider.service';
 import { RecentLigaService, RecentLigaEntry } from '@shared/services';
 //for notification
 import {
@@ -39,6 +44,7 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
+import {CurrentLigaService} from "@shared/services/current-liga";
 
 
 const ID_PATH_PARAM = 'id';
@@ -89,6 +95,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
   public recentLigas: RecentLigaEntry[] = [];
+  private currentLiga: LigaDO | null = null;
 
   public VereinsID: number;
   public providedID: number;
@@ -101,6 +108,16 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
 
+  // Liga-spezifischer Zustand (nur gesetzt wenn Route /home/:ligaId)
+  liga: LigaDO | null = null;
+  wettkaempfe: WettkampfDO[] = [];
+  defaultWettkampf: WettkampfDO | null = null;
+
+  // Optional nachgeladen für Anzeige
+  loadingLigaBlock = false;
+  ligatabelle: LigatabelleErgebnisDO[] | null = null;
+  matches: MatchDO[] | null = null;
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
@@ -112,7 +129,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService,
+    private currentLigaService: CurrentLigaService,
     private selectedLigaDataprovider: SelectedLigaDataprovider,
+    private ligatabelleProvider: LigatabelleDataProviderService,
+    private matchProvider: WettkampfMatchDataProviderService,
     private recentLigaService: RecentLigaService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -190,10 +210,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       }
     });
   }
-
-
-
-
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
@@ -341,6 +357,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadedLigaData=true;
       this.recentLigaService.add({id: this.selectedLigaID, name: this.selectedLigaName});
       this.recentLigas = this.recentLigaService.getAll();
+      // TODO: Hier geändert.
+      this.currentLigaService.setLigaById(this.selectedLigaID);
       if(this.hasLigaNameInUrl){
         // TODO: Hier die-Link Formulierung anpassen
         const link = '/home/' + this.selectedLigaID;

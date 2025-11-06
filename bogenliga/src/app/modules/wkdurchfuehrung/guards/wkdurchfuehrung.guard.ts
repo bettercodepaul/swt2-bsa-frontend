@@ -10,6 +10,7 @@ export class WkdurchfuehrungGuard implements CanActivate {
   canActivate() {
     // CAN_READ_WETTKAMPF required to activate wkdurchfuehrung
     return this.currentUserService.hasAnyPermisson(
+      // TODO: Hier die Permissions anschauen
       [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]);
   }
 }
