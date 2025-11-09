@@ -177,7 +177,7 @@ export class LigaDataProviderService  extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('checkExistsLigaName').path(liganame).build())
           .then((data: VersionedDataTransferObject) => {
-            console.log("Liga Data PRovider");
+            console.log("Liga Data Provider");
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {

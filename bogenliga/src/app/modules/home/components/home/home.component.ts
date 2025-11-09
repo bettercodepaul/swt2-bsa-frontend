@@ -33,6 +33,7 @@ import { MatchDO } from '@verwaltung/types/match-do.class';
 import { LigatabelleErgebnisDO } from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
 import { LigatabelleDataProviderService } from '../../../ligatabelle/services/ligatabelle-data-provider.service';
 import { MatchDataProviderService as WettkampfMatchDataProviderService } from '@wettkampf/services/match-data-provider.service';
+import {buildLigaHomeLink, slugifyLigaName} from '@shared/functions/slug-utils';
 import { RecentLigaService, RecentLigaEntry } from '@shared/services';
 //for notification
 import {
@@ -45,6 +46,7 @@ import {
   NotificationService
 } from '@shared/services';
 import {CurrentLigaService} from "@shared/services/current-liga";
+import {extractLigaId, extractLigaSlug} from "@shared/functions/liga-route-utils";
 
 
 const ID_PATH_PARAM = 'id';
@@ -84,6 +86,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    */
   private selectedLigaName: string;
   private selectedLigaID: number;
+  private selectedLigaSlug: string;
   private selectedLigaDetails: string;
   private selectedLigaDetailBase64: string;
   private selectedLigaDetailFileName: string;
@@ -164,9 +167,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   async ngOnInit() {
+    // Login / Initialdaten
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser().then(() => this.handleSuccessfulLogin());
-    } else if (this.currentUserService.isLoggedIn() === true) {
+    } else {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
@@ -174,39 +178,113 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     this.recentLigas = this.recentLigaService.getAll();
 
-
-    //to get if of liga from route path
-    this.routeSubscription=this.route.params.subscribe((params) => {
-      //if parameter ID_Path_PARAM is defined
-      //it parses the parameter value as an integer and assigns it to the providedID variable
-
-      //checking if url has parameter
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.hasID = true;
-        //this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
-
-
-        //check if url has number or liganame
-        if (!paramIsNumber) {
-          this.ligaName = params[ID_PATH_PARAM]
-          this.hasLigaIDInUrl = false;
-          this.hasLigaNameInUrl=true;
-          console.log("String liga name is: " + this.ligaName);
-          this.ligaName? this.loadLiga(this.ligaName) : null;
-        } else {
-          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          this.hasLigaIDInUrl = true;
-          this.hasLigaNameInUrl=false;
-          console.log("Number ID is: " + this.providedID);
-          this.checkingAndLoadingLiga(); // load liga with changes of id in url
-        }
-        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
-
-      } else {
+    // URL-Param überwachen (alte + neue Deeplink-Formate)
+    this.routeSubscription = this.route.params.subscribe(async (params) => {
+      const raw = params[ID_PATH_PARAM]; // ID_PATH_PARAM = 'id'
+      if (isUndefined(raw)) {
+        this.hasID = false;
         this.hasLigaIDInUrl = false;
-        this.hasLigaNameInUrl=false;
-        this.hasID=false;
+        this.hasLigaNameInUrl = false;
+        return;
+      }
+
+      this.hasID = true;
+
+      // Prüfe kombiniertes Format: "<zahl>" oder "<zahl>-<slug>"
+      const combinedMatch = /^(\d+)(?:-(.+))?$/.exec(raw);
+      if (combinedMatch) {
+        // Numerische ID extrahieren
+        const idNum = parseInt(combinedMatch[1], 10);
+        const slugPartFromUrl = combinedMatch[2] || null;
+
+        this.providedID = idNum;
+        this.hasLigaIDInUrl = true;
+        this.hasLigaNameInUrl = false;
+
+        try {
+          // Liga per ID laden
+          await this.ligaDataProvider.checkExists(idNum)
+            .then((response: BogenligaResponse<LigaDO>) => {
+              if (!response.payload.id) {
+                // Ungültige ID → zurück zur allgemeinen Home-Seite
+                this.router.navigateByUrl('/home');
+                return;
+              }
+
+              // Liga-Daten in State übernehmen
+              this.selectedLigaName = response.payload.name;
+              this.selectedLigaID = response.payload.id;
+              this.selectedLigaSlug = slugifyLigaName(this.selectedLigaName);
+              this.selectedLigaDetails = response.payload.ligaDetail;
+              this.selectedLigaDetailBase64 = response.payload.ligaDetailFileBase64;
+              this.selectedLigaDetailFileName = response.payload.ligaDetailFileName;
+              this.selectedLigaDetailFileType = response.payload.ligaDetailFileType;
+              this.loadedLigaData = true;
+              this.currentLigaService.setLigaById(this.selectedLigaID);
+              this.recentLigaService.add({ id: this.selectedLigaID, name: this.selectedLigaName });
+              this.recentLigas = this.recentLigaService.getAll();
+
+              // Veranstaltungen für diese Liga holen
+              this.getVeranstaltungen(this.selectedLigaID);
+
+              // Slug validieren / kanonisieren
+              const canonicalLink = `/home/${this.selectedLigaID}-${this.selectedLigaSlug}`;
+              if (!slugPartFromUrl || slugPartFromUrl !== this.selectedLigaSlug) {
+                // Redirect nur wenn wir nicht schon auf der korrekten URL sind
+                if (raw !== `${this.selectedLigaID}-${this.selectedLigaSlug}`) {
+                  this.router.navigateByUrl(canonicalLink);
+                }
+              }
+            })
+            .catch(() => {
+              this.router.navigateByUrl('/home');
+            });
+        } catch {
+          this.router.navigateByUrl('/home');
+        }
+
+        return;
+      }
+
+      // Legacy-Fall: kein numerischer Präfix → Interpretieren als Liga-Name
+      this.hasLigaIDInUrl = false;
+      this.hasLigaNameInUrl = true;
+      this.ligaName = raw;
+
+      try {
+        const normalizedName = this.ligaName.replace(/_/g, ' ').toLowerCase();
+        await this.ligaDataProvider.checkExistsLigaName(normalizedName)
+          .then((response: BogenligaResponse<LigaDO>) => {
+            if (!response.payload.id) {
+              this.router.navigateByUrl('/home');
+              return;
+            }
+
+            // Liga-Daten übernehmen
+            this.selectedLigaName = response.payload.name;
+            this.selectedLigaID = response.payload.id;
+            this.selectedLigaSlug = slugifyLigaName(this.selectedLigaName);
+            this.selectedLigaDetails = response.payload.ligaDetail;
+            this.selectedLigaDetailBase64 = response.payload.ligaDetailFileBase64;
+            this.selectedLigaDetailFileName = response.payload.ligaDetailFileName;
+            this.selectedLigaDetailFileType = response.payload.ligaDetailFileType;
+            this.loadedLigaData = true;
+            this.currentLigaService.setLigaById(this.selectedLigaID);
+            this.recentLigaService.add({ id: this.selectedLigaID, name: this.selectedLigaName });
+            this.recentLigas = this.recentLigaService.getAll();
+
+            // Veranstaltungen
+            this.getVeranstaltungen(this.selectedLigaID);
+
+            // Sofort auf kanonische URL weiterleiten
+            const canonical = `/home/${this.selectedLigaID}-${this.selectedLigaSlug}`;
+            this.router.navigateByUrl(canonical);
+          })
+          .catch(() => {
+            this.router.navigateByUrl('/home');
+          });
+      } catch {
+        this.router.navigateByUrl('/home');
       }
     });
   }
@@ -357,12 +435,13 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadedLigaData=true;
       this.recentLigaService.add({id: this.selectedLigaID, name: this.selectedLigaName});
       this.recentLigas = this.recentLigaService.getAll();
-      // TODO: Hier geändert.
       this.currentLigaService.setLigaById(this.selectedLigaID);
       if(this.hasLigaNameInUrl){
-        // TODO: Hier die-Link Formulierung anpassen
-        const link = '/home/' + this.selectedLigaID;
-        this.router.navigateByUrl(link);
+        const link = buildLigaHomeLink(this.selectedLigaID, this.selectedLigaName)
+        // Prevent double navigation
+        if (!this.route.snapshot.paramMap.get('id')?.startsWith(this.selectedLigaID + '-')) {
+          this.router.navigateByUrl(link);
+        }
       }
     }
   }
