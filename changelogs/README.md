@@ -19,4 +19,5 @@ Die Changelogs folgen dem [Keep a Changelog](https://keepachangelog.com/de/1.0.0
 
 - `changelog-2025-11-01-ligauebersicht.md` - Ligaübersicht Modul (Issue #1957-Frontend)
 - `changelog-2025-11-09-league-hierarchy-service.md` - Liga-Hierarchie Service
+- `changelog-2025-11-09-ui-001-tree-component.md` - UI-001 Basis-Baumkomponente
 
