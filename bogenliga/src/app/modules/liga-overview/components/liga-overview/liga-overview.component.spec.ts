@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {LigaOverviewComponent} from './liga-overview.component';
 import {LeagueHierarchyService} from '@shared/services';
-import {Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {LeagueHierarchyResult} from '@shared/models/tree-node';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
@@ -18,12 +18,18 @@ describe('LigaOverviewComponent', () => {
   let component: LigaOverviewComponent;
   let fixture: ComponentFixture<LigaOverviewComponent>;
   let mockRouter: jasmine.SpyObj<Router>;
+  let mockActivatedRoute: any;
+  let queryParamsSubject: BehaviorSubject<any>;
   let hierarchyService: jasmine.SpyObj<LeagueHierarchyService>;
   let hierarchySubject: Subject<LeagueHierarchyResult>;
 
   beforeEach(async(() => {
     // Mock Router erstellen
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+    queryParamsSubject = new BehaviorSubject<any>({});
+    mockActivatedRoute = {
+      queryParams: queryParamsSubject.asObservable()
+    };
     hierarchySubject = new Subject<LeagueHierarchyResult>();
     hierarchyService = jasmine.createSpyObj('LeagueHierarchyService', ['getHierarchy']);
     hierarchyService.getHierarchy.and.returnValue(hierarchySubject.asObservable());
@@ -35,6 +41,7 @@ describe('LigaOverviewComponent', () => {
       ],
       providers: [
         {provide: Router, useValue: mockRouter},
+        {provide: ActivatedRoute, useValue: mockActivatedRoute},
         {provide: LeagueHierarchyService, useValue: hierarchyService}
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -111,5 +118,85 @@ describe('LigaOverviewComponent', () => {
 
     expect(component.treeNodes.length).toBe(0);
     expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.EMPTY');
+  });
+
+  describe('Deeplink functionality', () => {
+    it('should handle valid ligaId query parameter', (done) => {
+      const nodes = [
+        {
+          id: 1,
+          name: 'Bundesliga',
+          level: 0,
+          parentId: null,
+          children: [
+            {id: 2, name: 'Region A', level: 1, parentId: 1, children: []}
+          ]
+        }
+      ];
+
+      fixture.detectChanges();
+      hierarchySubject.next({status: 'ok', data: nodes});
+      fixture.detectChanges();
+
+      // Simulate query param
+      queryParamsSubject.next({ligaId: '2'});
+
+      // TreeComponent sollte expandPathTo aufrufen
+      setTimeout(() => {
+        expect(component.selectedLigaId).toBe(2);
+        done();
+      }, 200);
+    });
+
+    it('should show error message for invalid ligaId', (done) => {
+      fixture.detectChanges();
+
+      queryParamsSubject.next({ligaId: 'invalid'});
+
+      setTimeout(() => {
+        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
+        done();
+      }, 50);
+    });
+
+    it('should show error message for non-existent ligaId', (done) => {
+      const nodes = [
+        {id: 1, name: 'Bundesliga', level: 0, parentId: null, children: []}
+      ];
+
+      fixture.detectChanges();
+      hierarchySubject.next({status: 'ok', data: nodes});
+      fixture.detectChanges();
+
+      queryParamsSubject.next({ligaId: '999'});
+
+      setTimeout(() => {
+        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.NOT_FOUND');
+        done();
+      }, 200);
+    });
+
+    it('should navigate to league homepage on tree selection', () => {
+      spyOn(window.location, 'assign');
+
+      component.onTreeSelect(123);
+
+      expect(window.location.assign).toHaveBeenCalledWith('/wettkaempfe/ligatabelle?ligaId=123');
+    });
+
+    it('should clear deeplink error after 5 seconds', (done) => {
+      fixture.detectChanges();
+
+      queryParamsSubject.next({ligaId: 'invalid'});
+
+      setTimeout(() => {
+        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
+
+        setTimeout(() => {
+          expect(component.deeplinkErrorMessage).toBeNull();
+          done();
+        }, 5100);
+      }, 50);
+    });
   });
 });
