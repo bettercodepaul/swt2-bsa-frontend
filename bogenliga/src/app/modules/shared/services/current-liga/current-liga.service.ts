@@ -5,16 +5,6 @@ import { LigaDO } from '@verwaltung/types/liga-do.class';
 import { LigaDataProviderService } from '@verwaltung/services/liga-data-provider.service';
 import { slugifyLigaName } from '@shared/functions/slug-utils';
 
-/**
- * localStorage Keys für den Liga-Kontext.
- * ID = stabiler Lookup
- * NAME = Original-Liga-Name (wie vom Backend geliefert)
- * SLUG = kanonischer Slug (aus NAME slugified, nur a-z0-9-)
- *
- * Historie:
- * - Frühere Versionen speicherten im "slug"-Key fälschlich den Original-Namen.
- *   Dies wird beim Restore erkannt und migriert.
- */
 const STORAGE_ID_KEY   = 'bogenliga_current_liga_id';
 const STORAGE_NAME_KEY = 'bogenliga_current_liga_name';
 const STORAGE_SLUG_KEY = 'bogenliga_current_liga_slug';
@@ -48,9 +38,6 @@ export class CurrentLigaService {
     return this.stateSubject.value.liga;
   }
 
-  /**
-   * Lädt Liga per ID (primärer Weg) und persistiert ID + NAME + SLUG.
-   */
   async setLigaById(id: number): Promise<LigaDO> {
     if (this.lastIdLoaded === id && this.stateSubject.value.liga) {
       return this.stateSubject.value.liga;
@@ -63,13 +50,12 @@ export class CurrentLigaService {
   }
 
   /**
-   * Legacy: Setzt Liga über einen Namen (nicht einen Slug!).
-   * Das Backend-Ende checkExistsLigaName erwartet den ursprünglichen Liganamen.
-   * Wenn ihr später echten Slug-Support habt, kann diese Methode angepasst oder entfernt werden.
+   * Setzt Liga über einen Namen (Backend erwartet den Original-Namen).
+   * (Beibehalt für Fälle, in denen nur der Name vorliegt.)
    */
-  async setLigaBySlug(nameOrSlugLegacy: string): Promise<LigaDO> {
+  async setLigaBySlug(name: string): Promise<LigaDO> {
     this.patch({ loading: true, error: undefined });
-    const resp = await this.ligaProvider.findBySlug(nameOrSlugLegacy);
+    const resp = await this.ligaProvider.findBySlug(name);
     const liga = resp.payload;
     this.persistAndSet(liga);
     return liga;
@@ -83,12 +69,8 @@ export class CurrentLigaService {
     localStorage.removeItem(STORAGE_SLUG_KEY);
   }
 
-  /**
-   * Persistiert Liga + Ableitungen und setzt State.
-   */
   private persistAndSet(liga: LigaDO | null): void {
     this.setLigaInternal(liga);
-
     if (!this.browser) { return; }
     if (liga && liga.id != null) {
       const name = liga.name ?? '';
@@ -103,23 +85,16 @@ export class CurrentLigaService {
     }
   }
 
-  /**
-   * Reiner State-Setter (ohne Persistenz), gemeinsam genutzt.
-   */
   private setLigaInternal(liga: LigaDO | null): void {
     this.lastIdLoaded = liga?.id;
     this.patch({ liga, loading: false, error: undefined });
   }
 
   /**
-   * Migration + Restore:
-   * Ablauf:
-   * 1. Falls ID vorhanden -> darüber restaurieren (kanonisiert automatisch NAME + SLUG).
-   * 2. Falls keine ID, aber NAME vorhanden -> versuche setLigaBySlug(NAME).
-   * 3. Falls keine ID+NAME, aber "slug" vorhanden:
-   *    - Prüfe ob slug "legacy" (enthält unzulässige Slug-Zeichen)
-   *      -> behandle als NAME und versuche setLigaBySlug
-   *    - sonst kann ohne Backend kein Name rekonstruiert werden (versuche setLigaBySlug(slug) als Fallback).
+   * Restore ohne Migration:
+   * - Wenn ID vorhanden: per ID laden.
+   * - Sonst, wenn NAME vorhanden: per Name laden.
+   * - SLUG wird ignoriert (nur informativ gespeichert).
    */
   private async restoreFromStorage(): Promise<void> {
     if (!this.browser) {
@@ -130,10 +105,8 @@ export class CurrentLigaService {
 
     const idRaw   = localStorage.getItem(STORAGE_ID_KEY);
     const nameRaw = localStorage.getItem(STORAGE_NAME_KEY);
-    const slugRaw = localStorage.getItem(STORAGE_SLUG_KEY);
 
-    // Nichts gespeichert
-    if (!idRaw && !nameRaw && !slugRaw) {
+    if (!idRaw && !nameRaw) {
       this.patch({ loading: false });
       this.readySubject.next(true);
       return;
@@ -142,31 +115,10 @@ export class CurrentLigaService {
     try {
       if (idRaw) {
         await this.setLigaById(Number(idRaw));
-        return;
-      }
-
-      if (nameRaw) {
+      } else if (nameRaw) {
         await this.setLigaBySlug(nameRaw);
-        return;
       }
-
-      if (slugRaw) {
-        // Prüfen ob slugRaw ein echter slug war oder ein legacy Name.
-        const looksLikeRealSlug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slugRaw);
-        if (!looksLikeRealSlug) {
-          // legacy: im "slug"-Slot liegt eigentlich der Name
-          await this.setLigaBySlug(slugRaw);
-        } else {
-          // Versuch: slugRaw als Name (Backend braucht Original-Name)
-          // Falls Backend das nicht mehr findet -> Clear
-          try {
-            await this.setLigaBySlug(slugRaw);
-          } catch {
-            this.clear();
-          }
-        }
-      }
-    } catch (e) {
+    } catch {
       this.clear();
       this.patch({ error: 'Restore failed', loading: false });
     } finally {
