@@ -212,6 +212,53 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Expandiert den Pfad zu einem Knoten und markiert ihn.
+   * 
+   * Findet alle Eltern-Knoten bis zur Wurzel und expandiert sie,
+   * damit der Zielknoten sichtbar wird. Setzt anschließend die Selektion.
+   * 
+   * @param nodeId Die ID des Zielknotens
+   * @returns true, wenn der Knoten gefunden und expandiert wurde, sonst false
+   */
+  expandPathTo(nodeId: NodeId): boolean {
+    if (!this.nodeById.has(nodeId)) {
+      return false;
+    }
+
+    // Pfad zur Wurzel finden
+    const pathToRoot: NodeId[] = [];
+    let currentId: NodeId | null = nodeId;
+    
+    while (currentId != null) {
+      const parent = this.parentById.get(currentId);
+      if (parent != null) {
+        pathToRoot.push(parent);
+      }
+      currentId = parent ?? null;
+    }
+
+    // Alle Eltern-Knoten expandieren
+    let mutated = false;
+    for (const parentId of pathToRoot) {
+      if (!this.expandedIds.has(parentId)) {
+        this.expandedIds.add(parentId);
+        mutated = true;
+      }
+    }
+
+    if (mutated) {
+      this.expandedIds = new Set(this.expandedIds);
+      this.updateVisibleNodes();
+    }
+
+    // Knoten selektieren und fokussieren
+    this.selectNode(nodeId);
+    this.cdr.markForCheck();
+    
+    return true;
+  }
+
+  /**
    * Fügt alle Knoten in Lookup-Tabellen ein.
    */
   private rebuildLookup(list: LeagueTreeNode[]): void {
