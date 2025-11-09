@@ -2002,6 +2002,23 @@
           "TAG": "Download daily overview"
         }
       }
+  },
+  "LIGAUEBERSICHT": {
+    "TITLE": "League overview",
+    "DESCRIPTION": "Here you can find a central overview of all leagues with their hierarchical structures.",
+    "PLACEHOLDER": "The league overview is currently under development. Data integration will follow shortly.",
+    "STATUS": {
+      "LOADING": "Loading league hierarchy …",
+      "EMPTY": "No leagues found. The data source currently contains no entries.",
+      "TIMEOUT": "The league hierarchy could not be loaded (timeout). Please try again later.",
+      "OFFLINE_FALLBACK": "Live data not available. Displaying local reference data.",
+      "ERROR": "The league hierarchy could not be loaded."
+    },
+    "TREE": {
+      "TITLE": "League hierarchy",
+      "EXPAND": "Expand node",
+      "COLLAPSE": "Collapse node"
     }
+  }
   }
 }

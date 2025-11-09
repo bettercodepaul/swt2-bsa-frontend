@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+:host {
+  display: block;
+}
+
+.bla-league-tree {
+  --bla-tree-focus-ring: 2px solid var(--bla-color-focus, #2c7be5);
+  --bla-tree-hover-bg: rgba(44, 123, 229, 0.08);
+  --bla-tree-selected-bg: rgba(44, 123, 229, 0.16);
+  --bla-tree-border-radius: 8px;
+  --bla-tree-row-height: 52px;
+  --bla-tree-node-gap: 32px;
+  --bla-tree-branch-length: 32px;
+  --bla-tree-branch-color: #d8dde8;
+  --bla-tree-level-0-bg: #d62828;
+  --bla-tree-level-0-border: #b71f21;
+  --bla-tree-level-1-bg: #f77f00;
+  --bla-tree-level-1-border: #d26a00;
+  --bla-tree-level-2-bg: #1d3557;
+  --bla-tree-level-2-border: #14253d;
+  --bla-tree-level-3-bg: #2b2d42;
+  --bla-tree-level-3-border: #1e1f30;
+  --bla-tree-level-4-bg: #6c757d;
+  --bla-tree-level-4-border: #545c63;
+  --bla-tree-level-default-bg: #ffffff;
+  --bla-tree-level-default-border: #d1d6e0;
+  --bla-tree-level-default-foreground: #1d2533;
+  --bla-tree-card-shadow: 0 8px 16px rgba(18, 33, 54, 0.12);
+
+  font-size: 15px;
+  line-height: 1.4;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 24px;
+}
+
+.bla-league-tree__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.bla-league-tree__root-item {
+  list-style: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+
