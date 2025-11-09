@@ -2015,6 +2015,18 @@
   "LIGAUEBERSICHT": {
     "TITLE": "Ligaübersicht",
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Ligen mit ihren hierarchischen Strukturen.",
-    "PLACEHOLDER": "Die Ligaübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze."
+    "PLACEHOLDER": "Die Ligaübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+    "STATUS": {
+      "LOADING": "Liga-Hierarchie wird geladen …",
+      "EMPTY": "Keine Ligen gefunden. Die Datenquelle liefert aktuell keine Einträge.",
+      "TIMEOUT": "Die Liga-Hierarchie konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
+      "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
+      "ERROR": "Die Liga-Hierarchie konnte nicht geladen werden."
+    },
+    "TREE": {
+      "TITLE": "Liga-Hierarchie",
+      "EXPAND": "Knoten ausklappen",
+      "COLLAPSE": "Knoten einklappen"
+    }
   }
 }

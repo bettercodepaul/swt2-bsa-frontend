@@ -1,0 +1,35 @@
+- id: FE-LEAGUE-NORMALIZER
+  date: 2025-11-09
+  type: feat
+  scope: utils/league-normalizer
+  summary: Normalisierungs-Layer für Baumdaten inkl. stabiler IDs, deterministischer Sortierung und robuster Behandlung inkonsistenter API-Daten.
+  motivation: UI benötigt ein konsistentes, sortiertes Baumdatenmodell mit Deeplink-Unterstützung.
+  details:
+    - Neues Modul utils/league-normalizer.ts
+    - Mapping: DTO -> TreeNode (stabile IDs, Eltern-Kind-Auflösung, Root-Ermittlung)
+    - Sortierung: Alphabetisch nach name (localeCompare, stabil)
+    - Defensive Logik: fehlende Eltern → als Root behandeln; Duplikate (gleiche ID) → mergen; Zyklen → per DFS erkannt, Back-Edges gebrochen und geloggt
+    - Hilfsfunktionen: findPathTo(nodeId) für Deeplinks
+  api:
+    exports:
+      - normalize(dto: Dto[]): TreeNode[]
+      - findPathTo(tree: TreeNode[], nodeId: string): string[] | null
+  acceptance:
+    - Beispiel-JSON wird korrekt in eine konsistente Baumstruktur transformiert
+    - Fehlende Eltern erzeugen separate Roots (kein Crash)
+    - Doppelte IDs werden deterministisch gemerged (Log-Warnungen)
+    - Zyklen werden erkannt, Kanten geschnitten und geloggt
+  tests:
+    - Leere Eingabe
+    - Tiefer/ungleichmäßiger Baum
+    - Fehlende Eltern/Orphans
+    - Duplikat-IDs
+    - Zyklische Parent-Verweise
+    - Sortierung mit gemischter Groß-/Kleinschreibung und diakritischen Zeichen
+  breaking_changes: false
+  migration: none
+  observability:
+    - Logging: console.warn mit Codes LN001 (Missing parent), LN002 (Duplicate), LN003 (Cycle)
+  dependencies: [API-001]
+  priority: Must
+  estimation_sp: 3

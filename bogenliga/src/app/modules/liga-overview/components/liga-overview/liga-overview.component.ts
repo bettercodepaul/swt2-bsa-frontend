@@ -1,24 +1,59 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {LeagueHierarchyService} from '@shared/services';
+import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 /**
  * Komponente für die Ligaübersicht.
  *
- * Diese Komponente zeigt eine zentrale Übersicht aller Ligen.
- * Aktuell wird ein Platzhalter (leerer Baum) angezeigt, bis die Datenintegration erfolgt.
+ * Stellt die Liga-Hierarchie über eine barrierearme Tree-Komponente dar
+ * und kümmert sich um Datenladung, Statuskommunikation und Analytics-Tracking.
  */
 @Component({
   selector: 'bla-liga-overview',
   templateUrl: './liga-overview.component.html',
   styleUrls: ['./liga-overview.component.scss']
 })
-export class LigaOverviewComponent implements OnInit {
+export class LigaOverviewComponent implements OnInit, OnDestroy {
+
+  /**
+   * Aktueller Ladezustand.
+   */
+  isLoading = false;
+
+  /**
+   * Ergebnis des Hierarchie-Loads inklusive Status.
+   */
+  hierarchyResult: LeagueHierarchyResult | null = null;
+
+  /**
+   * Datenquelle für die Tree-Komponente.
+   */
+  treeNodes: LeagueTreeNode[] = [];
+
+  /**
+   * Aktuell ausgewählte Liga-ID (Tree Selection).
+   */
+  selectedLigaId: number | null = null;
+
+  /**
+   * Übersetzungsschlüssel für Statusmeldungen.
+   */
+  statusMessageKey: string | null = null;
+
+  private readonly destroy$ = new Subject<void>();
 
   /**
    * Konstruktor
    * @param router Angular Router für Navigation
+   * @param leagueHierarchyService Service für League-Hierarchie
    */
-  constructor(private router: Router) {
+  constructor(
+    private readonly router: Router,
+    private readonly leagueHierarchyService: LeagueHierarchyService
+  ) {
   }
 
   /**
@@ -29,6 +64,23 @@ export class LigaOverviewComponent implements OnInit {
   ngOnInit(): void {
     // Analytics-Event für Seitenaufruf
     this.trackPageView();
+    this.loadHierarchy();
+  }
+
+  /**
+   * Lifecycle Hook: Aufräumen.
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Wird aufgerufen, wenn ein Tree-Knoten selektiert wird.
+   */
+  onTreeSelect(ligaId: number): void {
+    this.selectedLigaId = ligaId;
+    this.trackSelection(ligaId);
   }
 
   /**
@@ -39,6 +91,58 @@ export class LigaOverviewComponent implements OnInit {
   private trackPageView(): void {
     if (typeof window !== 'undefined' && (window as any)._paq) {
       (window as any)._paq.push(['trackEvent', 'Navigation', 'page_ligauebersicht_view']);
+    }
+  }
+
+  /**
+   * Lädt die Liga-Hierarchie und bereitet den Tree vor.
+   */
+  private loadHierarchy(): void {
+    this.isLoading = true;
+    this.hierarchyResult = null;
+    this.statusMessageKey = null;
+    this.leagueHierarchyService.getHierarchy()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (result) => {
+          this.hierarchyResult = result;
+          this.treeNodes = result.data ?? [];
+          this.statusMessageKey = this.resolveStatusMessageKey(result);
+          this.isLoading = false;
+        },
+        error: () => {
+          this.hierarchyResult = {status: 'error', data: [], reason: 'Unhandled error'};
+          this.treeNodes = [];
+          this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
+          this.isLoading = false;
+        }
+      });
+  }
+
+  /**
+   * Bestimmt die passende Statusmeldung.
+   */
+  private resolveStatusMessageKey(result: LeagueHierarchyResult): string | null {
+    switch (result.status) {
+      case 'ok':
+        return null;
+      case 'empty':
+        return 'LIGAUEBERSICHT.STATUS.EMPTY';
+      case 'timeout':
+        return 'LIGAUEBERSICHT.STATUS.TIMEOUT';
+      case 'offline-fallback':
+        return 'LIGAUEBERSICHT.STATUS.OFFLINE_FALLBACK';
+      default:
+        return 'LIGAUEBERSICHT.STATUS.ERROR';
+    }
+  }
+
+  /**
+   * Analytics-Event für Tree-Selektion.
+   */
+  private trackSelection(ligaId: number): void {
+    if (typeof window !== 'undefined' && (window as any)._paq) {
+      (window as any)._paq.push(['trackEvent', 'Navigation', 'tree_ligauebersicht_select', ligaId]);
     }
   }
 }
