@@ -1,3 +1,5 @@
+import {LigaDO} from "@verwaltung/types/liga-do.class";
+
 /**
  * Erzeugt einen URL-tauglichen Slug aus einem Liga-Namen.
  */
@@ -35,8 +37,9 @@ export function matchesLigaSlug(ligaName: string, slug: string): boolean {
 }
 
 /**
- * Baut die kanonische Liga-Home-URL.
+ * Baut die kanonische Liga-Home-URL via dem Liga Objekt.
  */
-export function buildLigaHomeLink(id: number, ligaName: string): string {
-  return `/home/${id}-${slugifyLigaName(ligaName)}`;
+export function buildLigaHomeLink(liga: Pick<LigaDO, 'id' | 'name'>): string {
+  const slug = slugifyLigaName(liga.name ?? '');
+  return `/home/${liga.id}-${slug}`;
 }
