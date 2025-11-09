@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LeagueHierarchyService} from '@shared/services';
 import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {buildLeagueUrl, isValidLigaId} from '../../utils/league-url.helper';
+import {TreeComponent} from '../tree/tree.component';
 
 /**
  * Komponente für die Ligaübersicht.
@@ -43,15 +45,28 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    */
   statusMessageKey: string | null = null;
 
+  /**
+   * Hinweismeldung für ungültige Liga-IDs (Deeplink).
+   */
+  deeplinkErrorMessage: string | null = null;
+
+  /**
+   * Referenz zur Tree-Komponente für programmatisches Expandieren.
+   */
+  @ViewChild(TreeComponent)
+  private treeComponent?: TreeComponent;
+
   private readonly destroy$ = new Subject<void>();
 
   /**
    * Konstruktor
    * @param router Angular Router für Navigation
+   * @param route ActivatedRoute für Query-Parameter
    * @param leagueHierarchyService Service für League-Hierarchie
    */
   constructor(
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly leagueHierarchyService: LeagueHierarchyService
   ) {
   }
@@ -59,12 +74,13 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   /**
    * Lifecycle Hook: Initialisierung der Komponente
    *
-   * Feuert Analytics Event für Seitenaufruf
+   * Feuert Analytics Event für Seitenaufruf und verarbeitet Query-Parameter.
    */
   ngOnInit(): void {
     // Analytics-Event für Seitenaufruf
     this.trackPageView();
     this.loadHierarchy();
+    this.handleDeeplink();
   }
 
   /**
@@ -77,10 +93,12 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
 
   /**
    * Wird aufgerufen, wenn ein Tree-Knoten selektiert wird.
+   * Navigiert zur Liga-Homepage mit der entsprechenden Liga-ID.
    */
   onTreeSelect(ligaId: number): void {
     this.selectedLigaId = ligaId;
     this.trackSelection(ligaId);
+    this.navigateToLeagueHomepage(ligaId);
   }
 
   /**
@@ -144,5 +162,96 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     if (typeof window !== 'undefined' && (window as any)._paq) {
       (window as any)._paq.push(['trackEvent', 'Navigation', 'tree_ligauebersicht_select', ligaId]);
     }
+  }
+
+  /**
+   * Verarbeitet Deeplink-Query-Parameter (ligaId).
+   * 
+   * Liest den Query-Parameter aus und expandiert/markiert den entsprechenden
+   * Knoten im Baum, falls vorhanden. Bei ungültiger ID wird eine Meldung angezeigt.
+   */
+  private handleDeeplink(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        const ligaIdParam = params['ligaId'];
+        
+        if (ligaIdParam == null) {
+          return;
+        }
+
+        const ligaId = Number(ligaIdParam);
+        
+        if (!isValidLigaId(ligaId)) {
+          this.showDeeplinkError('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
+          return;
+        }
+
+        // Warten, bis Daten geladen sind
+        this.waitForDataThenExpand(ligaId);
+      });
+  }
+
+  /**
+   * Wartet auf das Laden der Hierarchie-Daten und expandiert dann den Pfad.
+   */
+  private waitForDataThenExpand(ligaId: number): void {
+    // Prüfen, ob Daten bereits geladen sind
+    if (this.treeNodes.length > 0) {
+      this.expandToNode(ligaId);
+      return;
+    }
+
+    // Auf Datenladen warten (max. 5 Sekunden)
+    const checkInterval = setInterval(() => {
+      if (this.treeNodes.length > 0) {
+        clearInterval(checkInterval);
+        this.expandToNode(ligaId);
+      }
+    }, 100);
+
+    setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 5000);
+  }
+
+  /**
+   * Expandiert den Pfad zu einem Knoten.
+   */
+  private expandToNode(ligaId: number): void {
+    if (!this.treeComponent) {
+      return;
+    }
+
+    const success = this.treeComponent.expandPathTo(ligaId);
+    
+    if (!success) {
+      this.showDeeplinkError('LIGAUEBERSICHT.DEEPLINK.NOT_FOUND');
+    }
+  }
+
+  /**
+   * Navigiert zur Liga-Homepage mit der angegebenen Liga-ID.
+   */
+  private navigateToLeagueHomepage(ligaId: number): void {
+    try {
+      const url = buildLeagueUrl(ligaId);
+      if (typeof window !== 'undefined') {
+        window.location.assign(url);
+      }
+    } catch (error) {
+      console.error('Failed to navigate to league homepage:', error);
+    }
+  }
+
+  /**
+   * Zeigt eine nicht-blockierende Fehlermeldung für Deeplink-Probleme.
+   */
+  private showDeeplinkError(messageKey: string): void {
+    this.deeplinkErrorMessage = messageKey;
+    // Nachricht nach 5 Sekunden ausblenden
+    setTimeout(() => {
+      this.deeplinkErrorMessage = null;
+    }, 5000);
   }
 }
