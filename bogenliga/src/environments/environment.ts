@@ -6,7 +6,11 @@ export const environment = {
   production:     false,
   showLabel: true,
   label: 'TEST',
-  backendBaseUrl: 'http://localhost:9000'
+  backendBaseUrl: 'http://localhost:9000',
+  analytics: {
+    enabled: true,
+    transport: 'console' as 'console' | 'auto',
+  }
 };
 
 /*
