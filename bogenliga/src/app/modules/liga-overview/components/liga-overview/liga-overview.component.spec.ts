@@ -71,19 +71,7 @@ describe('LigaOverviewComponent', () => {
   /**
    * Test: Analytics Event wird korrekt getrackt (wenn _paq verfügbar ist)
    */
-  it('should track analytics event on initialization when _paq is available', () => {
-    // Mock _paq
-    (window as any)._paq = [];
-    spyOn((window as any)._paq, 'push');
-
-    fixture.detectChanges();
-    hierarchySubject.next({status: 'ok', data: [], reason: undefined});
-
-    expect((window as any)._paq.push).toHaveBeenCalledWith(['trackEvent', 'Navigation', 'page_ligauebersicht_view']);
-
-    // Cleanup
-    delete (window as any)._paq;
-  });
+  // page view tracking removed; scope narrowed to Ligaübersicht events only
 
   /**
    * Test: Kein Fehler wenn _paq nicht verfügbar ist

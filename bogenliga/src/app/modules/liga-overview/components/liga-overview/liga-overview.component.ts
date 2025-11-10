@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LeagueHierarchyService} from '@shared/services';
+import {AnalyticsService, LeagueHierarchyService} from '@shared/services';
 import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -67,7 +67,8 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly leagueHierarchyService: LeagueHierarchyService
+    private readonly leagueHierarchyService: LeagueHierarchyService,
+    private readonly analytics: AnalyticsService,
   ) {
   }
 
@@ -77,8 +78,6 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    * Feuert Analytics Event für Seitenaufruf und verarbeitet Query-Parameter.
    */
   ngOnInit(): void {
-    // Analytics-Event für Seitenaufruf
-    this.trackPageView();
     this.loadHierarchy();
     this.handleDeeplink();
   }
@@ -97,20 +96,11 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    */
   onTreeSelect(ligaId: number): void {
     this.selectedLigaId = ligaId;
-    this.trackSelection(ligaId);
+    // Analytics: tree_select
+    this.analytics.track('tree_select', { nodeId: ligaId });
     this.navigateToLeagueHomepage(ligaId);
   }
 
-  /**
-   * Tracked den Seitenaufruf für Analytics (Matomo/Piwik)
-   *
-   * Event-Name: page_ligauebersicht_view
-   */
-  private trackPageView(): void {
-    if (typeof window !== 'undefined' && (window as any)._paq) {
-      (window as any)._paq.push(['trackEvent', 'Navigation', 'page_ligauebersicht_view']);
-    }
-  }
 
   /**
    * Lädt die Liga-Hierarchie und bereitet den Tree vor.
@@ -119,6 +109,10 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.hierarchyResult = null;
     this.statusMessageKey = null;
+
+    // Performance: fetch-start markieren
+    this.analytics.mark('api_liga_hierarchie_fetch_start');
+
     this.leagueHierarchyService.getHierarchy()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -127,6 +121,16 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           this.treeNodes = result.data ?? [];
           this.statusMessageKey = this.resolveStatusMessageKey(result);
           this.isLoading = false;
+
+          // Performance: Nach Render messen (rAF ~ nach Layout/Paint)
+          if (typeof requestAnimationFrame !== 'undefined') {
+            requestAnimationFrame(() => {
+              this.analytics.mark('tree_render');
+              this.analytics.measureAndTrack('api_liga_hierarchie_timing', 'api_liga_hierarchie_fetch_start', 'tree_render', {
+                status: result.status
+              });
+            });
+          }
         },
         error: () => {
           this.hierarchyResult = {status: 'error', data: [], reason: 'Unhandled error'};
@@ -155,14 +159,6 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Analytics-Event für Tree-Selektion.
-   */
-  private trackSelection(ligaId: number): void {
-    if (typeof window !== 'undefined' && (window as any)._paq) {
-      (window as any)._paq.push(['trackEvent', 'Navigation', 'tree_ligauebersicht_select', ligaId]);
-    }
-  }
 
   /**
    * Verarbeitet Deeplink-Query-Parameter (ligaId).
