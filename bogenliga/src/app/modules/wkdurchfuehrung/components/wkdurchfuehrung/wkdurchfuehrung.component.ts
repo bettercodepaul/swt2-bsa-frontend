@@ -510,7 +510,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.loadTableRows();
     }
   }
-  // when a Wettkmapftag gets selected from the list --> ID for Buttons
+  // when a Wettkampftag gets selected from the list --> ID for Buttons
   public onView($event: VersionedDataObject): void {
     // Überprüft, ob ein gültiger Wettkampf ausgewählt wurde
     if ($event.id >= 0) {
