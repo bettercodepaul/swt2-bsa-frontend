@@ -136,7 +136,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     // statt einfach nur einen Teil ein/auszublenden - rufen wir hier jetzt den ganzen Dialog nochmal auf
     // wir setzen beim AUfruf in den Pfad die Wettkampf-ID ein - damit kann man später vom Schusszettel auf die Matchliste zurückspringen
 
-    console.log('selectedWettkampftag wkdurchführung', this.selectedVeranstaltungId, this.selectedWettkampf);
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
         [new UriBuilder().path('wkdurchfuehrung/' + this.selectedVeranstaltungId + '/' + this.selectedWettkampf).build() ]
@@ -515,7 +514,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.loadTableRows();
     }
   }
-  // when a Wettkmapftag gets selected from the list --> ID for Buttons
+  // when a Wettkampftag gets selected from the list --> ID for Buttons
   public onView($event: VersionedDataObject): void {
     // Überprüft, ob ein gültiger Wettkampf ausgewählt wurde
     if ($event.id >= 0) {
@@ -677,7 +676,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
                 )
               );
               window.open(url, '_blank');
-//              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
