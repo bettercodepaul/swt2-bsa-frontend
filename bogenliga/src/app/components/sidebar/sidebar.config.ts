@@ -13,7 +13,6 @@ import {
   faCalendarAlt,
   faCode, // faFootballBall,
   faHome,
-  faListOl,
   faSitemap,
   faUsers,
   faQuestion,
@@ -140,14 +139,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     datacy: 'sidebar-ligauebersicht-button'
   },
   {
-    label: 'SIDEBAR.MANNSCHAFTEN',
-    icon: faListOl,
-    route: '/ligatabelle',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
-  },
-  {
     label: 'SIDEBAR.SPOTTING',
     icon: faBinoculars,
     route: '/spotter',
@@ -262,14 +253,6 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-ligauebersicht-button'
-  },
-  {
-    label: 'SIDEBAR.MANNSCHAFTEN',
-    icon: faListOl,
-    route: '/ligatabelle',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
   },
   {
     label: 'SIDEBAR.SPOTTING',
