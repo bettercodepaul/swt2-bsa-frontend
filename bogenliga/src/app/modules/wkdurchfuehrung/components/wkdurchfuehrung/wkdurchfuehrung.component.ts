@@ -128,6 +128,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // Definiert das Array groupedMatches mit der Struktur { groupName: string; matches: TableRow[] }
   groupedMatches: { groupName: string; matches: TableRow[] }[] = [];
 
+  goBack(): void {
+    window.history.back();
+  }
+
   openSecondView() {
     // statt einfach nur einen Teil ein/auszublenden - rufen wir hier jetzt den ganzen Dialog nochmal auf
     // wir setzen beim AUfruf in den Pfad die Wettkampf-ID ein - damit kann man später vom Schusszettel auf die Matchliste zurückspringen
