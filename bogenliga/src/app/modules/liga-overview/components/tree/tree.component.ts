@@ -13,6 +13,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {LeagueTreeNode} from '@shared/models/tree-node';
+import { AnalyticsService } from '@shared/services';
 
 type NodeId = number;
 
@@ -85,7 +86,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   constructor(
     private readonly host: ElementRef<HTMLElement>,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly analytics: AnalyticsService
   ) {
   }
 
@@ -164,6 +166,14 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     const isExpanded = this.expandedIds.has(nodeId);
     const shouldExpand = expand ?? !isExpanded;
 
+    // Analytics: tree expand/collapse
+    const node = this.nodeById.get(nodeId);
+    this.analytics.track('tree_expand', {
+      nodeId,
+      expanded: shouldExpand,
+      level: node?.level ?? null
+    });
+
     if (shouldExpand) {
       if (!isExpanded) {
         this.expandedIds.add(nodeId);
@@ -208,6 +218,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   selectNode(nodeId: NodeId): void {
     this.selectedId = nodeId;
     this.focusNode(nodeId);
+    // Analytics: tree select
+    this.analytics.track('tree_select', { nodeId });
     this.select.emit(nodeId);
   }
 
