@@ -13,6 +13,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {LeagueTreeNode} from '@shared/models/tree-node';
+import {AnalyticsService} from '@shared/services';
 
 type NodeId = number;
 
@@ -85,7 +86,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   constructor(
     private readonly host: ElementRef<HTMLElement>,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly analytics: AnalyticsService,
   ) {
   }
 
@@ -169,6 +171,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.expandedIds.add(nodeId);
         this.expandedIds = new Set(this.expandedIds);
         this.updateVisibleNodes();
+        this.trackExpand(nodeId, 'expand');
       }
     } else if (isExpanded) {
       this.expandedIds.delete(nodeId);
@@ -177,6 +180,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
       if (this.focusedNodeId != null && !this.isVisible(this.focusedNodeId)) {
         this.focusNode(nodeId);
       }
+      this.trackExpand(nodeId, 'collapse');
     }
     this.cdr.markForCheck();
   }
@@ -209,6 +213,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.selectedId = nodeId;
     this.focusNode(nodeId);
     this.select.emit(nodeId);
+    // Tracking der Selektion auf Komponentenebene vermeiden – erfolgt im Parent
   }
 
   /**
@@ -352,7 +357,16 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  private focusNext(currentId: NodeId): void {
+  private trackExpand(nodeId: NodeId, state: 'expand'|'collapse'): void {
+    const node = this.nodeById.get(nodeId);
+    this.analytics.track('tree_expand', {
+      nodeId,
+      state,
+      level: node?.level ?? null,
+    });
+  }
+
+  private focusNode(nodeId: NodeId): void {
     const index = this.visibleNodes.findIndex((item) => item.id === currentId);
     if (index >= 0 && index < this.visibleNodes.length - 1) {
       this.focusNode(this.visibleNodes[index + 1].id);
