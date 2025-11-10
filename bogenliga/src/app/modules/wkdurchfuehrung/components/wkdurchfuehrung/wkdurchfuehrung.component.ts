@@ -134,7 +134,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   openSecondView() {
     // statt einfach nur einen Teil ein/auszublenden - rufen wir hier jetzt den ganzen Dialog nochmal auf
-    // wir setzen beim AUfruf in den Pfad die Wettkampf-ID ein - damit kann man später vom Schusszettel auf die Matchliste zurückspringen
+    // wir setzen beim Aufruf in den Pfad die Wettkampf-ID ein - damit kann man später vom Schusszettel auf die Matchliste zurückspringen
 
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
