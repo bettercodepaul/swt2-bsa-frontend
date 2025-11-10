@@ -672,7 +672,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
                 )
               );
               window.open(url, '_blank');
-//              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
