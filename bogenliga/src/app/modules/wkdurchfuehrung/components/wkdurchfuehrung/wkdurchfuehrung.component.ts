@@ -51,8 +51,8 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 
 export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
 
-  public div1Visible: boolean = false;
-  public div2Visible: boolean = true;
+  public div1Visible = false;
+  public div2Visible = true;
   public ActionButtonColors = ActionButtonColors;
   public config = WKDURCHFUEHRUNG_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -77,13 +77,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private remainingWettkampfRequests: number;
   private remainingMatchRequests: number;
   public currentVeranstaltungName;
+  private veranstaltungId;
   private wettkampfId;
   private disableGMButton = true;
   private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
   public wettkampfListe;
   private aktivesSportjahr: number;
-  wettkampf : WettkampfDO;
+  wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
   public matches: Array<MatchDO[]> = [];
@@ -101,37 +102,55 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   private sessionHandling: SessionHandling;
 
+
   constructor(private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private einstellungenDataProvider: EinstellungenProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
-    private matchDataProvider: MatchDataProviderService,
-    private passeDataProviderService: PasseDataProviderService,
-    private matchProvider: MatchProviderService,
-    private onOfflineService: OnOfflineService,
-    private currentUserService: CurrentUserService,
-    private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
-    private dialog: MatDialog,
-    private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+              private einstellungenDataProvider: EinstellungenProviderService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
+              private matchDataProvider: MatchDataProviderService,
+              private passeDataProviderService: PasseDataProviderService,
+              private matchProvider: MatchProviderService,
+              private onOfflineService: OnOfflineService,
+              private currentUserService: CurrentUserService,
+              private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
+              private dialog: MatDialog,
+              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService
 
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
-  toggleDiv(){
-    //Setzt die Sichtbarkeit der divs und simuliert damit eine neue Seite
-    this.div1Visible = !this.div1Visible;
-    this.div2Visible = !this.div2Visible;
+
+
+
+  // Definiert das Array groupedMatches mit der Struktur { groupName: string; matches: TableRow[] }
+  groupedMatches: { groupName: string; matches: TableRow[] }[] = [];
+
+  openSecondView() {
+    // statt einfach nur einen Teil ein/auszublenden - rufen wir hier jetzt den ganzen Dialog nochmal auf
+    // wir setzen beim AUfruf in den Pfad die Wettkampf-ID ein - damit kann man später vom Schusszettel auf die Matchliste zurückspringen
+
+    console.log('selectedWettkampftag wkdurchführung', this.selectedVeranstaltungId, this.selectedWettkampf);
+    const url = '#' + this.router.serializeUrl(
+      this.router.createUrlTree(
+        [new UriBuilder().path('wkdurchfuehrung/' + this.selectedVeranstaltungId + '/' + this.selectedWettkampf).build() ]
+      )
+    );
+    window.open(url, '_blank');
   }
+
   ngOnInit() {
 
     this.route.params.subscribe((params) => {
 
       if (!isUndefined(params['wettkampfId'])) {
         // WettkampfId im Pfad enthalten -> Wettkampf soll automatisch ausgewaehlt werden
+
+
         this.wettkampfIdEnthalten = true;
+        this.veranstaltungId = parseInt(params['veranstaltungId'], 10);
         this.wettkampfId = parseInt(params['wettkampfId'], 10);
         console.log('WettkampfID:', this.wettkampfId);
 
@@ -149,8 +168,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
 
-        this.findAvailableYears();
-        this.visible = false;
+        this.selectedVeranstaltungId = this.veranstaltungId;
+        this.selectedWettkampfId = this.wettkampfId;
+        this.showMatches();
+        this.visible = true;
+        // Setzt die Sichtbarkeit der divs und simuliert damit eine neue Seite
+        this.div1Visible = true; // ausblenden
+        this.div2Visible = false; // sichtbar
 
       } else if (this.onOfflineService.isOffline()) {
         // falls offline, Veranstaltung aus id die im onOfflineService gespeichert ist laden
@@ -487,7 +511,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.loadTableRows();
     }
   }
-  // when a Ligatabelle gets selected from the list --> ID for Buttons
+  // when a Wettkmapftag gets selected from the list --> ID for Buttons
   public onView($event: VersionedDataObject): void {
     // Überprüft, ob ein gültiger Wettkampf ausgewählt wurde
     if ($event.id >= 0) {
@@ -593,7 +617,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     return this.onOfflineService.isOffline();
   }
   public isDisabledGMButton(): boolean {
-    return this.disableGMButton; //prüft ob der disableGMButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
+    return this.disableGMButton; // prüft ob der disableGMButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
   }
   public generateMatches() {
     // Generiert Daten für die Matches basierend auf der ausgewählten Wettkampf-ID
@@ -703,11 +727,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.matchRows = [];
     this.loadingMatch = false;
   }
-
-
-
-  // Definiert das Array groupedMatches mit der Struktur { groupName: string; matches: TableRow[] }
-  groupedMatches: { groupName: string; matches: TableRow[] }[] = [];
   // Gruppiere die Matches basierend auf der Nummer (nr)
   groupMatches(matches: MatchDOExt[]) {
     const groupedMatchesMap = new Map<number, MatchDOExt[]>();
@@ -734,7 +753,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.loadingMatch = false;
     }
     // Konvertiert die MatchDTOExt-Objekte in MatchDOExt-Objekte und speichere sie im tableContentMatch-Array
-    this.tableContentMatch = response.payload.map(match => {
+    this.tableContentMatch = response.payload.map((match) => {
       const tableContentRow: MatchDOExt = new MatchDOExt();
       tableContentRow.id = match.id;
       tableContentRow.matchNr = match.matchNr;
