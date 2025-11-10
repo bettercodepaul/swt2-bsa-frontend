@@ -10,6 +10,7 @@ import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
+import { AnalyticsService } from '@shared/services';
 import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
 
 
@@ -43,7 +44,7 @@ export class SidebarComponent implements OnInit {
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider, private analytics: AnalyticsService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
@@ -116,10 +117,8 @@ export class SidebarComponent implements OnInit {
    * @param route Die aufgerufene Route
    */
   private trackNavigationClick(route: string): void {
-    if (typeof window !== 'undefined' && (window as any)._paq) {
-      if (route === '/liga') {
-        (window as any)._paq.push(['trackEvent', 'Navigation', 'nav_ligauebersicht_click']);
-      }
+    if (route === '/liga') {
+      this.analytics.track('nav_ligauebersicht_click', { origin: 'sidebar', route });
     }
   }
 
