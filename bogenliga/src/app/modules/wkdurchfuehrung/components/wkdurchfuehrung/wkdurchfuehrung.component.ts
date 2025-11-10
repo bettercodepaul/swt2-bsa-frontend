@@ -667,16 +667,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.matchProvider.pair(this.selectedMatchId)
           .then((data) => {
             if (data.payload.length === 2) {
-// das wÃ¤re schÃ¶ner - funktioniert leider aber noch nicht...
-// Ã¶ffne die Datenerfassung in einem neuen Tab
-              /*            this.urlString = new UriBuilder()
-               .fromPath(environment.)
-               .path('/#/schusszettel/'+ data.payload[0])
-               .path('/' + data.payload[1])
-               .build();
-               window.open(this.urlString, '_blank')
-               */
-              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              const url = '#' + this.router.serializeUrl(
+                this.router.createUrlTree(
+                  [new UriBuilder().path('/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]).build() ]
+                )
+              );
+              window.open(url, '_blank');
+//              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
