@@ -174,7 +174,7 @@
               [id]="'wettkampfDurchfuehrung'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'arrow-right'"
-              (onClick)="toggleDiv()"
+              (onClick)="openSecondView()"
               [disabled]="isDisabled()">
               {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
             </bla-actionbutton>
@@ -243,7 +243,7 @@
           [id]="'zurück'"
           [color]="ActionButtonColors.PRIMARY"
           [iconClass]="'arrow-left'"
-          (onClick)="toggleDiv()">
+          (onClick)="goBack()">
           {{ 'WKDURCHFUEHRUNG.BUTTON.ZURUECK' | translate }}
         </bla-actionbutton>
       </div>

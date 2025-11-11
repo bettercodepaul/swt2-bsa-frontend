@@ -53,7 +53,7 @@ import {QRCodeModule} from 'angularx-qrcode';
     WkdurchfuehrungGuard,
     SchusszettelGuard,
     TableteingabeGuard,
-    TabletadminGuard
+    TabletadminGuard,
   ],
   exports: [
     SchusszettelComponent
