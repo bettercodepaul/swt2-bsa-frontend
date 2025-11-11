@@ -46,8 +46,6 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
   coloredActionsWithText: true
   };
 
-
-
 export const MATCH_TABLE_CONFIG: TableConfig = {
 
   columns: [
@@ -85,4 +83,7 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
   }
 
 };
+
+
+
 
