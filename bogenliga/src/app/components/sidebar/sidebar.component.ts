@@ -10,6 +10,7 @@ import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
+import { AnalyticsService } from '@shared/services';
 import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
 
 
@@ -43,7 +44,7 @@ export class SidebarComponent implements OnInit {
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider, private analytics: AnalyticsService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
@@ -75,7 +76,7 @@ export class SidebarComponent implements OnInit {
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
     this.URLRoute = this.router.url;
-    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
+    if (this.URLRoute.startsWith("/home") ) {
       const lastSlashIndex = this.URLRoute.lastIndexOf('/');
       switch(lastSlashIndex){
         case 0:
@@ -100,14 +101,26 @@ export class SidebarComponent implements OnInit {
 
     if (this.ligaID != undefined && route.startsWith("/home")){
       result =  result + '/'+ this.ligaID.toString();
-    } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
-      result =  result + '/'+ this.ligaID.toString();
     }
 
     this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
 
+    // Analytics-Event für Navigation tracken
+    this.trackNavigationClick(route);
+
     return result;
     }
+
+  /**
+   * Tracked Navigationsklicks für Analytics (Matomo/Piwik)
+   * 
+   * @param route Die aufgerufene Route
+   */
+  private trackNavigationClick(route: string): void {
+    if (route === '/liga') {
+      this.analytics.track('nav_ligauebersicht_click', { origin: 'sidebar', route });
+    }
+  }
 
 
   public getSidebarCollapseIcon(): string {
