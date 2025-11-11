@@ -396,7 +396,7 @@ a:hover, a:focus {
 }
 
 .action-btn:hover {
-  filter:brightness(0.8);
+  filter: brightness(0.8);
   transition: filter 0.3s;
 }
 
@@ -404,14 +404,20 @@ a:hover, a:focus {
   opacity: 0.75;
 }
 
-.action-btn:disabled,hover{
-  filter:none;
+.action-btn:disabled, hover {
+  filter: none;
 }
 
-.action-btn:focus,*:hover{
-  outline:none;
+.action-btn:focus, *:hover {
+  outline: none;
 }
 
-.action-btn-circle:focus{
-  outline:none;
+.action-btn-circle:focus {
+  outline: none;
+}
+
+/* Scroll-Fix für Mobile & Fullscreen */
+html, body, app-root {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch; // iOS
 }

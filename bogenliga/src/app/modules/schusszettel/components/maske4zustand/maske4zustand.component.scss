@@ -631,3 +631,18 @@ $border: #dee2e6;
     }
   }
 }
+
+/* Scroll Fix Schusszettel-Uebersicht & Tabelle Mobile */
+@media (max-width: 1024px) {
+  .embedded-schusszettel-section {
+    display: block !important;
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-x: auto !important;
+  }
+  .embedded-schusszettel-section .schusszettel-container {
+    transform-origin: top left !important;
+    display: inline-block !important;
+    margin: 0 !important;
+  }
+}
