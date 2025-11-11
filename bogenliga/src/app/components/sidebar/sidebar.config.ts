@@ -13,10 +13,10 @@ import {
   faCalendarAlt,
   faCode, // faFootballBall,
   faHome,
-  faListOl,
   faSitemap,
   faUsers,
   faQuestion,
+  faChartBar, // Ligaübersicht
 
   faTrophy, // Wettkämpfe
   faCalendar, // Wettkampfdurchführung
@@ -131,12 +131,12 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
 
 
   {
-    label: 'SIDEBAR.MANNSCHAFTEN',
-    icon: faListOl,
-    route: '/ligatabelle',
+    label: 'SIDEBAR.LIGAUEBERSICHT',
+    icon: faChartBar,
+    route: '/liga',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
+    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.SPOTTING',
@@ -247,12 +247,12 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
   {
-    label: 'SIDEBAR.MANNSCHAFTEN',
-    icon: faListOl,
-    route: '/ligatabelle',
+    label: 'SIDEBAR.LIGAUEBERSICHT',
+    icon: faChartBar,
+    route: '/liga',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
+    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.SPOTTING',
