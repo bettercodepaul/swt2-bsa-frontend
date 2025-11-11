@@ -226,7 +226,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private loadWettkaempfe(): void {
     this.wettkaempfeDTO = [];
     this.wettkaempfeDO = [];
-    this.wettkampfDataProvider.findAll()
+    this.wettkampfDataProvider.findFutureSix()
         .then((response: BogenligaResponse<WettkampfDTO[]>) => {
           this.handleSuccessLoadWettkaempfe(response.payload);
         })
