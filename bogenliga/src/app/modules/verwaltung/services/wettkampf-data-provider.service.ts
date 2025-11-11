@@ -60,6 +60,37 @@ export class WettkampfDataProviderService extends DataProviderService {
     }
   }
 
+  public findFutureSix(): Promise<BogenligaResponse<WettkampfDTO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf findall');
+      return new Promise((resolve, reject) => {
+        db.wettkampfTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampfArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('futureSix').build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            console.log('wettkampf-data-provider', error);
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+      });
+    }
+  }
+
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for wettkampf with id ' + id);
