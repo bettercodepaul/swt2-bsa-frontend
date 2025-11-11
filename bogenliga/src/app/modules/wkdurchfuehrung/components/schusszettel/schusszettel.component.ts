@@ -1,8 +1,8 @@
-import { Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse, RequestResult, UriBuilder} from '../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -32,19 +32,13 @@ import {LigatabelleDataProviderService} from '../../../ligatabelle/services/liga
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
-const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
-const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
-const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
-const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
-const NOTIFACTION_SCHUETZE = 'schuetze';
 const PLATZHALTER = 'Platzhalter';
-const FALSCHER_SCHUETZE = '';
 
 
 @Component({
-  selector:    'bla-schusszettel',
+  selector: 'bla-schusszettel',
   templateUrl: './schusszettel.component.html',
-  styleUrls:   ['./schusszettel.component.scss']
+  styleUrls: ['./schusszettel.component.scss']
 })
 export class SchusszettelComponent implements OnInit {
 
@@ -52,7 +46,6 @@ export class SchusszettelComponent implements OnInit {
   @Input() match1Id?: number;
   @Input() match2Id?: number;
   @Input() embeddedMode = false;
-  @Input() readOnlyMode = false;
 
   match1: MatchDOExt;
   match2: MatchDOExt;
@@ -91,8 +84,6 @@ export class SchusszettelComponent implements OnInit {
   allowedMitglieder1: number[];
   allowedMitglieder2: number[];
   isSaved = false;
-
-
 
 
   constructor(private router: Router,
@@ -142,133 +133,131 @@ export class SchusszettelComponent implements OnInit {
       // Only show loading notification in standalone mode
       if (!this.embeddedMode) {
         this.notificationService.showNotification({
-          id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
-          title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
+          id: 'NOTIFICATION_SCHUSSZETTEL_LOADING',
+          title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
           description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.DESCRIPTION',
-          severity:    NotificationSeverity.INFO,
-          origin:      NotificationOrigin.USER,
-          userAction:  NotificationUserAction.PENDING
+          severity: NotificationSeverity.INFO,
+          origin: NotificationOrigin.USER,
+          userAction: NotificationUserAction.PENDING
         });
       }
 
 
       this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
-          .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
+        .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
-            this.match1 = data.payload[0];
-            this.match2 = data.payload[1];
+          this.match1 = data.payload[0];
+          this.match2 = data.payload[1];
 
-            console.log(this.match1, this.match2);
-            if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
-              this.isSaved = true;
-            } else if (this.match2.matchpunkte !== null && !(this.match2.mannschaftName === 'Platzhalter 1')) {
-              this.isSaved = true;
-            }
+          console.log(this.match1, this.match2);
+          if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
+            this.isSaved = true;
+          } else if (this.match2.matchpunkte !== null && !(this.match2.mannschaftName === 'Platzhalter 1')) {
+            this.isSaved = true;
+          }
 
 
-            /**
-             * Limits the Schützen of match 1 to 3 and each passe-array
-             * for each Schütze to 5
-             * Only a maximum of 15 passe for each match will be possible
-             */
+          /**
+           * Limits the Schützen of match 1 to 3 and each passe-array
+           * for each Schütze to 5
+           * Only a maximum of 15 passe for each match will be possible
+           */
 
-            if (this.match1.schuetzen.length !== 0) {
+          if (this.match1.schuetzen.length !== 0) {
 
-              if (this.match1.schuetzen.length > 3) {
-                for (let i = this.match1.schuetzen.length; i > 3; i--) {
-                  this.match1.schuetzen.pop();
-                }
-              }
-
-              for (let i = 0; i < 3; i++) {
-                if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
-                  for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
-                    this.match1.schuetzen[i].pop();
-                  }
-                }
-              }
-            }
-            /**
-             * Limits the Schützen of match 2 to 3 and each passe-array
-             * for each Schütze to 5
-             * Only a maximum of 15 passe for each match will be possible
-             */
-            if (this.match2.schuetzen.length !== 0) {
-
-              if (this.match2.schuetzen.length > 3) {
-                for (let i = this.match2.schuetzen.length; i > 3; i--) {
-                  this.match2.schuetzen.pop();
-                }
-              }
-
-              for ( let i = 0; i < 3; i++) {
-                if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
-                  for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
-                    this.match2.schuetzen[i].pop();
-                  }
-                }
+            if (this.match1.schuetzen.length > 3) {
+              for (let i = this.match1.schuetzen.length; i > 3; i--) {
+                this.match1.schuetzen.pop();
               }
             }
 
-
-
-
-            console.log('match1', this.match1);
-            console.log('match2', this.match2);
-            let shouldInitSumSatz = true;
-
-            if (this.match1.schuetzen.length <= 0) {
-              this.initSchuetzenMatch1();
-              shouldInitSumSatz = false;
-            }
-
-            if (this.match2.schuetzen.length <= 0) {
-              this.initSchuetzenMatch2();
-              shouldInitSumSatz = false;
-            }
-
-
-            if (shouldInitSumSatz) {
-              this.initSumSatz();
-              this.setPoints();
-            }
-            if (!this.embeddedMode) {
-              this.notificationService.discardNotification();
-            }
-            const stringMatch1 = this.match1.mannschaftName;
-            const stringMatch2 = this.match2.mannschaftName;
-
-            if (stringMatch1.includes(PLATZHALTER)) {
-              for (const i of Object.keys(this.match1.schuetzen)) {
-                this.match1.schuetzen[0][0].rueckennummer = 1;
-                this.match1.schuetzen[1][0].rueckennummer = 2;
-                this.match1.schuetzen[2][0].rueckennummer = 3;
-                for (let j = 0; j <= 2; j++) {
-                  this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
-                  this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
+            for (let i = 0; i < 3; i++) {
+              if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+                for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
+                  this.match1.schuetzen[i].pop();
                 }
               }
-              this.match1.satzpunkte = 0;
-              this.match1.matchpunkte = 0;
+            }
+          }
+          /**
+           * Limits the Schützen of match 2 to 3 and each passe-array
+           * for each Schütze to 5
+           * Only a maximum of 15 passe for each match will be possible
+           */
+          if (this.match2.schuetzen.length !== 0) {
 
-            } else if (stringMatch2.includes(PLATZHALTER)) {
-              for (const i of Object.keys(this.match2.schuetzen)) {
-                this.match2.schuetzen[0][0].rueckennummer = 1;
-                this.match2.schuetzen[1][0].rueckennummer = 2;
-                this.match2.schuetzen[2][0].rueckennummer = 3;
-                for (let j = 0; j <= 2; j++) {
-                  this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
-                  this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
-                }
+            if (this.match2.schuetzen.length > 3) {
+              for (let i = this.match2.schuetzen.length; i > 3; i--) {
+                this.match2.schuetzen.pop();
               }
-              this.match2.satzpunkte = 0;
-              this.match2.matchpunkte = 0;
             }
 
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+            for (let i = 0; i < 3; i++) {
+              if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+                for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                  this.match2.schuetzen[i].pop();
+                }
+              }
+            }
+          }
+
+
+          console.log('match1', this.match1);
+          console.log('match2', this.match2);
+          let shouldInitSumSatz = true;
+
+          if (this.match1.schuetzen.length <= 0) {
+            this.initSchuetzenMatch1();
+            shouldInitSumSatz = false;
+          }
+
+          if (this.match2.schuetzen.length <= 0) {
+            this.initSchuetzenMatch2();
+            shouldInitSumSatz = false;
+          }
+
+
+          if (shouldInitSumSatz) {
+            this.initSumSatz();
+            this.setPoints();
+          }
+          if (!this.embeddedMode) {
+            this.notificationService.discardNotification();
+          }
+          const stringMatch1 = this.match1.mannschaftName;
+          const stringMatch2 = this.match2.mannschaftName;
+
+          if (stringMatch1.includes(PLATZHALTER)) {
+            for (const i of Object.keys(this.match1.schuetzen)) {
+              this.match1.schuetzen[0][0].rueckennummer = 1;
+              this.match1.schuetzen[1][0].rueckennummer = 2;
+              this.match1.schuetzen[2][0].rueckennummer = 3;
+              for (let j = 0; j <= 2; j++) {
+                this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
+                this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
+              }
+            }
+            this.match1.satzpunkte = 0;
+            this.match1.matchpunkte = 0;
+
+          } else if (stringMatch2.includes(PLATZHALTER)) {
+            for (const i of Object.keys(this.match2.schuetzen)) {
+              this.match2.schuetzen[0][0].rueckennummer = 1;
+              this.match2.schuetzen[1][0].rueckennummer = 2;
+              this.match2.schuetzen[2][0].rueckennummer = 3;
+              for (let j = 0; j <= 2; j++) {
+                this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
+                this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
+              }
+            }
+            this.match2.satzpunkte = 0;
+            this.match2.matchpunkte = 0;
+          }
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
 
     // Check for input properties first (embedded mode)
@@ -333,13 +322,13 @@ export class SchusszettelComponent implements OnInit {
     } catch (e) {
 
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
-        severity:    NotificationSeverity.INFO,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
+        severity: NotificationSeverity.INFO,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
       });
     }
   }
@@ -363,7 +352,6 @@ export class SchusszettelComponent implements OnInit {
         this.mannschaften = response.payload;
       });
   }
-
 
 
   /**
@@ -420,17 +408,15 @@ export class SchusszettelComponent implements OnInit {
     }
 
 
-
-
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
+        id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
       });
     } else if (
       // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
@@ -442,13 +428,13 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen[1][0].rueckennummer == null ||
       this.match2.schuetzen[2][0].rueckennummer == null) {
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
+        id: 'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
       });
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
@@ -458,25 +444,25 @@ export class SchusszettelComponent implements OnInit {
       this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
       this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
       this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
-      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
+      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer) {
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
+        id: 'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
       });
     } else {
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+        id: 'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
-        severity:    NotificationSeverity.INFO,
-        origin:      NotificationOrigin.USER,
+        severity: NotificationSeverity.INFO,
+        origin: NotificationOrigin.USER,
         // type: NotificationType.OK, //--TO-DO Maximilian
-        userAction:  NotificationUserAction.PENDING
+        userAction: NotificationUserAction.PENDING
       });
 
       // im Ausgabefeld ist die Schutzennummer aktuell nur in der 0-ten Passe gesetzt
@@ -506,24 +492,24 @@ export class SchusszettelComponent implements OnInit {
           // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
           this.ngOnInit();
           this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+            id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
             description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
+            severity: NotificationSeverity.ERROR,
+            origin: NotificationOrigin.SYSTEM,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.ACCEPTED
           });
         }, (error) => {
           console.error(error);
           this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+            id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
             description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
+            severity: NotificationSeverity.ERROR,
+            origin: NotificationOrigin.SYSTEM,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.ACCEPTED
           });
           this.notificationService.discardNotification();
         });
@@ -544,13 +530,13 @@ export class SchusszettelComponent implements OnInit {
     if (this.dirtyFlag === true) {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
-        id:          NOTIFICATION_ZURUECK,
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        id: NOTIFICATION_ZURUECK,
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
-        severity:    NotificationSeverity.QUESTION,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.YES_NO,
-        userAction:  NotificationUserAction.PENDING
+        severity: NotificationSeverity.QUESTION,
+        origin: NotificationOrigin.USER,
+        type: NotificationType.YES_NO,
+        userAction: NotificationUserAction.PENDING
       };
 
       console.log('show notification');
@@ -587,13 +573,13 @@ export class SchusszettelComponent implements OnInit {
     if (this.dirtyFlag === true) {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
-        id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        id: NOTIFICATION_WEITER_SCHALTEN,
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
-        severity:    NotificationSeverity.QUESTION,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.YES_NO,
-        userAction:  NotificationUserAction.PENDING
+        severity: NotificationSeverity.QUESTION,
+        origin: NotificationOrigin.USER,
+        type: NotificationType.YES_NO,
+        userAction: NotificationUserAction.PENDING
       };
 
       this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
@@ -631,13 +617,13 @@ export class SchusszettelComponent implements OnInit {
     if (this.dirtyFlag === true) {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
-        id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        id: NOTIFICATION_WEITER_SCHALTEN,
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
-        severity:    NotificationSeverity.QUESTION,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.YES_NO,
-        userAction:  NotificationUserAction.PENDING
+        severity: NotificationSeverity.QUESTION,
+        origin: NotificationOrigin.USER,
+        type: NotificationType.YES_NO,
+        userAction: NotificationUserAction.PENDING
       };
 
       this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)

@@ -47,14 +47,6 @@ $border: #dee2e6;
   }
 }
 
-.match-container {
-  border: 1px solid rgba(0, 0, 0, .1);
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 // Match Header Section - Compact for tablets
 .match-header-section {
   margin-bottom: 15px;
@@ -345,10 +337,6 @@ $border: #dee2e6;
     padding: 10px;
   }
 
-  .match-container {
-    padding: 8px;
-  }
-
   .shooters-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 8px;
@@ -432,16 +420,6 @@ $border: #dee2e6;
           padding: 0;
           margin: 0;
         }
-      }
-
-      // Fixed positioning to prevent overlap
-      .match1 {
-        margin-top: 20px;
-        margin-bottom: 60px;
-        border: 2px solid rgba(0, 0, 0, .1);
-        position: relative;
-        width: 100%;
-        min-height: 300px;
       }
 
       .match2 {
@@ -531,28 +509,11 @@ $border: #dee2e6;
         }
       }
 
-      // Fixed spacing with absolute values
-      .tabelle {
-        margin-left: 35px !important;
-        margin-top: 10px !important;
-        position: relative;
-      }
-
       .offset-9 {
         margin-top: 10px !important;
         margin-left: 950px !important;
         margin-bottom: 15px !important;
         position: absolute;
-      }
-
-      .schusstabelle {
-        margin-left: 60px !important;
-        position: relative;
-      }
-
-      .fehlerpunktetabelle {
-        margin-left: 100px !important;
-        position: relative;
       }
 
       .col-4 {
@@ -661,11 +622,6 @@ $border: #dee2e6;
 @media print {
   .weiter-button {
     display: none;
-  }
-
-  .match-container {
-    border: 2px solid #000;
-    page-break-inside: avoid;
   }
 
   .embedded-schusszettel-section {
