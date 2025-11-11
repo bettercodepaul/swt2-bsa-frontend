@@ -1,5 +1,5 @@
 <!-- Container -->
-<div>
+<div *ngIf="hasRingzahlen(match1) || hasRingzahlen(match2)">
   <!-- Match 1 -->
   <div class="match-section">
     <!-- Header Row -->
@@ -297,3 +297,6 @@
   </div>
 </div>
 
+<div *ngIf="!hasRingzahlen(match1) && !hasRingzahlen(match2)">
+  <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
+</div>
