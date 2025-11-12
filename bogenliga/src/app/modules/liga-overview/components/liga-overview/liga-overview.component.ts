@@ -21,6 +21,9 @@ import { AnalyticsService } from '@shared/services';
 })
 export class LigaOverviewComponent implements OnInit, OnDestroy {
 
+  /** ViewChild-Referenz auf die Tree-Komponente (für Deeplink-Expand). */
+  @ViewChild(TreeComponent, { static: false }) treeComponent?: TreeComponent;
+
   /**
    * Aktueller Ladezustand.
    */
@@ -50,6 +53,11 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    * Optionaler Hinweistext aus Deeplink-Validierung.
    */
   deeplinkMessageKey: string | null = null;
+
+  /**
+   * Flüchtige Fehlermeldung für Deeplink-Probleme; wird automatisch ausgeblendet.
+   */
+  deeplinkErrorMessage: string | null = null;
 
   /** Merkt sich die via URL gewünschte Liga-ID (falls vorhanden). */
   private deeplinkLigaId: number | null = null;
@@ -255,6 +263,24 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     } else {
       Promise.resolve().then(callback);
     }
+  }
+
+  /**
+   * Analytics: Seitenaufruf der Ligaübersicht tracken.
+   */
+  private trackPageView(): void {
+    try {
+      this.analytics.track('page_ligauebersicht_view');
+    } catch { /* no-op */ }
+  }
+
+  /**
+   * Analytics: Tree-Selektion tracken.
+   */
+  private trackSelection(ligaId: number): void {
+    try {
+      this.analytics.track('tree_select', { ligaId });
+    } catch { /* no-op */ }
   }
 
   /**
