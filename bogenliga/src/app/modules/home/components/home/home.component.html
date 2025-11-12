@@ -24,10 +24,15 @@
     <div class="calendar">
       <h2>Unsere nächsten Wettkämpfe</h2>
       <div id = "competitionList">
-        <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
-          <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
+        <bla-veranstaltungen-button  *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
+          <p heading>
+            <a [routerLink]="['/home', veranstaltung.veranstaltungDO.ligaId]">
+              {{veranstaltung.veranstaltungDO.name}}
+            </a>
+          </p>
           <p date-month>{{veranstaltung.month}}</p>
-          <h1 date-day>{{veranstaltung.day}}</h1>
+          <h1 date-day>{{veranstaltung.day}} "</h1>
+
         </bla-veranstaltungen-button>
       </div>
       <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>

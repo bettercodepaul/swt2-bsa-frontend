@@ -38,18 +38,18 @@ export class WettkampfDO implements VersionedDataObject {
     wettkampfAusrichter ?: number
   ) {
     this.id = !!id ? id : null;
-    this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
-    this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
-    this.wettkampfStrasse = !!wettkampfStrasse ? wettkampfStrasse : '';
-    this.wettkampfPlz = !!wettkampfPlz ? wettkampfPlz : '';
-    this.wettkampfOrtsname = !!wettkampfOrtsname ? wettkampfOrtsname : '';
-    this.wettkampfOrtsinfo = !!wettkampfOrtsinfo ? wettkampfOrtsinfo : '';
-    this.wettkampfBeginn = !!wettkampfBeginn ? wettkampfBeginn : '';
-    this.wettkampfTag = !!wettkampfTag ? wettkampfTag : null;
-    this.wettkampfDisziplinId = !!wettkampfDisziplinId ? wettkampfDisziplinId : null;
-    this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
-    this.version = !!version ? version : null;
-    this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
+    this.wettkampfVeranstaltungsId =  wettkampfVeranstaltungsId !== undefined && wettkampfVeranstaltungsId !== null ? wettkampfVeranstaltungsId : null;
+    this.wettkampfDatum =  wettkampfDatum !== undefined && wettkampfDatum !== null ? wettkampfDatum : '';
+    this.wettkampfStrasse =  wettkampfStrasse !== undefined && wettkampfStrasse !== null ? wettkampfStrasse : '';
+    this.wettkampfPlz = wettkampfPlz !== undefined && wettkampfPlz !== null ? wettkampfPlz : '';
+    this.wettkampfOrtsname = wettkampfOrtsname !== undefined && wettkampfOrtsname !== null ? wettkampfOrtsname : '';
+    this.wettkampfOrtsinfo = wettkampfOrtsinfo !== undefined && wettkampfOrtsinfo !== null ? wettkampfOrtsinfo : '';
+    this.wettkampfBeginn = wettkampfBeginn !== undefined && wettkampfBeginn !== null ? wettkampfBeginn : '';
+    this.wettkampfTag = wettkampfTag !== undefined && wettkampfTag !== null ? wettkampfTag : null;
+    this.wettkampfDisziplinId = wettkampfDisziplinId !== undefined && wettkampfDisziplinId !== null ? wettkampfDisziplinId : null;
+    this.wettkampfTypId = wettkampfTypId !== undefined && wettkampfTypId !== null ? wettkampfTypId : null;
+    this.version =  version !== undefined && version !== null ? version : null;
+    this.wettkampfAusrichter = wettkampfAusrichter !== undefined && wettkampfAusrichter !== null ? wettkampfAusrichter : null;
   }
 
   isComplete(): boolean {
