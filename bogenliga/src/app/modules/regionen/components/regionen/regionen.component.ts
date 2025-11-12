@@ -14,6 +14,8 @@ import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {RoleVersionedDataObject} from '@verwaltung/services/models/roles-versioned-data-object.class';
 import {Router} from '@angular/router';
+// import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
+// import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 
@@ -325,7 +327,8 @@ export class RegionenComponent implements OnInit {
     this.selectedLigaDO = event[0];
     console.log(this.selectedLigaDO);
     console.log('regionen selectedid: ' + this.selectedLigaDO.id);
-    this.router.navigateByUrl('/liga');
+    this.router.navigateByUrl('/ligatabelle/' + this.selectedLigaDO.id);
+    // this.router.navigateByUrl('/ligatabelle');
   }
 
   public getEmptyList(): RoleVersionedDataObject[] {
