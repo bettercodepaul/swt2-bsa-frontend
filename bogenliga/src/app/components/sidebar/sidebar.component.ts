@@ -99,9 +99,9 @@ export class SidebarComponent implements OnInit {
       result = result;
     }
 
-    if (this.ligaID != undefined && route.startsWith("/home")){
-      result =  result + '/'+ this.ligaID.toString();
-    } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
+    // Für die Home-Seite wollen wir NICHT automatisch eine Liga-ID anhängen,
+    // damit man immer zurück auf die echte Startseite kommt.
+    if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
       result =  result + '/'+ this.ligaID.toString();
     }
 
