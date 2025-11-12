@@ -2018,6 +2018,9 @@
       "TITLE": "League hierarchy",
       "EXPAND": "Expand node",
       "COLLAPSE": "Collapse node"
+    },
+    "DEEPLINK": {
+      "INVALID_ID": "Invalid league ID in the URL. Selection not possible."
     }
   }
   }
