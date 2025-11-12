@@ -71,6 +71,7 @@
          <!-- Button -->
         <div id="Button">
           <bla-actionbutton
+            *ngIf="veranstaltung"
             [id]="'ligadetailRegionSaveButton'"
             [color]= "ActionButtonColors.SUCCESS"
             [iconClass]="'th-list'"
@@ -79,7 +80,7 @@
             <!--{{ selectedVeranstaltungName}}
             name of the currently selected Liga displayed in button-->
 
-            {{this.veranstaltung.name}}
+            {{ veranstaltung?.name }}
           </bla-actionbutton>
 
           <bla-actionbutton
