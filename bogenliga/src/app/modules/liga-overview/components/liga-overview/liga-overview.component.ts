@@ -7,6 +7,7 @@ import {takeUntil} from 'rxjs/operators';
 import {buildLeagueUrl, isValidLigaId} from '../../utils/league-url.helper';
 import {TreeComponent} from '../tree/tree.component';
 import { AnalyticsService } from '@shared/services';
+import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
 
 /**
  * Komponente für die Ligaübersicht.
@@ -20,6 +21,9 @@ import { AnalyticsService } from '@shared/services';
   styleUrls: ['./liga-overview.component.scss']
 })
 export class LigaOverviewComponent implements OnInit, OnDestroy {
+
+  /** Dialog-/Seitenkonfiguration für Breadcrumbs etc. */
+  public config = LIGA_OVERVIEW_PAGE_CONFIG;
 
   /** ViewChild-Referenz auf die Tree-Komponente (für Deeplink-Expand). */
   @ViewChild(TreeComponent, { static: false }) treeComponent?: TreeComponent;
@@ -84,7 +88,6 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    * Feuert Analytics Event für Seitenaufruf und verarbeitet Query-Parameter.
    */
  ngOnInit(): void {
-  this.trackPageView();
   this.observeDeeplinkParam();
   this.loadHierarchy();
 }
@@ -130,6 +133,12 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           // Deeplink nach Datenladung anwenden
           this.applyDeeplinkIfPossible();
+
+          // Timing nach dem Rendern erfassen (OK)
+          this.runAfterRender(() => {
+            const duration = stop();
+            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'ok' });
+          });
         },
         error: () => {
           this.hierarchyResult = {status: 'error', data: [], reason: 'Unhandled error'};
@@ -263,15 +272,6 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     } else {
       Promise.resolve().then(callback);
     }
-  }
-
-  /**
-   * Analytics: Seitenaufruf der Ligaübersicht tracken.
-   */
-  private trackPageView(): void {
-    try {
-      this.analytics.track('page_ligauebersicht_view');
-    } catch { /* no-op */ }
   }
 
   /**

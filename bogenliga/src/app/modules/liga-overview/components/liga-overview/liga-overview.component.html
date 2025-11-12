@@ -1,55 +1,56 @@
-<div class="content">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <!-- Seitentitel -->
-        <h1>{{ 'LIGAUEBERSICHT.TITLE' | translate }}</h1>
-        <p>{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
+<bla-common-dialog [config]="config">
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <!-- Seitentitel innerhalb des Dialog-Headers vorhanden; Beschreibung hier zusätzlich -->
+          <p>{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
 
-        <!-- Deeplink Fehlermeldung -->
-        <div class="alert alert-warning liga-deeplink-error" role="alert" *ngIf="deeplinkErrorMessage">
-          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-          <span>{{ deeplinkErrorMessage | translate }}</span>
-        </div>
+          <!-- Deeplink Fehlermeldung -->
+          <div class="alert alert-warning liga-deeplink-error" role="alert" *ngIf="deeplinkErrorMessage">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <span>{{ deeplinkErrorMessage | translate }}</span>
+          </div>
 
-        <section class="liga-tree-section" [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
-          <ng-container *ngIf="isLoading; else treeContent">
-            <div class="liga-tree-state" role="status" aria-live="polite">
-              <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-              {{ 'LIGAUEBERSICHT.STATUS.LOADING' | translate }}
-            </div>
-          </ng-container>
-
-          <ng-template #treeContent>
-            <ng-container *ngIf="treeNodes.length > 0; else treeStateMessage">
-              <div class="liga-tree-wrapper">
-                <bla-league-tree
-                  [nodes]="treeNodes"
-                  [selectedId]="selectedLigaId"
-                  (select)="onTreeSelect($event)">
-                </bla-league-tree>
-              </div>
-              <!-- Statushinweis zur Datenlage -->
-              <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as smk">
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <span>{{ smk | translate }}</span>
-              </div>
-              <!-- Nicht-blockierender Hinweis aus Deeplink-Validierung -->
-              <div class="alert alert-warning liga-tree-state" role="alert" *ngIf="deeplinkMessageKey as dmk">
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                <span>{{ dmk | translate }}</span>
+          <section class="liga-tree-section" [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
+            <ng-container *ngIf="isLoading; else treeContent">
+              <div class="liga-tree-state" role="status" aria-live="polite">
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                {{ 'LIGAUEBERSICHT.STATUS.LOADING' | translate }}
               </div>
             </ng-container>
-          </ng-template>
 
-          <ng-template #treeStateMessage>
-            <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as key">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
-              <span>{{ key | translate }}</span>
-            </div>
-          </ng-template>
-        </section>
+            <ng-template #treeContent>
+              <ng-container *ngIf="treeNodes.length > 0; else treeStateMessage">
+                <div class="liga-tree-wrapper">
+                  <bla-league-tree
+                    [nodes]="treeNodes"
+                    [selectedId]="selectedLigaId"
+                    (select)="onTreeSelect($event)">
+                  </bla-league-tree>
+                </div>
+                <!-- Statushinweis zur Datenlage -->
+                <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as smk">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                  <span>{{ smk | translate }}</span>
+                </div>
+                <!-- Nicht-blockierender Hinweis aus Deeplink-Validierung -->
+                <div class="alert alert-warning liga-tree-state" role="alert" *ngIf="deeplinkMessageKey as dmk">
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                  <span>{{ dmk | translate }}</span>
+                </div>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #treeStateMessage>
+              <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as key">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span>{{ key | translate }}</span>
+              </div>
+            </ng-template>
+          </section>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</bla-common-dialog>
