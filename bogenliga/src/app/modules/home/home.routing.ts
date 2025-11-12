@@ -52,5 +52,4 @@ export const BUTTON_ROUTES: Routes = [
   {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {path: 'veranstaltung', component: VeranstaltungOverviewComponent, canActivate: [VeranstaltungOverviewGuard]},
   {path: 'veranstaltung/add', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
-  {path: 'wkdurchfuehrung', component: WkdurchfuehrungComponent}
 ];
