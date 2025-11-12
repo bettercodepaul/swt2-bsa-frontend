@@ -58,3 +58,12 @@ it('Anzeige User', function () {
   cy.get('[data-cy=verwaltung-user-button]').click()
   cy.url().should('include', '#/verwaltung/user')
 })
+
+/**
+ * Tests if an administrator can access the WKDurchfuehrung page.
+ */
+it('Can visit WKDurchfuehrung', function () {
+  cy.visit('http://localhost:4200/#/home')
+  cy.get('bla-veranstaltungen-button:nth-child(1) > button:nth-child(1)').click();
+  cy.url().should('include', '/#/wkdurchfuehrung');
+})
