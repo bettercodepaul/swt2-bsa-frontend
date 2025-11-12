@@ -7,6 +7,7 @@ import {takeUntil} from 'rxjs/operators';
 import {buildLeagueUrl, isValidLigaId} from '../../utils/league-url.helper';
 import {TreeComponent} from '../tree/tree.component';
 import { AnalyticsService } from '@shared/services';
+import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
 
 /**
  * Komponente für die Ligaübersicht.
@@ -20,6 +21,12 @@ import { AnalyticsService } from '@shared/services';
   styleUrls: ['./liga-overview.component.scss']
 })
 export class LigaOverviewComponent implements OnInit, OnDestroy {
+
+  /** Dialog-/Seitenkonfiguration für Breadcrumbs etc. */
+  public config = LIGA_OVERVIEW_PAGE_CONFIG;
+
+  /** ViewChild-Referenz auf die Tree-Komponente (für Deeplink-Expand). */
+  @ViewChild(TreeComponent, { static: false }) treeComponent?: TreeComponent;
 
   /**
    * Aktueller Ladezustand.
@@ -47,15 +54,17 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   statusMessageKey: string | null = null;
 
   /**
-   * Hinweismeldung für ungültige Liga-IDs (Deeplink).
+   * Optionaler Hinweistext aus Deeplink-Validierung.
+   */
+  deeplinkMessageKey: string | null = null;
+
+  /**
+   * Flüchtige Fehlermeldung für Deeplink-Probleme; wird automatisch ausgeblendet.
    */
   deeplinkErrorMessage: string | null = null;
 
-  /**
-   * Referenz zur Tree-Komponente für programmatisches Expandieren.
-   */
-  @ViewChild(TreeComponent)
-  private treeComponent?: TreeComponent;
+  /** Merkt sich die via URL gewünschte Liga-ID (falls vorhanden). */
+  private deeplinkLigaId: number | null = null;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -78,10 +87,10 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    *
    * Feuert Analytics Event für Seitenaufruf und verarbeitet Query-Parameter.
    */
-  ngOnInit(): void {
-    this.loadHierarchy();
-    this.handleDeeplink();
-  }
+ ngOnInit(): void {
+  this.observeDeeplinkParam();
+  this.loadHierarchy();
+}
 
   /**
    * Lifecycle Hook: Aufräumen.
@@ -97,7 +106,9 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    */
   onTreeSelect(ligaId: number): void {
     this.selectedLigaId = ligaId;
-    this.navigateToLeagueHomepage(ligaId);
+    this.trackSelection(ligaId);
+    // Direkte Router-Navigation zur Liga-Startseite (ohne kompletten Seiten-Reload)
+    this.router.navigate(['/home', ligaId]);
   }
 
 
@@ -120,11 +131,13 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           this.treeNodes = result.data ?? [];
           this.statusMessageKey = this.resolveStatusMessageKey(result);
           this.isLoading = false;
+          // Deeplink nach Datenladung anwenden
+          this.applyDeeplinkIfPossible();
 
-          // After next render tick, capture timing
+          // Timing nach dem Rendern erfassen (OK)
           this.runAfterRender(() => {
             const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'ok' });
           });
         },
         error: () => {
@@ -260,4 +273,62 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
       Promise.resolve().then(callback);
     }
   }
+
+  /**
+   * Analytics: Tree-Selektion tracken.
+   */
+  private trackSelection(ligaId: number): void {
+    try {
+      this.analytics.track('tree_select', { ligaId });
+    } catch { /* no-op */ }
+  }
+
+  /**
+   * Beobachtet Query-Params und liest ligaId (falls vorhanden).
+   */
+  private observeDeeplinkParam(): void {
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        const raw = params.get('ligaId');
+        this.deeplinkMessageKey = null;
+        this.deeplinkLigaId = null;
+        if (raw == null) {
+          return;
+        }
+        const parsed = Number(raw);
+        if (!Number.isFinite(parsed)) {
+          // Ungültiges Format -> nicht-blockierender Hinweis
+          this.deeplinkMessageKey = 'LIGAUEBERSICHT.DEEPLINK.INVALID_ID';
+          return;
+        }
+        this.deeplinkLigaId = parsed;
+        // Falls Daten schon da sind, sofort anwenden
+        this.applyDeeplinkIfPossible();
+      });
+  }
+
+  /**
+   * Wendet die Deeplink-Selektion an, sobald Baumdaten verfügbar sind.
+   */
+  private applyDeeplinkIfPossible(): void {
+    if (this.deeplinkLigaId == null || !Array.isArray(this.treeNodes) || this.treeNodes.length === 0) {
+      return;
+    }
+    const exists = this.containsNodeId(this.treeNodes, this.deeplinkLigaId);
+    if (exists) {
+      this.selectedLigaId = this.deeplinkLigaId;
+    } else {
+      this.deeplinkMessageKey = 'LIGAUEBERSICHT.DEEPLINK.INVALID_ID';
+    }
+  }
+
+  private containsNodeId(nodes: LeagueTreeNode[], id: number): boolean {
+    for (const n of nodes ?? []) {
+      if (n.id === id) { return true; }
+      if (n.children?.length && this.containsNodeId(n.children, id)) { return true; }
+    }
+    return false;
+  }
+
 }
