@@ -75,7 +75,7 @@ export class SidebarComponent implements OnInit {
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
     this.URLRoute = this.router.url;
-    if (this.URLRoute.startsWith("/home") ) {
+    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
       const lastSlashIndex = this.URLRoute.lastIndexOf('/');
       switch(lastSlashIndex){
         case 0:
@@ -99,6 +99,8 @@ export class SidebarComponent implements OnInit {
     }
 
     if (this.ligaID != undefined && route.startsWith("/home")){
+      result =  result + '/'+ this.ligaID.toString();
+    } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
       result =  result + '/'+ this.ligaID.toString();
     }
 
