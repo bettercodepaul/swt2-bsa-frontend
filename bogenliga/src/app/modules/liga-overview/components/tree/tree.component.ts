@@ -13,6 +13,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import {LeagueTreeNode} from '@shared/models/tree-node';
+import { AnalyticsService } from '@shared/services';
 
 type NodeId = number;
 
@@ -85,7 +86,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   constructor(
     private readonly host: ElementRef<HTMLElement>,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly analytics: AnalyticsService
   ) {
   }
 
@@ -174,6 +176,14 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     const isExpanded = this.expandedIds.has(nodeId);
     const shouldExpand = expand ?? !isExpanded;
 
+    // Analytics: tree expand/collapse
+    const node = this.nodeById.get(nodeId);
+    this.analytics.track('tree_expand', {
+      nodeId,
+      expanded: shouldExpand,
+      level: node?.level ?? null
+    });
+
     if (shouldExpand) {
       if (!isExpanded) {
         this.expandedIds.add(nodeId);
@@ -218,7 +228,56 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   selectNode(nodeId: NodeId): void {
     this.selectedId = nodeId;
     this.focusNode(nodeId);
+    // Analytics: tree select
+    this.analytics.track('tree_select', { nodeId });
     this.select.emit(nodeId);
+  }
+
+  /**
+   * Expandiert den Pfad zu einem Knoten und markiert ihn.
+   * 
+   * Findet alle Eltern-Knoten bis zur Wurzel und expandiert sie,
+   * damit der Zielknoten sichtbar wird. Setzt anschließend die Selektion.
+   * 
+   * @param nodeId Die ID des Zielknotens
+   * @returns true, wenn der Knoten gefunden und expandiert wurde, sonst false
+   */
+  expandPathTo(nodeId: NodeId): boolean {
+    if (!this.nodeById.has(nodeId)) {
+      return false;
+    }
+
+    // Pfad zur Wurzel finden
+    const pathToRoot: NodeId[] = [];
+    let currentId: NodeId | null = nodeId;
+    
+    while (currentId != null) {
+      const parent = this.parentById.get(currentId);
+      if (parent != null) {
+        pathToRoot.push(parent);
+      }
+      currentId = parent ?? null;
+    }
+
+    // Alle Eltern-Knoten expandieren
+    let mutated = false;
+    for (const parentId of pathToRoot) {
+      if (!this.expandedIds.has(parentId)) {
+        this.expandedIds.add(parentId);
+        mutated = true;
+      }
+    }
+
+    if (mutated) {
+      this.expandedIds = new Set(this.expandedIds);
+      this.updateVisibleNodes();
+    }
+
+    // Knoten selektieren und fokussieren
+    this.selectNode(nodeId);
+    this.cdr.markForCheck();
+    
+    return true;
   }
 
   /**

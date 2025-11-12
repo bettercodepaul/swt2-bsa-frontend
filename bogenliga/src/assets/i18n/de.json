@@ -2029,7 +2029,8 @@
       "COLLAPSE": "Knoten einklappen"
     },
     "DEEPLINK": {
-      "INVALID_ID": "Ungültige Liga-ID in der URL. Auswahl nicht möglich."
+      "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",
+      "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
     }
   }
 }

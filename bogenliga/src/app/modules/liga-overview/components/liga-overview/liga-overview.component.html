@@ -6,6 +6,12 @@
         <h1>{{ 'LIGAUEBERSICHT.TITLE' | translate }}</h1>
         <p>{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
 
+        <!-- Deeplink Fehlermeldung -->
+        <div class="alert alert-warning liga-deeplink-error" role="alert" *ngIf="deeplinkErrorMessage">
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <span>{{ deeplinkErrorMessage | translate }}</span>
+        </div>
+
         <section class="liga-tree-section" [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
           <ng-container *ngIf="isLoading; else treeContent">
             <div class="liga-tree-state" role="status" aria-live="polite">
