@@ -2020,7 +2020,8 @@
       "COLLAPSE": "Collapse node"
     },
     "DEEPLINK": {
-      "INVALID_ID": "Invalid league ID in the URL. Selection not possible."
+      "INVALID_ID": "The specified league ID is invalid.",
+      "NOT_FOUND": "The specified league could not be found."
     }
   }
   }

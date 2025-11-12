@@ -1,9 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LeagueHierarchyService} from '@shared/services';
 import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {buildLeagueUrl, isValidLigaId} from '../../utils/league-url.helper';
+import {TreeComponent} from '../tree/tree.component';
+import { AnalyticsService } from '@shared/services';
 
 /**
  * Komponente für die Ligaübersicht.
@@ -56,27 +59,27 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   /**
    * Konstruktor
    * @param router Angular Router für Navigation
-   * @param route ActivatedRoute für Query-Param Handling
+   * @param route ActivatedRoute für Query-Parameter
    * @param leagueHierarchyService Service für League-Hierarchie
    */
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly leagueHierarchyService: LeagueHierarchyService
+    private readonly leagueHierarchyService: LeagueHierarchyService,
+    private readonly analytics: AnalyticsService
   ) {
   }
 
   /**
    * Lifecycle Hook: Initialisierung der Komponente
    *
-   * Feuert Analytics Event für Seitenaufruf
+   * Feuert Analytics Event für Seitenaufruf und verarbeitet Query-Parameter.
    */
-  ngOnInit(): void {
-    // Analytics-Event für Seitenaufruf
-    this.trackPageView();
-    this.observeDeeplinkParam();
-    this.loadHierarchy();
-  }
+ ngOnInit(): void {
+  this.trackPageView();
+  this.observeDeeplinkParam();
+  this.loadHierarchy();
+}
 
   /**
    * Lifecycle Hook: Aufräumen.
@@ -88,6 +91,7 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
 
   /**
    * Wird aufgerufen, wenn ein Tree-Knoten selektiert wird.
+   * Navigiert zur Liga-Homepage mit der entsprechenden Liga-ID.
    */
   onTreeSelect(ligaId: number): void {
     this.selectedLigaId = ligaId;
@@ -96,16 +100,6 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home', ligaId]);
   }
 
-  /**
-   * Tracked den Seitenaufruf für Analytics (Matomo/Piwik)
-   *
-   * Event-Name: page_ligauebersicht_view
-   */
-  private trackPageView(): void {
-    if (typeof window !== 'undefined' && (window as any)._paq) {
-      (window as any)._paq.push(['trackEvent', 'Navigation', 'page_ligauebersicht_view']);
-    }
-  }
 
   /**
    * Lädt die Liga-Hierarchie und bereitet den Tree vor.
@@ -114,6 +108,10 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.hierarchyResult = null;
     this.statusMessageKey = null;
+
+    // Performance: measure fetch-start → render
+    const stop = this.analytics.startTimer('api_liga_hierarchie');
+
     this.leagueHierarchyService.getHierarchy()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -130,6 +128,11 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           this.treeNodes = [];
           this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
           this.isLoading = false;
+
+          this.runAfterRender(() => {
+            const duration = stop();
+            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'error' });
+          });
         }
       });
   }
@@ -152,12 +155,105 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
+
   /**
-   * Analytics-Event für Tree-Selektion.
+   * Verarbeitet Deeplink-Query-Parameter (ligaId).
+   * 
+   * Liest den Query-Parameter aus und expandiert/markiert den entsprechenden
+   * Knoten im Baum, falls vorhanden. Bei ungültiger ID wird eine Meldung angezeigt.
    */
-  private trackSelection(ligaId: number): void {
-    if (typeof window !== 'undefined' && (window as any)._paq) {
-      (window as any)._paq.push(['trackEvent', 'Navigation', 'tree_ligauebersicht_select', ligaId]);
+  private handleDeeplink(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        const ligaIdParam = params['ligaId'];
+        
+        if (ligaIdParam == null) {
+          return;
+        }
+
+        const ligaId = Number(ligaIdParam);
+        
+        if (!isValidLigaId(ligaId)) {
+          this.showDeeplinkError('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
+          return;
+        }
+
+        // Warten, bis Daten geladen sind
+        this.waitForDataThenExpand(ligaId);
+      });
+  }
+
+  /**
+   * Wartet auf das Laden der Hierarchie-Daten und expandiert dann den Pfad.
+   */
+  private waitForDataThenExpand(ligaId: number): void {
+    // Prüfen, ob Daten bereits geladen sind
+    if (this.treeNodes.length > 0) {
+      this.expandToNode(ligaId);
+      return;
+    }
+
+    // Auf Datenladen warten (max. 5 Sekunden)
+    const checkInterval = setInterval(() => {
+      if (this.treeNodes.length > 0) {
+        clearInterval(checkInterval);
+        this.expandToNode(ligaId);
+      }
+    }, 100);
+
+    setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 5000);
+  }
+
+  /**
+   * Expandiert den Pfad zu einem Knoten.
+   */
+  private expandToNode(ligaId: number): void {
+    if (!this.treeComponent) {
+      return;
+    }
+
+    const success = this.treeComponent.expandPathTo(ligaId);
+    
+    if (!success) {
+      this.showDeeplinkError('LIGAUEBERSICHT.DEEPLINK.NOT_FOUND');
+    }
+  }
+
+  /**
+   * Navigiert zur Liga-Homepage mit der angegebenen Liga-ID.
+   */
+  private navigateToLeagueHomepage(ligaId: number): void {
+    try {
+      const url = buildLeagueUrl(ligaId);
+      if (typeof window !== 'undefined') {
+        window.location.assign(url);
+      }
+    } catch (error) {
+      console.error('Failed to navigate to league homepage:', error);
+    }
+  }
+
+  /**
+   * Zeigt eine nicht-blockierende Fehlermeldung für Deeplink-Probleme.
+   */
+  private showDeeplinkError(messageKey: string): void {
+    this.deeplinkErrorMessage = messageKey;
+    // Nachricht nach 5 Sekunden ausblenden
+    setTimeout(() => {
+      this.deeplinkErrorMessage = null;
+    }, 5000);
+  }
+  /**
+   * Schedules a callback after the current render/microtask to approximate post-render timing.
+   */
+  private runAfterRender(callback: () => void): void {
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(callback);
+    } else {
+      Promise.resolve().then(callback);
     }
   }
 
