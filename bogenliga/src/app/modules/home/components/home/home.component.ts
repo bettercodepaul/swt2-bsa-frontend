@@ -187,6 +187,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.hasLigaIDInUrl = false;
         this.hasLigaNameInUrl=false;
         this.hasID=false;
+        // Liga-Auswahl beim Wechsel auf die Startseite zurücksetzen
+        this.selectedLigaDataprovider.setSelectedLigaID(undefined);
       }
     });
   }
