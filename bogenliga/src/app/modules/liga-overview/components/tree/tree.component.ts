@@ -95,9 +95,19 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.ensureRootsExpanded();
       this.updateVisibleNodes();
       this.ensureFocusableNode();
+      // Falls bereits eine Selektion vorliegt, Pfad expandieren
+      if (this.selectedId != null) {
+        this.expandAncestors(this.selectedId);
+      }
     }
 
-    if (changes['selectedId'] && !changes['selectedId'].firstChange) {
+    if (changes['selectedId']) {
+      // Bei Selektion Pfad expandieren und Fokus setzen
+      const next = changes['selectedId'].currentValue as number | null;
+      if (next != null) {
+        this.expandAncestors(next);
+        this.focusNode(next);
+      }
       this.cdr.markForCheck();
     }
   }
@@ -370,6 +380,33 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     if (mutated) {
       this.expandedIds = new Set(this.expandedIds);
+    }
+  }
+
+  /**
+   * Expandiert alle Vorfahren eines Knotens, sodass er sichtbar wird.
+   */
+  private expandAncestors(nodeId: NodeId): void {
+    if (!this.nodeById.has(nodeId)) {
+      return;
+    }
+    let current: NodeId | null = nodeId;
+    let mutated = false;
+    while (current != null) {
+      const parent = this.parentById.get(current);
+      if (parent == null) {
+        break;
+      }
+      if (!this.expandedIds.has(parent)) {
+        this.expandedIds.add(parent);
+        mutated = true;
+      }
+      current = parent;
+    }
+    if (mutated) {
+      this.expandedIds = new Set(this.expandedIds);
+      this.updateVisibleNodes();
+      this.ensureFocusableNode();
     }
   }
 }

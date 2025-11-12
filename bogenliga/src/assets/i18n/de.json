@@ -2027,6 +2027,9 @@
       "TITLE": "Liga-Hierarchie",
       "EXPAND": "Knoten ausklappen",
       "COLLAPSE": "Knoten einklappen"
+    },
+    "DEEPLINK": {
+      "INVALID_ID": "Ungültige Liga-ID in der URL. Auswahl nicht möglich."
     }
   }
 }

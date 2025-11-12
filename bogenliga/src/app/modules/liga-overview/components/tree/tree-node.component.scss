@@ -73,7 +73,9 @@
 }
 
 .bla-league-tree__item--selected .bla-league-tree__item-row {
-  box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.2), var(--bla-tree-card-shadow);
+  background: var(--bla-tree-selected-bg);
+  border-color: #2c7be5;
+  box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.35), var(--bla-tree-card-shadow);
 }
 
 .bla-league-tree__item--focused .bla-league-tree__item-row {
