@@ -2,11 +2,17 @@ import {Routes} from '@angular/router';
 
 import {HomeComponent} from '@home/components/home/home.component';
 import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
+import {ligaMatcher} from "./routing/liga-matcher";
+import {LigaResolver} from "./routing/resolvers/liga.resolver";
+import {LigatabelleComponent} from "./modules/ligatabelle/components/ligatabelle/ligatabelle.component";
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
+  //{path: 'home', component: HomeComponent},
+  //{path: 'home/:id', component: HomeComponent},
+  {matcher: ligaMatcher('home'), component: HomeComponent, resolve: { liga: LigaResolver }},
+  // Fallback ohne Liga
   {path: 'home', component: HomeComponent},
-  {path: 'home/:id', component: HomeComponent},
   {path: 'wettkaempfe', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},

@@ -29,6 +29,8 @@ import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDatapr
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import { RecentLigaService, RecentLigaEntry } from '@shared/services';
+import { slugifyLigaName } from '@shared/functions/slug-utils';
+
 //for notification
 import {
   CurrentUserService,
@@ -90,6 +92,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
   public recentLigas: RecentLigaEntry[] = [];
 
+  public ligaSelected = false;
+
   public VereinsID: number;
   public providedID: number;
   public ligaName: string;
@@ -144,9 +148,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   async ngOnInit() {
-    if (this.currentUserService.isLoggedIn() === false) {
+    if (!this.currentUserService.isLoggedIn()) {
       await this.logindataprovider.signInDefaultUser().then(() => this.handleSuccessfulLogin());
-    } else if (this.currentUserService.isLoggedIn() === true) {
+    } else {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
@@ -154,39 +158,29 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     this.recentLigas = this.recentLigaService.getAll();
 
+    const ligaFromResolver = this.route.snapshot.data['liga'] as LigaDO | null | undefined;
+    if (ligaFromResolver?.id != null) {
+      this.applyLiga(ligaFromResolver);
+    } else {
+      this.clearLigaSelection();
+    }
 
-    //to get if of liga from route path
-    this.routeSubscription=this.route.params.subscribe((params) => {
-      //if parameter ID_Path_PARAM is defined
-      //it parses the parameter value as an integer and assigns it to the providedID variable
-
-      //checking if url has parameter
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.hasID = true;
-        //this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
-
-
-        //check if url has number or liganame
-        if (!paramIsNumber) {
-          this.ligaName = params[ID_PATH_PARAM]
-          this.hasLigaIDInUrl = false;
-          this.hasLigaNameInUrl=true;
-          console.log("String liga name is: " + this.ligaName);
-          this.ligaName? this.loadLiga(this.ligaName) : null;
-        } else {
-          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          this.hasLigaIDInUrl = true;
-          this.hasLigaNameInUrl=false;
-          console.log("Number ID is: " + this.providedID);
-          this.checkingAndLoadingLiga(); // load liga with changes of id in url
-        }
-        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
-
+    // QueryParam Änderungen (Navigation zwischen Ligen ohne Vollladung):
+    this.route.queryParamMap.subscribe(params => {
+      const qp = params.get('liga');
+      if (!qp) {
+        this.clearLigaSelection();
+        return;
+      }
+      // Wenn Resolver bereits gesetzt hat und slug/ID unverändert: nichts tun
+      if (this.selectedLigaID && (String(this.selectedLigaID) === qp)) {
+        return;
+      }
+      const isNumeric = /^[0-9]+$/.test(qp);
+      if (isNumeric) {
+        this.ligaDataProvider.findById(qp).then(r => this.handleLigaPayload(r.payload));
       } else {
-        this.hasLigaIDInUrl = false;
-        this.hasLigaNameInUrl=false;
-        this.hasID=false;
+        this.ligaDataProvider.findBySlug(qp).then(r => this.handleLigaPayload(r.payload));
       }
     });
   }
@@ -209,14 +203,57 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
   }
 
-  public deselect(){
-    const link = '/home';
-    this.router.navigateByUrl(link);
-  }
-
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
     this.hasID ? this.loadLiga(this.providedID) : null;
+  }
+
+  private applyLiga(liga: LigaDO): void {
+    this.selectedLigaName               = liga.name;
+    this.selectedLigaID                 = liga.id;
+    this.selectedLigaDetails            = liga.ligaDetail;
+    this.selectedLigaDetailBase64       = liga.ligaDetailFileBase64;
+    this.selectedLigaDetailFileName     = liga.ligaDetailFileName;
+    this.selectedLigaDetailFileType     = liga.ligaDetailFileType;
+    this.ligaSelected                   = true;
+    this.recentLigaService.add({ id: liga.id, name: liga.name });
+    this.recentLigas = this.recentLigaService.getAll();
+    this.getVeranstaltungen(liga.id);
+  }
+
+  private handleLigaPayload(liga: LigaDO): void {
+    if (!liga || liga.id == null) {
+      this.clearLigaSelection();
+      return;
+    }
+    this.applyLiga(liga);
+  }
+
+  private clearLigaSelection(): void {
+    this.selectedLigaID = null;
+    this.selectedLigaName = null;
+    this.selectedLigaDetails = null;
+    this.selectedLigaDetailBase64 = null;
+    this.selectedLigaDetailFileName = null;
+    this.selectedLigaDetailFileType = null;
+    this.ligaSelected = false;
+  }
+
+  public deselect() {
+    this.router.navigateByUrl('/home');
+    this.clearLigaSelection();
+  }
+
+  // Ergänze in der Klasse:
+  public getLigaQueryParam(entry: { id: number; name: string; slug?: string }): string {
+    const slug = entry.slug || slugifyLigaName(entry.name ?? '');
+    return slug || String(entry.id);
+  }
+
+// Falls du bei buildRecentLigaLink bleiben willst, ändere es so (aber Template-Anpassung ist besser):
+  public buildRecentLigaLink(entry: { id: number; name: string; slug?: string }): string {
+    const value = this.getLigaQueryParam(entry);
+    return `/home/liga?liga=${encodeURIComponent(value)}`;
   }
 
 
@@ -581,7 +618,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.loadWettkaempfe();
     this.buildVeranstaltungskalender();
   }
-
 
 
 
