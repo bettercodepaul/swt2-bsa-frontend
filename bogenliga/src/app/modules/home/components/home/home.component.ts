@@ -92,9 +92,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
   public recentLigas: RecentLigaEntry[] = [];
-
   public ligaSelected = false;
-
   public VereinsID: number;
   public providedID: number;
   public ligaName: string;
@@ -605,6 +603,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.loadWettkaempfe();
     this.buildVeranstaltungskalender();
   }
+
 
 
 

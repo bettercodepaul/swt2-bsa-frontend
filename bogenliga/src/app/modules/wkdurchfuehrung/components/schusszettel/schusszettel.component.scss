@@ -6,11 +6,79 @@ $secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
+/* Schusszettel-Übersicht & Tabellen - Start */
+.match-section {
+  padding: 15px;
+}
+
+.match-section h2 {
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.versus-info {
+  color: #ff833a;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.row-header {
+  text-align: right;
+}
+
+.table {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.table th,
+.table td {
+  border: 1px solid #e5e7eb;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+.table td {
+  height: 50px;
+  width: 50px;
+  font-size: 25px !important;
+}
+
+.table thead th {
+  background: #f8f9fb;
+  font-weight: 600;
+}
+
+.total-row {
+  background: #f8f9fb;
+}
+
+.total-row td {
+  font-size: 18px !important;
+}
+
+.score-table span,
+.arrow-table span {
+  font-weight: 500;
+}
+
+.hr-divider {
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+/* Schusszettel-Übersicht & Tabellen - Ende */
 
 input, label {
   display: block;
 }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -33,19 +101,6 @@ input {
   }
 }
 
-
-tr, th, td {
-  alignment: center;
-  text-align: center;
-  margin: 10px;
-  font-size: 10px;
-  padding: 5px;
-}
-
-td {
-  font-size: 16px;
-}
-
 label {
   font-size: 10px;
 }
@@ -56,59 +111,12 @@ label {
   border-left-style: solid;
 }
 
-.match1 {
-  margin-top: 20px;
-}
-
-.match2 {
-  margin-top: -150px;
-  margin-bottom: 20px;
-}
-
-.match1, .match2 {
-  border: 2px solid rgba(0, 0, 0, .1);
-}
-
-.schuetzensumme {
-  font-size: 30px;
-}
-
 .btn {
   margin: 10px 0px 0px 20px;
 }
 
-.signature, hr {
-  visibility: hidden;
-}
-
-.match h1{
-  font-size: 2vw;
-}
-
-.match h2{
-  font-size: 1vw;
-}
-
-.mannschaften_col-3 h1 {
-  font-size: 1vw;
-
-}
-
-.mannschaften_col-3 {
-  width: 200px;
-  margin-left: 4em;
-  margin-top: 5em;
-  font-size: 12px;
-}
-
 .henlo.match_col-3 h2 {
   font-size: 1vw;
-}
-
-.match_col-3 {
-  width: 220px;
-  margin-left: 6.5em;
-  margin-top: 3em;
 }
 
 @media print {
@@ -119,16 +127,14 @@ label {
     font-size: 25px;
   }
   h1 {
-    font-size: 10px!important; //30px
+    font-size: 10px !important; //30px
   }
   h3 {
     font-size: 2em;
   }
-
   .match1 {
     margin-bottom: 1cm;
   }
-
   .match2 {
     margin-top: 1cm;
   }
@@ -139,7 +145,6 @@ label {
     float: left;
     margin-left: 20%;
   }
-
   .signature {
     visibility: visible;
     margin-top: -2cm;
@@ -157,7 +162,6 @@ label {
     margin-top: 0.5cm;
     margin-bottom: -2cm;
   }
-
   hr {
     visibility: visible;
     width: 100%;
@@ -168,26 +172,21 @@ label {
     margin-top: 2.5cm;
     margin-bottom: 0.5cm;
   }
-
 }
-
-.fehlerfeld {
-  margin-left: -26px;
-}
-
 
 /* popup Hintergrund unscharf */
-.schuetze-popup{
+.schuetze-popup {
   position: fixed;
-  top:0;
-  bottom:0;
-  left:0;
+  top: 0;
+  bottom: 0;
+  left: 0;
   right: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   transition: opacity;
   visibility: visible;
   opacity: 1;
 }
+
 /* Das eigentliche popup fenster Desigen */
 .popup {
   margin: 70px auto;
@@ -199,12 +198,14 @@ label {
   position: relative;
   transition: all 5s ease-in-out;
 }
+
 /*  Überschrift Desigen im Popup Fenster*/
 .popup h2 {
   margin-top: 0;
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
 }
+
 /* popup close desigen */
 .popup .close {
   position: absolute;
@@ -216,64 +217,15 @@ label {
   text-decoration: none;
   color: #333;
 }
+
 /* schliessende x wird vorgehoben */
 .popup .close:hover {
   color: $primary;
   cursor: pointer;
 }
 
-.schusstabelle{
-  margin-left: 60px;
-}
-.fehlerpunktetabelle{
-  margin-left: 100px
-}
-.col-4{
-  margin-right: 10px;
-  width: 80px;
-}
-.offset-9{
-  margin-top: 10px;
-  margin-left: 82%;
-  margin-bottom: 15px;
-}
-.tabelle{
-  margin-left: 35px;
-  margin-top: 10px;
-}
-
-#buttonContainer{
+#buttonContainer {
   margin-left: 10px;
   display: flex;
   justify-content: space-between;
-}
-
-// Embedded mode styling for tablet view
-.tablet-mode-indicator {
-  color: #666;
-  font-size: 14px;
-  font-weight: normal;
-  margin-top: 5px;
-}
-
-// Ensure both teams are visible in embedded mode
-.match1, .match2 {
-  margin-bottom: 2rem;
-}
-
-// Responsive adjustments for tablet embedded view
-@media (max-width: 1024px) {
-  input {
-    height: 45px;
-    width: 45px;
-    font-size: 24px;
-  }
-  
-  .mannschaften_col-3 h2 {
-    font-size: 1.5rem;
-  }
-  
-  .tablet-mode-indicator {
-    font-size: 12px;
-  }
 }
