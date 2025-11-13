@@ -21,6 +21,7 @@
   background: var(--bla-tree-branch-color, #d8dde8);
   transform: translateX(-50%);
   display: block;
+  pointer-events: none;
 }
 
 :host::after {
@@ -31,6 +32,7 @@
   right: 0;
   border-top: 1px solid var(--bla-tree-branch-color, #d8dde8);
   display: block;
+  pointer-events: none;
 }
 
 :host(:first-child)::after {
@@ -52,6 +54,7 @@
 
 .bla-league-tree__item-row {
   position: relative;
+  z-index: 1; /* keep row above connectors */
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -187,6 +190,7 @@
   height: var(--bla-tree-branch-length, 32px);
   background: var(--bla-tree-branch-color, #d8dde8);
   transform: translateX(-50%);
+  pointer-events: none;
 }
 
 /* Level theming */

@@ -4,8 +4,9 @@ import {environment} from '@environment';
 import {UriBuilder} from '@shared/data-provider/services/utils/uri-builder.class';
 import {LeagueDTO} from '@shared/models/league.dto';
 import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
-import {Observable, of, throwError} from 'rxjs';
-import {catchError, map, timeout, switchMap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, map, timeout} from 'rxjs/operators';
+import { normalize, Dto as NormDto, TreeNode as NormNode } from '../../../../utils/league-normalizer';
 
 // Default timeout for API calls (ms)
 const DEFAULT_TIMEOUT_MS = 6000;
@@ -62,44 +63,50 @@ export class LeagueHierarchyService {
   }
 
   /**
-   * Build a hierarchical tree from flat league list using ligaUebergeordnetId as parent reference.
+   * Build a hierarchical tree from flat league list using robust normalizer (dedupe, cycles, missing parents, sorting).
    */
   private fromFlatList(list: LeagueDTO[]): LeagueTreeNode[] {
     if (!Array.isArray(list) || list.length === 0) { return []; }
 
-    const byId = new Map<number, LeagueTreeNode>();
-    const roots: LeagueTreeNode[] = [];
+    // 1) Adapt backend DTOs to normalizer DTOs (string IDs)
+    const dtos: NormDto[] = list
+      .filter((it) => it != null && Number.isFinite(it.id))
+      .map((it) => ({
+        id: String(it.id),
+        name: it.name ?? '',
+        parentId: it.ligaUebergeordnetId == null ? null : String(it.ligaUebergeordnetId)
+      }));
 
-    // Create nodes
-    for (const item of list) {
-      const node: LeagueTreeNode = {
-        id: item.id,
-        name: item.name,
-        parentId: item.ligaUebergeordnetId ?? null,
-        level: 0,
-        children: []
-      };
-      byId.set(item.id, node);
-    }
+    // 2) Normalize (dedupe, cycle-safe, sorted)
+    const forest = normalize(dtos, { locale: 'de' });
 
-    // Link children and collect roots
-    for (const item of list) {
-      const node = byId.get(item.id)!;
-      const parentId = item.ligaUebergeordnetId ?? null;
-      if (parentId == null) {
-        roots.push(node);
-      } else {
-        const parent = byId.get(parentId);
-        if (parent) {
-          node.level = parent.level + 1;
-          parent.children.push(node);
-        } else {
-          // Orphan node without existing parent -> treat as root
-          roots.push(node);
-        }
+    // 3) Map back to numeric LeagueTreeNode with computed levels
+    const toNumber = (s: string | null | undefined): number | null => {
+      if (s == null) return null;
+      const n = Number(s);
+      return Number.isFinite(n) ? n : null;
+    };
+
+    const mapNode = (node: NormNode, level: number): LeagueTreeNode | null => {
+      const idNum = toNumber(node.id);
+      if (idNum == null) {
+        console.warn('LN004 Invalid id after normalization, node dropped:', node.id);
+        return null;
       }
-    }
+      const children = (node.children ?? [])
+        .map((c) => mapNode(c, level + 1))
+        .filter((x): x is LeagueTreeNode => x != null);
+      return {
+        id: idNum,
+        name: node.name ?? '',
+        parentId: toNumber(node.parentId ?? null),
+        level,
+        children
+      };
+    };
 
-    return roots;
+    return forest
+      .map((root) => mapNode(root, 0))
+      .filter((x): x is LeagueTreeNode => x != null);
   }
 }
