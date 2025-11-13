@@ -22,6 +22,11 @@
 
             <ng-template #treeContent>
               <ng-container *ngIf="treeNodes.length > 0; else treeStateMessage">
+                <div class="liga-tree-actions" role="group" aria-label="Tree actions">
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="onToggleExpandAll()">
+                    {{ expandAllActive ? 'Alle zuklappen' : 'Alle aufklappen' }}
+                  </button>
+                </div>
                 <div class="liga-tree-wrapper">
                   <bla-league-tree
                     [nodes]="treeNodes"

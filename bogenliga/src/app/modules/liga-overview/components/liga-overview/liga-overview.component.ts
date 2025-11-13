@@ -38,6 +38,9 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    */
   hierarchyResult: LeagueHierarchyResult | null = null;
 
+  /** Button-Label-Zustand: true = alles aufgeklappt */
+  expandAllActive = false;
+
   /**
    * Datenquelle für die Tree-Komponente.
    */
@@ -90,6 +93,7 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
  ngOnInit(): void {
   this.observeDeeplinkParam();
   this.loadHierarchy();
+  this.expandAllActive = false;
 }
 
   /**
@@ -110,6 +114,19 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     // Direkte Router-Navigation zur Liga-Startseite (ohne kompletten Seiten-Reload)
     this.router.navigate(['/home', ligaId]);
   }
+
+  /** Toolbar: alle Knoten auf-/zuklappen */
+  onToggleExpandAll(): void {
+    if (!this.treeComponent) { return; }
+    if (this.treeComponent.isFullyExpanded()) {
+      this.treeComponent.collapseAll();
+      this.expandAllActive = false;
+    } else {
+      this.treeComponent.expandAll();
+      this.expandAllActive = true;
+    }
+  }
+
 
 
   /**

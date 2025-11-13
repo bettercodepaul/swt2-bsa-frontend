@@ -209,6 +209,67 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Public API: expandiert alle Knoten rekursiv.
+   */
+  expandAll(): void {
+    let mutated = false;
+    const visit = (items: LeagueTreeNode[]) => {
+      for (const n of items ?? []) {
+        if (Array.isArray(n.children) && n.children.length > 0) {
+          if (!this.expandedIds.has(n.id)) {
+            this.expandedIds.add(n.id);
+            mutated = true;
+          }
+          visit(n.children);
+        }
+      }
+    };
+    visit(this.nodes ?? []);
+    if (mutated) {
+      this.expandedIds = new Set(this.expandedIds);
+      this.updateVisibleNodes();
+      this.ensureFocusableNode();
+      this.cdr.markForCheck();
+    }
+  }
+
+  /**
+   * Public API: klappt alle Knoten außer den Wurzeln zu.
+   */
+  collapseAll(): void {
+    const next = new Set<NodeId>();
+    for (const root of this.nodes ?? []) {
+      next.add(root.id);
+    }
+    const changed = next.size !== this.expandedIds.size || Array.from(next).some(id => !this.expandedIds.has(id));
+    if (changed) {
+      this.expandedIds = next;
+      this.updateVisibleNodes();
+      this.ensureFocusableNode();
+      this.cdr.markForCheck();
+    }
+  }
+
+  /**
+   * Prüft, ob alle Knoten mit Kindern expandiert sind.
+   */
+  isFullyExpanded(): boolean {
+    let all = true;
+    const visit = (items: LeagueTreeNode[]) => {
+      for (const n of items ?? []) {
+        if (Array.isArray(n.children) && n.children.length > 0) {
+          if (!this.expandedIds.has(n.id)) { all = false; return; }
+          visit(n.children);
+          if (!all) return;
+        }
+      }
+    };
+    visit(this.nodes ?? []);
+    return all;
+  }
+
+
+  /**
    * TrackBy-Funktion für *ngFor.
    */
   trackByNodeId(_index: number, item: LeagueTreeNode): NodeId {
