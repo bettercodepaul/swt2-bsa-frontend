@@ -1,63 +1,64 @@
 <div id="homePage">
 
-  <!--Welcome Page Title and paragraph-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (!hasLigaNameInUrl)" data-cy=welcome-banner>
-    <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
+  <!-- Welcome -->
+  <div style="max-width:75%; margin:15px; padding:5px" *ngIf="!ligaSelected" data-cy="welcome-banner">
+    <h1 class="homeHeading">{{ 'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+
     <div *ngIf="recentLigas.length > 0">
       <h2>{{ 'HOME.HOME.RECENT_TITLE' | translate }}</h2>
       <ul class="recent-liga-list">
         <li *ngFor="let liga of recentLigas">
-          <a [routerLink]="['/home', liga.id]">{{ liga.name }}</a>
+          <a [routerLink]="['/home']"
+             [queryParams]="{ liga: getLigaQueryParam(liga) }"
+             queryParamsHandling="merge">
+            {{ liga.name }}
+          </a>
         </li>
       </ul>
     </div>
   </div>
 
-  <!--Ligadetail Page Title-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl" >
+  <!-- Liga Titel -->
+  <div style="max-width:75%; margin:15px; padding:5px" *ngIf="ligaSelected">
     <h1 class="homeHeading" [innerHTML]="selectedLigaName"></h1>
   </div>
 
-  <!--Wettkampftabelle-->
   <div class="container">
     <div class="calendar">
       <h2>Unsere nächsten Wettkämpfe</h2>
-      <div id = "competitionList">
+      <div id="competitionList">
         <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
-          <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
-          <p date-month>{{veranstaltung.month}}</p>
-          <h1 date-day>{{veranstaltung.day}}</h1>
+          <p heading>{{ veranstaltung.veranstaltungDO.name }}</p>
+          <p date-month>{{ veranstaltung.month }}</p>
+          <h1 date-day>{{ veranstaltung.day }}</h1>
         </bla-veranstaltungen-button>
       </div>
       <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
-      </div>
-    <!-- Row 1 -->
-    <div class="shortcuts">
-      <bla-shortcut-button  [config]="config_shortcut"></bla-shortcut-button>
     </div>
-    <div class="news" style="margin-left: 0px; min-height: 40vh">
 
-      <!-- Row 2 -->
-      <!--Block of Information-->
+    <div class="shortcuts">
+      <bla-shortcut-button [config]="config_shortcut"></bla-shortcut-button>
+    </div>
 
-      <!--Welcome Page Information-->
-      <div class="flexChild" *ngIf="!hasLigaIDInUrl && (! hasLigaNameInUrl)">
+    <div class="news" style="margin-left:0; min-height:40vh">
+
+      <!-- Allgemeine News -->
+      <div class="flexChild" *ngIf="!ligaSelected">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
           <div class="flexChild">
             <img class="mosaikImg" src="assets/img/home_halle.png" alt="Bogenliga Halle">
           </div>
-
           <div class="flexChild">
             <h3>{{ 'HOME.HOME.BOX1HEADING' | translate }}</h3>
-            <p style="margin-top: 20px">{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
+            <p style="margin-top:20px">{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
           </div>
         </div>
       </div>
 
-      <!--Ligadetail Page Information (Ligadetailes)-->
-      <div class="flexChild" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl">
+      <!-- Liga Details -->
+      <div class="flexChild" *ngIf="ligaSelected">
         <h2>Ligadetails</h2>
         <div class="news-container">
           <div class="flexChild">
@@ -65,33 +66,30 @@
           </div>
         </div>
 
-        <!-- File Download Link -->
-         <a (click)="fileDownload()" *ngIf="this.selectedLigaDetailFileName">Download {{this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType)}}</a>
+        <a (click)="fileDownload()" *ngIf="selectedLigaDetailFileName">
+          Download {{ selectedLigaDetailFileName + getFileType(selectedLigaDetailFileType) }}
+        </a>
 
-         <!-- Button -->
         <div id="Button">
           <bla-actionbutton
-            *ngIf="veranstaltung"
             [id]="'ligadetailRegionSaveButton'"
-            [color]= "ActionButtonColors.SUCCESS"
+            [color]="ActionButtonColors.SUCCESS"
             [iconClass]="'th-list'"
             (onClick)="ligatabelleLinking()">
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
-            <!--{{ selectedVeranstaltungName}}
-            name of the currently selected Liga displayed in button-->
-
             {{ veranstaltung?.name }}
           </bla-actionbutton>
 
           <bla-actionbutton
             [id]="'deselectLigaButton'"
-            [color]= "ActionButtonColors.SECONDARY"
+            [color]="ActionButtonColors.SECONDARY"
             [iconClass]="zurStartseiteIcon"
             (onClick)="deselect()">
             {{ 'HOME.LIGADETAILES.BACK_TO_HOME' | translate }}
           </bla-actionbutton>
         </div>
       </div>
+
     </div>
   </div>
 </div>

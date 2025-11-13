@@ -12,6 +12,7 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/liga-mapper';
 import {LigaDO} from '../types/liga-do.class';
 import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
+import {slugifyLigaName} from "@shared/functions/slug-utils";
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,43 @@ export class LigaDataProviderService  extends DataProviderService {
                 : reject({result: RequestResult.FAILURE});
             });
       });
+  }
+
+  /**
+   * Findet eine Liga anhand eines Slugs.
+   * Bevorzugt Backend-Endpoint /v1/liga/slug/{slug}.
+   * Fällt zurück auf Client-Suche über alle Ligen, falls Endpoint nicht verfügbar ist.
+   */
+  public findBySlug(slug: string): Promise<BogenligaResponse<LigaDO>> {
+    // Übergangslösung ohne Backend-Endpoint und ohne slug-Spalte:
+    // 1) Alle Ligen laden
+    // 2) Slug clientseitig vergleichen
+    const slugLower = (slug || '').toLowerCase();
+
+    return new Promise((resolve, reject) => {
+      this.findAll().then((all) => {
+        const list = all.payload ?? [];
+        const match = list.find(l => slugifyLigaName(l.name ?? '') === slugLower);
+        if (match) {
+          resolve({ result: RequestResult.SUCCESS, payload: match });
+        } else {
+          // Optionaler numeric Fallback: falls slug numerisch ist, versuche findById
+          if (/^[0-9]+$/.test(slugLower)) {
+            this.findById(slugLower).then(resolve).catch(() => {
+              resolve({ result: RequestResult.FAILURE, payload: new LigaDO() as any });
+            });
+          } else {
+            resolve({ result: RequestResult.FAILURE, payload: new LigaDO() as any });
+          }
+        }
+      }).catch((error) => {
+        if (error?.result === RequestResult.CONNECTION_PROBLEM) {
+          reject(error);
+        } else {
+          resolve({ result: RequestResult.FAILURE, payload: new LigaDO() as any });
+        }
+      });
+    });
   }
 
 
