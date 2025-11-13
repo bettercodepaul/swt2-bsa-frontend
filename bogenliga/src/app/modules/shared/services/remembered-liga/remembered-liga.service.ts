@@ -6,7 +6,7 @@ export interface RememberedLiga {
   slug: string;
 }
 
-const KEY = 'remembered_liga';
+const KEY = 'bogenliga_remembered_liga';
 
 @Injectable({ providedIn: 'root' })
 export class RememberedLigaService {
