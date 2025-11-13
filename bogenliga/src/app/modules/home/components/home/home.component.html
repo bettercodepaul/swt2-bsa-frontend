@@ -9,7 +9,9 @@
       <h2>{{ 'HOME.HOME.RECENT_TITLE' | translate }}</h2>
       <ul class="recent-liga-list">
         <li *ngFor="let liga of recentLigas">
-          <a [routerLink]="['/home','liga']" [queryParams]="{ liga: getLigaQueryParam(liga) }">
+          <a [routerLink]="['/home']"
+             [queryParams]="{ liga: getLigaQueryParam(liga) }"
+             queryParamsHandling="merge">
             {{ liga.name }}
           </a>
         </li>
