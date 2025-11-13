@@ -41,6 +41,7 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
+import {distinctUntilChanged, map} from "rxjs/operators";
 
 
 const ID_PATH_PARAM = 'id';
@@ -148,59 +149,45 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   async ngOnInit() {
+    // 1) Login sicherstellen (Default-User bei Public View)
     if (!this.currentUserService.isLoggedIn()) {
-      await this.logindataprovider.signInDefaultUser().then(() => this.handleSuccessfulLogin());
-    } else {
-      this.loadWettkaempfe();
-      this.findByVeranstalungsIds();
-      this.setCorrectID();
+      try {
+        await this.logindataprovider.signInDefaultUser();
+      } catch (e) {
+        // Optional: Logging / Silent fail
+        console.warn('Default sign-in failed', e);
+      }
     }
 
+    // 2) Initiale Daten laden (Wettkämpfe, Veranstaltungen, VereinsID)
+    this.handleSuccessfulLogin();
+    this.setCorrectID();
+
+    // 3) Zuletzt angesehene Ligen laden (LocalStorage)
     this.recentLigas = this.recentLigaService.getAll();
 
-    const ligaFromResolver = this.route.snapshot.data['liga'] as LigaDO | null | undefined;
-    if (ligaFromResolver?.id != null) {
-      this.applyLiga(ligaFromResolver);
-    } else {
-      this.clearLigaSelection();
-    }
-
-    // QueryParam Änderungen (Navigation zwischen Ligen ohne Vollladung):
-    this.route.queryParamMap.subscribe(params => {
-      const qp = params.get('liga');
-      if (!qp) {
-        this.clearLigaSelection();
-        return;
-      }
-      // Wenn Resolver bereits gesetzt hat und slug/ID unverändert: nichts tun
-      if (this.selectedLigaID && (String(this.selectedLigaID) === qp)) {
-        return;
-      }
-      const isNumeric = /^[0-9]+$/.test(qp);
-      if (isNumeric) {
-        this.ligaDataProvider.findById(qp).then(r => this.handleLigaPayload(r.payload));
-      } else {
-        this.ligaDataProvider.findBySlug(qp).then(r => this.handleLigaPayload(r.payload));
-      }
-    });
+    // 4) Liga aus dem Resolver beobachten.
+    // Der Resolver wird durch runGuardsAndResolvers:'paramsOrQueryParamsChange' bei
+    // jedem Wechsel von ?liga=... erneut ausgeführt. Wir reagieren hier nur auf echte Änderungen.
+    this.routeSubscription = this.route.data
+      .pipe(
+        map(d => d['liga'] as LigaDO | null),
+        distinctUntilChanged((a, b) => a?.id === b?.id)
+      )
+      .subscribe(liga => {
+        if (liga && liga.id != null) {
+          this.applyLiga(liga);
+        } else {
+          this.clearLigaSelection();
+        }
+      });
   }
-
-
-
 
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    if(this.hasLigaNameInUrl){
-      this.hasLigaNameInUrl=undefined;
-      this.hasLigaIDInUrl=undefined;
-      this.routeSubscription.unsubscribe();
-    }
-    if(this.hasLigaIDInUrl){
-      this.routeSubscription.unsubscribe();
-      this.hasLigaIDInUrl=undefined;
-      this.hasLigaNameInUrl=undefined;
-    }
+    // Einziger notwendiger Cleanup: Subscription auf route.data
+    this.routeSubscription?.unsubscribe();
   }
 
   /**Check if LigaID of URL exists and load the corresponding page*/
@@ -240,7 +227,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public deselect() {
-    this.router.navigateByUrl('/home');
+    this.router.navigate(['/home'], { queryParams: {} });
     this.clearLigaSelection();
   }
 
@@ -585,10 +572,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-
-    console.log("Id der veranstaltung " + this.veranstaltung.id)
-    const link = '/wettkaempfe/' + this.veranstaltung.id;
-    this.router.navigateByUrl(link);
+    this.router.navigate(
+      ['/wettkaempfe', this.veranstaltung.id],
+      { queryParamsHandling: 'merge' }
+    );
   }
 
 

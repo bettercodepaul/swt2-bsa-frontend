@@ -31,8 +31,8 @@ import {VereineComponent} from '@vereine/components';
 import {
   DsbMitgliedDetailPopUpComponent
 } from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
-import {ligaMatcher} from "../../routing/liga-matcher";
-import {LigaResolver} from "../../routing/resolvers/liga.resolver";
+import {ligaMatcher} from "@shared/routing/liga-matcher";
+import {LigaResolver} from "@shared/routing/resolvers/liga.resolver";
 import {LigatabelleComponent} from "../ligatabelle/components/ligatabelle/ligatabelle.component";
 import {LigatabelleGuard} from "../ligatabelle/guards/ligatabelle.guard";
 
@@ -40,11 +40,14 @@ import {LigatabelleGuard} from "../ligatabelle/guards/ligatabelle.guard";
 
 export const HOME_ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  // NEU: Liga-View via QueryParam ?liga=
-  {path: 'home/liga', component: HomeComponent, canActivate: [HomeGuard], resolve: { liga: LigaResolver }},
-  // Legacy: /home und /home/:id bestehen vorerst weiter
-  { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },
-  { path: 'home/:id', component: HomeComponent, canActivate: [HomeGuard] },
+  {path: 'home', component: HomeComponent, canActivate: [HomeGuard],
+    resolve: { liga: LigaResolver },
+    // wichtig: bei Änderung von ?liga= erneut laden
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {path: 'impressum', component: ImpressumComponent, canActivate: [HomeGuard]},
+  // Optional: Redirect für alte /home/:id oder /home/liga (falls noch Links existieren)
+  {path: 'home/:legacy', redirectTo: 'home'},
   {path: 'impressum', component: ImpressumComponent, canActivate: [HomeGuard]},
   //{path: '**', component: HomeComponent, canActivate: [HomeGuard]}
 ];
