@@ -52,6 +52,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input()
   selectedId: NodeId | null = null;
 
+
   /**
    * Event: Wird ausgelöst, wenn der Benutzer einen Knoten selektiert (Enter/Space oder Klick).
    */
@@ -378,6 +379,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.expandedIds = new Set(this.expandedIds);
     }
   }
+
 
   /**
    * Aktualisiert die Liste sichtbarer Knoten (flach).
