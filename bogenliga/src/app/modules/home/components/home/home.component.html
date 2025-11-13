@@ -1,8 +1,8 @@
 <div id="homePage">
 
-  <!-- Welcome -->
-  <div style="max-width:75%; margin:15px; padding:5px" *ngIf="!ligaSelected" data-cy="welcome-banner">
-    <h1 class="homeHeading">{{ 'HOME.HOME.WELCOME' | translate }}</h1>
+  <!--Welcome Page Title and paragraph-->
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (!hasLigaNameInUrl)" data-cy=welcome-banner>
+    <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
 
     <div *ngIf="recentLigas.length > 0">
@@ -24,6 +24,7 @@
     <h1 class="homeHeading" [innerHTML]="selectedLigaName"></h1>
   </div>
 
+  <!--Wettkampftabelle-->
   <div class="container">
     <div class="calendar">
       <h2>Unsere nächsten Wettkämpfe</h2>
@@ -40,8 +41,7 @@
     <div class="shortcuts">
       <bla-shortcut-button [config]="config_shortcut"></bla-shortcut-button>
     </div>
-
-    <div class="news" style="margin-left:0; min-height:40vh">
+    <div class="news" style="margin-left: 0px; min-height: 40vh">
 
       <!-- Allgemeine News -->
       <div class="flexChild" *ngIf="!ligaSelected">
@@ -66,12 +66,15 @@
           </div>
         </div>
 
+        <!-- File Download Link -->
         <a (click)="fileDownload()" *ngIf="selectedLigaDetailFileName">
           Download {{ selectedLigaDetailFileName + getFileType(selectedLigaDetailFileType) }}
         </a>
 
+         <!-- Button -->
         <div id="Button">
           <bla-actionbutton
+            *ngIf="veranstaltung"
             [id]="'ligadetailRegionSaveButton'"
             [color]="ActionButtonColors.SUCCESS"
             [iconClass]="'th-list'"
@@ -89,7 +92,6 @@
           </bla-actionbutton>
         </div>
       </div>
-
     </div>
   </div>
 </div>

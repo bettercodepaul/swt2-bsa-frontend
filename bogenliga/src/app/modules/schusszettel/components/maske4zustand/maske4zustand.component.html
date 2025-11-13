@@ -23,11 +23,10 @@
       <div class="col-12">
         <h3 class="section-title">Schusszettel-Übersicht</h3>
         <div class="schusszettel-container">
-          <bla-schusszettel 
-            [match1Id]="infos?.eigenesTeamMatchId" 
+          <bla-schusszettel
+            [match1Id]="infos?.eigenesTeamMatchId"
             [match2Id]="infos?.gegnerischesTeamMatchId"
-            [embeddedMode]="true"
-            [readOnlyMode]="false">
+            [embeddedMode]="true">
           </bla-schusszettel>
         </div>
       </div>
@@ -41,7 +40,8 @@
         <div class="alert alert-info">
           <mat-icon>info</mat-icon>
           <strong>Match-Übersicht</strong><br>
-          {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }} vs {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }}<br>
+          {{ infos?.eigenesTeam?.teamName || 'Unbekanntes Team' }}
+          vs {{ infos?.gegnerischesTeam?.teamName || 'Unbekanntes Team' }}<br>
           <small>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar.</small>
         </div>
       </div>

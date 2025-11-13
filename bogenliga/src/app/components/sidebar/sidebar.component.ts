@@ -14,6 +14,14 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { LigaDO } from '@verwaltung/types/liga-do.class';
 import {slugifyLigaName} from "@shared/functions/slug-utils";
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import { AnalyticsService } from '@shared/services';
+import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
+
+
+
+const ID_PATH_PARAM = 'id';
+export var ligaID: number;
 
 @Component({
   selector: 'bla-sidebar',
@@ -30,6 +38,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public CONFIG;
   faCaretDown = faCaretDown;
 
+  public hasLigaID: boolean;
+  public ligaID: number;
+  public URLRoute: string;
+
   private ligaSub?: Subscription;
   currentLiga: LigaDO | null = null;
 
@@ -40,12 +52,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private onOfflineService: OnOfflineService,
     private ligaContext: LigaContextService,
+    private selectedLigaDataprovider: SelectedLigaDataprovider,
+    private analytics: AnalyticsService
   ) {
     store.pipe(select((state) => state.sidebarState))
       .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
-  ngOnInit() {
+ ngOnInit() {
     this.offlineSetter();
 
     // Liga-Kontext beobachten
@@ -68,12 +82,55 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * tells store that sidebar button was used -> Sidebar needs to change
+   */
   public toggleSidebar() {
     this.store.dispatch({ type: TOGGLE_SIDEBAR });
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     return this.currentUserService.hasAnyPermisson(userPermissions);
+  }
+
+  public getRoute(route: string, detailType: string): string {
+    let result: string = route;
+    this.URLRoute = this.router.url;
+    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
+      const lastSlashIndex = this.URLRoute.lastIndexOf('/');
+      switch(lastSlashIndex){
+        case 0:
+          //forget liga ID if no liga ID is part of the URL-route
+          this.ligaID = undefined;
+          break;
+        case result.length:
+          !(this.URLRoute.substring(lastSlashIndex + 1).toString() === "ligaid") ?
+            this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1)) : undefined;
+          break;
+      }
+
+    }
+
+    if (detailType === 'undefined') {
+      return(route);
+    } else if (detailType === 'verein'){
+      result = result + '/' + this.currentUserService.getVerein();
+    } else {
+      result = result;
+    }
+
+    // Für die Home-Seite wollen wir NICHT automatisch eine Liga-ID anhängen,
+    // damit man immer zurück auf die echte Startseite kommt.
+    if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
+      result =  result + '/'+ this.ligaID.toString();
+    }
+
+    this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
+
+    // Analytics-Event für Navigation tracken
+    this.trackNavigationClick(route);
+
+    return result;
   }
 
   /**
@@ -116,15 +173,26 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (!this.isActive) this.toggleSidebar();
   }
 
+  /**
+   * Tracked Navigationsklicks für Analytics (Matomo/Piwik)
+   *
+   * @param route Die aufgerufene Route
+   */
+  private trackNavigationClick(route: string): void {
+    if (route === '/liga') {
+      this.analytics.track('nav_ligauebersicht_click', { origin: 'sidebar', route });
+    }
+  }
+
+  public getSidebarCollapseIcon(): string {
+    return this.isActive ? 'angle-double-right' : 'angle-double-left';
+  }
+
   existSubitems(subitems: SideBarNavigationSubitem[]): boolean {
     return !!subitems && subitems.length > 0;
   }
 
   isSelected(itemroute: string): boolean {
     return (this.router.url.indexOf(itemroute) >= 0);
-  }
-
-  public getSidebarCollapseIcon(): string {
-    return this.isActive ? 'angle-double-right' : 'angle-double-left';
   }
 }

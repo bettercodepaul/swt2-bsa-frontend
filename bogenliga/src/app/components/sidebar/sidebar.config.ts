@@ -17,6 +17,7 @@ import {
   faSitemap,
   faUsers,
   faQuestion,
+  faChartBar, // Ligaübersicht
 
   faTrophy, // Wettkämpfe
   faCalendar, // Wettkampfdurchführung
@@ -130,6 +131,14 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   },
 
 
+  {
+    label: 'SIDEBAR.LIGAUEBERSICHT',
+    icon: faChartBar,
+    route: '/liga',
+    permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: [],
+    datacy: 'sidebar-ligauebersicht-button'
+  },
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
@@ -245,6 +254,14 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
+  },
+  {
+    label: 'SIDEBAR.LIGAUEBERSICHT',
+    icon: faChartBar,
+    route: '/liga',
+    permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: [],
+    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.MANNSCHAFTEN',

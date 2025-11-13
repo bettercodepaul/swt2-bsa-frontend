@@ -47,14 +47,6 @@ $border: #dee2e6;
   }
 }
 
-.match-container {
-  border: 1px solid rgba(0, 0, 0, .1);
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
 // Weiter Button - Positioned to avoid overlap
 .weiter-button {
   margin: 20px auto;
@@ -77,10 +69,6 @@ $border: #dee2e6;
 @media (max-width: 1024px) {
   .maske6-matchende {
     padding: 10px;
-  }
-
-  .match-container {
-    padding: 8px;
   }
 }
 
@@ -368,11 +356,6 @@ $border: #dee2e6;
 @media print {
   .weiter-button {
     display: none;
-  }
-
-  .match-container {
-    border: 2px solid #000;
-    page-break-inside: avoid;
   }
 
   .embedded-schusszettel-section {
