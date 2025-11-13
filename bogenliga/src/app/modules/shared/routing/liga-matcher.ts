@@ -2,7 +2,7 @@ import { UrlSegment, UrlMatchResult } from '@angular/router';
 
 /**
  * Unterstützt Pfade:
- *   home/liga=<id|slug>
+ *   home?liga=<id|slug>
  * Gibt den Wert als posParams.liga zurück.
  */
 export function ligaMatcher(expectedPrefix: string) {

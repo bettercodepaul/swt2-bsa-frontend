@@ -19,7 +19,6 @@ export const ROUTES: Routes = [
     resolve: { liga: LigaResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
-
   {
     path: 'home',
     canActivate: [HomeGuard, LigaStickyGuard],
@@ -27,7 +26,6 @@ export const ROUTES: Routes = [
     resolve: { liga: LigaResolver },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
-
   {
     path: 'wettkaempfe/:id',
     canActivate: [LigaStickyGuard],
