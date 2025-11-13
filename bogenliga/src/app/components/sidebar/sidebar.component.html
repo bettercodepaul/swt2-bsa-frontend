@@ -70,15 +70,6 @@
 
   <!-- Sidebar Footer -->
   <div id="sidebarFooter" [class.inactive]="isActive">
-    <!-- Home Icon separat: sicheres Liga-Home -->
-    <a id="sidebarHome"
-       (click)="navigateHome()"
-       data-cy="sidebar-home-button">
-      <bla-sidebar-item
-        [label]="'SIDEBAR.HOME' | translate"
-        [icon]="'home'"></bla-sidebar-item>
-    </a>
-
     <a id="sidebarCollapseBottom"
        (click)="toggleSidebar()"
        data-cy="sidebar-collapse-button">
