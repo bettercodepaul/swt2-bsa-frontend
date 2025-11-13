@@ -29,6 +29,8 @@ import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDatapr
 import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import { RecentLigaService, RecentLigaEntry } from '@shared/services';
+import { slugifyLigaName } from '@shared/functions/slug-utils';
+
 //for notification
 import {
   CurrentUserService,
@@ -39,6 +41,7 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
+import {distinctUntilChanged, map} from "rxjs/operators";
 
 
 const ID_PATH_PARAM = 'id';
@@ -89,7 +92,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
   public recentLigas: RecentLigaEntry[] = [];
-
+  public ligaSelected = false;
   public VereinsID: number;
   public providedID: number;
   public ligaName: string;
@@ -144,81 +147,98 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   async ngOnInit() {
-    if (this.currentUserService.isLoggedIn() === false) {
-      await this.logindataprovider.signInDefaultUser().then(() => this.handleSuccessfulLogin());
-    } else if (this.currentUserService.isLoggedIn() === true) {
-      this.loadWettkaempfe();
-      this.findByVeranstalungsIds();
-      this.setCorrectID();
+    // 1) Login sicherstellen (Default-User bei Public View)
+    if (!this.currentUserService.isLoggedIn()) {
+      try {
+        await this.logindataprovider.signInDefaultUser();
+      } catch (e) {
+        // Optional: Logging / Silent fail
+        console.warn('Default sign-in failed', e);
+      }
     }
 
+    // 2) Initiale Daten laden (Wettkämpfe, Veranstaltungen, VereinsID)
+    this.handleSuccessfulLogin();
+    this.setCorrectID();
+
+    // 3) Zuletzt angesehene Ligen laden (LocalStorage)
     this.recentLigas = this.recentLigaService.getAll();
 
-
-    //to get if of liga from route path
-    this.routeSubscription=this.route.params.subscribe((params) => {
-      //if parameter ID_Path_PARAM is defined
-      //it parses the parameter value as an integer and assigns it to the providedID variable
-
-      //checking if url has parameter
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.hasID = true;
-        //this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
-
-
-        //check if url has number or liganame
-        if (!paramIsNumber) {
-          this.ligaName = params[ID_PATH_PARAM]
-          this.hasLigaIDInUrl = false;
-          this.hasLigaNameInUrl=true;
-          console.log("String liga name is: " + this.ligaName);
-          this.ligaName? this.loadLiga(this.ligaName) : null;
+    // 4) Liga aus dem Resolver beobachten.
+    // Der Resolver wird durch runGuardsAndResolvers:'paramsOrQueryParamsChange' bei
+    // jedem Wechsel von ?liga=... erneut ausgeführt. Wir reagieren hier nur auf echte Änderungen.
+    this.routeSubscription = this.route.data
+      .pipe(
+        map(d => d['liga'] as LigaDO | null),
+        distinctUntilChanged((a, b) => a?.id === b?.id)
+      )
+      .subscribe(liga => {
+        if (liga && liga.id != null) {
+          this.applyLiga(liga);
         } else {
-          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          this.hasLigaIDInUrl = true;
-          this.hasLigaNameInUrl=false;
-          console.log("Number ID is: " + this.providedID);
-          this.checkingAndLoadingLiga(); // load liga with changes of id in url
+          this.clearLigaSelection();
         }
-        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
-
-      } else {
-        this.hasLigaIDInUrl = false;
-        this.hasLigaNameInUrl=false;
-        this.hasID=false;
-        // Liga-Auswahl beim Wechsel auf die Startseite zurücksetzen
-        this.selectedLigaDataprovider.setSelectedLigaID(undefined);
-      }
-    });
+      });
   }
-
-
-
 
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    if(this.hasLigaNameInUrl){
-      this.hasLigaNameInUrl=undefined;
-      this.hasLigaIDInUrl=undefined;
-      this.routeSubscription.unsubscribe();
-    }
-    if(this.hasLigaIDInUrl){
-      this.routeSubscription.unsubscribe();
-      this.hasLigaIDInUrl=undefined;
-      this.hasLigaNameInUrl=undefined;
-    }
-  }
-
-  public deselect(){
-    const link = '/home';
-    this.router.navigateByUrl(link);
+    // Einziger notwendiger Cleanup: Subscription auf route.data
+    this.routeSubscription?.unsubscribe();
   }
 
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
     this.hasID ? this.loadLiga(this.providedID) : null;
+  }
+
+  private applyLiga(liga: LigaDO): void {
+    this.selectedLigaName               = liga.name;
+    this.selectedLigaID                 = liga.id;
+    this.selectedLigaDetails            = liga.ligaDetail;
+    this.selectedLigaDetailBase64       = liga.ligaDetailFileBase64;
+    this.selectedLigaDetailFileName     = liga.ligaDetailFileName;
+    this.selectedLigaDetailFileType     = liga.ligaDetailFileType;
+    this.ligaSelected                   = true;
+    this.recentLigaService.add({ id: liga.id, name: liga.name });
+    this.recentLigas = this.recentLigaService.getAll();
+    this.getVeranstaltungen(liga.id);
+  }
+
+  private handleLigaPayload(liga: LigaDO): void {
+    if (!liga || liga.id == null) {
+      this.clearLigaSelection();
+      return;
+    }
+    this.applyLiga(liga);
+  }
+
+  private clearLigaSelection(): void {
+    this.selectedLigaID = null;
+    this.selectedLigaName = null;
+    this.selectedLigaDetails = null;
+    this.selectedLigaDetailBase64 = null;
+    this.selectedLigaDetailFileName = null;
+    this.selectedLigaDetailFileType = null;
+    this.ligaSelected = false;
+  }
+
+  public deselect() {
+    this.router.navigate(['/home'], { queryParams: {} });
+    this.clearLigaSelection();
+  }
+
+  // Ergänze in der Klasse:
+  public getLigaQueryParam(entry: { id: number; name: string; slug?: string }): string {
+    const slug = entry.slug || slugifyLigaName(entry.name ?? '');
+    return slug || String(entry.id);
+  }
+
+// Falls du bei buildRecentLigaLink bleiben willst, ändere es so (aber Template-Anpassung ist besser):
+  public buildRecentLigaLink(entry: { id: number; name: string; slug?: string }): string {
+    const value = this.getLigaQueryParam(entry);
+    return `/home/liga?liga=${encodeURIComponent(value)}`;
   }
 
 
@@ -228,7 +248,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private loadWettkaempfe(): void {
     this.wettkaempfeDTO = [];
     this.wettkaempfeDO = [];
-    this.wettkampfDataProvider.findAll()
+    this.wettkampfDataProvider.findFutureSix()
         .then((response: BogenligaResponse<WettkampfDTO[]>) => {
           this.handleSuccessLoadWettkaempfe(response.payload);
         })
@@ -550,10 +570,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-
-    console.log("Id der veranstaltung " + this.veranstaltung.id)
-    const link = '/wettkaempfe/' + this.veranstaltung.id;
-    this.router.navigateByUrl(link);
+    this.router.navigate(
+      ['/wettkaempfe', this.veranstaltung.id],
+      { queryParamsHandling: 'merge' }
+    );
   }
 
 
