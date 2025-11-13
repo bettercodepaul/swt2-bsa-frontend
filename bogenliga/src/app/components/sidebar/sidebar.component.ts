@@ -1,15 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute,Router, ParamMap} from '@angular/router';
-import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import {select, Store} from '@ngrx/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { select, Store } from '@ngrx/store';
+import { environment } from '../../../environments/environment';
+import { AppState, SidebarState, TOGGLE_SIDEBAR } from '../../modules/shared/redux-store';
+import { CurrentUserService, UserPermission } from '../../modules/shared/services/current-user';
+import { SIDE_BAR_CONFIG } from './sidebar.config';
+import { SIDE_BAR_CONFIG_OFFLINE } from './sidebar.config';
+import { OnOfflineService } from '@shared/services';
+import { SideBarNavigationSubitem } from './types/sidebar-navigation-subitem.interface';
+import { LigaContextService } from '@shared/services/liga-context/liga-context.service';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { LigaDO } from '@verwaltung/types/liga-do.class';
+import {slugifyLigaName} from "@shared/functions/slug-utils";
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {environment} from '../../../environments/environment';
-import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
-import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
-import {SIDE_BAR_CONFIG} from './sidebar.config';
-import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
-import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
-import {OnOfflineService} from '@shared/services';
 import { AnalyticsService } from '@shared/services';
 import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
 
@@ -19,64 +24,79 @@ const ID_PATH_PARAM = 'id';
 export var ligaID: number;
 
 @Component({
-  selector:    'bla-sidebar',
+  selector: 'bla-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls:   [
+  styleUrls: [
     './sidebar.component.scss',
     './../../app.component.scss'
   ]
 })
+export class SidebarComponent implements OnInit, OnDestroy {
 
-
-export class SidebarComponent implements OnInit {
-
-
-
-
-  public isActive: boolean; // for class and css to know if sidebar is wide or small
+  public isActive: boolean;
   public inProd = environment.production;
   public CONFIG;
+  faCaretDown = faCaretDown;
+
   public hasLigaID: boolean;
   public ligaID: number;
   public URLRoute: string;
 
+  private ligaSub?: Subscription;
+  currentLiga: LigaDO | null = null;
 
-
-  faCaretDown = faCaretDown;
-
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider, private analytics: AnalyticsService) {
+  constructor(
+    private store: Store<AppState>,
+    private currentUserService: CurrentUserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private onOfflineService: OnOfflineService,
+    private ligaContext: LigaContextService,
+    private selectedLigaDataprovider: SelectedLigaDataprovider,
+    private analytics: AnalyticsService
+  ) {
     store.pipe(select((state) => state.sidebarState))
-         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+      .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
  ngOnInit() {
     this.offlineSetter();
+
+    // Liga-Kontext beobachten
+    this.ligaSub = this.ligaContext.currentLiga$
+      .pipe(distinctUntilChanged((a, b) => a?.id === b?.id))
+      .subscribe(liga => {
+        this.currentLiga = liga ?? null;
+      });
   }
 
-// Um im Offlinemodus die Sidebar entsprechend anzupassen.
-  public offlineSetter(): void {
-    if (this.onOfflineService.isOffline() == true) {
+  ngOnDestroy(): void {
+    this.ligaSub?.unsubscribe();
+  }
+
+  private offlineSetter(): void {
+    if (this.onOfflineService.isOffline() === true) {
       this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
     } else {
       this.CONFIG = SIDE_BAR_CONFIG;
     }
-
   }
 
   /**
    * tells store that sidebar button was used -> Sidebar needs to change
    */
   public toggleSidebar() {
-    this.store.dispatch({type: TOGGLE_SIDEBAR});
+    this.store.dispatch({ type: TOGGLE_SIDEBAR });
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     return this.currentUserService.hasAnyPermisson(userPermissions);
   }
+
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
     this.URLRoute = this.router.url;
-    if (this.URLRoute.startsWith("/home") ) {
+    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
       const lastSlashIndex = this.URLRoute.lastIndexOf('/');
       switch(lastSlashIndex){
         case 0:
@@ -85,21 +105,23 @@ export class SidebarComponent implements OnInit {
           break;
         case result.length:
           !(this.URLRoute.substring(lastSlashIndex + 1).toString() === "ligaid") ?
-          this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1)) : undefined;
+            this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1)) : undefined;
           break;
-        }
-
       }
 
+    }
+
     if (detailType === 'undefined') {
-     return(route);
+      return(route);
     } else if (detailType === 'verein'){
-          result = result + '/' + this.currentUserService.getVerein();
-      } else {
+      result = result + '/' + this.currentUserService.getVerein();
+    } else {
       result = result;
     }
 
-    if (this.ligaID != undefined && route.startsWith("/home")){
+    // Für die Home-Seite wollen wir NICHT automatisch eine Liga-ID anhängen,
+    // damit man immer zurück auf die echte Startseite kommt.
+    if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
       result =  result + '/'+ this.ligaID.toString();
     }
 
@@ -109,11 +131,51 @@ export class SidebarComponent implements OnInit {
     this.trackNavigationClick(route);
 
     return result;
+  }
+
+  /**
+   * Liefert RouterLink-Kommandos für ein Item.
+   * Hängt keinen Liga-Param an – der wird getrennt über getRouteQueryParams() geliefert.
+   */
+  public getRouteCommands(item: { route: string; detailType?: string }): any[] {
+    let base = item.route;
+    // Detailtyp Verein → Verein-ID anhängen
+    if (item.detailType === 'verein') {
+      base = `${base}/${this.currentUserService.getVerein()}`;
     }
+    return [base];
+  }
+
+  /**
+   * Liefert QueryParams inklusive liga (falls aktiv).
+   * Für Routen, bei denen liga nicht sticky sein soll (z. B. reine Admin-Seiten), könnte man hier eine Ausnahme bauen.
+   */
+  public getRouteQueryParams(item: { route: string }): any | null {
+    const source = this.currentLiga ?? this.ligaContext.remembered;
+    if (source?.id != null) {
+      const ligaValue = slugifyLigaName(source.name); // oder )source.id für ID
+      // Whitelist für Routen:
+      if (item.route.startsWith('/home') || item.route.startsWith('/ligatabelle') || item.route.startsWith('/wettkaempfe')) {
+        return { liga: ligaValue };
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Klick auf das Home-Icon / Home-Eintrag:
+   * - Mit aktiver Liga: /home?liga=<id/slug>
+   * - Ohne Liga: /home
+   */
+  public navigateHome(): void {
+    const link = this.ligaContext.buildHomeLink(this.currentLiga ?? undefined);
+    this.router.navigate(link.commands, { queryParams: link.queryParams });
+    if (!this.isActive) this.toggleSidebar();
+  }
 
   /**
    * Tracked Navigationsklicks für Analytics (Matomo/Piwik)
-   * 
+   *
    * @param route Die aufgerufene Route
    */
   private trackNavigationClick(route: string): void {
@@ -122,26 +184,15 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-
   public getSidebarCollapseIcon(): string {
     return this.isActive ? 'angle-double-right' : 'angle-double-left';
   }
 
   existSubitems(subitems: SideBarNavigationSubitem[]): boolean {
-    if (isNullOrUndefined(subitems)) {
-      return false;
-    } else if (subitems.length === 0) {
-      return false;
-    }
-    return true;
+    return !!subitems && subitems.length > 0;
   }
 
   isSelected(itemroute: string): boolean {
     return (this.router.url.indexOf(itemroute) >= 0);
   }
-
-  public getID(): number {
-    return this.ligaID;
-}
-
 }

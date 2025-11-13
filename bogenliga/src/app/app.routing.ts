@@ -2,13 +2,41 @@ import {Routes} from '@angular/router';
 
 import {HomeComponent} from '@home/components/home/home.component';
 import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
+import {ligaMatcher} from "@shared/routing/liga-matcher";
+import {LigaResolver} from "@shared/routing/resolvers/liga.resolver";
+import {LigatabelleComponent} from "./modules/ligatabelle/components/ligatabelle/ligatabelle.component";
+import {HomeGuard} from "@home/guards/home.guard";
+import {LigaStickyGuard} from "@shared/routing/guards/liga-sticky.guard";
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
+  //{path: 'home', component: HomeComponent},
+  //{path: 'home/:id', component: HomeComponent},
+  {
+    matcher: ligaMatcher('home'),
+    canActivate: [HomeGuard, LigaStickyGuard],
+    component: HomeComponent,
+    resolve: { liga: LigaResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'home',
+    canActivate: [HomeGuard, LigaStickyGuard],
+    component: HomeComponent,
+    resolve: { liga: LigaResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'wettkaempfe/:id',
+    canActivate: [LigaStickyGuard],
+    loadChildren: () => import('./modules/wettkampf/wettkampf.module').then(m => m.WettkampfModule),
+    resolve: { liga: LigaResolver },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  // Fallback ohne Liga
   {path: 'home', component: HomeComponent},
-  {path: 'home/:id', component: HomeComponent},
   {path: 'wettkaempfe', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
-  {path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
+  //{path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'verwaltung', loadChildren: () => import('src/app/modules/verwaltung/verwaltung.module').then((m) => m.VerwaltungModule)},
   {path: 'wkdurchfuehrung', loadChildren: () => import('src/app/modules/wkdurchfuehrung/wkdurchfuehrung.module').then((m) => m.WkdurchfuehrungModule)},
@@ -18,6 +46,8 @@ export const ROUTES: Routes = [
   {path: 'vereine', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'vereine/:id', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'playground', loadChildren: () => import('src/app/modules/playground/playground.module').then((m) => m.PlaygroundModule)},
+  {path: 'ligatabelle', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
+  {path: 'ligatabelle/:id', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
   {path: 'liga', loadChildren: () => import('src/app/modules/liga-overview/liga-overview.module').then((m) => m.LigaOverviewModule)},
   {path: 'spotter', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
   {path: 'schusszettel', loadChildren: () => import('./modules/schusszettel/schusszettel.module').then((m) => m.SchusszettelModule)},

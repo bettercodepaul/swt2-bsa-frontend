@@ -1,4 +1,3 @@
-  <!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="navbar"
      class="navbar navbar-expand navbar-dark fixed-top shadow-sm">
 
@@ -9,45 +8,52 @@
              size="2x"></fa-icon>
   </a>
 
-  <!-- Logo and Titel -->
+  <!-- Logo (bei aktiver Liga mit QueryParam) -->
   <a id="navbar-brand"
-     routerLink="/home">
+     href="/home"
+     (click)="onLogoClick($event)">
     <img
       alt="Bogenliga Logo"
       src="../../../assets/img/Logos/BL_Logo/Logo-fuer-Schriftkombination/BL-Logo-Right-Color.svg"
       style="width:4.8em;">
   </a>
 
-  <div *ngIf="!hasID">
-  <a id="navbar-header"
-     routerLink="/home">
-    <h1>{{'NAVBAR.TITLE' | translate }}</h1>
-  </a>
-  </div>
-  <div *ngIf="hasID">
-      <h1>{{getLigaName() | translate}}</h1>
+  <!-- Titel: Standard oder Liga-Name -->
+  <div class="navbar-title-wrapper">
+    <ng-container *ngIf="!currentLiga?.id && !ligaName">
+      <a id="navbar-header"
+         [routerLink]="['/home']">
+        <h1>{{ 'NAVBAR.TITLE' | translate }}</h1>
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="currentLiga?.id">
+      <h1>{{ ligaName }}</h1>
+    </ng-container>
+
+    <ng-container *ngIf="!currentLiga?.id && ligaName">
+      <h1>{{ ligaName }}</h1>
+    </ng-container>
   </div>
 
-  <div *ngIf="(isOffline())"
-     id="navbar-offline">
+  <!-- Offline-Indikator -->
+  <div *ngIf="isOffline()"
+       id="navbar-offline">
     <h3>OFFLINE</h3>
   </div>
 
-
-  <!-- Links -->
+  <!-- Rechtsbereich -->
   <div id="navbar-right"
        class="nav navbar-nav ml-auto navbar-right">
 
-    <!-- Login Button -->
+    <!-- Login -->
+    <a *ngIf="(!isLoggedIn || isDefaultUserLoggedIn)"
+       class="nav-link"
+       [routerLink]="['/user/login']">
+      <button class="btn btn-light" data-cy="login-button">Login</button>
+    </a>
 
-      <a *ngIf="(!isLoggedIn || isDefaultUserLoggedIn)"
-         class="nav-link"
-         routerLink="/user/login">
-        <button class="btn btn-light" data-cy="login-button">Login</button>
-      </a>
-
-      <!-- Profil Dropdown -->
-
+    <!-- User Dropdown Trigger -->
     <a *ngIf="(isLoggedIn && !isDefaultUserLoggedIn)"
        class="dropdown nav-link dropdown-toggle"
        (click)="toggleUserDropdown()">
@@ -55,9 +61,9 @@
                size="2x"></fa-icon>
     </a>
 
+    <!-- Dropdown -->
     <bla-user-dropdown *ngIf="isUserDropdownVisible"
                        (onAction)="toggleUserDropdown()"></bla-user-dropdown>
 
   </div>
-
 </nav>

@@ -4,45 +4,64 @@
 
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h3 id="title"
-          *ngIf="!isActive">{{'NAVBAR.TITLE' | translate }}</h3>
+      <h3 id="title" *ngIf="!isActive">{{ 'NAVBAR.TITLE' | translate }}</h3>
     </div>
 
     <!-- Sidebar links config -->
     <nav class="list-unstyled components">
       <ng-container *ngFor="let item of CONFIG">
+        <li *ngIf="hasUserPermissions(item.permissons) && !(inProd === true && item.inProdVisible === false)"
+            [class.selected]="isSelected(item.route)">
 
-        <li *ngIf="hasUserPermissions(item.permissons) && !(inProd === true && item.inProdVisible === false)" [class.selected]="isSelected(item.route)">
+          <!-- Haupt-Item -->
+          <div class="sidebar-text-toggle" data-toggle="tooltip" data-placement="right" [class.flexBox]="!isActive">
+            <!-- Navigation: route + query params (liga falls vorhanden) -->
+            <a
+              [routerLink]="getRouteCommands(item)"
+              [queryParams]="getRouteQueryParams(item)"
+              class="navbar-text"
+              [class.flexChild]="!isActive"
+              [attr.data-cy]="item.datacy"
+              (click)="!isActive ? toggleSidebar(): null">
 
-          <!-- Item of Navigation (with Button for Dropdown) -->
-          <div class="sidebar-text-toggle" data-toggle="tooltip" data-placement="right"  [class.flexBox]="!isActive" >
-            <a routerLink="{{getRoute(item.route,item.detailType)}}"  class="navbar-text" [class.flexChild]="!isActive" [attr.data-cy]="item.datacy" (click)="!isActive ? toggleSidebar():null">
-              <bla-sidebar-item label="{{ item.label | translate }}"
-                                title="{{ item.label | translate }}"
-                                [icon]="item.icon"
-                                [subitems]="item.subitems"></bla-sidebar-item>
+              <bla-sidebar-item
+                [label]="item.label | translate"
+                [title]="item.label | translate"
+                [icon]="item.icon"
+                [subitems]="item.subitems"></bla-sidebar-item>
             </a>
 
-            <!-- Button for Dropdown -->
-            <button *ngIf="existSubitems(item.subitems) && isActive == false" class="navbar-toggler sidebar-dropdown-toggle" [class.flexChild]="!isActive" [class.inactive]="isActive" type="button" data-toggle="collapse" attr.data-target="#collapsibleNavbar{{ label }}">
+            <!-- Dropdown Button -->
+            <button *ngIf="existSubitems(item.subitems) && isActive == false"
+                    class="navbar-toggler sidebar-dropdown-toggle"
+                    [class.flexChild]="!isActive"
+                    [class.inactive]="isActive"
+                    type="button"
+                    data-toggle="collapse"
+                    attr.data-target="#collapsibleNavbar{{ item.label }}">
               <fa-icon class="navbar-toggler-icon" [icon]="faCaretDown" size="lg"></fa-icon>
             </button>
           </div>
 
-          <!-- Navbar links -->
-            <div *ngIf="existSubitems(item.subitems) && isActive == false" class="nav-subitems collapse navbar-collapse" [class.inactive]="isActive" id="collapsibleNavbar{{ label }}">
-              <ul class="navbar-nav">
-                <ng-container *ngFor="let subitem of item.subitems">
-                  <ng-container *ngIf="hasUserPermissions(subitem.permissons)">
-                    <li class="nav-item" [class.subselected]="isSelected(subitem.route)">
-                      <a class="nav-link" routerLink="{{subitem.route}}">
-                        <bla-sidebar-subitem label="{{ subitem.label | translate }}"></bla-sidebar-subitem>
-                      </a>
-                    </li>
-                  </ng-container>
+          <!-- Subitems -->
+          <div *ngIf="existSubitems(item.subitems) && isActive == false"
+               class="nav-subitems collapse navbar-collapse"
+               [class.inactive]="isActive"
+               id="collapsibleNavbar{{ item.label }}">
+            <ul class="navbar-nav">
+              <ng-container *ngFor="let subitem of item.subitems">
+                <ng-container *ngIf="hasUserPermissions(subitem.permissons)">
+                  <li class="nav-item" [class.subselected]="isSelected(subitem.route)">
+                    <a class="nav-link"
+                       [routerLink]="[subitem.route]"
+                       [queryParams]="getRouteQueryParams(subitem)">
+                      <bla-sidebar-subitem [label]="subitem.label | translate"></bla-sidebar-subitem>
+                    </a>
+                  </li>
                 </ng-container>
-              </ul>
-            </div>
+              </ng-container>
+            </ul>
+          </div>
 
         </li>
       </ng-container>
@@ -50,20 +69,19 @@
   </div>
 
   <!-- Sidebar Footer -->
-  <div id="sidebarFooter"
-       [class.inactive]="isActive">
-
+  <div id="sidebarFooter" [class.inactive]="isActive">
     <a id="sidebarCollapseBottom"
        (click)="toggleSidebar()"
        data-cy="sidebar-collapse-button">
-      <bla-sidebar-item label="{{ 'SIDEBAR.COLLAPSE' | translate }}"
-                        [icon]="getSidebarCollapseIcon()"></bla-sidebar-item>
+      <bla-sidebar-item
+        [label]="'SIDEBAR.COLLAPSE' | translate"
+        [icon]="getSidebarCollapseIcon()"></bla-sidebar-item>
     </a>
   </div>
 </nav>
 
-
 <div id="sidebar-backdrop"
      [class.backdrop-visible]="!isActive"
      [class.backdrop-hidden]="isActive"
-     (click)="toggleSidebar()"></div>
+     (click)="toggleSidebar()">
+</div>
