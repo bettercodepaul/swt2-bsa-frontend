@@ -77,6 +77,12 @@ body {
   color: $primary-black;
 }
 
+/* Scroll-Fix für Mobile & Fullscreen */
+body {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch; // iOS
+}
+
 // ==================
 /* GLOBAL TYPOGRAPHY */
 
@@ -414,10 +420,4 @@ a:hover, a:focus {
 
 .action-btn-circle:focus {
   outline: none;
-}
-
-/* Scroll-Fix für Mobile & Fullscreen */
-html, body, app-root {
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch; // iOS
 }
