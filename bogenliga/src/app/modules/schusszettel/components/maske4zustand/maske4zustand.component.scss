@@ -341,6 +341,14 @@ $border: #dee2e6;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 8px;
   }
+
+  /* Fix: Anzeige der Schusszettel (Tabelle) Mobile */
+  .embedded-schusszettel-section {
+    display: block !important;
+  }
+  .embedded-schusszettel-section .schusszettel-container {
+    transform-origin: top left !important;
+  }
 }
 
 // Mobile adjustments
@@ -573,7 +581,7 @@ $border: #dee2e6;
 
   @media (max-width: 1199px) {
     .schusszettel-container {
-      transform: scale(0.9);
+      transform: scale(0.8);
     }
   }
 
@@ -629,20 +637,5 @@ $border: #dee2e6;
       border: 1px solid #000;
       box-shadow: none;
     }
-  }
-}
-
-/* Scroll Fix Schusszettel-Uebersicht & Tabelle Mobile */
-@media (max-width: 1024px) {
-  .embedded-schusszettel-section {
-    display: block !important;
-    padding: 0 !important;
-    align-items: flex-start !important;
-    overflow-x: auto !important;
-  }
-  .embedded-schusszettel-section .schusszettel-container {
-    transform-origin: top left !important;
-    display: inline-block !important;
-    margin: 0 !important;
   }
 }
