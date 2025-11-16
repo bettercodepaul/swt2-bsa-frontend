@@ -39,7 +39,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     route: '/liga',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-ligauebersicht-button'
+    datacy: 'sidebar-regionen-button'
   },
   {
     label: 'SIDEBAR.VEREINE',
