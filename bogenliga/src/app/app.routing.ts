@@ -42,7 +42,6 @@ export const ROUTES: Routes = [
   {path: 'wkdurchfuehrung', loadChildren: () => import('src/app/modules/wkdurchfuehrung/wkdurchfuehrung.module').then((m) => m.WkdurchfuehrungModule)},
   {path: 'wkdurchfuehrung/:id', loadChildren: () => import('src/app/modules/wkdurchfuehrung/wkdurchfuehrung.module').then((m) => m.WkdurchfuehrungModule)},
   {path: 'user', loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule)},
-  {path: 'regionen', loadChildren: () => import('src/app/modules/regionen/regionen.module').then((m) => m.RegionenModule)},
   {path: 'vereine', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'vereine/:id', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'playground', loadChildren: () => import('src/app/modules/playground/playground.module').then((m) => m.PlaygroundModule)},
