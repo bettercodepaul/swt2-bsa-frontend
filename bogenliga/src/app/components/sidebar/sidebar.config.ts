@@ -9,7 +9,6 @@ import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 import {
   faArchive,
   faBinoculars,
-  faBullseye,
   faCalendarAlt,
   faCode, // faFootballBall,
   faHome,
@@ -17,8 +16,6 @@ import {
   faSitemap,
   faUsers,
   faQuestion,
-  faChartBar, // Ligaübersicht
-
   faTrophy, // Wettkämpfe
   faCalendar, // Wettkampfdurchführung
   faCogs, // Verwaltung
@@ -37,12 +34,12 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   },
 
   {
-    label: 'SIDEBAR.REGIONEN',
-    icon: faBullseye,
-    route: '/regionen',
+    label: 'SIDEBAR.LIGAUEBERSICHT',
+    icon: faSitemap,
+    route: '/liga',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-regionen-button'
+    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.VEREINE',
@@ -129,16 +126,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
-
-
-  {
-    label: 'SIDEBAR.LIGAUEBERSICHT',
-    icon: faChartBar,
-    route: '/liga',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-ligauebersicht-button'
-  },
+ 
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
@@ -254,14 +242,6 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
-  },
-  {
-    label: 'SIDEBAR.LIGAUEBERSICHT',
-    icon: faChartBar,
-    route: '/liga',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
