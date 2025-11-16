@@ -39,7 +39,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     route: '/liga',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-regionen-button'
+    datacy: 'sidebar-ligauebersicht-button'
   },
   {
     label: 'SIDEBAR.VEREINE',
@@ -126,7 +126,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
- 
+
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
