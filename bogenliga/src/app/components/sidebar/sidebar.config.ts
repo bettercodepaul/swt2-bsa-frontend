@@ -126,7 +126,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
- 
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
