@@ -31,6 +31,7 @@
         <bla-veranstaltungen-button [routerLink]="['/home']"
                                     [queryParams]="{ liga: veranstaltung.veranstaltungDO.ligaId }"
                                     queryParamsHandling="merge"
+                                    [attr.data-liga-id]="veranstaltung.veranstaltungDO.ligaId"
                                     *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
           <p heading>{{ veranstaltung.veranstaltungDO.name }}</p>
           <p date-month>{{ veranstaltung.month }}</p>
