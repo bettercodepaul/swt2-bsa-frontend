@@ -204,6 +204,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.recentLigaService.add({ id: liga.id, name: liga.name });
     this.recentLigas = this.recentLigaService.getAll();
     this.getVeranstaltungen(liga.id);
+    this.buildVeranstaltungskalender();
   }
 
   private handleLigaPayload(liga: LigaDO): void {
@@ -455,9 +456,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
                month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
                day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
              };
-             if(this.providedID == null || this.providedID == undefined) {
+             if(this.selectedLigaID == null) {
                this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-             }else if(this.providedID == veranstaltungWettkaempfeDOLocal.veranstaltungDO.ligaId){
+             }else if(this.selectedLigaID == veranstaltungWettkaempfeDOLocal.veranstaltungDO.ligaId){
                this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
              }
              this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
@@ -594,7 +595,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
           }
         })
         .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
-          //error
+          console.log('Veranstaltung not found for LigaID');
         });
   }
 
