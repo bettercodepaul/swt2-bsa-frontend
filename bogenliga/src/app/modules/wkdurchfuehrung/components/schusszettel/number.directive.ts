@@ -1,5 +1,12 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
-import {NotificationOrigin, NotificationService, NotificationSeverity, NotificationType, NotificationUserAction} from '@shared/services';
+import {
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services';
+
 /**
  * A element-directive to ensure only-number inputs.
  */
@@ -28,13 +35,13 @@ export class NumberOnlyDirective {
    */
   public notificationMethod(event: KeyboardEvent) {
     this.notificationService.showNotification({
-      id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
-      title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
+      id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+      title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
       description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     });
     event.preventDefault();
   }
@@ -47,6 +54,17 @@ export class NumberOnlyDirective {
     return parseInt(value, 10) >= this.MIN_VAL && parseInt(value, 10) <= this.MAX_VAL;
   }
 
+  @HostListener('focus')
+  onFocus() {
+    const input = this.el.nativeElement as HTMLInputElement;
+
+    // Auswahl erst ausführen, wenn Rendering fertig ist
+    setTimeout(() => {
+      input.select();
+    });
+  }
+
+
   /**
    * Handles keydown events for FehlerNumberOnly and SchuetzeNumberOnly,
    * fires notificationMethod if keydown was invalid.
@@ -54,13 +72,29 @@ export class NumberOnlyDirective {
    */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
+    if (this.specialKeys.includes(event.key)) {
       return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
-      this.notificationMethod(event);
     }
+
+    if (event.key === this.ALIAS_10) {
+      this.el.nativeElement.value = '10';
+      event.preventDefault();
+      return;
+    }
+
+    if (!this.allowedKeys.includes(event.key) || isNaN(Number(event.key))) {
+      this.notificationMethod(event);
+      return;
+    }
+
+    // ALWAYS replace old value
+    this.el.nativeElement.value = event.key;
+    event.preventDefault();
+    this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
+
   }
+
+
   /**
    * Handles keyup events for PfeilNumberOnly, FehlerNumberOnly and SchuetzeNumberOnly, increases tabindex if keystroke was valid.
    * @param event
@@ -91,27 +125,31 @@ export class NumberOnlyDirective {
 })
 export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
+  constructor(el: ElementRef, notificationService: NotificationService) {
+    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notificationService);
     this.ALIAS_10 = '+';
   }
 
-  /**
-   * Override of onKeyDown Method from NumberOnlyDirective
-   * @param event
-   */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end, and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
+    // allow special keys via base class
+    if (this.specialKeys.includes(event.key)) {
       return;
     }
+
+    // handle alias for value 10
     if (event.key === this.ALIAS_10) {
       this.el.nativeElement.value = '10';
+      event.preventDefault();
+      this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
       return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
-      this.notificationMethod(event);
     }
+
+    // let base directive handle validation + replace behavior
+    super.onKeyDown(event);
+
+    // ensure Angular gets updated value
+    this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
   }
 }
 
