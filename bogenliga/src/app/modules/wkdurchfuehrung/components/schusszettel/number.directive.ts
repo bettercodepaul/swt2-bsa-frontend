@@ -95,7 +95,7 @@ export class NumberOnlyDirective {
       setTimeout(() => {
         const next = document.querySelector(`[tabindex="${currentTabIndex + 1}"]`) as HTMLElement;
         next?.focus();
-      }, 50);
+      }, 65);
     }
   }
 

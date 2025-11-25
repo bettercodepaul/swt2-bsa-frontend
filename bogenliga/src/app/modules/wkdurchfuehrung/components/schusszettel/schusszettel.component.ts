@@ -66,6 +66,8 @@ export class SchusszettelComponent implements OnInit {
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
+  private lastRueckennummer: number | null = null;
+
 
   // no usages
   allPasse: PasseDoClass[] = [];
@@ -300,22 +302,95 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number, satzNr: number) {
-    const mannschaftId = matchNr === 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
+  rememberOldValue(value: number | null) {
+    this.lastRueckennummer = value;
+  }
 
-    let mitglied = null;
+  async onSchuetzeChange(
+    event: any,
+    matchNr: number,
+    schuetzeIndex: number,
+    satzIndex: number
+  ) {
+    const inputElement: HTMLInputElement = event.target;
+    const newValue = Number(inputElement.value);
+
+    const match = this['match' + matchNr];
+    const mannschaftId = match.mannschaftId;
+
+    const previousValue = this.lastRueckennummer;
+
+    console.log(
+      `👤 Rückennummer geändert → Match ${matchNr}, Schütze ${schuetzeIndex}, Satz ${satzIndex}:`,
+      newValue,
+      '| vorher:',
+      previousValue
+    );
+
+    if (newValue == null || newValue === 0) {
+      inputElement.value = previousValue ? String(previousValue) : '';
+      return;
+    }
+
+    // prüfen ob Nummer schon existiert
+    const existsAlready = match.schuetzen.some((schuetze, idx) =>
+      idx !== schuetzeIndex && schuetze[0]?.rueckennummer === newValue
+    );
+
+    if (existsAlready) {
+      this.notificationService.showNotification({
+        id: 'SCHUETZE_DUPLIKAT',
+        title: 'Rückennummer bereits vergeben',
+        description: `Die Rückennummer ${newValue} wird bereits von einem anderen Schützen genutzt.`,
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
+      });
+
+      // UI und Model zurücksetzen
+      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
+      inputElement.value = previousValue ? String(previousValue) : '';
+
+      return;
+    }
 
     try {
-      if (value != null) {
-        mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
+      const response = await this.mannschaftsMitgliedDataProvider
+        .findByTeamIdAndRueckennummer(mannschaftId, newValue);
+
+      const mitglied = response.payload;
+
+      if (!mitglied) {
+        match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
+        inputElement.value = previousValue ? String(previousValue) : '';
+
+        this.notificationService.showNotification({
+          id: 'SCHUETZE_NOT_FOUND',
+          title: 'Schütze nicht gefunden',
+          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
+          severity: NotificationSeverity.ERROR,
+          origin: NotificationOrigin.SYSTEM,
+          type: NotificationType.OK,
+          userAction: NotificationUserAction.ACCEPTED
+        });
+
+        return;
       }
+
+      // gültig → neues Model setzen
+      match.schuetzen[schuetzeIndex][0].rueckennummer = newValue;
+      this.dirtyFlag = true;
+
     } catch (e) {
+      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
+      inputElement.value = previousValue ? String(previousValue) : '';
 
       this.notificationService.showNotification({
-        id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
-        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
-        severity: NotificationSeverity.INFO,
+        id: 'SCHUETZE_LOOKUP_ERROR',
+        title: 'Fehler beim Laden',
+        description: `Die Rückennummer ${newValue} konnte nicht überprüft werden.`,
+        severity: NotificationSeverity.ERROR,
         origin: NotificationOrigin.SYSTEM,
         type: NotificationType.OK,
         userAction: NotificationUserAction.ACCEPTED

@@ -124,11 +124,13 @@
                 <td *ngIf="j === 0">
                   <input
                     [(ngModel)]="passe.rueckennummer"
-                    (ngModelChange)="onSchuetzeChange($event, 1, i, j)"
+                    (input)="onSchuetzeChange($event, 1, i, j)"
+                    (focus)="rememberOldValue(passe.rueckennummer)"
                     blaSchuetzeNumberOnly
                     blaSchuetzenTabIndexDirective
                     type="number"
-                    [readOnly]="readOnlyMode"/>
+                    [readOnly]="readOnlyMode"
+                  />
                 </td>
                 <td class="split">
                   <input
@@ -322,11 +324,13 @@
                 <td *ngIf="j === 0">
                   <input
                     [(ngModel)]="passe.rueckennummer"
-                    (ngModelChange)="onSchuetzeChange($event, 2, i, j)"
+                    (input)="onSchuetzeChange($event, 2, i, j)"
+                    (focus)="rememberOldValue(passe.rueckennummer)"
                     blaSchuetzeNumberOnly
                     blaSchuetzenTabIndexDirective
                     type="number"
-                    [readOnly]="readOnlyMode"/>
+                    [readOnly]="readOnlyMode"
+                  />
                 </td>
                 <td class="split">
                   <input
