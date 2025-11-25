@@ -7,9 +7,7 @@ import {
   NotificationUserAction
 } from '@shared/services';
 
-/**
- * A element-directive to ensure only-number inputs.
- */
+// Restricts input fields to numeric values
 @Directive()
 export class NumberOnlyDirective {
 
@@ -17,12 +15,12 @@ export class NumberOnlyDirective {
   protected notificationService;
   protected specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'Delete', 'Del', 'ArrowLeft', 'ArrowRight', 'Left', 'Right', 'Shift'];
   protected allowedKeys: Array<string>;
-  protected MIN_VAL: number; // min allowed value in fields
-  protected MAX_VAL: number; // max allowed value in fields
+  protected MIN_VAL: number;
+  protected MAX_VAL: number;
   protected ALIAS_10 = '+';
-  private focusTimeout: any;
   private focusMoved = false;
 
+  // Initializes directive settings
   constructor(el: ElementRef, allowedKeys: Array<string>, MIN_VAL: number, MAX_VAL: number, notificationService: NotificationService) {
     this.el = el;
     this.notificationService = notificationService;
@@ -31,10 +29,7 @@ export class NumberOnlyDirective {
     this.MAX_VAL = MAX_VAL;
   }
 
-  /**
-   * Executes notificationService if the entered key was invalid.
-   * @param event - Parse a keyboard key to the method
-   */
+  // Shows notification on invalid key input
   public notificationMethod(event: KeyboardEvent) {
     this.notificationService.showNotification({
       id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
@@ -48,12 +43,12 @@ export class NumberOnlyDirective {
     event.preventDefault();
   }
 
-  /** Check min/max range */
+  // Checks if value is within allowed range
   public inRange(value) {
     return parseInt(value, 10) >= this.MIN_VAL && parseInt(value, 10) <= this.MAX_VAL;
   }
 
-  /** Auto-select value when entering field */
+  // Selects input text on focus
   @HostListener('focus')
   onFocus() {
     const input = this.el.nativeElement as HTMLInputElement;
@@ -62,7 +57,7 @@ export class NumberOnlyDirective {
     });
   }
 
-  /** Default keydown handling (replace behavior) — used by most directives */
+  // Handles numeric keystroke behavior
   protected handleKeyDown(event: KeyboardEvent) {
     if (this.specialKeys.includes(event.key)) {
       return;
@@ -80,13 +75,12 @@ export class NumberOnlyDirective {
       return;
     }
 
-    // ALWAYS replace old value
     this.el.nativeElement.value = event.key;
     event.preventDefault();
     this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
   }
 
-  /** Auto-focus next input once per field entry */
+  // Moves focus to next input field
   @HostListener('keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
     if (this.specialKeys.includes(event.key) || this.focusMoved) {
@@ -96,7 +90,7 @@ export class NumberOnlyDirective {
     if (this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value)) {
       const currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'), 10);
 
-      this.focusMoved = true; // block further auto-focus until blur
+      this.focusMoved = true;
 
       setTimeout(() => {
         const next = document.querySelector(`[tabindex="${currentTabIndex + 1}"]`) as HTMLElement;
@@ -105,17 +99,14 @@ export class NumberOnlyDirective {
     }
   }
 
+  // Resets focus flag on blur
   @HostListener('blur')
   onBlur() {
-    this.focusMoved = false; // reset when user leaves field
+    this.focusMoved = false;
   }
-
 }
 
-
-/**
- * Pfeil — supports alias "+" = 10
- */
+// Directive for values 0–10, "+" = 10
 @Directive({
   selector: '[blaPfeilNumberOnly]'
 })
@@ -132,10 +123,7 @@ export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
   }
 }
 
-
-/**
- * Schütze — 1–99
- */
+// Directive for values 1–99
 @Directive({
   selector: '[blaSchuetzeNumberOnly]'
 })
@@ -151,27 +139,26 @@ export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
   }
 }
 
-
-/**
- * Fehlerpunkte — allow multi-digit input up to 60
- */
+// Directive for multi-digit values up to 60
 @Directive({
   selector: '[blaFehlerNumberOnly]'
 })
 export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
 
-  private replaceNext = true; // track first keystroke after focus
+  private replaceNext = true;
 
   constructor(el: ElementRef, notificationService: NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 60, notificationService);
   }
 
+  // Resets replace flag on focus
   @HostListener('focus')
   onFocus() {
     this.replaceNext = true;
     super.onFocus();
   }
 
+  // Handles multi-digit input rules
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (this.specialKeys.includes(event.key)) {
@@ -185,7 +172,6 @@ export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
 
     const current = this.el.nativeElement.value ?? '';
 
-    // ✅ first input after focus → replace
     if (this.replaceNext) {
       this.replaceNext = false;
       this.el.nativeElement.value = event.key;
@@ -194,7 +180,6 @@ export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
       return;
     }
 
-    // ✅ subsequent input → append if still ≤ 60
     const nextValue = current + event.key;
 
     if (!this.inRange(nextValue)) {
@@ -207,4 +192,3 @@ export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
     this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
   }
 }
-
