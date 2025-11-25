@@ -148,7 +148,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   /**
    * Liefert QueryParams inklusive liga (falls aktiv).
-   * Für Routen, bei denen liga nicht sticky sein soll (z. B. reine Admin-Seiten), könnte man hier eine Ausnahme bauen.
+   * Für alle hier eingegebenen Routen wird der Liga-QueryParam angehängt.
    */
   public getRouteQueryParams(item: { route: string }): any | null {
     const source = this.currentLiga ?? this.ligaContext.remembered;
@@ -160,17 +160,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
     }
     return null;
-  }
-
-  /**
-   * Klick auf das Home-Icon / Home-Eintrag:
-   * - Mit aktiver Liga: /home?liga=<id/slug>
-   * - Ohne Liga: /home
-   */
-  public navigateHome(): void {
-    const link = this.ligaContext.buildHomeLink(this.currentLiga ?? undefined);
-    this.router.navigate(link.commands, { queryParams: link.queryParams });
-    if (!this.isActive) this.toggleSidebar();
   }
 
   /**
