@@ -173,18 +173,25 @@
       <div class="col-2 fehlerpunkte-wrapper">
         <table class="table score-table">
           <tbody>
-          <tr *ngFor="let val of match1.fehlerpunkte; let i = index">
+          <tr
+            *ngFor="
+        let fehler of match1.fehlerpunkte;
+        let i = index;
+        trackBy: trackByIndex
+      "
+          >
             <th>
-              {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} {{
-                i + 1
-              }}
+              {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} {{ i + 1 }}
             </th>
+
             <td>
               <input
+                type="number"
                 [(ngModel)]="match1.fehlerpunkte[i]"
-                (ngModelChange)="onFehlerpunkteChange($event, 1, i)"
+                (blur)="onFehlerpunkteBlur(1, i)"
                 blaFehlerNumberOnly
-                [readOnly]="readOnlyMode"/>
+                [readOnly]="readOnlyMode"
+              />
             </td>
           </tr>
           </tbody>
@@ -315,7 +322,7 @@
                 <td *ngIf="j === 0">
                   <input
                     [(ngModel)]="passe.rueckennummer"
-                    (ngModelChange)="onSchuetzeChange($event, 1, i, j)"
+                    (ngModelChange)="onSchuetzeChange($event, 2, i, j)"
                     blaSchuetzeNumberOnly
                     blaSchuetzenTabIndexDirective
                     type="number"
@@ -370,22 +377,30 @@
       <div class="col-2 fehlerpunkte-wrapper">
         <table class="table score-table">
           <tbody>
-          <tr *ngFor="let val of match2.fehlerpunkte; let i = index">
+          <tr
+            *ngFor="
+        let fehler of match2.fehlerpunkte;
+        let i = index;
+        trackBy: trackByIndex
+      "
+          >
             <th>
-              {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} {{
-                i + 1
-              }}
+              {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} {{ i + 1 }}
             </th>
+
             <td>
               <input
+                type="number"
                 [(ngModel)]="match2.fehlerpunkte[i]"
-                (ngModelChange)="onFehlerpunkteChange($event, 2, i)"
+                (blur)="onFehlerpunkteBlur(2, i)"
                 blaFehlerNumberOnly
-                [readOnly]="readOnlyMode"/>
+                [readOnly]="readOnlyMode"
+              />
             </td>
           </tr>
           </tbody>
         </table>
+
       </div>
     </div>
   </div>
