@@ -335,6 +335,21 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
+  onFehlerpunkteBlur(matchNr: number, satzNr: number) {
+    const match = this['match' + matchNr];
+    const value = match.fehlerpunkte[satzNr]; // kommt direkt aus dem Modell
+    let realValue: number = value as any;
+
+    if (realValue == null || isNaN(realValue) || realValue < 1) {
+      realValue = null;
+    }
+
+    match.fehlerpunkte[satzNr] = realValue;
+    match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
+    this.setPoints();
+    this.dirtyFlag = true;
+  }
+
 
   private getAllMannschaften(): void {
     this.dsbMannschaftDataProvider.findAll()
