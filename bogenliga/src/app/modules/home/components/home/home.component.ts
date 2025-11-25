@@ -223,6 +223,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.selectedLigaDetailFileName = null;
     this.selectedLigaDetailFileType = null;
     this.ligaSelected = false;
+
+    this.buildVeranstaltungskalender();
   }
 
   public deselect() {
@@ -429,6 +431,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
   private async findByVeranstalungsIds(): Promise<void> {
 
+    this.veranstaltungDO = [];
+    this.veranstaltungWettkaempfeDO = [];
+
     let sportJahr = 0;
     await this.einstellungenDataProvider.findAll().then((x: BogenligaResponse<EinstellungenDO[]>) => {
       let sportJahrDo = x.payload.filter(x => x.key == 'aktives-Sportjahr')[0];
@@ -602,7 +607,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
-    this.buildVeranstaltungskalender();
   }
 
 
