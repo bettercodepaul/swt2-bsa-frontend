@@ -1,18 +1,16 @@
-<nav id="breadcrumb-container"
-     aria-label="breadcrumb">
+<nav id="breadcrumb-container" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li *ngFor="let breadCrumb of getBreadCrumbs()"
         class="breadcrumb-item"
         [class.active]="breadCrumb.isLast">
 
       <a *ngIf="!breadCrumb.isLast"
-         [routerLink]="breadCrumb.route">
-        <span>{{breadCrumb.label}}</span>
+         [routerLink]="breadCrumb.route"
+         [queryParams]="breadCrumb.queryParams">
+        <span>{{ breadCrumb.label }}</span>
       </a>
 
-      <span *ngIf="breadCrumb.isLast">{{breadCrumb.label}}</span>
-
+      <span *ngIf="breadCrumb.isLast">{{ breadCrumb.label }}</span>
     </li>
-
   </ol>
 </nav>
