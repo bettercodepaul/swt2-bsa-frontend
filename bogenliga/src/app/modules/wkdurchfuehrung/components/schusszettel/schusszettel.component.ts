@@ -857,11 +857,12 @@ export class SchusszettelComponent implements OnInit {
 
   // Prüft, ob in einem Match mindestens eine Ringzahl (Pfeil 1 oder 2) enthält.
   public hasRingzahlen(match: MatchDOExt): boolean {
-    if (!match?.schuetzen?.length) {
+    if (!Array.isArray(match?.schuetzen) || match.schuetzen.length === 0) {
       return false;
     }
 
     return match.schuetzen.some(schuetze =>
+      Array.isArray(schuetze) &&
       schuetze.some(passe =>
         passe?.ringzahlPfeil1 != null || passe?.ringzahlPfeil2 != null
       )

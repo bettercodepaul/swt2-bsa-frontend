@@ -345,6 +345,7 @@ $border: #dee2e6;
   /* Fix: Anzeige der Schusszettel (Tabelle) Mobile */
   .embedded-schusszettel-section {
     display: block !important;
+    overflow-x: auto;
   }
   .embedded-schusszettel-section .schusszettel-container {
     transform-origin: top left !important;
@@ -390,6 +391,7 @@ $border: #dee2e6;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: auto;
 
   .section-title {
     font-size: 18px;
