@@ -158,7 +158,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
 
     // 2) Initiale Daten laden (Wettkämpfe, Veranstaltungen, VereinsID)
-    this.handleSuccessfulLogin();
     this.setCorrectID();
 
     // 3) Zuletzt angesehene Ligen laden (LocalStorage)
