@@ -204,7 +204,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.recentLigaService.add({ id: liga.id, name: liga.name });
     this.recentLigas = this.recentLigaService.getAll();
     this.getVeranstaltungen(liga.id);
-    this.buildVeranstaltungskalender();
+    this.getWettkampfTableContent();
   }
 
   private handleLigaPayload(liga: LigaDO): void {
@@ -224,7 +224,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.selectedLigaDetailFileType = null;
     this.ligaSelected = false;
 
-    this.buildVeranstaltungskalender();
+    this.getWettkampfTableContent();
   }
 
   public deselect() {
@@ -384,31 +384,37 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
 
 
-  private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
+  private async handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): Promise<void> {
     this.wettkaempfeDTO = payload;
-    this.wettkaempfeDTO.forEach((wettkampf) => {
-      this.wettkaempfeDO.push(new WettkampfDO(
-        wettkampf.id,
-        wettkampf.wettkampfVeranstaltungsId,
-        wettkampf.wettkampfDatum,
-        wettkampf.wettkampfStrasse,
-        wettkampf.wettkampfPlz,
-        wettkampf.wettkampfOrtsname,
-        wettkampf.wettkampfOrtsinfo,
-        wettkampf.wettkampfBeginn,
-        wettkampf.wettkampfTag,
-        wettkampf.wettkampfDisziplinId,
-        wettkampf.wettkampfTypId,
-        wettkampf.version)
-      );
-    });
 
-    this.checkDate();
-    this.wettkaempfeDO.forEach((wettkampf) => {
-      this.findLigaNameByVeranstaltungsId(wettkampf);
-    });
-    this.fillTableRows();
-    this.loadingWettkampf = false;
+    // Alle Veranstaltungen zu den Wettkämpfen laden und kombinieren
+    const combined = await Promise.all(
+      this.wettkaempfeDTO.map(async (wettkampf) => {
+        try {
+          const response = await this.veranstaltungDataProvider.findById(wettkampf.wettkampfVeranstaltungsId);
+          const veranstaltung = response.payload as VeranstaltungDO;
+
+          const monthNum = parseInt(wettkampf.wettkampfDatum.split('-')[1], 10);
+          const dayNum = parseInt(wettkampf.wettkampfDatum.split('-')[2], 10);
+
+          const item: VeranstaltungWettkaempfe = {
+            wettkaempfeDO: wettkampf as unknown as WettkampfDO,
+            veranstaltungDO: veranstaltung,
+            month: this.numberToMonth(monthNum),
+            day: dayNum
+          };
+          return item;
+        } catch (e) {
+          console.log('Veranstaltung not Found');
+          return null;
+        }
+      })
+    );
+
+    // Nur gültige Einträge übernehmen und nach Datum sortieren
+    this.veranstaltungWettkaempfeDO = combined
+      .filter((x): x is VeranstaltungWettkaempfe => x !== null)
+      .sort((a, b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
   }
 
   private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDO): void {
@@ -429,11 +435,27 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     });
 
   }
-  private async findByVeranstalungsIds(): Promise<void> {
-
+  private async getWettkampfTableContent(): Promise<void> {
     this.veranstaltungDO = [];
     this.veranstaltungWettkaempfeDO = [];
 
+    console.log('Wettkämpfe laden Timestamp:'+ Date.now());
+
+    if (this.selectedLigaID == null) {
+      this.wettkampfDataProvider.findFutureSix()
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+          this.handleSuccessLoadWettkaempfe(response.payload);
+        })
+        .catch((response: BogenligaResponse<WettkampfDTO[]>) => {
+          this.wettkaempfeDTO = response.payload;
+        });
+    }else {
+      await this.findByVeranstalungsIds()
+    }
+    console.log('Wettkämpfe für Liga geladen Timestamp:'+ Date.now());
+  }
+
+  private async findByVeranstalungsIds(): Promise<void> {
     let sportJahr = 0;
     await this.einstellungenDataProvider.findAll().then((x: BogenligaResponse<EinstellungenDO[]>) => {
       let sportJahrDo = x.payload.filter(x => x.key == 'aktives-Sportjahr')[0];
@@ -461,9 +483,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
                month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
                day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
              };
-             if(this.selectedLigaID == null) {
-               this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-             }else if(this.selectedLigaID == veranstaltungWettkaempfeDOLocal.veranstaltungDO.ligaId){
+             if(this.selectedLigaID == veranstaltungWettkaempfeDOLocal.veranstaltungDO.ligaId){
                this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
              }
              this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
