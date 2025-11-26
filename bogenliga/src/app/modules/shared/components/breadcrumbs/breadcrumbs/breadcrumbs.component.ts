@@ -1,84 +1,81 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {TranslatePipe} from '@ngx-translate/core';
-import {isNullOrUndefined, isNumber} from '@shared/functions';
-import {BreadcrumbDO} from '../types/breadcrumb-dto.class';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { isNullOrUndefined, isNumber } from '@shared/functions';
+import { BreadcrumbDO } from '@shared/components';
+import { RememberedLigaService } from '@shared/services/remembered-liga/remembered-liga.service';
 
 @Component({
-  selector:    'bla-breadcrumbs',
+  selector: 'bla-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
-  styleUrls:   ['./breadcrumbs.component.scss'],
-  providers:   [TranslatePipe]
+  styleUrls: ['./breadcrumbs.component.scss'],
+  providers: [TranslatePipe]
 })
 export class BreadcrumbsComponent implements OnInit {
 
-  @Input() public moduleTranslationKey;
+  @Input() public moduleTranslationKey: string;
 
-  constructor(private router: Router, private translate: TranslatePipe) {
-  }
+  constructor(
+    private router: Router,
+    private translate: TranslatePipe,
+    private rememberedLigaService: RememberedLigaService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (isNullOrUndefined(this.moduleTranslationKey)) {
       console.warn('BreadcrumbsComponent: Property "moduleTranslationKey" must be defined');
     }
   }
 
   public getBreadCrumbs(): BreadcrumbDO[] {
-    const homeBreadCrumb = new BreadcrumbDO(
+    const remembered = this.rememberedLigaService.get();
+    const ligaParamValue = remembered
+      ? (remembered.slug || remembered.id)
+      : null;
+
+    const homeCrumb = new BreadcrumbDO(
       this.translate.transform('HOME.HOME.TITLE'),
       '/home',
-      false
+      false,
+      ligaParamValue ? { liga: ligaParamValue } : null
     );
 
-    const breadCrumbs: BreadcrumbDO[] = [];
+    const crumbs: BreadcrumbDO[] = [];
 
-    const urlSegments = this.router.url.split('/');
-    let route = '';
-    for (let i = 1; i < urlSegments.length; i++) {
-      const urlSegment = urlSegments[i];
+    const tree: UrlTree = this.router.parseUrl(this.router.url);
+    const segments = tree.root.children['primary']?.segments.map(s => s.path) ?? [];
 
-      if (urlSegment.trim().length > 0) {
-        // start always with home
-        if (i === 1 && urlSegment.toUpperCase() !== 'HOME') {
-          breadCrumbs.push(homeBreadCrumb);
-        }
-
-        const translationKey = `${this.moduleTranslationKey}.${urlSegment.toUpperCase()}.TITLE`; // page translation key
-        const label = this.translate.transform(`${translationKey}`);
-
-        route += `/${urlSegment}`;
-
-        if (label !== translationKey) {
-          // translation key exists
-          const breadCrumb = new BreadcrumbDO(
-            label,
-            route,
-            (i === urlSegments.length - 1)
-          );
-
-          breadCrumbs.push(breadCrumb);
-
-        } else if (urlSegment === 'add') {
-          const breadCrumb = new BreadcrumbDO(
-            this.translate.transform('BREADCRUMB.NEW_ENTITY'),
-            route,
-            (i === urlSegments.length - 1)
-          );
-
-          breadCrumbs.push(breadCrumb);
-
-        } else if (isNumber(+urlSegment)) {
-          const breadCrumb = new BreadcrumbDO(
-            urlSegment,
-            route,
-            (i === urlSegments.length - 1)
-          );
-
-          breadCrumbs.push(breadCrumb);
-        }
-      }
+    // Wenn wir nicht auf /home sind, Home-Crumb voranstellen
+    if (!(segments.length > 0 && segments[0].toLowerCase() === 'home')) {
+      crumbs.push(homeCrumb);
     }
 
-    return breadCrumbs;
+    let cumulativeRoute = '';
+    segments.forEach((segment, idx) => {
+      cumulativeRoute += `/${segment}`;
+      const translationKey = `${this.moduleTranslationKey}.${segment.toUpperCase()}.TITLE`;
+      const label = this.translate.transform(translationKey);
+      const isLast = (idx === segments.length - 1);
+
+      if (label !== translationKey) {
+        crumbs.push(new BreadcrumbDO(label, cumulativeRoute, isLast));
+        return;
+      }
+
+      if (segment === 'add') {
+        crumbs.push(new BreadcrumbDO(
+          this.translate.transform('BREADCRUMB.NEW_ENTITY'),
+          cumulativeRoute,
+          isLast
+        ));
+        return;
+      }
+
+      if (isNumber(+segment)) {
+        crumbs.push(new BreadcrumbDO(segment, cumulativeRoute, isLast));
+      }
+    });
+
+    return crumbs;
   }
 }

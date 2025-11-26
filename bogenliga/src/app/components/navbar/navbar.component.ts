@@ -145,7 +145,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.ligaContext?.clearRemembered) {
       this.ligaContext.clearRemembered();
     }
-    // Navigiere zur allgemeinen Home-Seite
+    // Navigiere zur allgemeinen Home-Seite (temporär)
     this.router.navigate(['/home']);
   }
 }

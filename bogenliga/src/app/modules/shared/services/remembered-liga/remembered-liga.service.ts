@@ -13,14 +13,14 @@ export class RememberedLigaService {
 
   set(liga: RememberedLiga | null): void {
     if (!liga) {
-      localStorage.removeItem(KEY);
+      sessionStorage.removeItem(KEY);
       return;
     }
-    localStorage.setItem(KEY, JSON.stringify(liga));
+    sessionStorage.setItem(KEY, JSON.stringify(liga));
   }
 
   get(): RememberedLiga | null {
-    const raw = localStorage.getItem(KEY);
+    const raw = sessionStorage.getItem(KEY);
     if (!raw) return null;
     try {
       const parsed = JSON.parse(raw) as RememberedLiga;
@@ -32,6 +32,6 @@ export class RememberedLigaService {
   }
 
   clear(): void {
-    localStorage.removeItem(KEY);
+    sessionStorage.removeItem(KEY);
   }
 }
