@@ -7,7 +7,9 @@ import {
   NotificationUserAction
 } from '@shared/services';
 
-// Restricts input fields to numeric values
+/**
+ * A element-directive to ensure only-number inputs.
+ */
 @Directive()
 export class NumberOnlyDirective {
 
@@ -29,7 +31,10 @@ export class NumberOnlyDirective {
     this.MAX_VAL = MAX_VAL;
   }
 
-  // Shows notification on invalid key input
+  /**
+   * Executes notificationService if the entered key was invalid.
+   * @param event - Parse a keyboard key to the method
+   */
   public notificationMethod(event: KeyboardEvent) {
     this.notificationService.showNotification({
       id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
@@ -43,7 +48,10 @@ export class NumberOnlyDirective {
     event.preventDefault();
   }
 
-  // Checks if value is within allowed range
+  /**
+   * Method to check if param value is in range of classes min and max values.
+   * @param value
+   */
   public inRange(value) {
     return parseInt(value, 10) >= this.MIN_VAL && parseInt(value, 10) <= this.MAX_VAL;
   }
@@ -80,7 +88,10 @@ export class NumberOnlyDirective {
     this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
   }
 
-  // Moves focus to next input field
+  /**
+   * Handles keyup events for PfeilNumberOnly, FehlerNumberOnly and SchuetzeNumberOnly, increases tabindex if keystroke was valid.
+   * @param event
+   */
   @HostListener('keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
     if (this.specialKeys.includes(event.key) || this.focusMoved) {
@@ -106,7 +117,12 @@ export class NumberOnlyDirective {
   }
 }
 
-// Directive for values 0–10, "+" = 10
+/**
+ * A element-directive to ensure only-number inputs in passe.ringzahlPfeil fields.
+ * Controls the number-aliasing using '+' instead of 10 (1 keystroke instead of 2).
+ * Contains rules for allowed keystrokes.
+ * Extends NumberOnlyDirective
+ */
 @Directive({
   selector: '[blaPfeilNumberOnly]'
 })
@@ -123,7 +139,10 @@ export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
   }
 }
 
-// Directive for values 1–99
+/**
+ * A element-directive to ensure only-number inputs in passe.schuetzeNr fields.
+ * Extends NumberOnlyDirective
+ */
 @Directive({
   selector: '[blaSchuetzeNumberOnly]'
 })
@@ -139,7 +158,10 @@ export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
   }
 }
 
-// Directive for multi-digit values up to 60
+/**
+ * A element-directive to ensure only-number inputs in match.fehlerpunkte fields.
+ * Extends NumberOnlyDirective
+ */
 @Directive({
   selector: '[blaFehlerNumberOnly]'
 })
