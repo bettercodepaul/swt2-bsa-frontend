@@ -378,7 +378,6 @@ export class SchusszettelComponent implements OnInit {
         return;
       }
 
-      // gültig → neues Model setzen
       match.schuetzen[schuetzeIndex][0].rueckennummer = newValue;
       this.dirtyFlag = true;
 
