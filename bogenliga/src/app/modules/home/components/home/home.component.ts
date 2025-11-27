@@ -103,6 +103,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
+  public currentSportjahr: number;
 
   constructor(
     private notificationService: NotificationService,
