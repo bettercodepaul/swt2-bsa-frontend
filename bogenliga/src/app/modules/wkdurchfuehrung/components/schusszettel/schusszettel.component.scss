@@ -11,9 +11,12 @@ $secondary-dark: #ff833a; // hover Links, Logo
   min-width: 1000px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  padding: 35px;
 }
 
-.schusszettel-container {
+.schusszettel-container-note {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 35px;
 }
 
