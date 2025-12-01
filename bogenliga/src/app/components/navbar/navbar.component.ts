@@ -88,17 +88,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Getter für QueryParams des Home-Links (Logo), falls man dort aufs Liga-Home leiten wollen würde
-  /*
-  public get homeQueryParams(): any | null {
-    if (this.currentLiga?.id != null) {
-      const slug = slugifyLigaName(this.currentLiga.name || '') || String(this.currentLiga.id);
-      return { liga: slug };
-    }
-    return null;
-  }
-  */
-
   public useLanguage(lang: string): void {
     this.translate.use(lang);
   }
@@ -136,16 +125,30 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   /**
    * Klick auf das Bogenliga-Logo:
-   * - remembered Liga löschen
-   * - zu /home navigieren (ohne liga)
+   * - navigiert zum Liga-Home (/home?liga=...)
+   * - bevorzugt Slug aus aktueller Liga, sonst remembered Liga, sonst Fallback auf /home
    */
   public onLogoClick(event: MouseEvent): void {
     event.preventDefault();
-    // bevorzugt über LigaContext kapseln:
-    if (this.ligaContext?.clearRemembered) {
-      this.ligaContext.clearRemembered();
+
+    // 1) Versuche aktuelle Liga aus Context
+    const activeLiga = this.currentLiga;
+    if (activeLiga?.id != null) {
+      const slug = activeLiga.name ? slugifyLigaName(activeLiga.name) : null;
+      const ligaParam = slug || activeLiga.id;
+      this.router.navigate(['/home'], { queryParams: { liga: ligaParam } });
+      return;
     }
-    // Navigiere zur allgemeinen Home-Seite (temporär)
+
+    // 2) Fallback: remembered Liga verwenden
+    const remembered = this.rememberedLiga.get();
+    if (remembered?.id != null) {
+      const ligaParam = remembered.slug || remembered.id;
+      this.router.navigate(['/home'], { queryParams: { liga: ligaParam } });
+      return;
+    }
+
+    // 3) Letzter Fallback: Standard-Home ohne Liga
     this.router.navigate(['/home']);
   }
 }
