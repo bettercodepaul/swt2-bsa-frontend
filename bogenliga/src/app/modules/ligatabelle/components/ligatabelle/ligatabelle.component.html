@@ -94,7 +94,8 @@
             {{ selectedVeranstaltungName}}
           </bla-actionbutton>
 
-          <!-- Button - Zu den Ligadetails -->
+          <!-- Button - Zu den Ligadetails (Deprecated, ersetzt durch Liga-Home) -->
+          <!--
           <bla-actionbutton
             [id]="'goToLigadetailsButton'"
             [color]= "ActionButtonColors.PRIMARY"
@@ -102,8 +103,10 @@
             (onClick)="goToLigaDetails()">
             {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
           </bla-actionbutton>
+          -->
 
-          <!-- Button - Auswahl zurücksetzen -->
+          <!-- Button - Auswahl zurücksetzen (Deprecated) -->
+          <!--
           <bla-actionbutton
             [id]="'deselectLigaButton'"
             [color]= "ActionButtonColors.SECONDARY"
@@ -111,6 +114,7 @@
             (onClick)="deselect()">
             {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
           </bla-actionbutton>
+          -->
 
         </div>
         <div class="col-sm-9">
