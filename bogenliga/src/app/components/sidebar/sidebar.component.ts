@@ -163,6 +163,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Ist ein Liga-Kontext aktiv?
+   * Prüft currentLiga oder (als Fallback) den gemerkten Kontext im Service.
+   */
+  public hasActiveLigaContext(): boolean {
+    const source = this.currentLiga ?? this.ligaContext.remembered;
+    return !!source?.id;
+  }
+
+  /**
    * Tracked Navigationsklicks für Analytics (Matomo/Piwik)
    *
    * @param route Die aufgerufene Route
