@@ -10,7 +10,9 @@
     <!-- Sidebar links config -->
     <nav class="list-unstyled components">
       <ng-container *ngFor="let item of CONFIG">
-        <li *ngIf="hasUserPermissions(item.permissons) && !(inProd === true && item.inProdVisible === false)"
+        <li *ngIf="hasUserPermissions(item.permissons)
+                   && !(inProd === true && item.inProdVisible === false)
+                   && (item.route !== '/ligatabelle' || hasActiveLigaContext())"
             [class.selected]="isSelected(item.route)">
 
           <!-- Haupt-Item -->
