@@ -92,9 +92,9 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     this.selectedLigaId = ligaId;
     this.trackSelection(ligaId);
 
-    // Neue, kanonische Navigation: /ligatabelle?liga=<id>
+    // Navigation zur jeweiligen Liga-Home-Seite: /home?liga=<id>
     this.router.navigate(
-      ['/ligatabelle'],
+      ['/home'],
       {
         queryParams: { liga: ligaId },
         queryParamsHandling: 'merge'
