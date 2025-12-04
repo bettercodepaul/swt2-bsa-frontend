@@ -1,46 +1,89 @@
 @import 'src/styles.scss';
 
-.competitionListElement {
+.competitionCard {
   width: 100%;
-  height: 3.5em;
-  padding: 0 1em;
-  margin: auto;
-  align-items: center;
-  text-align: left;
+  margin: 0.5em auto;
   background-color: $primary-white;
-  border: none;
-  display: grid;
-  grid-template-columns: 10% 75% 15%;
-  column-gap: 2%;
+  border: 1px solid $light-gray;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.competitionListElement:hover {
+.competitionCard:hover {
   background-color: $light-gray;
 }
 
-button.competitionListElement:first-child {
-  margin-top: 1em;
+.competitionCardHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto; // Datum | Titel | Pfeil
+  align-items: center;
+  padding: 0.75em 1em;
+  column-gap: 1em;
 }
 
-button.competitionListElement + button.competitionListElement {
-  margin-top: 0.5em;
-}
-
-button.competitionListElement:last-child {
-  margin-bottom: 1em;
-}
-
-.competitionListElementDate {
+.competitionCardDate {
   max-height: 80%;
 }
 
-.competitionListElementDate > h1 {
+.competitionCardDate > h1 {
   margin-top: -0.7em;
   font-size: 1.5em;
 }
 
-.competitionListElementHeading {
+.competitionCardHeading {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.competitionCardToggleIcon {
+  text-align: right;
+}
+
+.competitionCardToggleIcon .toggleArrow {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* Standard: Pfeil nach unten (180° gedreht) */
+  transform: rotate(180deg);
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+}
+
+.competitionCardToggleIcon .toggleArrow::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  background: $primary-black; // oder 'black'
+  clip-path: polygon(50% 0%, 100% 60%, 80% 60%, 50% 20%, 20% 60%, 0% 60%);
+}
+
+/* aufgeklappt: Pfeil nach oben */
+.competitionCardToggleIcon .toggleArrow.expanded {
+  transform: rotate(0deg);
+}
+
+/* Body (aufgeklappter Bereich) */
+.competitionCardBody {
+  padding: 0.75em 1em 1em 1em;
+  border-top: 1px solid $dark-gray;
+  background-color: $light-gray;
+}
+
+.competitionCardDetails {
+  margin-bottom: 0.5em;
+  font-size: 0.9rem;
+}
+
+.competitionCardActions {
+  text-align: right;
 }

@@ -28,14 +28,44 @@
     <div class="calendar">
       <h2>Unsere nächsten Wettkämpfe</h2>
       <div id="competitionList">
-        <bla-veranstaltungen-button [routerLink]="['/home']"
-                                    [queryParams]="{ liga: veranstaltung.veranstaltungDO.ligaId }"
-                                    queryParamsHandling="merge"
-                                    [attr.data-liga-id]="veranstaltung.veranstaltungDO.ligaId"
-                                    *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
-          <p heading>{{ veranstaltung.veranstaltungDO.name }}</p>
-          <p date-month>{{ veranstaltung.month }}</p>
-          <h1 date-day>{{ veranstaltung.day }}</h1>
+        <bla-veranstaltungen-button
+          *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5"
+          [id]="veranstaltung.wettkaempfeDO.id"
+        >
+
+          <!-- Header-Inhalte -->
+          <p heading>
+            {{ veranstaltung.veranstaltungDO.name }}
+          </p>
+          <p date-month>
+            {{ veranstaltung.month }}
+          </p>
+          <h1 date-day>
+            {{ veranstaltung.day }}
+          </h1>
+
+          <!-- Aufgeklappte Details -->
+          <div details>
+            <div>{{ veranstaltung.wettkaempfeDO.wettkampfOrt }}</div>
+            <div>{{ veranstaltung.wettkaempfeDO.wettkampfDatum | date:'mediumDate' }}</div>
+            <div *ngIf="veranstaltung.veranstaltungDO.sportjahr">
+              Sportjahr: {{ veranstaltung.veranstaltungDO.sportjahr }}
+            </div>
+          </div>
+
+          <!-- Aktions-Button -->
+          <div action>
+            <button
+              class="btn btn-primary"
+              (click)="router.navigate(
+        ['/wettkaempfe', veranstaltung.veranstaltungDO.id],
+        { queryParamsHandling: 'merge' }
+      )"
+            >
+              Zur Ligatabelle
+            </button>
+          </div>
+
         </bla-veranstaltungen-button>
       </div>
       <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
