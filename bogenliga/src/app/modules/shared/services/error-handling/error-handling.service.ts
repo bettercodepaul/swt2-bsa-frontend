@@ -51,9 +51,7 @@ export class ErrorHandlingService {
       this.handleUnexpectedError(statusCode, errorDto);
     }
 
-    throw httpError;
-
-
+    return new Observable<any>((subscriber) => subscriber.complete());
   }
 
   // create notification
@@ -85,8 +83,8 @@ export class ErrorHandlingService {
       // Nur wenn vom Backend KEIN errorDto kommt, fallback auf generisch:
       if (isNullOrUndefined(errorDto) || isNullOrUndefined(errorDto.errorCode)) {
         errorDto = {errorCode: 'ENTITY_NOT_FOUND_ERROR', errorMessage: null, param: null};
+        // Wenn z. B. LIGA_NOT_FOUND_ERROR vom Backend kommt, lassen wir ihn unverändert durch.
       }
-      // Wenn z. B. LIGA_NOT_FOUND_ERROR vom Backend kommt, lassen wir ihn unverändert durch.
     } else if (statusCode === HTTP_NOT_ACCEPTABLE && (isNullOrUndefined(errorDto) || isNullOrUndefined(errorDto.errorCode))) {
       errorDto = {errorCode: 'HTTP_NOT_ACCEPTABLE_ERROR', errorMessage: null, param: null};
     }
