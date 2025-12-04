@@ -37,6 +37,8 @@
           <p heading>
             {{ veranstaltung.veranstaltungDO.name }}
           </p>
+          <p subheading>Wettkampftag: {{ veranstaltung.wettkaempfeDO.wettkampfTag}}</p>
+
           <p date-month>
             {{ veranstaltung.month }}
           </p>
@@ -46,8 +48,9 @@
 
           <!-- Aufgeklappte Details -->
           <div details>
-            <div>{{ veranstaltung.wettkaempfeDO.wettkampfOrt }}</div>
-            <div>{{ veranstaltung.wettkaempfeDO.wettkampfDatum | date:'mediumDate' }}</div>
+            <div>{{ veranstaltung.wettkaempfeDO.wettkampfPlz }} {{ veranstaltung.wettkaempfeDO.wettkampfOrtsname }}</div>
+            <div>{{ veranstaltung.wettkaempfeDO.wettkampfStrasse }}</div>
+            <div>Wettkampfbeginn: {{ veranstaltung.wettkaempfeDO.wettkampfBeginn }}</div>
             <div *ngIf="veranstaltung.veranstaltungDO.sportjahr">
               Sportjahr: {{ veranstaltung.veranstaltungDO.sportjahr }}
             </div>
