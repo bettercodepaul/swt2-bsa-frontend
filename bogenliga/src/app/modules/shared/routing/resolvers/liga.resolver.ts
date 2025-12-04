@@ -39,7 +39,7 @@ export class LigaResolver implements Resolve<LigaDO | null> {
 
     // Unterscheiden zwischen "kein Param vorhanden" und "Param vorhanden aber leer"
     const hasLigaParam = route.queryParamMap.has('liga');
-    let raw = route.queryParamMap.get('liga');
+    let rawLigaQuery = route.queryParamMap.get('liga');
 
     // Param fehlt komplett -> Kontext leeren, auf /home bleiben
     if (!hasLigaParam) {
@@ -47,19 +47,22 @@ export class LigaResolver implements Resolve<LigaDO | null> {
       return null;
     }
 
+    // Param ist vorhanden, da hasLigaParam true sein muss -> Leerzeichen am Anfang und Ende trimmen
+    let trimmedLigaQuery = rawLigaQuery.trim();
+
     // Param vorhanden, aber leer oder nur Whitespace -> Redirect auf /home ohne Param
-    if (raw == null || raw.trim().length === 0) {
+    if ((trimmedLigaQuery.length === 0)) {
       this.performInvalidRedirect();
       return null;
     }
 
-    raw = raw.trim();
-    const isNumeric = /^[0-9]+$/.test(raw);
+    // Checken ob numerisch oder Slug
+    const isNumeric = /^[0-9]+$/.test(trimmedLigaQuery);
 
     try {
       const resp: BogenligaResponse<LigaDO> = isNumeric
-        ? await this.ligaProvider.findById(raw)
-        : await this.ligaProvider.findBySlug(raw);
+        ? await this.ligaProvider.findById(trimmedLigaQuery)
+        : await this.ligaProvider.findBySlug(trimmedLigaQuery);
 
       const liga = resp.payload;
 
@@ -69,7 +72,7 @@ export class LigaResolver implements Resolve<LigaDO | null> {
           status: 404,
           error: {
             errorCode: 'LIGA_NOT_FOUND_ERROR',
-            errorMessage: `No result found for liga: '${raw}'`,
+            errorMessage: `No result found for liga: '${trimmedLigaQuery}'`,
             param: null
           }
         });
@@ -82,7 +85,7 @@ export class LigaResolver implements Resolve<LigaDO | null> {
 
       // Wenn Param numerisch war, akzeptieren wir ihn so (keine Umschreibung).
       // Wenn Param slug war und nicht dem kanonischen Slug entspricht -> Umschreiben
-      if (!isNumeric && raw !== canonicalSlug) {
+      if (!isNumeric && trimmedLigaQuery !== canonicalSlug) {
         // Umschreiben der URL auf kanonischen Param (ersetzt den aktuellen Eintrag)
         this.router.navigate(['/home'], {
           queryParams: { liga: canonicalSlug },
