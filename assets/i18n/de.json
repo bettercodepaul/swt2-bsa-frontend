@@ -1893,6 +1893,10 @@
       "ENTITY_NOT_FOUND_ERROR": {
         "TITLE": "Nicht gefunden",
         "DESCRIPTION": "Die angeforderte Resource wurde nicht gefunden."
+      },
+      "LIGA_NOT_FOUND_ERROR": {
+        "TITLE": "Liga nicht gefunden",
+        "DESCRIPTION": "Die angeforderte Liga wurde nicht gefunden."
       }
     }
   },

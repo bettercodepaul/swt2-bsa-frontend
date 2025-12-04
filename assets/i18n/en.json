@@ -1892,6 +1892,10 @@
         "ENTITY_NOT_FOUND_ERROR": {
           "TITLE": "Entity Not Found Error",
           "DESCRIPTION": "The requested resource was not found."
+        },
+        "LIGA_NOT_FOUND_ERROR": {
+          "TITLE": "League Not Found Error",
+          "DESCRIPTION": "The requested league was not found."
         }
       }
     },
