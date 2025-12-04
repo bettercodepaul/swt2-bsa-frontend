@@ -4,7 +4,7 @@ import { LigaDataProviderService } from '@verwaltung/services/liga-data-provider
 import { LigaDO } from '@verwaltung/types/liga-do.class';
 import { BogenligaResponse } from '@shared/data-provider';
 import { LoginDataProviderService } from '@user/services/login-data-provider.service';
-import { CurrentUserService } from '@shared/services';
+import {CurrentUserService, ErrorHandlingService} from '@shared/services';
 import { RememberedLiga, RememberedLigaService } from '@shared/services/remembered-liga/remembered-liga.service';
 import { slugifyLigaName } from '@shared/functions/slug-utils';
 
@@ -23,7 +23,8 @@ export class LigaResolver implements Resolve<LigaDO | null> {
     private loginProvider: LoginDataProviderService,
     private currentUser: CurrentUserService,
     private rememberedLiga: RememberedLigaService,
-    private router: Router
+    private router: Router,
+    private errorHandlingService: ErrorHandlingService
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<LigaDO | null> {
@@ -63,7 +64,15 @@ export class LigaResolver implements Resolve<LigaDO | null> {
       const liga = resp.payload;
 
       if (!liga || liga.id == null) {
-        // Ungültig -> Redirect nach /home ohne Param
+        // Kein echter Fehler geworfen -> synthetische Not-Found-Notification erzeugen und redirecten
+        this.errorHandlingService.handleHttpError({
+          status: 404,
+          error: {
+            errorCode: 'LIGA_NOT_FOUND_ERROR',
+            errorMessage: `No result found for liga: '${raw}'`,
+            param: null
+          }
+        });
         this.performInvalidRedirect();
         return null;
       }
@@ -79,7 +88,6 @@ export class LigaResolver implements Resolve<LigaDO | null> {
           queryParams: { liga: canonicalSlug },
           replaceUrl: true
         });
-        // Liga trotzdem setzen, da wir sie erfolgreich geladen haben
       }
 
       // RememberedLiga setzen
@@ -93,6 +101,8 @@ export class LigaResolver implements Resolve<LigaDO | null> {
       return liga;
     } catch (e) {
       console.warn('LigaResolver: Fehler beim Laden der Liga', e);
+      // Fehler an den ErrorHandlingService übergeben
+      this.errorHandlingService.handleHttpError(e);
       // Ungültig / Fehler -> Redirect ohne Param
       this.performInvalidRedirect();
       return null;
