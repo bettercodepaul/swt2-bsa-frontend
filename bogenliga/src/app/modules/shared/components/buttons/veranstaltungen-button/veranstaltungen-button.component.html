@@ -1,8 +1,36 @@
-<button class = "competitionListElement soft-shadow">
-  <div class = "competitionListElementDate">
-    <ng-content select = "[date-month]"></ng-content>
-    <ng-content select = "[date-day]"></ng-content>
+<div class="competitionCard soft-shadow"
+     role="button"
+     tabindex="0"
+     (click)="toggle()"
+     (keydown.enter)="toggle()"
+     (keydown.space)="toggle()">
+
+  <!-- Header: immer sichtbar -->
+  <div class="competitionCardHeader">
+    <div class="competitionCardDate">
+      <ng-content select="[date-month]"></ng-content>
+      <ng-content select="[date-day]"></ng-content>
+    </div>
+
+    <div class="competitionCardHeading">
+      <ng-content select="[heading]"></ng-content>
+    </div>
+
+    <div class="competitionCardToggleIcon">
+      <span class="toggleArrow" [class.expanded]="expanded"></span>
+    </div>
   </div>
-  <ng-content select = "[heading]" class = "competitionListElementHeading"></ng-content>
-  <h1>→</h1>
-</button>
+
+  <!-- Body: nur sichtbar, wenn expanded -->
+  <div class="competitionCardBody" *ngIf="expanded" (click)="$event.stopPropagation()">
+    <!-- Detail-Infos (z.\u00a0B. Ort, Uhrzeit, Liga, usw.) -->
+    <div class="competitionCardDetails">
+      <ng-content select="[details]"></ng-content>
+    </div>
+
+    <!-- Aktionsbereich mit Button/Link -->
+    <div class="competitionCardActions">
+      <ng-content select="[action]"></ng-content>
+    </div>
+  </div>
+</div>
