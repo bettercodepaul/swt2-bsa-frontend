@@ -1,9 +1,6 @@
 :host {
   display: block;
-}
-
-:host {
-  display: block;
+  width: 100%;
 }
 
 .bla-league-tree {
@@ -12,8 +9,8 @@
   --bla-tree-selected-bg: rgba(44, 123, 229, 0.16);
   --bla-tree-border-radius: 8px;
   --bla-tree-row-height: 52px;
-  --bla-tree-node-gap: 32px;
-  --bla-tree-branch-length: 32px;
+  --bla-tree-node-gap: 24px;
+  --bla-tree-branch-length: 28px;
   --bla-tree-branch-color: #d8dde8;
   --bla-tree-level-0-bg: #d62828;
   --bla-tree-level-0-border: #b71f21;
@@ -33,7 +30,7 @@
   font-size: 15px;
   line-height: 1.4;
   width: 100%;
-  overflow-x: auto;
+  min-width: 0;
   padding-bottom: 24px;
 }
 
@@ -42,7 +39,9 @@
   padding: 0;
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: var(--bla-tree-node-gap);
 }
 
 .bla-league-tree__root-item {
@@ -51,5 +50,24 @@
   display: flex;
   justify-content: center;
   flex: 1 1 auto;
+  min-width: 200px;
+  max-width: 100%;
 }
 
+/* Tablet and below: stack vertically */
+@media (max-width: 992px) {
+  .bla-league-tree {
+    --bla-tree-node-gap: 16px;
+    --bla-tree-branch-length: 20px;
+  }
+
+  .bla-league-tree__list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bla-league-tree__root-item {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}

@@ -3,10 +3,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 260px;
-  min-width: 240px;
-  max-width: 320px;
-  padding: 0 calc(var(--bla-tree-node-gap, 32px) / 2);
+  flex: 1 1 auto;
+  min-width: 180px;
+  max-width: 400px;
+  padding: 0 calc(var(--bla-tree-node-gap, 24px) / 2);
   box-sizing: border-box;
   outline: none;
 }
@@ -84,9 +84,9 @@
 
 .bla-league-tree__label {
   flex: 1 1 auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -230,19 +230,31 @@
 
 @media (max-width: 992px) {
   :host {
-    padding: 0 calc(var(--bla-tree-node-gap, 32px) / 3);
-    min-width: 180px;
-    max-width: 240px;
+    padding: 0 calc(var(--bla-tree-node-gap, 24px) / 4);
+    min-width: 160px;
+    max-width: 100%;
   }
 
   .bla-league-tree__item-row {
     width: 100%;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem 1rem;
   }
 
   .bla-league-tree__group {
     flex-wrap: wrap;
-    row-gap: calc(var(--bla-tree-node-gap, 32px) / 1.5);
+    row-gap: calc(var(--bla-tree-node-gap, 24px) / 1.5);
   }
 }
 
+@media (max-width: 576px) {
+  :host {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .bla-league-tree__item-row {
+    padding: 0.625rem 0.875rem;
+    min-height: 44px;
+  }
+}
