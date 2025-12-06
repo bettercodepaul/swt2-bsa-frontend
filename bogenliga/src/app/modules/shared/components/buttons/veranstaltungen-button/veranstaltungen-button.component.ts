@@ -14,6 +14,12 @@ export class VeranstaltungenButtonComponent implements OnInit {
   @Input() public id: string;
   @Input() public href: string;
 
+  public expanded = false;
+
   ngOnInit(): void {
+  }
+
+  public toggle(): void {
+    this.expanded = !this.expanded;
   }
 }
