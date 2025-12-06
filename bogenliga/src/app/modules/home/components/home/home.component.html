@@ -26,7 +26,17 @@
 
   <div class="container">
     <div class="calendar">
-      <h2>Unsere nächsten Wettkämpfe</h2>
+      <h2 *ngIf="veranstaltungWettkaempfeDO?.length > 0; else noEvents">
+      <ng-container *ngIf="currentSportjahr > veranstaltungWettkaempfeDO[0]?.veranstaltungDO?.sportjahr; else headlineElse">
+        {{ 'HOME.HOME.WETTKAEMPFE.VERGANGENE' | translate }}
+      </ng-container>
+      <ng-template #headlineElse>
+        {{ 'HOME.HOME.WETTKAEMPFE.NAECHSTE' | translate }}
+      </ng-template>
+      </h2>
+      <ng-template #noEvents>
+        <h2>{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</h2>
+      </ng-template>
       <div id="competitionList">
         <bla-veranstaltungen-button
           *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5"
@@ -50,9 +60,9 @@
           <div details>
             <div>{{ veranstaltung.wettkaempfeDO.wettkampfPlz }} {{ veranstaltung.wettkaempfeDO.wettkampfOrtsname }}</div>
             <div>{{ veranstaltung.wettkaempfeDO.wettkampfStrasse }}</div>
-            <div>Wettkampfbeginn: {{ veranstaltung.wettkaempfeDO.wettkampfBeginn }}</div>
+            <div>{{ 'HOME.HOME.WETTKAMPF_BEGINN' | translate }} {{ veranstaltung.wettkaempfeDO.wettkampfBeginn }}</div>
             <div *ngIf="veranstaltung.veranstaltungDO.sportjahr">
-              Sportjahr: {{ veranstaltung.veranstaltungDO.sportjahr }}
+              {{'HOME.HOME.WETTKAMPF_SPORTJAHR' | translate}} {{ veranstaltung.veranstaltungDO.sportjahr }}
             </div>
           </div>
 
