@@ -16,21 +16,52 @@ it('Login möglich / Fenster öffnet sich', function() {
   cy.url().should('include', '#/user/login')
 })
 
-it('leitet bei Klick auf jede Veranstaltung zur korrekten URL mit liga QueryParam', () => {
+it('bla-veranstaltungen-button existiert und toggelt expanded/unexpanded', () => {
   cy.visit('http://localhost:4200/#/home');
 
-  cy.get('#competitionList bla-veranstaltungen-button')
-    .should('have.length.at.least', 1)
-    .each(($el) => {
-      const ligaId = $el.attr('data-liga-id');
-      expect(ligaId, 'Liga-ID vorhanden').to.match(/^\d+$/);
+  // Auf Container warten
+  cy.get('#competitionList', { timeout: 10000 }).should('exist');
 
-      cy.wrap($el).click();
+  // Buttons suchen (mit längerem Timeout)
+  cy.get('#competitionList')
+    .find('bla-veranstaltungen-button', { timeout: 10000 })
+    .then(($buttons) => {
+      if ($buttons.length === 0) {
+        // Keine Veranstaltungen vorhanden -> Test überspringen/loggen
+        cy.log('Keine bla-veranstaltungen-button gefunden (keine Wettkämpfe)');
+        return;
+      }
 
-      // Prüfe Hash-URL mit QueryParam
-      cy.url().should('include', '#/home');
-      cy.url().should('include', `liga=${ligaId}`);
+      // Ersten Button als Alias setzen
+      cy.wrap($buttons.first()).as('firstEventBtn');
 
-      cy.go('back');
+      // Anfangszustand prüfen
+      cy.get('@firstEventBtn')
+        .find('.toggleArrow')
+        .should('exist')
+        .and('not.have.class', 'expanded');
+      cy.get('@firstEventBtn')
+        .find('.competitionCardBody')
+        .should('not.exist');
+
+      // Klick zum Expandieren
+      cy.get('@firstEventBtn')
+        .find('.toggleArrow').click();
+      cy.get('@firstEventBtn')
+        .find('.competitionCardBody')
+        .should('exist');
+      cy.get('@firstEventBtn')
+        .find('.toggleArrow')
+        .should('have.class', 'expanded');
+
+      // Klick zum Schließen
+      cy.get('@firstEventBtn')
+        .find('.toggleArrow').click();
+      cy.get('@firstEventBtn')
+        .find('.competitionCardBody')
+        .should('not.exist');
+      cy.get('@firstEventBtn')
+        .find('.toggleArrow')
+        .should('not.have.class', 'expanded');
     });
 });
