@@ -37,7 +37,13 @@
     "HOME": {
       "TITLE": "Archery League GER",
       "WELCOME": "Welcome",
-      "WETTKAEMPFE": "Our next competitions",
+      "WETTKAEMPFE":{
+        "NAECHSTE": "Our next competitions",
+        "VERGANGENE": "Our completed competitions"
+      },
+      "WETTKAMPFTAG": "Match day:",
+      "WETTKAMPF_BEGINN": "Start:",
+      "WETTKAMPF_SPORTJAHR": "Sportyear:",
       "RECENT_TITLE": "Recently visited leagues",
       "FURTHER": "further information",
       "CONTENT": "On the page of Bogenliga DE, here you will find all the information of the German leagues in archery. Browse through the leagues and let yourself be drawn into the fascination of team archery.",
