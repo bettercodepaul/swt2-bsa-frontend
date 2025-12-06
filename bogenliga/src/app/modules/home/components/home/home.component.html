@@ -37,7 +37,7 @@
           <p heading>
             {{ veranstaltung.veranstaltungDO.name }}
           </p>
-          <p subheading>Wettkampftag: {{ veranstaltung.wettkaempfeDO.wettkampfTag}}</p>
+          <p subheading>{{'HOME.HOME.WETTKAMPFTAG' | translate}} {{ veranstaltung.wettkaempfeDO.wettkampfTag}}</p>
 
           <p date-month>
             {{ veranstaltung.month }}
@@ -58,17 +58,15 @@
 
           <!-- Aktions-Button -->
           <div action>
-            <button
-              class="btn btn-primary"
-              (click)="router.navigate(
-        ['/wettkaempfe', veranstaltung.veranstaltungDO.id],
-        { queryParamsHandling: 'merge' }
-      )"
-            >
-              Zur Ligatabelle
-            </button>
+            <bla-actionbutton
+              [id]="'goToLigaTabelle'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'th-list'"
+              (onClick)="ligatabelleLinking()">
+              {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+              {{ veranstaltung?.name }}
+            </bla-actionbutton>
           </div>
-
         </bla-veranstaltungen-button>
       </div>
       <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>

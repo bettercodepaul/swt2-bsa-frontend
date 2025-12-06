@@ -38,7 +38,13 @@
     "HOME": {
       "TITLE": "Home",
       "WELCOME": "Willkommen",
-      "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
+      "WETTKAEMPFE":{
+        "NAECHSTE": "Unsere nächsten Wettkämpfe",
+        "VERGANGENE": "Unsere vergangenen Wettkämpfe"
+      },
+      "WETTKAMPFTAG": "Wettkampftag:",
+      "WETTKAMPF_BEGINN": "Beginn:",
+      "WETTKAMPF_SPORTJAHR": "Sportjahr:",
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
       "RECENT_TITLE": "Zuletzt besuchte Ligen",
       "FURTHER": "Weitere Infos",
