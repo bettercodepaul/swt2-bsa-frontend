@@ -10,8 +10,8 @@ $border: #dee2e6;
 :host {
   display: block;
   width: 100%;
-  height: 100vh;
-  overflow-y: auto;
+  // height: 100vh;
+  // overflow-y: auto;
 }
 
 .maske6-matchende {
@@ -301,37 +301,51 @@ $border: #dee2e6;
   // Responsive scaling with media queries
   @media (min-width: 1600px) {
     .schusszettel-container {
-      transform: scale(1.1);
+      transform: none;
+      zoom: 1.1;
     }
   }
 
   @media (max-width: 1199px) {
     .schusszettel-container {
-      transform: scale(0.9);
+      transform: none;
+      zoom: 0.8;
     }
   }
 
   @media (max-width: 1024px) {
     .schusszettel-container {
-      transform: scale(0.8);
+      transform: none;
+      zoom: 0.8;
+    }
+    /* Fix: Anzeige der Schusszettel (Tabelle) Mobile */
+    .embedded-schusszettel-section {
+      display: block !important;
+      overflow-x: auto;
+    }
+    .embedded-schusszettel-section .schusszettel-container {
+      transform-origin: top left !important;
     }
   }
 
   @media (max-width: 900px) {
     .schusszettel-container {
-      transform: scale(0.7);
+      transform: none;
+      zoom: 0.7;
     }
   }
 
   @media (max-width: 768px) {
     .schusszettel-container {
-      transform: scale(0.6);
+      transform: none;
+      zoom: 0.6;
     }
   }
 
   @media (max-width: 480px) {
     .schusszettel-container {
-      transform: scale(0.5);
+      transform: none;
+      zoom: 0.5;
       padding: 10px;
     }
   }
