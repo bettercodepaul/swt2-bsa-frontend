@@ -320,13 +320,6 @@ export class SchusszettelComponent implements OnInit {
 
     const previousValue = this.lastRueckennummer;
 
-    console.log(
-      `👤 Rückennummer geändert → Match ${matchNr}, Schütze ${schuetzeIndex}, Satz ${satzIndex}:`,
-      newValue,
-      '| vorher:',
-      previousValue
-    );
-
     if (newValue == null || newValue === 0) {
       inputElement.value = previousValue ? String(previousValue) : '';
       return;
@@ -382,8 +375,22 @@ export class SchusszettelComponent implements OnInit {
       this.dirtyFlag = true;
 
     } catch (e) {
+
       match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
       inputElement.value = previousValue ? String(previousValue) : '';
+
+      if (e?.status === 404) {
+        this.notificationService.showNotification({
+          id: 'SCHUETZE_NOT_FOUND',
+          title: 'Rückennummer nicht gefunden',
+          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
+          severity: NotificationSeverity.ERROR,
+          origin: NotificationOrigin.SYSTEM,
+          type: NotificationType.OK,
+          userAction: NotificationUserAction.ACCEPTED
+        });
+        return;
+      }
 
       this.notificationService.showNotification({
         id: 'SCHUETZE_LOOKUP_ERROR',
