@@ -1,8 +1,11 @@
 <!-- Container -->
 <div
   class="schusszettel-container"
-  *ngIf="hasRingzahlen(match1) || hasRingzahlen(match2)"
   [class.readonly-mode]="readOnlyMode">
+  <!-- <div
+    class="schusszettel-container"
+    *ngIf="hasRingzahlen(match1) || hasRingzahlen(match2)"
+    [class.readonly-mode]="readOnlyMode"> -->
   <!-- Match 1 -->
   <div class="match-section">
     <!-- Header Row -->
@@ -499,9 +502,9 @@
     </div>
   </div>
 </div>
-<div
+<!-- <div
   class="schusszettel-container-note"
   *ngIf="match1 && match2 && !hasRingzahlen(match1) && !hasRingzahlen(match2)">
   <p>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar, da noch keine Match-Ergebnisse eingetragen
     wurden.</p>
-</div>
+</div> -->
