@@ -10,8 +10,8 @@ $border: #dee2e6;
 :host {
   display: block;
   width: 100%;
-  height: 100vh;
-  overflow-y: auto;
+  // height: 100vh;
+  // overflow-y: auto;
 }
 
 .maske4-zustand {
@@ -345,6 +345,7 @@ $border: #dee2e6;
   /* Fix: Anzeige der Schusszettel (Tabelle) Mobile */
   .embedded-schusszettel-section {
     display: block !important;
+    overflow-x: auto;
   }
   .embedded-schusszettel-section .schusszettel-container {
     transform-origin: top left !important;
@@ -390,6 +391,7 @@ $border: #dee2e6;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: auto;
 
   .section-title {
     font-size: 18px;
@@ -411,6 +413,7 @@ $border: #dee2e6;
     position: relative;
     transform-origin: center center;
     margin: 0;
+    --zoom-factor: 1;
 
     // Fixed layout that prevents squishing
     ::ng-deep {
@@ -477,7 +480,7 @@ $border: #dee2e6;
         alignment: center;
         text-align: center;
         margin: 10px;
-        font-size: 10px;
+        font-size: calc(12px / var(--zoom-factor));
         padding: 5px;
       }
 
@@ -575,38 +578,50 @@ $border: #dee2e6;
   // Responsive scaling with media queries
   @media (min-width: 1600px) {
     .schusszettel-container {
-      transform: scale(1.1);
+      transform: none;
+      zoom: 1.1;
+      --zoom-factor: 1.1;
     }
   }
 
   @media (max-width: 1199px) {
     .schusszettel-container {
-      transform: scale(0.8);
+      transform: none;
+      zoom: 0.8;
+      --zoom-factor: 0.8;
     }
   }
 
   @media (max-width: 1024px) {
     .schusszettel-container {
-      transform: scale(0.8);
+      transform: none;
+      zoom: 0.8;
+      --zoom-factor: 0.8;
     }
   }
 
   @media (max-width: 900px) {
     .schusszettel-container {
-      transform: scale(0.7);
+      transform: none;
+      zoom: 0.7;
+      --zoom-factor: 0.8;
     }
   }
 
   @media (max-width: 768px) {
     .schusszettel-container {
-      transform: scale(0.6);
+      transform: none;
+      zoom: 0.6;
+      --zoom-factor: 0.8;
     }
   }
 
   @media (max-width: 480px) {
     .schusszettel-container {
-      transform: scale(0.5);
+      transform: none;
+      zoom: 0.5;
       padding: 10px;
+      --zoom-factor: 0.8;
     }
   }
 }

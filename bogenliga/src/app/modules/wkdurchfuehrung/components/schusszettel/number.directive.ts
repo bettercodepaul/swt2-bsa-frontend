@@ -1,5 +1,12 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
-import {NotificationOrigin, NotificationService, NotificationSeverity, NotificationType, NotificationUserAction} from '@shared/services';
+import {
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services';
+
 /**
  * A element-directive to ensure only-number inputs.
  */
@@ -10,10 +17,12 @@ export class NumberOnlyDirective {
   protected notificationService;
   protected specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'Delete', 'Del', 'ArrowLeft', 'ArrowRight', 'Left', 'Right', 'Shift'];
   protected allowedKeys: Array<string>;
-  protected MIN_VAL: number; // min allowed value in fields
-  protected MAX_VAL: number; // max allowed value in fields
+  protected MIN_VAL: number;
+  protected MAX_VAL: number;
   protected ALIAS_10 = '+';
+  private focusMoved = false;
 
+  // Initializes directive settings
   constructor(el: ElementRef, allowedKeys: Array<string>, MIN_VAL: number, MAX_VAL: number, notificationService: NotificationService) {
     this.el = el;
     this.notificationService = notificationService;
@@ -28,13 +37,13 @@ export class NumberOnlyDirective {
    */
   public notificationMethod(event: KeyboardEvent) {
     this.notificationService.showNotification({
-      id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
-      title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
+      id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+      title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
       description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     });
     event.preventDefault();
   }
@@ -47,38 +56,66 @@ export class NumberOnlyDirective {
     return parseInt(value, 10) >= this.MIN_VAL && parseInt(value, 10) <= this.MAX_VAL;
   }
 
-  /**
-   * Handles keydown events for FehlerNumberOnly and SchuetzeNumberOnly,
-   * fires notificationMethod if keydown was invalid.
-   * @param event
-   */
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
-      return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
-      this.notificationMethod(event);
-    }
+  // Selects input text on focus
+  @HostListener('focus')
+  onFocus() {
+    const input = this.el.nativeElement as HTMLInputElement;
+    setTimeout(() => {
+      input.select();
+    });
   }
+
+  // Handles numeric keystroke behavior
+  protected handleKeyDown(event: KeyboardEvent) {
+    if (this.specialKeys.includes(event.key)) {
+      return;
+    }
+
+    if (event.key === this.ALIAS_10) {
+      this.el.nativeElement.value = '10';
+      event.preventDefault();
+      this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
+      return;
+    }
+
+    if (!this.allowedKeys.includes(event.key) || isNaN(Number(event.key))) {
+      this.notificationMethod(event);
+      return;
+    }
+
+    this.el.nativeElement.value = event.key;
+    event.preventDefault();
+    this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
+  }
+
   /**
    * Handles keyup events for PfeilNumberOnly, FehlerNumberOnly and SchuetzeNumberOnly, increases tabindex if keystroke was valid.
    * @param event
    */
   @HostListener('keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
-    // Allow Backspace, tab, end and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
+    if (this.specialKeys.includes(event.key) || this.focusMoved) {
       return;
     }
-    if (this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
+
+    if (this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value)) {
       const currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'), 10);
-      // @ts-ignore FIXME: dear TypeScript, .focus() DOES exist on Element -.-
-      document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus();
+
+      this.focusMoved = true;
+
+      setTimeout(() => {
+        const next = document.querySelector(`[tabindex="${currentTabIndex + 1}"]`) as HTMLElement;
+        next?.focus();
+      }, 65);
     }
   }
-}
 
+  // Resets focus flag on blur
+  @HostListener('blur')
+  onBlur() {
+    this.focusMoved = false;
+  }
+}
 
 /**
  * A element-directive to ensure only-number inputs in passe.ringzahlPfeil fields.
@@ -91,30 +128,16 @@ export class NumberOnlyDirective {
 })
 export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
+  constructor(el: ElementRef, notificationService: NotificationService) {
+    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notificationService);
     this.ALIAS_10 = '+';
   }
 
-  /**
-   * Override of onKeyDown Method from NumberOnlyDirective
-   * @param event
-   */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end, and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
-      return;
-    }
-    if (event.key === this.ALIAS_10) {
-      this.el.nativeElement.value = '10';
-      return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
-      this.notificationMethod(event);
-    }
+    super.handleKeyDown(event);
   }
 }
-
 
 /**
  * A element-directive to ensure only-number inputs in passe.schuetzeNr fields.
@@ -125,11 +148,15 @@ export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
 })
 export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 1, 99, notifcationService);
+  constructor(el: ElementRef, notificationService: NotificationService) {
+    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 1, 99, notificationService);
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    super.handleKeyDown(event);
   }
 }
-
 
 /**
  * A element-directive to ensure only-number inputs in match.fehlerpunkte fields.
@@ -140,7 +167,50 @@ export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
 })
 export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 60, notifcationService);
+  private replaceNext = true;
+
+  constructor(el: ElementRef, notificationService: NotificationService) {
+    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 60, notificationService);
+  }
+
+  // Resets replace flag on focus
+  @HostListener('focus')
+  onFocus() {
+    this.replaceNext = true;
+    super.onFocus();
+  }
+
+  // Handles multi-digit input rules
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (this.specialKeys.includes(event.key)) {
+      return;
+    }
+
+    if (!this.allowedKeys.includes(event.key) || isNaN(Number(event.key))) {
+      this.notificationMethod(event);
+      return;
+    }
+
+    const current = this.el.nativeElement.value ?? '';
+
+    if (this.replaceNext) {
+      this.replaceNext = false;
+      this.el.nativeElement.value = event.key;
+      event.preventDefault();
+      this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
+      return;
+    }
+
+    const nextValue = current + event.key;
+
+    if (!this.inRange(nextValue)) {
+      this.notificationMethod(event);
+      return;
+    }
+
+    this.el.nativeElement.value = nextValue;
+    event.preventDefault();
+    this.el.nativeElement.dispatchEvent(new Event('input', {bubbles: true}));
   }
 }
