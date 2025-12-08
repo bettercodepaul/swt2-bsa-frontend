@@ -55,13 +55,13 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 .table {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   text-align: center;
 }
 
 .table th,
 .table td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #ebebeb;
   padding: 5px;
   vertical-align: middle;
   font-size: 12px;
@@ -80,12 +80,12 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 .table thead th {
-  background: #f8f9fb;
+  background: #ffffff;
   font-weight: 600;
 }
 
 .total-row {
-  background: #f8f9fb;
+  background: #ffffff;
 }
 
 .total-row td {
@@ -196,4 +196,13 @@ input {
 #buttonContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.schuetze-select {
+  height: 52px;
+  width: 52px;
+  padding: 0;
+  text-align: center;
+  font-size: 30px;
+  box-sizing: border-box;
 }

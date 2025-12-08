@@ -2,10 +2,6 @@
 <div
   class="schusszettel-container"
   [class.readonly-mode]="readOnlyMode">
-  <!-- <div
-    class="schusszettel-container"
-    *ngIf="hasRingzahlen(match1) || hasRingzahlen(match2)"
-    [class.readonly-mode]="readOnlyMode"> -->
   <!-- Match 1 -->
   <div class="match-section">
     <!-- Header Row -->
@@ -24,7 +20,6 @@
             match2.mannschaftName
           }}
         </h3>
-        <!-- <p *ngIf="embeddedMode">Tablet-Modus</p> -->
       </div>
       <!-- 2 Table -->
       <div class="col-6">
@@ -125,15 +120,19 @@
             <tr>
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
-                  <input
+                  <select
                     [(ngModel)]="passe.rueckennummer"
-                    (input)="onSchuetzeChange($event, 1, i, j)"
-                    (focus)="rememberOldValue(passe.rueckennummer)"
-                    blaSchuetzeNumberOnly
-                    blaSchuetzenTabIndexDirective
-                    type="number"
-                    [readOnly]="readOnlyMode"
-                  />
+                    (ngModelChange)="onSchuetzeChangeDropdown($event, 1, i, j)"
+                    [disabled]="readOnlyMode"
+                    class="schuetze-select"
+                  >
+                    <option [ngValue]="null">–</option>
+                    <option
+                      *ngFor="let nr of getAvailableRueckennummernMatch1(i)"
+                      [ngValue]="nr">
+                      {{ nr }}
+                    </option>
+                  </select>
                 </td>
                 <td class="split">
                   <input
@@ -206,7 +205,6 @@
   </div>
   <!-- Trennlinie -->
   <hr class="hr-divider"/>
-  <!-- match2 - Now shown in embedded mode too -->
   <!-- Match 2 -->
   <div class="match-section">
     <!-- Header Row -->
@@ -225,7 +223,6 @@
             match1.mannschaftName
           }}
         </h3>
-        <!-- <p *ngIf="embeddedMode">Tablet-Modus</p> -->
       </div>
       <!-- 2 Table -->
       <div class="col-6">
@@ -325,15 +322,19 @@
             <tr>
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
-                  <input
+                  <select
                     [(ngModel)]="passe.rueckennummer"
-                    (input)="onSchuetzeChange($event, 2, i, j)"
-                    (focus)="rememberOldValue(passe.rueckennummer)"
-                    blaSchuetzeNumberOnly
-                    blaSchuetzenTabIndexDirective
-                    type="number"
-                    [readOnly]="readOnlyMode"
-                  />
+                    (ngModelChange)="onSchuetzeChangeDropdown($event, 2, i, j)"
+                    [disabled]="readOnlyMode"
+                    class="schuetze-select"
+                  >
+                    <option [ngValue]="null">–</option>
+                    <option
+                      *ngFor="let nr of getAvailableRueckennummernMatch2(i)"
+                      [ngValue]="nr">
+                      {{ nr }}
+                    </option>
+                  </select>
                 </td>
                 <td class="split">
                   <input
@@ -502,9 +503,3 @@
     </div>
   </div>
 </div>
-<!-- <div
-  class="schusszettel-container-note"
-  *ngIf="match1 && match2 && !hasRingzahlen(match1) && !hasRingzahlen(match2)">
-  <p>Detaillierte Schusszettel-Informationen sind derzeit nicht verfügbar, da noch keine Match-Ergebnisse eingetragen
-    wurden.</p>
-</div> -->
