@@ -319,16 +319,17 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true;
   }
 
+  // Rueckennummer fuer Dropdown-Auswahl
   getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
     const originallyUsed = this.initialUsed1;
 
     return this.allowedMitglieder1.filter(nr =>
-      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer bleibt erlaubt
+      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer erlaubt
       !originallyUsed.includes(nr)                 // alle anderen nur, wenn anfangs frei
     );
   }
 
-
+  // Rueckennummer fuer Dropdown-Auswahl
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
     const originallyUsed = this.initialUsed2;
 
@@ -525,7 +526,7 @@ export class SchusszettelComponent implements OnInit {
     this.match1 = payload[0];
     this.match2 = payload[1];
 
-    // 2. Falls Schützen fehlen → wie beim Initial-Load initialisieren
+    // 2. Falls Schützen fehlen, initialisieren
     if (!this.match1.schuetzen || this.match1.schuetzen.length === 0) {
       this.initSchuetzenMatch1();
     }
@@ -537,7 +538,7 @@ export class SchusszettelComponent implements OnInit {
     this.initSumSatz();
     this.setPoints();
 
-    // 4. Singlesatz-Punkte neu aufbauen (damit Tabelle korrekt ist)
+    // 4. Singlesatz-Punkte neu aufbauen
     this.match1singlesatzpoints = [...this.match1singlesatzpoints];
     this.match2singlesatzpoints = [...this.match2singlesatzpoints];
   }
