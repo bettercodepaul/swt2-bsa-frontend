@@ -61,15 +61,17 @@ export class SchusszettelComponent implements OnInit {
   andererTagVeranstaltung: VeranstaltungDO;
   andererTagAnzahl: number;
 
-  matchMannschaft: DsbMannschaftDO;
-  matchAllPasseMannschaft: PasseDoClass[];
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
-  private lastRueckennummer: number | null = null;
-
+  allowedMitglieder1: number[];
+  allowedMitglieder2: number[];
+  private initialUsed1: number[] = [];
+  private initialUsed2: number[] = [];
 
   // no usages
+  matchMannschaft: DsbMannschaftDO;
+  matchAllPasseMannschaft: PasseDoClass[];
   allPasse: PasseDoClass[] = [];
   allWettkaempfe: WettkampfDO[];
   allVeranstaltungen: VeranstaltungDO[];
@@ -83,8 +85,6 @@ export class SchusszettelComponent implements OnInit {
   anzahlAnTagenMannschaft = new Array<Array<number>>();
   veranstaltungVorherig: VeranstaltungDO;
   veranstaltungGegenwaertig: VeranstaltungDO;
-  allowedMitglieder1: number[];
-  allowedMitglieder2: number[];
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -148,6 +148,9 @@ export class SchusszettelComponent implements OnInit {
 
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
+          // Rückennummern laden
+          this.loadAllowedRueckennummern(this.match1, 1);
+          this.loadAllowedRueckennummern(this.match2, 2);
 
           console.log(this.match1, this.match2);
           if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
@@ -205,6 +208,9 @@ export class SchusszettelComponent implements OnInit {
           console.log('match1', this.match1);
           console.log('match2', this.match2);
           let shouldInitSumSatz = true;
+
+          this.initialUsed1 = this.match1.schuetzen.map(s => s[0].rueckennummer);
+          this.initialUsed2 = this.match2.schuetzen.map(s => s[0].rueckennummer);
 
           if (this.match1.schuetzen.length <= 0) {
             this.initSchuetzenMatch1();
@@ -302,106 +308,34 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  rememberOldValue(value: number | null) {
-    this.lastRueckennummer = value;
+  onSchuetzeChangeDropdown(newValue: number, matchNr: number, schuetzeIndex: number) {
+    const match = this['match' + matchNr];
+
+    // Neue Rückennummer in allen 5 Passen dieses Schützen setzen
+    for (let j = 0; j < match.schuetzen[schuetzeIndex].length; j++) {
+      match.schuetzen[schuetzeIndex][j].rueckennummer = newValue;
+    }
+
+    this.dirtyFlag = true;
   }
 
-  async onSchuetzeChange(
-    event: any,
-    matchNr: number,
-    schuetzeIndex: number,
-    satzIndex: number
-  ) {
-    const inputElement: HTMLInputElement = event.target;
-    const newValue = Number(inputElement.value);
+  getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
+    const originallyUsed = this.initialUsed1;
 
-    const match = this['match' + matchNr];
-    const mannschaftId = match.mannschaftId;
-
-    const previousValue = this.lastRueckennummer;
-
-    if (newValue == null || newValue === 0) {
-      inputElement.value = previousValue ? String(previousValue) : '';
-      return;
-    }
-
-    // prüfen ob Nummer schon existiert
-    const existsAlready = match.schuetzen.some((schuetze, idx) =>
-      idx !== schuetzeIndex && schuetze[0]?.rueckennummer === newValue
+    return this.allowedMitglieder1.filter(nr =>
+      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer bleibt erlaubt
+      !originallyUsed.includes(nr)                 // alle anderen nur, wenn anfangs frei
     );
+  }
 
-    if (existsAlready) {
-      this.notificationService.showNotification({
-        id: 'SCHUETZE_DUPLIKAT',
-        title: 'Rückennummer bereits vergeben',
-        description: `Die Rückennummer ${newValue} wird bereits von einem anderen Schützen genutzt.`,
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.ACCEPTED
-      });
 
-      // UI und Model zurücksetzen
-      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-      inputElement.value = previousValue ? String(previousValue) : '';
+  getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
+    const originallyUsed = this.initialUsed2;
 
-      return;
-    }
-
-    try {
-      const response = await this.mannschaftsMitgliedDataProvider
-        .findByTeamIdAndRueckennummer(mannschaftId, newValue);
-
-      const mitglied = response.payload;
-
-      if (!mitglied) {
-        match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-        inputElement.value = previousValue ? String(previousValue) : '';
-
-        this.notificationService.showNotification({
-          id: 'SCHUETZE_NOT_FOUND',
-          title: 'Schütze nicht gefunden',
-          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
-          severity: NotificationSeverity.ERROR,
-          origin: NotificationOrigin.SYSTEM,
-          type: NotificationType.OK,
-          userAction: NotificationUserAction.ACCEPTED
-        });
-
-        return;
-      }
-
-      match.schuetzen[schuetzeIndex][0].rueckennummer = newValue;
-      this.dirtyFlag = true;
-
-    } catch (e) {
-
-      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-      inputElement.value = previousValue ? String(previousValue) : '';
-
-      if (e?.status === 404) {
-        this.notificationService.showNotification({
-          id: 'SCHUETZE_NOT_FOUND',
-          title: 'Rückennummer nicht gefunden',
-          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
-          severity: NotificationSeverity.ERROR,
-          origin: NotificationOrigin.SYSTEM,
-          type: NotificationType.OK,
-          userAction: NotificationUserAction.ACCEPTED
-        });
-        return;
-      }
-
-      this.notificationService.showNotification({
-        id: 'SCHUETZE_LOOKUP_ERROR',
-        title: 'Fehler beim Laden',
-        description: `Die Rückennummer ${newValue} konnte nicht überprüft werden.`,
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.ACCEPTED
-      });
-    }
+    return this.allowedMitglieder2.filter(nr =>
+      nr === originallyUsed[schuetzeIndex] ||
+      !originallyUsed.includes(nr)
+    );
   }
 
 
@@ -432,29 +366,11 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
-  private getAllMannschaften(): void {
-    this.dsbMannschaftDataProvider.findAll()
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-        this.mannschaften = response.payload;
-      });
-  }
-
-
   /**
    * Diese Methode wurde überprüft und wird momentan nicht verwendet. Daher wurde hier die Methode findAll() nicht
    * geändert bzw. angepasst.
    * @private
    */
-
-  private maxMannschaftsId(): number {
-    let maxMid = this.mannschaften[0].id;
-    this.mannschaften.forEach((mannschaft) => {
-      if (mannschaft.id > maxMid) {
-        maxMid = mannschaft.id;
-      }
-    });
-    return maxMid;
-  }
 
   savepopSelberTag() {
     this.popupSelberTag = true;
@@ -565,9 +481,10 @@ export class SchusszettelComponent implements OnInit {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
 
+
           // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
-          // this.ngOnInit();
-          this.reloadUpdatedMatches(data.payload);
+          this.ngOnInit();
+          // this.reloadUpdatedMatches(data.payload);
           this.notificationService.showNotification({
             id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
             title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
@@ -900,6 +817,22 @@ export class SchusszettelComponent implements OnInit {
 
   }
 
+  private loadAllowedRueckennummern(match: MatchDOExt, matchNr: number) {
+    this.mannschaftsMitgliedDataProvider
+      .findAllByTeamId(match.mannschaftId)
+      .then(response => {
+
+        const ruecken = response.payload.map(m => m.rueckennummer);
+
+        if (matchNr === 1) {
+          this.allowedMitglieder1 = ruecken;
+        } else {
+          this.allowedMitglieder2 = ruecken;
+        }
+      });
+  }
+
+
   private setKummulativePoints() {
     let kumuluativ1 = 0;
     let kumuluativ2 = 0;
@@ -934,20 +867,6 @@ export class SchusszettelComponent implements OnInit {
       sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
     }
     return sum;
-  }
-
-  // Prüft, ob in einem Match mindestens eine Ringzahl (Pfeil 1 oder 2) enthält.
-  public hasRingzahlen(match: MatchDOExt): boolean {
-    if (!Array.isArray(match?.schuetzen) || match.schuetzen.length === 0) {
-      return false;
-    }
-
-    return match.schuetzen.some(schuetze =>
-      Array.isArray(schuetze) &&
-      schuetze.some(passe =>
-        passe?.ringzahlPfeil1 != null || passe?.ringzahlPfeil2 != null
-      )
-    );
   }
 
   public onButtonDownload(path: string): string {
