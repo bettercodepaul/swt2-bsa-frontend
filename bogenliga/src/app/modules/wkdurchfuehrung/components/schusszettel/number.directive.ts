@@ -139,24 +139,6 @@ export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
   }
 }
 
-/**
- * A element-directive to ensure only-number inputs in passe.schuetzeNr fields.
- * Extends NumberOnlyDirective
- */
-@Directive({
-  selector: '[blaSchuetzeNumberOnly]'
-})
-export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
-
-  constructor(el: ElementRef, notificationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 1, 99, notificationService);
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    super.handleKeyDown(event);
-  }
-}
 
 /**
  * A element-directive to ensure only-number inputs in match.fehlerpunkte fields.

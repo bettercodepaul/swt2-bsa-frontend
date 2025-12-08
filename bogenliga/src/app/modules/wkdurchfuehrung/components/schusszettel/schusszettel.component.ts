@@ -61,15 +61,19 @@ export class SchusszettelComponent implements OnInit {
   andererTagVeranstaltung: VeranstaltungDO;
   andererTagAnzahl: number;
 
-  matchMannschaft: DsbMannschaftDO;
-  matchAllPasseMannschaft: PasseDoClass[];
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
-  private lastRueckennummer: number | null = null;
-
+  allowedMitglieder1: number[];
+  allowedMitglieder2: number[];
+  private initialUsed1: number[] = [];
+  private initialUsed2: number[] = [];
+  private memberMap1: Map<number, number>;
+  private memberMap2: Map<number, number>;
 
   // no usages
+  matchMannschaft: DsbMannschaftDO;
+  matchAllPasseMannschaft: PasseDoClass[];
   allPasse: PasseDoClass[] = [];
   allWettkaempfe: WettkampfDO[];
   allVeranstaltungen: VeranstaltungDO[];
@@ -83,8 +87,6 @@ export class SchusszettelComponent implements OnInit {
   anzahlAnTagenMannschaft = new Array<Array<number>>();
   veranstaltungVorherig: VeranstaltungDO;
   veranstaltungGegenwaertig: VeranstaltungDO;
-  allowedMitglieder1: number[];
-  allowedMitglieder2: number[];
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -124,8 +126,8 @@ export class SchusszettelComponent implements OnInit {
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
     // this.initSchuetzen();
-    this.initSchuetzenMatch1();
-    this.initSchuetzenMatch2();
+    // this.initSchuetzenMatch1();
+    // this.initSchuetzenMatch2();
 
     // Handle both input properties (embedded mode) and route parameters
     const loadMatches = (match1id: number, match2id: number) => {
@@ -148,6 +150,9 @@ export class SchusszettelComponent implements OnInit {
 
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
+          // Rückennummern laden
+          this.loadAllowedRueckennummern(this.match1, 1);
+          this.loadAllowedRueckennummern(this.match2, 2);
 
           console.log(this.match1, this.match2);
           if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
@@ -193,7 +198,7 @@ export class SchusszettelComponent implements OnInit {
             }
 
             for (let i = 0; i < 3; i++) {
-              if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+              if (this.match2.schuetzen[i].length > 5 && this.match2.schuetzen[i].length !== 0) {
                 for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
                   this.match2.schuetzen[i].pop();
                 }
@@ -206,12 +211,15 @@ export class SchusszettelComponent implements OnInit {
           console.log('match2', this.match2);
           let shouldInitSumSatz = true;
 
-          if (this.match1.schuetzen.length <= 0) {
+          this.initialUsed1 = this.match1.schuetzen.map(s => s[0].rueckennummer);
+          this.initialUsed2 = this.match2.schuetzen.map(s => s[0].rueckennummer);
+
+          if (!this.match1.schuetzen || this.match1.schuetzen.length === 0) {
             this.initSchuetzenMatch1();
             shouldInitSumSatz = false;
           }
 
-          if (this.match2.schuetzen.length <= 0) {
+          if (!this.match2.schuetzen || this.match2.schuetzen.length === 0) {
             this.initSchuetzenMatch2();
             shouldInitSumSatz = false;
           }
@@ -302,106 +310,42 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  rememberOldValue(value: number | null) {
-    this.lastRueckennummer = value;
-  }
-
-  async onSchuetzeChange(
-    event: any,
-    matchNr: number,
-    schuetzeIndex: number,
-    satzIndex: number
-  ) {
-    const inputElement: HTMLInputElement = event.target;
-    const newValue = Number(inputElement.value);
+  onSchuetzeChangeDropdown(newValue: number, matchNr: number, schuetzeIndex: number) {
 
     const match = this['match' + matchNr];
-    const mannschaftId = match.mannschaftId;
 
-    const previousValue = this.lastRueckennummer;
+    const passe0 = match.schuetzen[schuetzeIndex][0];
 
-    if (newValue == null || newValue === 0) {
-      inputElement.value = previousValue ? String(previousValue) : '';
-      return;
-    }
+    // MitgliedId über Map holen
+    const memberMap = matchNr === 1 ? this.memberMap1 : this.memberMap2;
+    const correctMitgliedId = memberMap.get(newValue);
 
-    // prüfen ob Nummer schon existiert
-    const existsAlready = match.schuetzen.some((schuetze, idx) =>
-      idx !== schuetzeIndex && schuetze[0]?.rueckennummer === newValue
+    passe0.rueckennummer = newValue;
+    passe0.dsbMitgliedId = correctMitgliedId;
+
+    // Dirty markieren
+    this.dirtyFlag = true;
+  }
+
+
+  // Rueckennummer Dropdown-Auswahl
+  getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
+    const originallyUsed = this.initialUsed1;
+
+    return this.allowedMitglieder1.filter(nr =>
+      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer erlaubt
+      !originallyUsed.includes(nr)                 // alle anderen nur, wenn anfangs frei
     );
+  }
 
-    if (existsAlready) {
-      this.notificationService.showNotification({
-        id: 'SCHUETZE_DUPLIKAT',
-        title: 'Rückennummer bereits vergeben',
-        description: `Die Rückennummer ${newValue} wird bereits von einem anderen Schützen genutzt.`,
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.ACCEPTED
-      });
+  // Rueckennummer Dropdown-Auswahl
+  getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
+    const originallyUsed = this.initialUsed2;
 
-      // UI und Model zurücksetzen
-      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-      inputElement.value = previousValue ? String(previousValue) : '';
-
-      return;
-    }
-
-    try {
-      const response = await this.mannschaftsMitgliedDataProvider
-        .findByTeamIdAndRueckennummer(mannschaftId, newValue);
-
-      const mitglied = response.payload;
-
-      if (!mitglied) {
-        match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-        inputElement.value = previousValue ? String(previousValue) : '';
-
-        this.notificationService.showNotification({
-          id: 'SCHUETZE_NOT_FOUND',
-          title: 'Schütze nicht gefunden',
-          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
-          severity: NotificationSeverity.ERROR,
-          origin: NotificationOrigin.SYSTEM,
-          type: NotificationType.OK,
-          userAction: NotificationUserAction.ACCEPTED
-        });
-
-        return;
-      }
-
-      match.schuetzen[schuetzeIndex][0].rueckennummer = newValue;
-      this.dirtyFlag = true;
-
-    } catch (e) {
-
-      match.schuetzen[schuetzeIndex][0].rueckennummer = previousValue;
-      inputElement.value = previousValue ? String(previousValue) : '';
-
-      if (e?.status === 404) {
-        this.notificationService.showNotification({
-          id: 'SCHUETZE_NOT_FOUND',
-          title: 'Rückennummer nicht gefunden',
-          description: `Rückennummer ${newValue} existiert nicht in dieser Mannschaft.`,
-          severity: NotificationSeverity.ERROR,
-          origin: NotificationOrigin.SYSTEM,
-          type: NotificationType.OK,
-          userAction: NotificationUserAction.ACCEPTED
-        });
-        return;
-      }
-
-      this.notificationService.showNotification({
-        id: 'SCHUETZE_LOOKUP_ERROR',
-        title: 'Fehler beim Laden',
-        description: `Die Rückennummer ${newValue} konnte nicht überprüft werden.`,
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.ACCEPTED
-      });
-    }
+    return this.allowedMitglieder2.filter(nr =>
+      nr === originallyUsed[schuetzeIndex] ||
+      !originallyUsed.includes(nr)
+    );
   }
 
 
@@ -432,29 +376,11 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
-  private getAllMannschaften(): void {
-    this.dsbMannschaftDataProvider.findAll()
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-        this.mannschaften = response.payload;
-      });
-  }
-
-
   /**
    * Diese Methode wurde überprüft und wird momentan nicht verwendet. Daher wurde hier die Methode findAll() nicht
    * geändert bzw. angepasst.
    * @private
    */
-
-  private maxMannschaftsId(): number {
-    let maxMid = this.mannschaften[0].id;
-    this.mannschaften.forEach((mannschaft) => {
-      if (mannschaft.id > maxMid) {
-        maxMid = mannschaft.id;
-      }
-    });
-    return maxMid;
-  }
 
   savepopSelberTag() {
     this.popupSelberTag = true;
@@ -565,6 +491,7 @@ export class SchusszettelComponent implements OnInit {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
 
+
           // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
           // this.ngOnInit();
           this.reloadUpdatedMatches(data.payload);
@@ -608,7 +535,10 @@ export class SchusszettelComponent implements OnInit {
     this.match1 = payload[0];
     this.match2 = payload[1];
 
-    // 2. Falls Schützen fehlen → wie beim Initial-Load initialisieren
+    this.initialUsed1 = this.match1.schuetzen.map(s => s[0].rueckennummer);
+    this.initialUsed2 = this.match2.schuetzen.map(s => s[0].rueckennummer);
+
+    // 2. Falls Schützen fehlen, initialisieren
     if (!this.match1.schuetzen || this.match1.schuetzen.length === 0) {
       this.initSchuetzenMatch1();
     }
@@ -620,7 +550,7 @@ export class SchusszettelComponent implements OnInit {
     this.initSumSatz();
     this.setPoints();
 
-    // 4. Singlesatz-Punkte neu aufbauen (damit Tabelle korrekt ist)
+    // 4. Singlesatz-Punkte neu aufbauen
     this.match1singlesatzpoints = [...this.match1singlesatzpoints];
     this.match2singlesatzpoints = [...this.match2singlesatzpoints];
   }
@@ -900,6 +830,31 @@ export class SchusszettelComponent implements OnInit {
 
   }
 
+  private loadAllowedRueckennummern(match: MatchDOExt, matchNr: number) {
+    this.mannschaftsMitgliedDataProvider
+      .findAllByTeamId(match.mannschaftId)
+      .then(response => {
+
+        const members = response.payload;
+
+        // Map rueckennummer → dsbMitgliedId erstellen
+        const memberMap = new Map<number, number>(
+          members.map(m => [m.rueckennummer, m.dsbMitgliedId])
+        );
+
+        const ruecken = members.map(m => m.rueckennummer);
+
+        if (matchNr === 1) {
+          this.allowedMitglieder1 = ruecken;
+          this.memberMap1 = memberMap;
+        } else {
+          this.allowedMitglieder2 = ruecken;
+          this.memberMap2 = memberMap;
+        }
+      });
+  }
+
+
   private setKummulativePoints() {
     let kumuluativ1 = 0;
     let kumuluativ2 = 0;
@@ -934,20 +889,6 @@ export class SchusszettelComponent implements OnInit {
       sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
     }
     return sum;
-  }
-
-  // Prüft, ob in einem Match mindestens eine Ringzahl (Pfeil 1 oder 2) enthält.
-  public hasRingzahlen(match: MatchDOExt): boolean {
-    if (!Array.isArray(match?.schuetzen) || match.schuetzen.length === 0) {
-      return false;
-    }
-
-    return match.schuetzen.some(schuetze =>
-      Array.isArray(schuetze) &&
-      schuetze.some(passe =>
-        passe?.ringzahlPfeil1 != null || passe?.ringzahlPfeil2 != null
-      )
-    );
   }
 
   public onButtonDownload(path: string): string {
