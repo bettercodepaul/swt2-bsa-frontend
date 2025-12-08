@@ -124,8 +124,8 @@ export class SchusszettelComponent implements OnInit {
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
     // this.initSchuetzen();
-    this.initSchuetzenMatch1();
-    this.initSchuetzenMatch2();
+    // this.initSchuetzenMatch1();
+    // this.initSchuetzenMatch2();
 
     // Handle both input properties (embedded mode) and route parameters
     const loadMatches = (match1id: number, match2id: number) => {
@@ -196,7 +196,7 @@ export class SchusszettelComponent implements OnInit {
             }
 
             for (let i = 0; i < 3; i++) {
-              if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+              if (this.match2.schuetzen[i].length > 5 && this.match2.schuetzen[i].length !== 0) {
                 for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
                   this.match2.schuetzen[i].pop();
                 }
@@ -212,12 +212,12 @@ export class SchusszettelComponent implements OnInit {
           this.initialUsed1 = this.match1.schuetzen.map(s => s[0].rueckennummer);
           this.initialUsed2 = this.match2.schuetzen.map(s => s[0].rueckennummer);
 
-          if (this.match1.schuetzen.length <= 0) {
+          if (!this.match1.schuetzen || this.match1.schuetzen.length === 0) {
             this.initSchuetzenMatch1();
             shouldInitSumSatz = false;
           }
 
-          if (this.match2.schuetzen.length <= 0) {
+          if (!this.match2.schuetzen || this.match2.schuetzen.length === 0) {
             this.initSchuetzenMatch2();
             shouldInitSumSatz = false;
           }
@@ -312,23 +312,30 @@ export class SchusszettelComponent implements OnInit {
 
     const match = this['match' + matchNr];
 
+    // Prüfen ob Nummer schon vergeben ist
     const otherIndex = match.schuetzen.findIndex(
       (s, idx) => s[0].rueckennummer === newValue && idx !== schuetzeIndex
     );
 
-    // Wenn die Nummer schon vergeben → Schützen tauschen
+    // Schützen tauschen
     if (otherIndex !== -1) {
       const tmp = match.schuetzen[schuetzeIndex];
       match.schuetzen[schuetzeIndex] = match.schuetzen[otherIndex];
       match.schuetzen[otherIndex] = tmp;
     }
 
-    // Jetzt NEUE Nummer + NEUE MitgliedId in allen 5 Passen setzen
+    // Neue Nummer + MitgliedId übernehmen
     const mitgliedId = match.schuetzen[schuetzeIndex][0].dsbMitgliedId;
 
     for (let j = 0; j < match.schuetzen[schuetzeIndex].length; j++) {
       match.schuetzen[schuetzeIndex][j].rueckennummer = newValue;
       match.schuetzen[schuetzeIndex][j].dsbMitgliedId = mitgliedId;
+    }
+
+    if (matchNr === 1) {
+      this.initialUsed1 = match.schuetzen.map(s => s[0].rueckennummer);
+    } else {
+      this.initialUsed2 = match.schuetzen.map(s => s[0].rueckennummer);
     }
 
     this.dirtyFlag = true;
