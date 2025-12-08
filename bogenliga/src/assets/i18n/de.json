@@ -2042,5 +2042,17 @@
       "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",
       "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
     }
+  },
+  "MANNSCHAFTSUEBERSICHT": {
+    "TITLE": "Mannschaftsübersicht",
+    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften mit ihren zugehörigen Schützen.",
+    "PLACEHOLDER": "Die Mannschaftsübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+    "STATUS": {
+      "LOADING": "Mannschaftsübersicht wird geladen …",
+      "EMPTY": "Keine Mannschaften gefunden. Die Datenquelle liefert aktuell keine Einträge.",
+      "TIMEOUT": "Die Mannschaftsübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
+      "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
+      "ERROR": "Die Mannschaftsübersicht konnte nicht geladen werden."
+    }
   }
 }
