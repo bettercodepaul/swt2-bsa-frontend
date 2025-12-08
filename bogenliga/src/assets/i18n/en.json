@@ -37,7 +37,7 @@
     "HOME": {
       "TITLE": "Archery League GER",
       "WELCOME": "Welcome",
-      "WETTKAEMPFE": {
+      "WETTKAEMPFE":{
         "NAECHSTE": "Our next competitions",
         "VERGANGENE": "Our completed competitions"
       },
@@ -351,7 +351,7 @@
         "LABEL": "Competition day 4"
       },
       "OPTION5": {
-        "LABEL": "Live"
+        "LABEL": "Overall"
       }
     },
     "MANNSCHAFTEN": {
@@ -2070,9 +2070,19 @@
       "SAISONSTATISTIK": {
         "TITLE": "Statistics per season",
         "HELPER": "Statistics of an archer over the last five years"
+    }
+  },
+    "MANNSCHAFTSUEBERSICHT": {
+      "TITLE": "Team overview",
+      "DESCRIPTION": "Here you will find a central overview of, all teams with their associated shooters.",
+      "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
+      "STATUS": {
+        "LOADING": "Team overview is loading ...",
+        "EMPTY": "No teams found. The data source is currently not providing any entries.",
+        "TIMEOUT": "The team overview could not be loaded (timeout). Please try again later.",
+        "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
+        "ERROR": "The team overview could not be loaded."
       }
-    },
-    "NO_LIGA_WARNING": "The selected team is not assigned to a league."
-  }
+    }
   }
 }

@@ -1,5 +1,12 @@
-<div class="mannschaftsuebersicht-page">
-  <h1>test</h1>
-  <p>Dies ist eine leere Test-Seite für die Mannschaftsübersicht.</p>
-</div>
+<bla-navigation-dialog [config]="config">
+  <div class="mannschaftsuebersicht-page">
 
+    <!-- Loading indicator -->
+    <div *ngIf="loading">{{"MANNSCHAFTSUEBERSICHT.STATUS.LOADING" | translate}}</div>
+
+    <!-- Mannschaft anzeigen -->
+    <div *ngIf="!loading && mannschaft">
+      <h2>{{ mannschaft.name || 'unbenannte Mannschaft' }} <small *ngIf="mannschaft.nummer">(Nr. {{ mannschaft.nummer }})</small></h2>
+    </div>
+  </div>
+</bla-navigation-dialog>
