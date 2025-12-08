@@ -68,6 +68,8 @@ export class SchusszettelComponent implements OnInit {
   allowedMitglieder2: number[];
   private initialUsed1: number[] = [];
   private initialUsed2: number[] = [];
+  private memberMap1: Map<number, number>;
+  private memberMap2: Map<number, number>;
 
   // no usages
   matchMannschaft: DsbMannschaftDO;
@@ -312,30 +314,25 @@ export class SchusszettelComponent implements OnInit {
 
     const match = this['match' + matchNr];
 
-    // Prüfen ob Nummer schon vergeben ist
+    // 1. Prüfen ob Nummer schon vergeben ist
     const otherIndex = match.schuetzen.findIndex(
       (s, idx) => s[0].rueckennummer === newValue && idx !== schuetzeIndex
     );
 
-    // Schützen tauschen
     if (otherIndex !== -1) {
       const tmp = match.schuetzen[schuetzeIndex];
       match.schuetzen[schuetzeIndex] = match.schuetzen[otherIndex];
       match.schuetzen[otherIndex] = tmp;
     }
 
-    // Neue Nummer + MitgliedId übernehmen
-    const mitgliedId = match.schuetzen[schuetzeIndex][0].dsbMitgliedId;
+    // 2. korrekte MitgliedId über Map holen
+    const memberMap = (matchNr === 1) ? this.memberMap1 : this.memberMap2;
+    const correctMitgliedId = memberMap.get(newValue);
 
-    for (let j = 0; j < match.schuetzen[schuetzeIndex].length; j++) {
-      match.schuetzen[schuetzeIndex][j].rueckennummer = newValue;
-      match.schuetzen[schuetzeIndex][j].dsbMitgliedId = mitgliedId;
-    }
-
-    if (matchNr === 1) {
-      this.initialUsed1 = match.schuetzen.map(s => s[0].rueckennummer);
-    } else {
-      this.initialUsed2 = match.schuetzen.map(s => s[0].rueckennummer);
+    // 3. rückennummer & dsbMitgliedId im gesamten Schützenblock setzen
+    for (let passe of match.schuetzen[schuetzeIndex]) {
+      passe.rueckennummer = newValue;
+      passe.dsbMitgliedId = correctMitgliedId;
     }
 
     this.dirtyFlag = true;
@@ -492,11 +489,11 @@ export class SchusszettelComponent implements OnInit {
             this.match2.schuetzen[i][j].lfdNr = j + 1;
           }
 
-          this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
-          this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
+          // this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
+          // this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
 
-          this.match1.schuetzen[i][j].rueckennummer = this.match1.schuetzen[i][0].rueckennummer;
-          this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
+          // this.match1.schuetzen[i][j].rueckennummer = this.match1.schuetzen[i][0].rueckennummer;
+          // this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
         }
       }
 
@@ -846,12 +843,21 @@ export class SchusszettelComponent implements OnInit {
       .findAllByTeamId(match.mannschaftId)
       .then(response => {
 
-        const ruecken = response.payload.map(m => m.rueckennummer);
+        const members = response.payload;
+
+        // Map rueckennummer → dsbMitgliedId erstellen
+        const memberMap = new Map<number, number>(
+          members.map(m => [m.rueckennummer, m.dsbMitgliedId])
+        );
+
+        const ruecken = members.map(m => m.rueckennummer);
 
         if (matchNr === 1) {
           this.allowedMitglieder1 = ruecken;
+          this.memberMap1 = memberMap;
         } else {
           this.allowedMitglieder2 = ruecken;
+          this.memberMap2 = memberMap;
         }
       });
   }
