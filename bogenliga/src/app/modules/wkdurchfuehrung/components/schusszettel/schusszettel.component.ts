@@ -309,17 +309,33 @@ export class SchusszettelComponent implements OnInit {
   }
 
   onSchuetzeChangeDropdown(newValue: number, matchNr: number, schuetzeIndex: number) {
+
     const match = this['match' + matchNr];
 
-    // Neue Rückennummer in allen 5 Passen dieses Schützen setzen
+    const otherIndex = match.schuetzen.findIndex(
+      (s, idx) => s[0].rueckennummer === newValue && idx !== schuetzeIndex
+    );
+
+    // Wenn die Nummer schon vergeben → Schützen tauschen
+    if (otherIndex !== -1) {
+      const tmp = match.schuetzen[schuetzeIndex];
+      match.schuetzen[schuetzeIndex] = match.schuetzen[otherIndex];
+      match.schuetzen[otherIndex] = tmp;
+    }
+
+    // Jetzt NEUE Nummer + NEUE MitgliedId in allen 5 Passen setzen
+    const mitgliedId = match.schuetzen[schuetzeIndex][0].dsbMitgliedId;
+
     for (let j = 0; j < match.schuetzen[schuetzeIndex].length; j++) {
       match.schuetzen[schuetzeIndex][j].rueckennummer = newValue;
+      match.schuetzen[schuetzeIndex][j].dsbMitgliedId = mitgliedId;
     }
 
     this.dirtyFlag = true;
   }
 
-  // Rueckennummer fuer Dropdown-Auswahl
+
+  // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
     const originallyUsed = this.initialUsed1;
 
@@ -329,7 +345,7 @@ export class SchusszettelComponent implements OnInit {
     );
   }
 
-  // Rueckennummer fuer Dropdown-Auswahl
+  // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
     const originallyUsed = this.initialUsed2;
 
@@ -484,8 +500,8 @@ export class SchusszettelComponent implements OnInit {
 
 
           // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
-          this.ngOnInit();
-          // this.reloadUpdatedMatches(data.payload);
+          // this.ngOnInit();
+          this.reloadUpdatedMatches(data.payload);
           this.notificationService.showNotification({
             id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
             title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
