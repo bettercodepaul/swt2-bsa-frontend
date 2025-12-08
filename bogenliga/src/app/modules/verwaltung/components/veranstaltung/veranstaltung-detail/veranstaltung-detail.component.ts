@@ -896,11 +896,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLigatabelleExistsSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
     try {
       this.currentLigatabelle = response.payload;
-      for (let i = 0; i < this.rows.length; i++) {
-        const row = this.rows[i];
-        row.disabledActions.push(TableActionType.EDIT);
-        row.hiddenActions.push(TableActionType.EDIT);
-      }
       this.saveLoading = false;
     } catch (error) {
       console.error(error);
