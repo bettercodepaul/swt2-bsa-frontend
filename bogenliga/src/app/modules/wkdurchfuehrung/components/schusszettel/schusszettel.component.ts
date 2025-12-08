@@ -310,7 +310,8 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  onSchuetzeChangeDropdown(newValue: number, matchNr: number, schuetzeIndex: number) {
+  // Fehlerhafte Version
+  /*onSchuetzeChangeDropdown(newValue: number, matchNr: number, schuetzeIndex: number) {
 
     const match = this['match' + matchNr];
 
@@ -325,6 +326,36 @@ export class SchusszettelComponent implements OnInit {
 
     // Dirty markieren
     this.dirtyFlag = true;
+  }*/
+
+  async onSchuetzeChangeDropdown(newRueckennummer: number,
+                                 matchNr: number,
+                                 schuetzeIndex: number) {
+
+    const match = this['match' + matchNr];
+    const mannschaftId = match.mannschaftId;
+
+    try {
+      // Prüfen ob Rückennummer gültig ist
+      if (newRueckennummer != null) {
+        await this.mannschaftsMitgliedDataProvider
+          .findByTeamIdAndRueckennummer(mannschaftId, newRueckennummer);
+      }
+
+      this.dirtyFlag = true;
+
+    } catch (e) {
+
+      this.notificationService.showNotification({
+        id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+        title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+        severity: NotificationSeverity.INFO,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
+      });
+    }
   }
 
 
