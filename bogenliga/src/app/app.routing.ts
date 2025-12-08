@@ -23,5 +23,7 @@ export const ROUTES: Routes = [
   {path: 'spotter', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
   {path: 'schusszettel', loadChildren: () => import('./modules/schusszettel/schusszettel.module').then((m) => m.SchusszettelModule)},
   {path: 'hilfe', loadChildren: () => import('src/app/modules/hilfe/hilfe.module').then((m) => m.HilfeModule)},
+  {path: 'mannschaftsuebersicht', loadChildren: () => import('src/app/modules/mannschaftsuebersicht/mannschaftsuebersicht.module').then((m) => m.MannschaftsuebersichtModule)},
+  {path: 'mannschaftsuebersicht/:id', loadChildren: () => import('src/app/modules/mannschaftsuebersicht/mannschaftsuebersicht.module').then((m) => m.MannschaftsuebersichtModule)},
   {path: 'wkdurchfuehrung/tabletadmin/:id/:id/:id', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
 ];
