@@ -314,27 +314,16 @@ export class SchusszettelComponent implements OnInit {
 
     const match = this['match' + matchNr];
 
-    // 1. Prüfen ob Nummer schon vergeben ist
-    const otherIndex = match.schuetzen.findIndex(
-      (s, idx) => s[0].rueckennummer === newValue && idx !== schuetzeIndex
-    );
+    const passe0 = match.schuetzen[schuetzeIndex][0];
 
-    if (otherIndex !== -1) {
-      const tmp = match.schuetzen[schuetzeIndex];
-      match.schuetzen[schuetzeIndex] = match.schuetzen[otherIndex];
-      match.schuetzen[otherIndex] = tmp;
-    }
-
-    // 2. korrekte MitgliedId über Map holen
-    const memberMap = (matchNr === 1) ? this.memberMap1 : this.memberMap2;
+    // MitgliedId über Map holen
+    const memberMap = matchNr === 1 ? this.memberMap1 : this.memberMap2;
     const correctMitgliedId = memberMap.get(newValue);
 
-    // 3. rückennummer & dsbMitgliedId im gesamten Schützenblock setzen
-    for (let passe of match.schuetzen[schuetzeIndex]) {
-      passe.rueckennummer = newValue;
-      passe.dsbMitgliedId = correctMitgliedId;
-    }
+    passe0.rueckennummer = newValue;
+    passe0.dsbMitgliedId = correctMitgliedId;
 
+    // Dirty markieren
     this.dirtyFlag = true;
   }
 
@@ -489,11 +478,11 @@ export class SchusszettelComponent implements OnInit {
             this.match2.schuetzen[i][j].lfdNr = j + 1;
           }
 
-          // this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
-          // this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
+          this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
+          this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
 
-          // this.match1.schuetzen[i][j].rueckennummer = this.match1.schuetzen[i][0].rueckennummer;
-          // this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
+          this.match1.schuetzen[i][j].rueckennummer = this.match1.schuetzen[i][0].rueckennummer;
+          this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
         }
       }
 
