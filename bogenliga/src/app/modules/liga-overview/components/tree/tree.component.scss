@@ -7,10 +7,10 @@
   --bla-tree-focus-ring: 2px solid var(--bla-color-focus, #2c7be5);
   --bla-tree-hover-bg: rgba(44, 123, 229, 0.08);
   --bla-tree-selected-bg: rgba(44, 123, 229, 0.16);
-  --bla-tree-border-radius: 8px;
-  --bla-tree-row-height: 52px;
-  --bla-tree-node-gap: 24px;
-  --bla-tree-branch-length: 28px;
+  --bla-tree-border-radius: 6px;
+  --bla-tree-row-height: 48px;
+  --bla-tree-node-gap: 16px;
+  --bla-tree-branch-length: 24px;
   --bla-tree-branch-color: #d8dde8;
   --bla-tree-level-0-bg: #d62828;
   --bla-tree-level-0-border: #b71f21;
@@ -25,12 +25,12 @@
   --bla-tree-level-default-bg: #ffffff;
   --bla-tree-level-default-border: #d1d6e0;
   --bla-tree-level-default-foreground: #1d2533;
-  --bla-tree-card-shadow: 0 8px 16px rgba(18, 33, 54, 0.12);
+  --bla-tree-card-shadow: 0 4px 10px rgba(18, 33, 54, 0.1);
 
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.4;
-  width: 100%;
-  min-width: 0;
+  width: fit-content;
+  min-width: 100%;
   padding-bottom: 24px;
 }
 
@@ -39,9 +39,10 @@
   padding: 0;
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: var(--bla-tree-node-gap);
+  gap: 0;
+  width: 100%;
 }
 
 .bla-league-tree__root-item {
@@ -49,9 +50,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  flex: 1 1 auto;
-  min-width: 200px;
-  max-width: 100%;
+  flex: 0 0 auto;
 }
 
 /* Tablet and below: stack vertically */
