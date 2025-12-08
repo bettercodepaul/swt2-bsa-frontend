@@ -546,6 +546,9 @@ export class SchusszettelComponent implements OnInit {
     this.match1 = payload[0];
     this.match2 = payload[1];
 
+    this.initialUsed1 = this.match1.schuetzen.map(s => s[0].rueckennummer);
+    this.initialUsed2 = this.match2.schuetzen.map(s => s[0].rueckennummer);
+
     // 2. Falls Schützen fehlen, initialisieren
     if (!this.match1.schuetzen || this.match1.schuetzen.length === 0) {
       this.initSchuetzenMatch1();
