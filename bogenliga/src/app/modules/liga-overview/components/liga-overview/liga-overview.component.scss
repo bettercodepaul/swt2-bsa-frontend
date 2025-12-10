@@ -11,6 +11,14 @@
   margin-top: 32px;
 }
 
+.liga-tree-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
 .liga-tree-wrapper {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
@@ -25,4 +33,10 @@
   gap: 0.5rem;
   font-size: 0.95rem;
   margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .liga-tree-actions {
+    justify-content: flex-start;
+  }
 }

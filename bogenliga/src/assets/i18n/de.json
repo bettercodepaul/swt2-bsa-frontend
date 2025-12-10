@@ -2026,7 +2026,9 @@
     "TREE": {
       "TITLE": "Liga-Hierarchie",
       "EXPAND": "Knoten ausklappen",
-      "COLLAPSE": "Knoten einklappen"
+      "COLLAPSE": "Knoten einklappen",
+      "EXPAND_ALL": "Alle Knoten ausklappen",
+      "COLLAPSE_ALL": "Alle Knoten einklappen"
     },
     "DEEPLINK": {
       "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",

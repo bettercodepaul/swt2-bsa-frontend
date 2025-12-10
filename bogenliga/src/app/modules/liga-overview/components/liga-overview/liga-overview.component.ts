@@ -48,6 +48,12 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   selectedLigaId: number | null = null;
 
   /**
+   * Merker, ob der Baum zuletzt vollständig ausgeklappt wurde.
+   * Dient ausschließlich zur Beschriftung/Funktion des Toggle-Buttons.
+   */
+  isTreeFullyExpanded = false;
+
+  /**
    * Übersetzungsschlüssel für Statusmeldungen.
    */
   statusMessageKey: string | null = null;
@@ -103,12 +109,36 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Globaler Button: Baum vollständig ein-/ausklappen.
+   */
+  onToggleTreeExpansion(): void {
+    const nextExpanded = !this.isTreeFullyExpanded;
+
+    try {
+      this.analytics.track('tree_expand_all_toggle', {
+        nextState: nextExpanded ? 'expanded' : 'collapsed'
+      });
+    } catch {
+      // Analytics-Fehler ignorieren, UI soll nicht beeinflusst werden
+    }
+
+    if (nextExpanded) {
+      this.treeComponent?.expandAll();
+    } else {
+      this.treeComponent?.collapseAll();
+    }
+
+    this.isTreeFullyExpanded = nextExpanded;
+  }
+
+  /**
    * Lädt die Liga-Hierarchie und bereitet den Tree vor.
    */
   private loadHierarchy(): void {
     this.isLoading = true;
     this.hierarchyResult = null;
     this.statusMessageKey = null;
+    this.isTreeFullyExpanded = false;
 
     const stop = this.analytics.startTimer('api_liga_hierarchie');
 

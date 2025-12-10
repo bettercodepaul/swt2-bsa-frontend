@@ -234,6 +234,47 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Expandiert alle Knoten im Baum.
+   * Wird z. B. vom Global-Expand-Button in der Ligaübersicht verwendet.
+   */
+  expandAll(): void {
+    if (this.nodeById.size === 0) {
+      return;
+    }
+
+    let mutated = false;
+    for (const id of this.nodeById.keys()) {
+      if (!this.expandedIds.has(id)) {
+        this.expandedIds.add(id);
+        mutated = true;
+      }
+    }
+
+    if (mutated) {
+      this.expandedIds = new Set(this.expandedIds);
+      this.updateVisibleNodes();
+      this.ensureFocusableNode();
+      this.cdr.markForCheck();
+    }
+  }
+
+  /**
+   * Klappt alle Knoten ein, so dass nur die Wurzelebene sichtbar bleibt.
+   * Wird z. B. vom Global-Collapse-Button in der Ligaübersicht verwendet.
+   */
+  collapseAll(): void {
+    if (this.expandedIds.size === 0) {
+      return;
+    }
+
+    this.expandedIds.clear();
+    this.expandedIds = new Set<NodeId>();
+    this.updateVisibleNodes();
+    this.ensureFocusableNode();
+    this.cdr.markForCheck();
+  }
+
+  /**
    * Expandiert den Pfad zu einem Knoten und markiert ihn.
    * 
    * Findet alle Eltern-Knoten bis zur Wurzel und expandiert sie,
