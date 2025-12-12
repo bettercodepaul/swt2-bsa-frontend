@@ -2033,16 +2033,16 @@
                 }
               }
             },
-            "MANNSCHAFTSUEBERSICHT": {
-              "TITLE": "Team overview",
-              "DESCRIPTION": "Here you will find a central overview of, all teams with their associated shooters.",
-              "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
+            "VEREINSMANNSCHAFTENUEBERSICHT": {
+              "TITLE": "Club overview",
+              "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
+              "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
               "STATUS": {
-              "LOADING": "Team overview is loading ...",
-              "EMPTY": "No teams found. The data source is currently not providing any entries.",
-              "TIMEOUT": "The team overview could not be loaded (timeout). Please try again later.",
+              "LOADING": "Club overview is loading ...",
+              "EMPTY": "No club found. The data source is currently not providing any entries.",
+              "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
               "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-              "ERROR": "The team overview could not be loaded."
+              "ERROR": "The club overview could not be loaded."
             }
           }
         }
