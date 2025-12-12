@@ -2084,16 +2084,16 @@
     },
     "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."
   },
-  "MANNSCHAFTSUEBERSICHT": {
-    "TITLE": "Mannschaftsübersicht",
-    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften mit ihren zugehörigen Schützen.",
-    "PLACEHOLDER": "Die Mannschaftsübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+  "VEREINSMANNSCHAFTENUEBERSICHT": {
+    "TITLE": "Vereinsannschaftsübersicht",
+    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften eines Vereins.",
+    "PLACEHOLDER": "Die Vereinsannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
     "STATUS": {
-      "LOADING": "Mannschaftsübersicht wird geladen …",
-      "EMPTY": "Keine Mannschaften gefunden. Die Datenquelle liefert aktuell keine Einträge.",
-      "TIMEOUT": "Die Mannschaftsübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
+      "LOADING": "Vereinsmanschaftenübersicht wird geladen …",
+      "EMPTY": "Keine Verein gefunden. Die Datenquelle liefert aktuell keine Einträge.",
+      "TIMEOUT": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
       "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
-      "ERROR": "Die Mannschaftsübersicht konnte nicht geladen werden."
+      "ERROR": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden."
     }
   }
 }
