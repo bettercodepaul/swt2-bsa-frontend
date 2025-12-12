@@ -745,7 +745,7 @@
           "DELETE": {
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-          }
+          },
 
           "NOTIFICATION": {
             "DELETE": {
@@ -1245,7 +1245,7 @@
               "SAVE": "Save",
               "UPDATE": "Refresh",
               "DELETE": "Delete",
-              "RESET_FILTER": "Reset filter"
+              "RESET_FILTER": "Reset filter",
               "NOTIFICATION": {
                 "SAVE": {
                   "TITLE": "Success",
@@ -1357,7 +1357,7 @@
                   "SAVE_AND_LIZENZ_ERSTELLT": {
                     "TITLE": "Success",
                     "DESCRIPTION": "Successfully added marksman to team and created a licence."
-                  }
+                  },
                   "DUPLICATE": {
                     "TITLE": "Failed to add",
                     "DESCRIPTION": "Member number already taken. Please choose a different number."
@@ -2038,17 +2038,21 @@
               "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
               "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
               "STATUS": {
-              "LOADING": "Club overview is loading ...",
-              "EMPTY": "No club found. The data source is currently not providing any entries.",
-              "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
-              "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-              "ERROR": "The club overview could not be loaded.",
-                "TABLE": {
-                  "HEADERS": {
-                    "MANNSCHAFTSNAME": "Team name",
-                    "LIGANAME": "League name"
-                  }
+                "LOADING": "Club overview is loading ...",
+                "EMPTY": "No club found. The data source is currently not providing any entries.",
+                "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
+                "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
+                "ERROR": "The club overview could not be loaded."
+              },
+              "TABLE": {
+                "HEADERS": {
+                  "MANNSCHAFTSNAME": "Team name"
                 }
+              }
             }
           }
         }
+      }
+    }
+  }
+}
