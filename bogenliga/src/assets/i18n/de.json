@@ -2085,7 +2085,7 @@
     "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."
   },
   "VEREINSMANNSCHAFTENUEBERSICHT": {
-    "TITLE": "Vereinsannschaftsübersicht",
+    "TITLE": "Vereinsmannschaftsübersicht",
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften eines Vereins.",
     "PLACEHOLDER": "Die Vereinsannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
     "STATUS": {
@@ -2094,6 +2094,12 @@
       "TIMEOUT": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
       "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
       "ERROR": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden."
+    },
+    "TABLE": {
+      "HEADERS": {
+        "MANNSCHAFTSNAME": "Mannschaftsname",
+        "LIGANAME": "Liganame"
+      }
     }
   }
 }

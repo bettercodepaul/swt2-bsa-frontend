@@ -7,7 +7,14 @@
     <!-- Mannschaft anzeigen -->
     <div *ngIf="!loading && verein">
       <h2>{{ verein.name || 'unbenannte Mannschaft' }} </h2>
-      <p> </p>
+    </div>
+    <div class="row">
+      <bla-data-table
+        (onRowEntry)="getSelectedRow($event)"
+        [config]="config_table"
+        [loading]="loadingTable"
+        [rows]="rows">
+      </bla-data-table>
     </div>
   </div>
 </bla-navigation-dialog>
