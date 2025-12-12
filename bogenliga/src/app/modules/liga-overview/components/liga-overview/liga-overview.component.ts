@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {LeagueHierarchyService} from '@shared/services';
-import {LeagueHierarchyResult, LeagueTreeNode} from '@shared/models/tree-node';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {TreeComponent} from '../tree/tree.component';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LeagueHierarchyService } from '@shared/services';
+import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { TreeComponent } from '../tree/tree.component';
 import { AnalyticsService } from '@shared/services';
 import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
 
@@ -44,8 +44,15 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
 
   /**
    * Aktuell ausgewählte Liga-ID (Tree Selection).
+   * Wird beim Init aus dem Service wiederhergestellt.
    */
   selectedLigaId: number | null = null;
+
+  /**
+   * Initial expandierte Knoten-IDs für den Tree.
+   * Wird beim Init aus dem Service wiederhergestellt.
+   */
+  initialExpandedIds: Set<number> = new Set();
 
   /**
    * Übersetzungsschlüssel für Statusmeldungen.
@@ -72,14 +79,18 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly leagueHierarchyService: LeagueHierarchyService,
     private readonly analytics: AnalyticsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    // Restore persisted tree state
+    this.restoreTreeState();
     this.observeDeeplinkParam();
     this.loadHierarchy();
   }
 
   ngOnDestroy(): void {
+    // Persist tree state before destroy
+    this.saveTreeState();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -112,7 +123,7 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
 
     const stop = this.analytics.startTimer('api_liga_hierarchie');
 
-    this.leagueHierarchyService.getHierarchy()
+    this.leagueHierarchyService.getHierarchyCached()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (result) => {
@@ -130,7 +141,7 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           });
         },
         error: () => {
-          this.hierarchyResult = {status: 'error', data: [], reason: 'Unhandled error'};
+          this.hierarchyResult = { status: 'error', data: [], reason: 'Unhandled error' };
           this.treeNodes = [];
           this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
           this.isLoading = false;
@@ -234,6 +245,21 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Manuelles Aktualisieren: Cache und Tree-State löschen, neu laden.
+   */
+  onRefresh(): void {
+    // Cache und Tree-State invalidieren
+    this.leagueHierarchyService.invalidateCache();
+    this.leagueHierarchyService.clearTreeState();
+    // UI-State zurücksetzen
+    this.selectedLigaId = null;
+    this.initialExpandedIds = new Set();
+    // Neu laden
+    this.loadHierarchy();
+  }
+
+
+  /**
    * Analytics: Tree-Selektion tracken.
    */
   private trackSelection(ligaId: number): void {
@@ -241,4 +267,32 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
       this.analytics.track('tree_select', { ligaId });
     } catch { /* no-op */ }
   }
+
+  /**
+   * Stellt den Tree-State aus dem Service wieder her.
+   */
+  private restoreTreeState(): void {
+    if (this.leagueHierarchyService.hasPersistedTreeState()) {
+      this.selectedLigaId = this.leagueHierarchyService.selectedId;
+      this.initialExpandedIds = new Set(this.leagueHierarchyService.expandedIds);
+    }
+  }
+
+  /**
+   * Speichert den aktuellen Tree-State im Service.
+   */
+  private saveTreeState(): void {
+    if (this.treeComponent) {
+      this.leagueHierarchyService.expandedIds = this.treeComponent.expandedIds;
+    }
+    this.leagueHierarchyService.selectedId = this.selectedLigaId;
+  }
+
+  /**
+   * Handler für Änderungen an den expandierten Knoten.
+   */
+  onExpandedIdsChange(expandedIds: Set<number>): void {
+    this.leagueHierarchyService.expandedIds = expandedIds;
+  }
 }
+

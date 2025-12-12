@@ -1,8 +1,8 @@
-import {TestBed, fakeAsync, tick} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {LeagueHierarchyService} from './league-hierarchy.service';
-import {environment} from '@environment';
-import {LeagueDTO} from '@shared/models/league.dto';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { LeagueHierarchyService } from './league-hierarchy.service';
+import { environment } from '@environment';
+import { LeagueDTO } from '@shared/models/league.dto';
 
 describe('LeagueHierarchyService', () => {
   let service: LeagueHierarchyService;
@@ -24,6 +24,7 @@ describe('LeagueHierarchyService', () => {
   });
 
   afterEach(() => {
+    service.invalidateCache();
     httpMock.verify();
   });
 
@@ -98,5 +99,73 @@ describe('LeagueHierarchyService', () => {
     mockReq.flush([
       { id: 1, name: 'Bundesliga', ligaUebergeordnetId: null }
     ]);
+  });
+
+  describe('caching', () => {
+    it('should return cached data on second call', (done) => {
+      // First call
+      service.getHierarchyCached({ ttlMs: 60000 }).subscribe((res1) => {
+        expect(res1.status).toBe('ok');
+
+        // Second call should return cached data (no HTTP request)
+        service.getHierarchyCached({ ttlMs: 60000 }).subscribe((res2) => {
+          expect(res2.status).toBe('ok');
+          expect(res2.data).toEqual(res1.data);
+          done();
+        });
+      });
+
+      // Only one HTTP request should be made
+      const req = httpMock.expectOne(apiUrl);
+      req.flush(mockFlat);
+    });
+
+    it('should refetch after invalidation', (done) => {
+      // First call
+      service.getHierarchyCached({ ttlMs: 60000 }).subscribe((res1) => {
+        expect(res1.status).toBe('ok');
+
+        // Invalidate cache
+        service.invalidateCache();
+        expect(service.isCacheValid()).toBe(false);
+
+        // Second call should make new request
+        service.getHierarchyCached({ ttlMs: 60000 }).subscribe((res2) => {
+          expect(res2.status).toBe('ok');
+          done();
+        });
+
+        // Second HTTP request
+        const req2 = httpMock.expectOne(apiUrl);
+        req2.flush(mockFlat);
+      });
+
+      // First HTTP request
+      const req1 = httpMock.expectOne(apiUrl);
+      req1.flush(mockFlat);
+    });
+
+    it('should refetch after TTL expires', fakeAsync(() => {
+      // First call
+      service.getHierarchyCached({ ttlMs: 1000 }).subscribe();
+
+      const req1 = httpMock.expectOne(apiUrl);
+      req1.flush(mockFlat);
+
+      // Cache should be valid
+      expect(service.isCacheValid()).toBe(true);
+
+      // Wait for TTL to expire
+      tick(1100);
+
+      // Cache should be invalid
+      expect(service.isCacheValid()).toBe(false);
+
+      // Next call should trigger new request
+      service.getHierarchyCached({ ttlMs: 1000 }).subscribe();
+
+      const req2 = httpMock.expectOne(apiUrl);
+      req2.flush(mockFlat);
+    }));
   });
 });

@@ -120,7 +120,6 @@
       "STATISTIK_DRUCKEN": "Statistik drucken"
     }
   },
-
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
       "HEADERS": {
@@ -219,7 +218,6 @@
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
       "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
-
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
@@ -383,7 +381,7 @@
         "VERANSTALTUNG": "Auswahl der Veranstaltung und Mannschaft",
         "STATISTIKEN": "Statistiken"
       },
-      "FILTER_BUTTON":{
+      "FILTER_BUTTON": {
         "SCHUETZEN": "Schützen",
         "MANNSCHAFTEN": "Mannschaften"
       },
@@ -1575,7 +1573,7 @@
           "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         },
         "UPDATE_VERANSTALTUNG_FAILURE": {
-         "TITLE": "Update fehlgeschlagen",
+          "TITLE": "Update fehlgeschlagen",
           "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bitte generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
         },
         "UPDATE_DATABASE_FAILURE": {
@@ -2031,6 +2029,7 @@
     "DEEPLINK": {
       "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",
       "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
-    }
+    },
+    "REFRESH": "Aktualisieren"
   }
 }
