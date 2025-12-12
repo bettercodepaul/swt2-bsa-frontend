@@ -2022,7 +2022,8 @@
     "DEEPLINK": {
       "INVALID_ID": "The specified league ID is invalid.",
       "NOT_FOUND": "The specified league could not be found."
-    }
+    },
+    "REFRESH": "Refresh"
   }
   }
 }
