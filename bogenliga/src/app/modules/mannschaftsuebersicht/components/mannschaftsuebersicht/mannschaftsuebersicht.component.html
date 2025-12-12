@@ -5,8 +5,9 @@
     <div *ngIf="loading">{{"MANNSCHAFTSUEBERSICHT.STATUS.LOADING" | translate}}</div>
 
     <!-- Mannschaft anzeigen -->
-    <div *ngIf="!loading && mannschaft">
-      <h2>{{ mannschaft.name || 'unbenannte Mannschaft' }} <small *ngIf="mannschaft.nummer">(Nr. {{ mannschaft.nummer }})</small></h2>
+    <div *ngIf="!loading && verein">
+      <h2>{{ verein.name || 'unbenannte Mannschaft' }} </h2>
+      <p> </p>
     </div>
   </div>
 </bla-navigation-dialog>
