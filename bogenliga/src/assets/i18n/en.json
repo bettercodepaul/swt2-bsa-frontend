@@ -2042,7 +2042,13 @@
               "EMPTY": "No club found. The data source is currently not providing any entries.",
               "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
               "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-              "ERROR": "The club overview could not be loaded."
+              "ERROR": "The club overview could not be loaded.",
+                "TABLE": {
+                  "HEADERS": {
+                    "MANNSCHAFTSNAME": "Team name",
+                    "LIGANAME": "League name"
+                  }
+                }
             }
           }
         }
