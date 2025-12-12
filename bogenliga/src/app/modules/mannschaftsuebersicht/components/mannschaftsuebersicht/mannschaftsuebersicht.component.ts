@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BogenligaResponse} from "@shared/data-provider";
 import {DsbMannschaftDataProviderService} from "@verwaltung/services/dsb-mannschaft-data-provider.service";
 import {DsbMannschaftDTO} from "@verwaltung/types/datatransfer/dsb-mannschaft-dto.class";
+import {VereinDataProviderService} from "@verwaltung/services/verein-data-provider.service";
+import {VereinDTO} from "@verwaltung/types/datatransfer/verein-dto.class";
 
 const ID_PATH_PARAM = 'id';
 
@@ -23,11 +25,14 @@ const MANNSCHAFTSUEBERSICHT_CONFIG: NavigationDialogConfig = {
 })
 export class MannschaftsuebersichtComponent extends CommonComponentDirective implements OnInit {
   private providedID: number | null = null;
-  public mannschaft: DsbMannschaftDTO | null = null;
+  public mannschaften: DsbMannschaftDTO[] | null = null;
+  public verein: VereinDTO | null = null;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private vereinsDataProvider : VereinDataProviderService
   ) {
     super();
   }
@@ -43,6 +48,7 @@ export class MannschaftsuebersichtComponent extends CommonComponentDirective imp
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         console.log('This.providedID: ' + this.providedID);
         // Load after we have the ID
+        this.loadVereinsData();
         this.loadMannschaftData();
       } else {
         // no id provided
@@ -50,13 +56,28 @@ export class MannschaftsuebersichtComponent extends CommonComponentDirective imp
       }
     });
   }
+  loadVereinsData(): void{
+    // set loading state
+    this.loading = true;
+    this.vereinsDataProvider.findById(this.providedID)
+      .then((response: BogenligaResponse<VereinDTO>) => {
+        console.log(response)
+        this.verein = response.payload!;
+        this.loading = false;
+      })
+      .catch((response: BogenligaResponse<VereinDTO>) => {
+        console.error(response);
+        this.loading = false;
+      });
+  }
+
   loadMannschaftData(): void{
     // set loading state
     this.loading = true;
-    this.mannschaftDataProvider.findById(this.providedID)
-      .then((response: BogenligaResponse<DsbMannschaftDTO>) => {
+    this.mannschaftDataProvider.findAllByVereinsId(this.providedID)
+      .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         console.log(response)
-        this.mannschaft = response.payload!;
+        this.mannschaften = response.payload!;
         this.loading = false;
       })
       .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
@@ -65,5 +86,5 @@ export class MannschaftsuebersichtComponent extends CommonComponentDirective imp
       });
   }
 
-  protected readonly config = MANNSCHAFTSUEBERSICHT_CONFIG;
+  readonly config = MANNSCHAFTSUEBERSICHT_CONFIG;
 }
