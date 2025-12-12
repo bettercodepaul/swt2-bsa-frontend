@@ -10,9 +10,9 @@ import {VereinDTO} from "@verwaltung/types/datatransfer/verein-dto.class";
 
 const ID_PATH_PARAM = 'id';
 
-const MANNSCHAFTSUEBERSICHT_CONFIG: NavigationDialogConfig = {
-  moduleTranslationKey: 'MANNSCHAFTSUEBERSICHT',
-  pageTitleTranslationKey: 'MANNSCHAFTSUEBERSICHT.TITLE',
+const VEREINSMANNSCHAFTENUEBERSICHT_CONFIG: NavigationDialogConfig = {
+  moduleTranslationKey: 'VEREINSMANNSCHAFTENUEBERSICHT',
+  pageTitleTranslationKey: 'VEREINSMANNSCHAFTENUEBERSICHT.TITLE',
   navigationCardsConfig: {
     navigationCards: []
   },
@@ -20,10 +20,10 @@ const MANNSCHAFTSUEBERSICHT_CONFIG: NavigationDialogConfig = {
 
 @Component({
   selector: 'bla-mannschaftsuebersicht',
-  templateUrl: './mannschaftsuebersicht.component.html',
-  styleUrls: ['./mannschaftsuebersicht.component.scss']
+  templateUrl: './vereinsmannschaftenuebersicht.component.html',
+  styleUrls: ['./vereinsmannschaftenuebersicht.component.scss']
 })
-export class MannschaftsuebersichtComponent extends CommonComponentDirective implements OnInit {
+export class VereinsmannschaftenuebersichtComponent extends CommonComponentDirective implements OnInit {
   private providedID: number | null = null;
   public mannschaften: DsbMannschaftDTO[] | null = null;
   public verein: VereinDTO | null = null;
@@ -86,5 +86,5 @@ export class MannschaftsuebersichtComponent extends CommonComponentDirective imp
       });
   }
 
-  readonly config = MANNSCHAFTSUEBERSICHT_CONFIG;
+  readonly config = VEREINSMANNSCHAFTENUEBERSICHT_CONFIG;
 }

@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
-import {MANNSCHAFTSUEBERSICHT_ROUTES} from './mannschaftsuebersicht.routing';
-import {MannschaftsuebersichtComponent} from './components/mannschaftsuebersicht/mannschaftsuebersicht.component';
+import {MANNSCHAFTSUEBERSICHT_ROUTES} from './vereinsmannschaftenuebersicht.routing';
+import {VereinsmannschaftenuebersichtComponent} from './components';
 
 @NgModule({
   imports: [
@@ -13,8 +13,8 @@ import {MannschaftsuebersichtComponent} from './components/mannschaftsuebersicht
     SharedModule,
     FormsModule
   ],
-  declarations: [MannschaftsuebersichtComponent],
-  exports: [MannschaftsuebersichtComponent]
+  declarations: [VereinsmannschaftenuebersichtComponent],
+  exports: [VereinsmannschaftenuebersichtComponent]
 })
-export class MannschaftsuebersichtModule {
+export class VereinsmannschaftenuebersichtModule {
 }
