@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {isUndefined} from "@shared/functions";
-import {CommonComponentDirective, NavigationDialogConfig, toTableRows} from "@shared/components";
+import {CommonComponentDirective, toTableRows} from "@shared/components";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BogenligaResponse} from "@shared/data-provider";
 import {DsbMannschaftDataProviderService} from "@verwaltung/services/dsb-mannschaft-data-provider.service";
@@ -91,7 +91,7 @@ export class VereinsmannschaftenuebersichtComponent extends CommonComponentDirec
 
   mannschaftenrows(): void{
     this.mannschaften.forEach(mannschaft =>{
-      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, "todo");
+      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id);
       this.tableContent.push(test)
     });
 
