@@ -1,5 +1,5 @@
 
-/**
+/*
  * This test checks if the URL of Ligadetailseite is correct depending on the selected Liga ID
  */
 
@@ -17,14 +17,14 @@
   })
 */
 
-/* test lauft nicht
-  Wenn man bei Home ist, mit einer ausgewählten Liga, gibt es keinen Button mit deselect Liga
-  it('Deselektieren der LigaID über Button', function() {
+
+
+  /*it('Deselektieren der LigaID über Button', function() {
     cy.visit('http://localhost:4200/#/home/' + randomID)
     cy.get('[id="deselectLigaButtonLigadetailseite"]').click();
     cy.url().should('not.include', '#/home/' + randomID)
-  })
-*/
+  })*/
+
 
 
 function generateLigaID() {
