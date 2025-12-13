@@ -1,0 +1,40 @@
+/**
+ * Styles für die Empty-State Komponente
+ */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.empty-state__icon-wrapper {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    margin-bottom: 16px;
+}
+
+.empty-state__icon {
+    font-size: 28px;
+    color: #6c757d;
+}
+
+.empty-state__message {
+    font-size: 1rem;
+    color: #495057;
+    margin: 0;
+    max-width: 400px;
+    line-height: 1.5;
+}

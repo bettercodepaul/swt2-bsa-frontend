@@ -2032,6 +2032,7 @@
       "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",
       "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
     },
-    "REFRESH": "Aktualisieren"
+    "REFRESH": "Aktualisieren",
+    "RETRY": "Erneut versuchen"
   }
 }

@@ -19,39 +19,49 @@
           </div>
 
           <section class="liga-tree-section" [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
+            <!-- Loading State: Skeleton Loader -->
             <ng-container *ngIf="isLoading; else treeContent">
-              <div class="liga-tree-state" role="status" aria-live="polite">
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                {{ 'LIGAUEBERSICHT.STATUS.LOADING' | translate }}
-              </div>
+              <bla-tree-skeleton></bla-tree-skeleton>
             </ng-container>
 
             <ng-template #treeContent>
-              <ng-container *ngIf="treeNodes.length > 0; else treeStateMessage">
-                <div class="liga-tree-wrapper">
-                  <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId"
-                    [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
-                    (expandedIdsChange)="onExpandedIdsChange($event)">
-                  </bla-league-tree>
-                </div>
-                <!-- Statushinweis zur Datenlage -->
-                <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as smk">
-                  <i class="fa fa-info-circle" aria-hidden="true"></i>
-                  <span>{{ smk | translate }}</span>
-                </div>
-                <!-- Nicht-blockierender Hinweis aus Deeplink-Validierung -->
-                <div class="alert alert-warning liga-tree-state" role="alert" *ngIf="deeplinkMessageKey as dmk">
-                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                  <span>{{ dmk | translate }}</span>
-                </div>
+              <!-- Error State: 4xx/5xx/Timeout -->
+              <ng-container
+                *ngIf="hierarchyResult?.status === 'error' || hierarchyResult?.status === 'timeout'; else checkEmpty">
+                <bla-error-state [messageKey]="statusMessageKey" [showRetry]="true" (retry)="onRetry()">
+                </bla-error-state>
               </ng-container>
-            </ng-template>
 
-            <ng-template #treeStateMessage>
-              <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as key">
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <span>{{ key | translate }}</span>
-              </div>
+              <ng-template #checkEmpty>
+                <!-- Empty State: No data -->
+                <ng-container *ngIf="hierarchyResult?.status === 'empty'; else showTree">
+                  <bla-empty-state [messageKey]="statusMessageKey" icon="fa-folder-open">
+                  </bla-empty-state>
+                </ng-container>
+              </ng-template>
+
+              <ng-template #showTree>
+                <!-- Success State: Tree with data -->
+                <ng-container *ngIf="treeNodes.length > 0">
+                  <div class="liga-tree-wrapper">
+                    <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId"
+                      [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
+                      (expandedIdsChange)="onExpandedIdsChange($event)">
+                    </bla-league-tree>
+                  </div>
+                  <!-- Statushinweis für offline-fallback -->
+                  <div class="alert alert-info liga-tree-state" role="alert"
+                    *ngIf="hierarchyResult?.status === 'offline-fallback'">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <span>{{ statusMessageKey | translate }}</span>
+                  </div>
+                  <!-- Nicht-blockierender Hinweis aus Deeplink-Validierung -->
+                  <div class="alert alert-warning liga-tree-state" role="alert" *ngIf="deeplinkMessageKey as dmk">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <span>{{ dmk | translate }}</span>
+                  </div>
+                </ng-container>
+              </ng-template>
             </ng-template>
           </section>
         </div>
