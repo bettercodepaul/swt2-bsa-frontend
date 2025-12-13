@@ -64,8 +64,8 @@ export class SchusszettelComponent implements OnInit {
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
-  allowedMitglieder1: number[];
-  allowedMitglieder2: number[];
+  allowedMitglieder1: number[] = [];
+  allowedMitglieder2: number[] = [];
   private initialUsed1: number[] = [];
   private initialUsed2: number[] = [];
   private memberMap1: Map<number, number>;
@@ -330,16 +330,24 @@ export class SchusszettelComponent implements OnInit {
 
   // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
+    if (!this.allowedMitglieder1 || !this.initialUsed1) {
+      return [];
+    }
+
     const originallyUsed = this.initialUsed1;
 
     return this.allowedMitglieder1.filter(nr =>
-      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer erlaubt
-      !originallyUsed.includes(nr)                 // alle anderen nur, wenn anfangs frei
+      nr === originallyUsed[schuetzeIndex] ||
+      !originallyUsed.includes(nr)
     );
   }
 
   // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
+    if (!this.allowedMitglieder2 || !this.initialUsed2) {
+      return [];
+    }
+
     const originallyUsed = this.initialUsed2;
 
     return this.allowedMitglieder2.filter(nr =>
