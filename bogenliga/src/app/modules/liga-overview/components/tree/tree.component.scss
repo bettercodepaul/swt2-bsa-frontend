@@ -12,25 +12,47 @@
   --bla-tree-node-gap: 16px;
   --bla-tree-branch-length: 24px;
   --bla-tree-branch-color: #d8dde8;
-  /* Graustufen gemäß Styleguide UI-STYLE-004 - Maximale Unterscheidbarkeit */
-  --bla-tree-level-0-bg: #0D0D0D;
-  --bla-tree-level-0-border: #000000;
-  --bla-tree-level-0-color: #FFFFFF;
-  --bla-tree-level-1-bg: #2E2E2E;
-  --bla-tree-level-1-border: #1E1E1E;
-  --bla-tree-level-1-color: #FFFFFF;
-  --bla-tree-level-2-bg: #4A4A4A;
-  --bla-tree-level-2-border: #3A3A3A;
-  --bla-tree-level-2-color: #FFFFFF;
-  --bla-tree-level-3-bg: #616161;
-  --bla-tree-level-3-border: #515151;
-  --bla-tree-level-3-color: #FFFFFF;
-  --bla-tree-level-4-bg: #757575;
-  --bla-tree-level-4-border: #656565;
-  --bla-tree-level-4-color: #FFFFFF;
-  --bla-tree-level-default-bg: #757575;
-  --bla-tree-level-default-border: #656565;
-  --bla-tree-level-default-foreground: #FFFFFF;
+  /* Bogenscheiben-Farben: Gelb, Rot, Blau, Schwarz, Weiß - Weiße Cards mit farbiger Umrandung */
+  /* Level 0: Gelb kräftig */
+  --bla-tree-level-0-bg: #FFFFFF;
+  --bla-tree-level-0-border: #FFCC34;
+  --bla-tree-level-0-color: #2A2A2A;
+  --bla-tree-level-0-icon-color: #FFCC34;
+  /* Level 1: Gelb leichter */
+  --bla-tree-level-1-bg: #FFFFFF;
+  --bla-tree-level-1-border: #FFE066;
+  --bla-tree-level-1-color: #2A2A2A;
+  --bla-tree-level-1-icon-color: #FFE066;
+  /* Level 2: Rot kräftig */
+  --bla-tree-level-2-bg: #FFFFFF;
+  --bla-tree-level-2-border: #F40E0E;
+  --bla-tree-level-2-color: #2A2A2A;
+  --bla-tree-level-2-icon-color: #F40E0E;
+  /* Level 3: Rot leichter */
+  --bla-tree-level-3-bg: #FFFFFF;
+  --bla-tree-level-3-border: #F85C5C;
+  --bla-tree-level-3-color: #2A2A2A;
+  --bla-tree-level-3-icon-color: #F85C5C;
+  /* Level 4: Blau kräftig */
+  --bla-tree-level-4-bg: #FFFFFF;
+  --bla-tree-level-4-border: #487AF5;
+  --bla-tree-level-4-color: #2A2A2A;
+  --bla-tree-level-4-icon-color: #487AF5;
+  /* Level 5: Blau leichter */
+  --bla-tree-level-5-bg: #FFFFFF;
+  --bla-tree-level-5-border: #7BA3F7;
+  --bla-tree-level-5-color: #2A2A2A;
+  --bla-tree-level-5-icon-color: #7BA3F7;
+  /* Level 6: Schwarz */
+  --bla-tree-level-6-bg: #FFFFFF;
+  --bla-tree-level-6-border: #2A2A2A;
+  --bla-tree-level-6-color: #2A2A2A;
+  --bla-tree-level-6-icon-color: #2A2A2A;
+  /* Level 7+: Grau (Default) */
+  --bla-tree-level-default-bg: #FFFFFF;
+  --bla-tree-level-default-border: #888888;
+  --bla-tree-level-default-foreground: #2A2A2A;
+  --bla-tree-level-default-icon-color: #888888;
   --bla-tree-card-shadow: 0 4px 10px rgba(18, 33, 54, 0.1);
 
   font-size: 13px;
