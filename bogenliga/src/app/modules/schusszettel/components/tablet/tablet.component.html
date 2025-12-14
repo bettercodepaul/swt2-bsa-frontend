@@ -51,16 +51,18 @@
         <bla-maske2eingabe
           *ngIf="!showZustandFirst"
           [infos]="data"
-          (satzSubmit)="onSatz($event)">
+          (satzSubmit)="onSatz($event)"
+          (abort)="onPasseAbort()">
         </bla-maske2eingabe>
       </ng-container>
 
       <!-- Match ended - show completed match results -->
-      <bla-maske6matchende
-        *ngSwitchCase="'MATCH_ENDE'"
-        [infos]="data"
-        (weiter)="onMatchEndeWeiter()">
-      </bla-maske6matchende>
+      <ng-container *ngSwitchCase="'MATCH_ENDE'">
+        <bla-maske6matchende
+          [infos]="data"
+          (weiter)="onMatchEndeWeiter()">
+        </bla-maske6matchende>
+      </ng-container>
 
       <!-- Competition ended -->
       <ng-container *ngSwitchCase="'WETTKAMPF_BEENDET'">

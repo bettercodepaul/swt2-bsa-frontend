@@ -8,6 +8,13 @@ import {ShooterOrderService} from '../../services/shooter-order.service';
 import {Subject} from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
 import {QueryList, ViewChildren, ElementRef} from '@angular/core';
+import {
+  NotificationService,
+  NotificationSeverity,
+  NotificationOrigin,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services';
 
 @Component({
   selector: 'bla-maske2eingabe',
@@ -17,6 +24,8 @@ import {QueryList, ViewChildren, ElementRef} from '@angular/core';
 export class PasseEingabeComponent implements OnInit, OnDestroy {
   @Input() infos!: TabletSchusszettel;
   @Output() satzSubmit = new EventEmitter<SchuetzenSatzDTO[]>();
+  @Output() abort = new EventEmitter<void>();
+
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
@@ -25,10 +34,12 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   orderedShooters: SchuetzeStammdatenDTO[] = [];
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private app: AppComponent,
-    private shooterOrderService: ShooterOrderService
-  ) {}
+    private shooterOrderService: ShooterOrderService,
+    private notificationService: NotificationService
+  ) {
+  }
 
   @ViewChildren('inputField') inputFields: QueryList<ElementRef>;
 
@@ -36,6 +47,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     const id = `${field}-${i}`;
     return this.inputFields.find((ref) => ref.nativeElement.id === id);
   }
+
   /** Compute the current passe */
   public get currentPasse(): number {
     // Use backend-provided currentPasseNumber if available, fallback to local calculation
@@ -43,7 +55,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       console.log('Using backend-provided currentPasseNumber:', this.infos.currentPasseNumber);
       return this.infos.currentPasseNumber;
     }
-    
+
     // Fallback to local calculation for backward compatibility
     const completedPasses = this.infos?.satzErgebnisse?.length || 0;
     const nextPasse = completedPasses + 1;
@@ -75,6 +87,24 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Tablet-Passe-Eingabe ist nur mit exakt 3 Schützen möglich
+    if (this.infos.schuetzeStammDaten.length !== 3) {
+      this.notificationService.showNotification({
+        id: 'NOTIFICATION_TABLET_SCHUETZEN_INKONSISTENT',
+        title: 'Passe-Eingabe nicht möglich',
+        description:
+          'Für dieses Match liegen inkonsistente Schützendaten vor.\n\n'
+          + 'Die Tablet-Eingabe ist nur mit genau 3 gemeldeten Schützen möglich.',
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
+      });
+
+      this.abort.emit();
+      return;
+    }
+
     // Apply saved shooter order
     this.orderedShooters = this.shooterOrderService.applyShooterOrder(
       this.infos.schuetzeStammDaten,
@@ -95,7 +125,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     });
 
     console.log('Created', groups.length, 'form groups');
-    this.form = this.fb.group({ schuesse: this.fb.array(groups) });
+    this.form = this.fb.group({schuesse: this.fb.array(groups)});
     console.log('Form created with schuesse array length:', this.schuesse.length);
     console.log('=== END DEBUGGING ===');
     this.app.fullscreen = true; // Navbar & Footer ausblenden
