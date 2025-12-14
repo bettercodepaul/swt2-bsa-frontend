@@ -51,6 +51,7 @@
 
 .bla-league-tree__item-row {
   position: relative;
+  z-index: 1; /* Über den Verbindungslinien */
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -59,14 +60,15 @@
   cursor: pointer;
   border-radius: var(--bla-tree-border-radius, 6px);
   box-shadow: var(--bla-tree-card-shadow);
-  border: 1px solid var(--bla-tree-level-default-border);
-  background: var(--bla-tree-level-default-bg);
-  color: var(--bla-tree-level-default-foreground, #1d2533);
+  border: 2px solid var(--bla-tree-level-default-border, #888888);
+  background: var(--bla-tree-level-default-bg, #FFFFFF);
+  color: var(--bla-tree-level-default-foreground, #2A2A2A);
   transition: box-shadow 160ms ease, transform 160ms ease;
   width: auto;
   min-width: 150px;
   max-width: 220px;
   margin: 0 auto;
+  isolation: isolate; /* Stacking Context für z-index */
 }
 
 .bla-league-tree__item-row:hover {
@@ -75,8 +77,8 @@
 }
 
 .bla-league-tree__item--selected .bla-league-tree__item-row {
-  background: var(--bla-tree-selected-bg);
-  border-color: #487AF5;
+  background: var(--bla-tree-selected-bg, rgba(72, 122, 245, 0.08));
+  /* Border-Farbe bleibt erhalten, nur zusätzlicher Focus-Ring */
   box-shadow: 0 0 0 3px rgba(72, 122, 245, 0.35), var(--bla-tree-card-shadow);
 }
 
@@ -103,14 +105,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.18);
-  color: inherit;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--bla-tree-level-default-icon-color, #888888);
   cursor: pointer;
   transition: background-color 120ms ease;
 }
 
 .bla-league-tree__toggle:hover {
-  background-color: rgba(255, 255, 255, 0.32);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bla-league-tree__toggle:focus {
@@ -131,6 +133,7 @@
   width: 10px;
   height: 10px;
   transition: transform 200ms ease;
+  color: inherit; /* Übernimmt die Icon-Farbe vom Toggle-Button */
 }
 
 /* Chevron als CSS-Pfeil - Default: Zeigt nach rechts (▶) */
@@ -185,43 +188,87 @@
   transform: translateX(-50%);
 }
 
-/* Level theming - Graustufen gemäß Styleguide UI-STYLE-004 (einheitlich weiße Schrift) */
+/* Level theming - Bogenscheiben-Farben: Weiße Cards mit farbiger Umrandung */
 :host([data-level="0"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-0-bg);
-  border-color: var(--bla-tree-level-0-border);
-  color: var(--bla-tree-level-0-color, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-0-border);
+  color: var(--bla-tree-level-0-color, #2A2A2A);
+}
+
+:host([data-level="0"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-0-icon-color, #FFCC34);
 }
 
 :host([data-level="1"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-1-bg);
-  border-color: var(--bla-tree-level-1-border);
-  color: var(--bla-tree-level-1-color, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-1-border);
+  color: var(--bla-tree-level-1-color, #2A2A2A);
+}
+
+:host([data-level="1"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-1-icon-color, #FFE066);
 }
 
 :host([data-level="2"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-2-bg);
-  border-color: var(--bla-tree-level-2-border);
-  color: var(--bla-tree-level-2-color, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-2-border);
+  color: var(--bla-tree-level-2-color, #2A2A2A);
+}
+
+:host([data-level="2"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-2-icon-color, #F40E0E);
 }
 
 :host([data-level="3"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-3-bg);
-  border-color: var(--bla-tree-level-3-border);
-  color: var(--bla-tree-level-3-color, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-3-border);
+  color: var(--bla-tree-level-3-color, #2A2A2A);
+}
+
+:host([data-level="3"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-3-icon-color, #F85C5C);
 }
 
 :host([data-level="4"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-4-bg);
-  border-color: var(--bla-tree-level-4-border);
-  color: var(--bla-tree-level-4-color, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-4-border);
+  color: var(--bla-tree-level-4-color, #2A2A2A);
 }
 
-:host([data-level="5"]) .bla-league-tree__item-row,
-:host([data-level="6"]) .bla-league-tree__item-row,
-:host([data-level="7"]) .bla-league-tree__item-row {
+:host([data-level="4"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-4-icon-color, #487AF5);
+}
+
+:host([data-level="5"]) .bla-league-tree__item-row {
+  background: var(--bla-tree-level-5-bg);
+  border: 2px solid var(--bla-tree-level-5-border);
+  color: var(--bla-tree-level-5-color, #2A2A2A);
+}
+
+:host([data-level="5"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-5-icon-color, #7BA3F7);
+}
+
+:host([data-level="6"]) .bla-league-tree__item-row {
+  background: var(--bla-tree-level-6-bg);
+  border: 2px solid var(--bla-tree-level-6-border);
+  color: var(--bla-tree-level-6-color, #2A2A2A);
+}
+
+:host([data-level="6"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-6-icon-color, #2A2A2A);
+}
+
+:host([data-level="7"]) .bla-league-tree__item-row,
+:host([data-level="8"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-default-bg);
-  border-color: var(--bla-tree-level-default-border);
-  color: var(--bla-tree-level-default-foreground, #FFFFFF);
+  border: 2px solid var(--bla-tree-level-default-border);
+  color: var(--bla-tree-level-default-foreground, #2A2A2A);
+}
+
+:host([data-level="7"]) .bla-league-tree__toggle,
+:host([data-level="8"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-default-icon-color, #888888);
 }
 
 @media (max-width: 992px) {
