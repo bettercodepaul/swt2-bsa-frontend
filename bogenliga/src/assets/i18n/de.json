@@ -2043,21 +2043,16 @@
       "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
     }
   },
-  "VEREINSMANNSCHAFTENUEBERSICHT": {
-    "TITLE": "Vereinsmannschaftsübersicht",
-    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften eines Vereins.",
-    "PLACEHOLDER": "Die Vereinsannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+  "MANNSCHAFT": {
+    "TITLE": "Mannschaftsübersicht",
+    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht der Mannschaft.",
+    "PLACEHOLDER": "Die Mannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
     "STATUS": {
-      "LOADING": "Vereinsmanschaftenübersicht wird geladen …",
+      "LOADING": "Manschaftenübersicht wird geladen …",
       "EMPTY": "Keine Verein gefunden. Die Datenquelle liefert aktuell keine Einträge.",
-      "TIMEOUT": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
+      "TIMEOUT": "Die Manschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
       "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
-      "ERROR": "Die Vereinsmanschaftenübersicht konnte nicht geladen werden."
-    },
-    "TABLE": {
-      "HEADERS": {
-        "MANNSCHAFTSNAME": "Mannschaftsname"
-      }
+      "ERROR": "Die Manschaftenübersicht konnte nicht geladen werden."
     }
   }
 }
