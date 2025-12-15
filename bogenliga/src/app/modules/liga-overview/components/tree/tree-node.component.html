@@ -12,7 +12,9 @@
     (click)="onToggleClick($event)"
     [attr.aria-label]="(expanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE' : 'LIGAUEBERSICHT.TREE.EXPAND') | translate"
     tabindex="-1">
-    <span class="bla-league-tree__toggle-icon" aria-hidden="true"></span>
+    <span class="bla-league-tree__toggle-icon" 
+          [class.bla-league-tree__toggle-icon--expanded]="expanded" 
+          aria-hidden="true"></span>
   </button>
   <span *ngIf="!hasChildren" class="bla-league-tree__toggle-placeholder" aria-hidden="true"></span>
   <span class="bla-league-tree__label">
