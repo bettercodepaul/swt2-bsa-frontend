@@ -10,6 +10,13 @@ import {VereinDTO} from "@verwaltung/types/datatransfer/verein-dto.class";
 import {MANNSCHAFT_CONFIG, MANNSCHAFTEN_TABLE_CONFIG} from "./mannschaft.config";
 import {TableRow} from "@shared/components/tables/types/table-row.class";
 import {MannschaftTabelleDO} from "@verwaltung/types/mannschfttabelle-do.class";
+import {
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
@@ -35,7 +42,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     private router: Router,
     private route: ActivatedRoute,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private vereinsDataProvider : VereinDataProviderService
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -71,8 +78,23 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
       .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         console.log(response)
         this.mannschaften = response.payload!;
+        if (this.mannschaften.length===0){
+          this.notificationService.showNotification({
+            id: 'LigaIDWarning',
+            description: '',
+            title: 'MANNSCHAFT.STATUS.NOT_FOUND',
+            origin: NotificationOrigin.SYSTEM,
+            userAction: NotificationUserAction.PENDING,
+            type: NotificationType.OK,
+            severity: NotificationSeverity.INFO,
+          });
+          this.router.navigate(['/home'])
+        }
         if (this.mannschaftId!=null){
           this.currentMannschaft = this.mannschaften.find(mannschaft => mannschaft.id === this.mannschaftId)!;
+          if (this.currentMannschaft==null){
+            this.router.navigate(['/mannschaft',this.veranstaltungId])
+          }
         }else {
           this.currentMannschaft = this.mannschaften[0];
         }

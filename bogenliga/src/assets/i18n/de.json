@@ -2048,6 +2048,7 @@
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht der Mannschaft.",
     "PLACEHOLDER": "Die Mannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
     "STATUS": {
+      "NOT_FOUND": "Die angegebene Mannschaft konnte nicht gefunden werden.",
       "LOADING": "Manschaftenübersicht wird geladen …",
       "EMPTY": "Keine Verein gefunden. Die Datenquelle liefert aktuell keine Einträge.",
       "TIMEOUT": "Die Manschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
