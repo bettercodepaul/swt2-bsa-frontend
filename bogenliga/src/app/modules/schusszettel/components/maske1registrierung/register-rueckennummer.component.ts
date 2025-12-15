@@ -68,7 +68,7 @@ export class RegisterRueckennummerComponent
         Array(3)
           .fill(null)
           .map(() =>
-            this.fb.control<number | null>(null, [Validators.required])
+            this.fb.control(null, Validators.required)
           )
       )
     });
