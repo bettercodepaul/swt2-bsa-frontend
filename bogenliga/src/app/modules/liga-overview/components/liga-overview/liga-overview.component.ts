@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeagueHierarchyService } from '@shared/services';
 import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
@@ -19,7 +19,7 @@ import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
   templateUrl: './liga-overview.component.html',
   styleUrls: ['./liga-overview.component.scss']
 })
-export class LigaOverviewComponent implements OnInit, OnDestroy {
+export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Dialog-/Seitenkonfiguration für Breadcrumbs etc. */
   public config = LIGA_OVERVIEW_PAGE_CONFIG;
@@ -60,6 +60,11 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
   statusMessageKey: string | null = null;
 
   /**
+   * UI-State für Expand-All/Collapse-All Button.
+   */
+  treeAllExpanded = false;
+
+  /**
    * Optionaler Hinweistext aus Deeplink-Validierung.
    */
   deeplinkMessageKey: string | null = null;
@@ -86,6 +91,10 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
     this.restoreTreeState();
     this.observeDeeplinkParam();
     this.loadHierarchy();
+  }
+
+  ngAfterViewInit(): void {
+    this.updateTreeAllExpandedState();
   }
 
   ngOnDestroy(): void {
@@ -146,6 +155,7 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
           }
 
           this.runAfterRender(() => {
+            this.updateTreeAllExpandedState();
             const duration = stop();
             this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
           });
@@ -327,6 +337,28 @@ export class LigaOverviewComponent implements OnInit, OnDestroy {
    */
   onExpandedIdsChange(expandedIds: Set<number>): void {
     this.leagueHierarchyService.expandedIds = expandedIds;
+    this.updateTreeAllExpandedState();
+  }
+
+  /**
+   * Globale Baumsteuerung: Expand-All / Collapse-All.
+   */
+  onToggleExpandCollapseAll(): void {
+    if (!this.treeComponent) {
+      return;
+    }
+
+    if (this.treeAllExpanded) {
+      this.treeComponent.collapseAll();
+    } else {
+      this.treeComponent.expandAll();
+    }
+
+    this.updateTreeAllExpandedState();
+  }
+
+  private updateTreeAllExpandedState(): void {
+    this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
   }
 }
 
