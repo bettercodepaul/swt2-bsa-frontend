@@ -125,7 +125,7 @@ describe('Wkdurchfuehrung tests', function () {
     cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
-    cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
+    cSy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
   })
 
 })
