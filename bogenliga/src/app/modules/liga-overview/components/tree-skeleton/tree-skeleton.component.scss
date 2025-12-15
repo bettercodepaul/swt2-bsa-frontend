@@ -1,0 +1,96 @@
+/**
+ * Skeleton-Loader Styles für die Tree-Komponente
+ */
+
+// Shimmer animation
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+.tree-skeleton {
+    padding: 16px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+
+.skeleton-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    margin-bottom: 4px;
+
+    // Level-based indentation
+    &--level-0 {
+        padding-left: 8px;
+    }
+
+    &--level-1 {
+        padding-left: 32px;
+    }
+
+    &--level-2 {
+        padding-left: 56px;
+    }
+}
+
+.skeleton-toggle {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f4f4f4 50%, #e8e8e8 75%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.skeleton-label {
+    height: 16px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f4f4f4 50%, #e8e8e8 75%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+
+    &--wide {
+        width: 180px;
+    }
+
+    &--medium {
+        width: 140px;
+    }
+
+    &--narrow {
+        width: 100px;
+    }
+}
+
+// Stagger animation for more natural effect
+@for $i from 1 through 6 {
+    .skeleton-row:nth-child(#{$i + 1}) {
+
+        .skeleton-toggle,
+        .skeleton-label {
+            animation-delay: #{$i * 0.1}s;
+        }
+    }
+}
+
+// Screen reader only
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
