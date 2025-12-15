@@ -1,0 +1,11 @@
+<div class="error-state" role="alert">
+    <div class="error-state__icon-wrapper">
+        <i class="fa fa-exclamation-circle error-state__icon" aria-hidden="true"></i>
+    </div>
+    <p class="error-state__message">{{ messageKey | translate }}</p>
+    <button *ngIf="showRetry" class="btn btn-primary error-state__retry-btn" (click)="onRetryClick()"
+        [attr.aria-label]="'LIGAUEBERSICHT.RETRY' | translate">
+        <i class="fa fa-sync" aria-hidden="true"></i>
+        <span>{{ 'LIGAUEBERSICHT.RETRY' | translate }}</span>
+    </button>
+</div>
