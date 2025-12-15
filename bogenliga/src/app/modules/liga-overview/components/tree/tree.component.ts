@@ -148,7 +148,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.viewInitialized = true;
-    this.focusCurrentNode();
+
   }
 
   ngOnDestroy(): void {
@@ -162,7 +162,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
    */
   @HostListener('keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
-    const source = event.target as HTMLElement;
+    const target = event.target as HTMLElement | null;
+    const source = (target?.closest?.('[data-node-id]') as HTMLElement | null) ?? target;
     const idAttr = source?.getAttribute('data-node-id');
     if (!idAttr) {
       return;
@@ -257,6 +258,51 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Expandiert alle Knoten, die Kinder besitzen.
+   */
+  expandAll(): void {
+    const allExpandable = this.collectExpandableNodeIds(this.nodes);
+    this.expandedIds = new Set(allExpandable);
+    this.updateVisibleNodes();
+    this.ensureFocusableNode();
+    this.expandedIdsChange.emit(this.expandedIds);
+    this.cdr.markForCheck();
+  }
+
+  /**
+   * Klappt alle Knoten ein.
+   */
+  collapseAll(): void {
+    this.expandedIds = new Set<NodeId>();
+    this.updateVisibleNodes();
+    this.ensureFocusableNode();
+
+    // Falls Fokus nach dem Einklappen nicht mehr sichtbar ist, auf erstes sichtbares Element setzen
+    if (this.focusedNodeId != null && !this.isVisible(this.focusedNodeId) && this.visibleNodes.length > 0) {
+      this.focusNode(this.visibleNodes[0].id);
+    }
+
+    this.expandedIdsChange.emit(this.expandedIds);
+    this.cdr.markForCheck();
+  }
+
+  /**
+   * true, wenn alle expandierbaren Knoten expandiert sind.
+   */
+  isAllExpanded(): boolean {
+    const expandable = this.collectExpandableNodeIds(this.nodes);
+    if (expandable.size === 0) {
+      return false;
+    }
+    for (const id of expandable) {
+      if (!this.expandedIds.has(id)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Wird ausgelöst, wenn ein Knoten selektiert wurde.
    */
   selectNode(nodeId: NodeId): void {
@@ -269,10 +315,10 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   /**
    * Expandiert den Pfad zu einem Knoten und markiert ihn.
-   * 
+   *
    * Findet alle Eltern-Knoten bis zur Wurzel und expandiert sie,
    * damit der Zielknoten sichtbar wird. Setzt anschließend die Selektion.
-   * 
+   *
    * @param nodeId Die ID des Zielknotens
    * @returns true, wenn der Knoten gefunden und expandiert wurde, sonst false
    */
@@ -331,6 +377,23 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     };
     visit(list, null);
     this.cleanupExpandedIds();
+  }
+
+  /**
+   * Sammelt alle Knoten-IDs, die Kinder besitzen (also expandierbar sind).
+   */
+  private collectExpandableNodeIds(nodes: LeagueTreeNode[]): Set<NodeId> {
+    const result = new Set<NodeId>();
+    const visit = (items: LeagueTreeNode[]) => {
+      for (const node of items ?? []) {
+        if (Array.isArray(node.children) && node.children.length > 0) {
+          result.add(node.id);
+          visit(node.children);
+        }
+      }
+    };
+    visit(nodes ?? []);
+    return result;
   }
 
   /**
