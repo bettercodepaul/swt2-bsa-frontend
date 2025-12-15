@@ -2,22 +2,22 @@
 
 describe('Query-Fehlermeldungen + Query-Clearing (liga)', () => {
 
-  /**
-   * Hilfsfunktion:
-   * Prüft, dass der Query-Parameter "liga" weder im hash noch in search vorhanden ist
-   */
-  const assertLigaQueryCleared = () => {
-    cy.location('hash').should('not.contain', 'liga=');
-    cy.location('search').should('not.contain', 'liga=');
-  };
-
-  /**
-   * Hilfsfunktion:
-   * Prüft, dass wir uns auf der Home-Seite befinden
-   * (Hash-basiertes Routing: #/home)
-   */
   const assertOnHomeRoute = () => {
     cy.location('hash').should('include', '#/home');
+  };
+
+  const assertLigaQueryCleared = () => {
+    cy.url().should('not.contain', 'liga=');
+  };
+
+  const assertErrorDialogVisible = () => {
+    cy.contains('Liga nicht gefunden').should('be.visible');
+    cy.contains('Die angeforderte Liga wurde nicht gefunden.').should('be.visible');
+    cy.contains('OK').should('be.visible');
+  };
+
+  const closeErrorDialog = () => {
+    cy.contains('OK').click();
   };
 
   it('clears liga query when it is empty', () => {
@@ -34,8 +34,7 @@ describe('Query-Fehlermeldungen + Query-Clearing (liga)', () => {
     assertLigaQueryCleared();
   });
 
-  it('shows error dialog and clears query for invalid liga', () => {
-    // Robusteres URL-Matching: fängt /v1/liga/123, /v1/liga?id=123, /v1/liga etc.
+  const interceptLiga404 = () => {
     cy.intercept(
       { method: 'GET', url: /\/v1\/liga(\/|$|\?)/ },
       {
@@ -47,20 +46,48 @@ describe('Query-Fehlermeldungen + Query-Clearing (liga)', () => {
         }
       }
     ).as('getLiga');
+  };
 
-    cy.visit('http://localhost:4200/#/home?liga=99999');
+  const visitWithLiga = (ligaValue) => {
+    cy.visit(`http://localhost:4200/#/home?liga=${encodeURIComponent(ligaValue)}`);
+  };
 
-    // Warte auf den konkreten Backend-Call (falls die App ihn macht)
+  it('shows error dialog and clears query for invalid liga (numbers)', () => {
+    interceptLiga404();
+    visitWithLiga('99999');
     cy.wait('@getLiga');
+
+    assertErrorDialogVisible();
+    closeErrorDialog();
 
     assertOnHomeRoute();
     assertLigaQueryCleared();
+  });
 
-    // Prüfe Fehlerdialog - falls vorhanden, besser mit data-cy-Attributen
-    // Beispiel-Selektoren (falls implementiert): cy.get('[data-cy=error-dialog]').should('be.visible')
-    cy.contains('Liga nicht gefunden').should('be.visible');
-    cy.contains('Die angeforderte Liga wurde nicht gefunden.').should('be.visible');
-    cy.contains('OK').should('be.visible');
+  it('shows error dialog for invalid liga (letters)', () => {
+    interceptLiga404();
+    visitWithLiga('fghjfgh');
+    cy.wait('@getLiga');
+
+
+    assertErrorDialogVisible();
+    closeErrorDialog();
+
+    assertOnHomeRoute();
+
+  });
+
+  it('shows error dialog and clears query for invalid liga (mixed)', () => {
+    interceptLiga404();
+    visitWithLiga('34jhfgd65');
+    cy.wait('@getLiga');
+
+    assertErrorDialogVisible();
+    closeErrorDialog();
+
+    assertOnHomeRoute();
+    assertLigaQueryCleared();
   });
 
 });
+
