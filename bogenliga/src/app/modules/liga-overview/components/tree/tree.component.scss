@@ -26,6 +26,7 @@
   --bla-tree-level-default-border: #d1d6e0;
   --bla-tree-level-default-foreground: #1d2533;
   --bla-tree-card-shadow: 0 4px 10px rgba(18, 33, 54, 0.1);
+  --bla-tree-mobile-indent-step: 16;
 
   font-size: 13px;
   line-height: 1.4;
@@ -58,6 +59,13 @@
   .bla-league-tree {
     --bla-tree-node-gap: 16px;
     --bla-tree-branch-length: 20px;
+
+    /* prevent horizontal overflow on narrow viewports */
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding-bottom: 8px;
+    font-size: 14px;
   }
 
   .bla-league-tree__list {

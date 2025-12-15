@@ -1,4 +1,8 @@
-<div class="bla-league-tree" role="tree" [attr.aria-multiselectable]="false">
+<div
+  class="bla-league-tree"
+  role="tree"
+  [attr.aria-multiselectable]="false"
+  [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
   <ul class="bla-league-tree__list" role="presentation">
     <li class="bla-league-tree__root-item" role="none" *ngFor="let node of nodes; trackBy: trackByNodeId">
       <bla-league-tree-node
