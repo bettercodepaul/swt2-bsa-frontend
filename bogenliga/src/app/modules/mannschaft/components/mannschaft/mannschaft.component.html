@@ -3,9 +3,19 @@
   <div *ngIf="loading">{{"MANNSCHAFT.STATUS.LOADING" | translate}}</div>
 
   <!-- Mannschaft anzeigen -->
-  <div *ngIf="!loading && mannschaft">
-    <h1>{{ mannschaft.name || 'unbenannte Mannschaft' }} </h1>
-    <h2>{{verein.name}}</h2>
+  <div *ngIf="!loading && currentMannschaft">
+    <h1>{{ currentMannschaft.name || 'unbenannte Mannschaft' }} </h1>
+  </div>
+  <div>
+    <select class="form-control"
+            id="vereine"
+            name="VereinName"
+            [(ngModel)]="currentMannschaft"
+            [disabled]="loading || mannschaften?.length === 0">
+      <option *ngFor="let mannschaft of mannschaften"
+              [ngValue]="mannschaft"> {{ mannschaft.name }}
+      </option>
+    </select>
   </div>
   <!--<div class="row">
     <bla-data-table

@@ -12,8 +12,8 @@ import {TableRow} from "@shared/components/tables/types/table-row.class";
 import {MannschaftTabelleDO} from "@verwaltung/types/mannschfttabelle-do.class";
 
 
-const ID_PATH_PARAM = 'id';
-
+const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
+const VERANSTALTUNG_PATH_PARAM = 'veranstaltungId';
 
 
 @Component({
@@ -22,9 +22,11 @@ const ID_PATH_PARAM = 'id';
   styleUrls: ['./mannschaft.component.scss']
 })
 export class MannschaftComponent extends CommonComponentDirective implements OnInit {
-  private providedID: number | null = null;
-  public mannschaft: DsbMannschaftDTO | null = null;
+  private mannschaftId: number | null = null;
+  private veranstaltungId: number | null = null;
+  public mannschaften: DsbMannschaftDTO[] | null = null;
   public verein: VereinDTO | null = null;
+  public currentMannschaft : DsbMannschaftDTO = new DsbMannschaftDTO()
   public rows: TableRow[] | null = null;
   public loadingTable: boolean;
   public tableContent: MannschaftTabelleDO[]=[];
@@ -39,47 +41,43 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit(): void {
-    this.providedID = null;
+    this.mannschaftId = null;
 
     this.loading = true;
     this.loadingTable =true;
     this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('This.providedID: ' + this.providedID);
+      if (!isUndefined(params[VERANSTALTUNG_PATH_PARAM])) {
+        this.veranstaltungId = parseInt(params[VERANSTALTUNG_PATH_PARAM], 10);
         // Load after we have the ID
-        this.loadMannschaftData();
+        this.loadMannschaftenData();
+      } else {
+        // no id provided
+        this.loading = false;
+      }
+      if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
+        this.mannschaftId = parseInt(params[MANNSCHAFT_PATH_PARAM], 10);
+        // Load after we have the ID
       } else {
         // no id provided
         this.loading = false;
       }
     });
   }
-  loadVereinsData(): void{
-    // set loading state
-    this.loading = true;
-    this.vereinsDataProvider.findById(this.mannschaft.vereinId)
-      .then((response: BogenligaResponse<VereinDTO>) => {
-        console.log(response)
-        this.verein = response.payload!;
-        this.loading = false;
-      })
-      .catch((response: BogenligaResponse<VereinDTO>) => {
-        console.error(response);
-        this.loading = false;
-      });
-  }
 
-  loadMannschaftData(): void{
+  loadMannschaftenData(): void{
     // set loading state
     this.loading = true;
-    this.mannschaftDataProvider.findById(this.providedID)
-      .then((response: BogenligaResponse<DsbMannschaftDTO>) => {
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(this.veranstaltungId)
+      .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         console.log(response)
-        this.mannschaft = response.payload!;
+        this.mannschaften = response.payload!;
+        if (this.mannschaftId!=null){
+          this.currentMannschaft = this.mannschaften.find(mannschaft => mannschaft.id === this.mannschaftId)!;
+        }else {
+          this.currentMannschaft = this.mannschaften[0];
+        }
         this.loading = false;
         //this.mannschaftenrows();
-        this.loadVereinsData();
       })
       .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
         console.error(response);
