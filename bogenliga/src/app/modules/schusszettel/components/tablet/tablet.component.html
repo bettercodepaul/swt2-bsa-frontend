@@ -51,7 +51,8 @@
         <bla-maske2eingabe
           *ngIf="!showZustandFirst"
           [infos]="data"
-          (satzSubmit)="onSatz($event)">
+          (satzSubmit)="onSatz($event)"
+          (abort)="onPasseAbort()">
         </bla-maske2eingabe>
       </ng-container>
 
