@@ -1,9 +1,9 @@
 <div
   class="bla-league-tree__item-row"
   (click)="onItemClick()"
+  [style.--bla-node-indent.px]="paddingLeft"
   [attr.data-has-children]="hasChildren"
   [attr.data-node-id]="node.id"
-  [attr.aria-label]="node.name"
   role="presentation">
   <button
     *ngIf="hasChildren"
@@ -22,6 +22,7 @@
 
 <ul
   *ngIf="hasChildren && expanded"
+  [id]="'league-tree-group-' + node.id"
   role="group"
   class="bla-league-tree__group">
   <li
