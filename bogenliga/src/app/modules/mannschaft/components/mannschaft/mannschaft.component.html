@@ -1,0 +1,18 @@
+<bla-navigation-dialog [config]="config">
+  <!-- Loading indicator -->
+  <div *ngIf="loading">{{"MANNSCHAFT.STATUS.LOADING" | translate}}</div>
+
+  <!-- Mannschaft anzeigen -->
+  <div *ngIf="!loading && mannschaft">
+    <h1>{{ mannschaft.name || 'unbenannte Mannschaft' }} </h1>
+    <h2>{{verein.name}}</h2>
+  </div>
+  <!--<div class="row">
+    <bla-data-table
+      (onRowEntry)="getSelectedRow($event)"
+      [config]="config_table"
+      [loading]="loadingTable"
+      [rows]="rows">
+    </bla-data-table>
+  </div>-->
+</bla-navigation-dialog>
