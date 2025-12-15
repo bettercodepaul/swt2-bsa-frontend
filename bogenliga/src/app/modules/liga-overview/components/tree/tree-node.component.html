@@ -1,9 +1,9 @@
 <div
   class="bla-league-tree__item-row"
   (click)="onItemClick()"
+  [style.--bla-node-indent.px]="paddingLeft"
   [attr.data-has-children]="hasChildren"
   [attr.data-node-id]="node.id"
-  [attr.aria-label]="node.name"
   role="presentation">
   <button
     *ngIf="hasChildren"
@@ -12,7 +12,9 @@
     (click)="onToggleClick($event)"
     [attr.aria-label]="(expanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE' : 'LIGAUEBERSICHT.TREE.EXPAND') | translate"
     tabindex="-1">
-    <span class="bla-league-tree__toggle-icon" aria-hidden="true"></span>
+    <span class="bla-league-tree__toggle-icon" 
+          [class.bla-league-tree__toggle-icon--expanded]="expanded" 
+          aria-hidden="true"></span>
   </button>
   <span *ngIf="!hasChildren" class="bla-league-tree__toggle-placeholder" aria-hidden="true"></span>
   <span class="bla-league-tree__label">
@@ -22,6 +24,7 @@
 
 <ul
   *ngIf="hasChildren && expanded"
+  [id]="'league-tree-group-' + node.id"
   role="group"
   class="bla-league-tree__group">
   <li
