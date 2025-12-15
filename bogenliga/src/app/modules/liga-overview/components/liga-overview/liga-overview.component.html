@@ -7,18 +7,15 @@
             <p class="mb-0">{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
 
             <div class="liga-overview__actions">
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm liga-tree-toggle-all-btn"
-                data-cy="liga-tree-toggle-all-button"
-                (click)="onToggleExpandCollapseAll()"
+              <button type="button" class="btn btn-outline-secondary btn-sm liga-tree-toggle-all-btn"
+                data-cy="liga-tree-toggle-all-button" (click)="onToggleExpandCollapseAll()"
                 [disabled]="isLoading || treeNodes.length === 0"
                 [attr.aria-label]="(treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate"
-                [attr.aria-controls]="'liga-tree'"
-                [attr.aria-pressed]="treeAllExpanded">
+                [attr.aria-controls]="'liga-tree'" [attr.aria-pressed]="treeAllExpanded">
                 <i class="fa" [ngClass]="treeAllExpanded ? 'fa-compress' : 'fa-expand'" aria-hidden="true"></i>
                 <span class="ms-1">
-                  {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate }}
+                  {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') |
+                  translate }}
                 </span>
               </button>
 
@@ -48,23 +45,6 @@
                 *ngIf="hierarchyResult?.status === 'error' || hierarchyResult?.status === 'timeout'; else checkEmpty">
                 <bla-error-state [messageKey]="statusMessageKey" [showRetry]="true" (retry)="onRetry()">
                 </bla-error-state>
-              <ng-container *ngIf="treeNodes.length > 0; else treeStateMessage">
-                <div class="liga-tree-wrapper">
-                  <bla-league-tree id="liga-tree" [nodes]="treeNodes" [selectedId]="selectedLigaId"
-                    [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
-                    (expandedIdsChange)="onExpandedIdsChange($event)">
-                  </bla-league-tree>
-                </div>
-                <!-- Statushinweis zur Datenlage -->
-                <div class="alert alert-info liga-tree-state" role="alert" *ngIf="statusMessageKey as smk">
-                  <i class="fa fa-info-circle" aria-hidden="true"></i>
-                  <span>{{ smk | translate }}</span>
-                </div>
-                <!-- Nicht-blockierender Hinweis aus Deeplink-Validierung -->
-                <div class="alert alert-warning liga-tree-state" role="alert" *ngIf="deeplinkMessageKey as dmk">
-                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                  <span>{{ dmk | translate }}</span>
-                </div>
               </ng-container>
 
               <ng-template #checkEmpty>
