@@ -6,6 +6,17 @@
     <div class="layout-elements">
 
       <bla-row-layout>
+        <!-- Ligatabelle -->
+        <div class="row" id="rowTable" style="margin-left: 5px">
+          <!-- Dies ist die aktuelle Ligatabelle zur Veranstaltung  -->
+          <bla-data-table
+            [config]="config_table"
+            [rows]="rowsLigatabelle"
+            [loading]="loadingLigatabelle"
+            (onRowEntry)="ligatabelleLinking();"
+          >
+          </bla-data-table>
+        </div>
 
         <h2 style="margin-top: 0">Auswahl der Veranstaltung und Wettkampftag</h2>
         <!--Jahr-->
@@ -22,13 +33,13 @@
                     [disabled]="loading"
                     (ngModelChange)="onSelectYear()"
             >
-              <option *ngFor="let Jahr of availableYears" [ngValue]="Jahr.sportjahr"> {{Jahr.sportjahr}}</option>
+              <option *ngFor="let Jahr of loadedYears" [ngValue]="Jahr"> {{Jahr}}</option>
             </select>
           </div>
         </div>
 
         <!--Liga-->
-        <div class="row">
+        <!--<div class="row">
           <label class="form-label-box col-form-label">
             <span>{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</span>
           </label>
@@ -44,7 +55,8 @@
               <option *ngFor="let veranstaltung of veranstaltungenForYear" [ngValue]="veranstaltung"> {{veranstaltung.ligaName}}</option>
             </select>
           </div>
-        </div>
+        </div> -->
+
 
         <!-- Dropdown Wettkampftag -->
         <div class="row print1" >
@@ -65,23 +77,6 @@
           </div>
         </div>
 
-        <!-- Ligatabelle -->
-        <div class="row">
-          <label class="form-label-box col-form-label">
-            <h2>{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</h2>
-          </label>
-        </div>
-        <div class="row" id="rowTable" style="margin-left: 5px">
-          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
-          <bla-data-table
-            [config]="config_table"
-            [rows]="rowsLigatabelle"
-            [loading]="loadingLigatabelle"
-            (onRowEntry)="ligatabelleLinking();"
-          >
-          </bla-data-table>
-        </div>
-
         <!-- Button -->
         <div id="Button">
           <!-- Button - Zu den Wettkampfergebnissen {Name der Liga} -->
@@ -94,27 +89,6 @@
             {{ selectedVeranstaltungName}}
           </bla-actionbutton>
 
-          <!-- Button - Zu den Ligadetails (Deprecated, ersetzt durch Liga-Home) -->
-          <!--
-          <bla-actionbutton
-            [id]="'goToLigadetailsButton'"
-            [color]= "ActionButtonColors.PRIMARY"
-            [iconClass]="zuDenLigadetailsIcon"
-            (onClick)="goToLigaDetails()">
-            {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
-          </bla-actionbutton>
-          -->
-
-          <!-- Button - Auswahl zurücksetzen (Deprecated) -->
-          <!--
-          <bla-actionbutton
-            [id]="'deselectLigaButton'"
-            [color]= "ActionButtonColors.SECONDARY"
-            [iconClass]="zuruecksetzenIcon"
-            (onClick)="deselect()">
-            {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
-          </bla-actionbutton>
-          -->
 
         </div>
         <div class="col-sm-9">
