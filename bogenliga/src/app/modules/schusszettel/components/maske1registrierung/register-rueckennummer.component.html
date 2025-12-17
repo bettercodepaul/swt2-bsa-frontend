@@ -3,11 +3,12 @@
 
   <ng-container *ngIf="infos.schuetzeStammDaten?.length; else emptyData">
     <p class="info-box">
-      Wähle ein Feld, dann klicke auf einen Schützen, um die Rückennummer einzufügen.
+      Wähle ein Feld (Box), dann klicke auf einen Schützen, um ihn zuzuweisen.
     </p>
 
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="register-layout">
+        <!-- LINK: Schützenliste mit Filter -->
         <div class="schuetzen-list">
           <input
             formControlName="filter"
@@ -27,25 +28,72 @@
           </div>
         </div>
 
-        <div class="input-grid" formArrayName="ids">
-          <div *ngFor="let ctrl of ids.controls; let i = index" class="slot-container">
-            <input
-              [formControlName]="i"
-              type="text"
-              placeholder="Slot {{ i + 1 }} Rückennummer"
-              aria-label="Rückennummer Slot {{ i + 1 }}"
-              (focus)="setActiveInput(i)"
-            />
-            <div class="error" *ngIf="ctrl.invalid && ctrl.touched">
-              Bitte eine gültige numerische Rückennummer eingeben
+        <!-- RECHTS: Slots als Boxen -->
+        <div class="slot-grid" formArrayName="ids">
+          <div
+            class="slot-container"
+            *ngFor="let ctrl of ids.controls; let i = index"
+            [class.active]="activeInputIndex === i"
+            (click)="setActiveInput(i)"
+          >
+            <div class="slot-label">Position {{ i + 1 }}</div>
+
+            <ng-container *ngIf="getShooterForSlot(i) as sh; else emptySlot">
+              <div class="slot-content">
+                <div class="slot-text">
+                  {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
+                </div>
+                <button
+                  type="button"
+                  class="slot-remove"
+                  aria-label="Schütze aus Slot entfernen"
+                  (click)="clearSlot(i); $event.stopPropagation()"
+                >
+                  ✕
+                </button>
+              </div>
+            </ng-container>
+
+            <ng-template #emptySlot>
+              <div class="slot-empty">
+                Schützen auswählen…
+              </div>
+            </ng-template>
+
+            <div class="error" *ngIf="ctrl.invalid && form.touched">
+              Bitte einen Schützen auswählen
             </div>
           </div>
         </div>
       </div>
 
       <button type="submit" [disabled]="form.invalid" class="confirm-button">
-        BESTÄTIGEN <span class="arrow">→</span>
+        BESTÄTIGEN
       </button>
+
+      <!-- NEU: Bestätigungs-Meldung direkt auf der Seite -->
+      <div class="confirm-box" *ngIf="confirmStep">
+        <p>
+          Sind Sie sicher, dass Sie diese Schützenzuordnung bestätigen möchten?
+          <strong>Sie können die Eingabe später nicht mehr ändern.</strong>
+        </p>
+        <div class="confirm-actions">
+          <button
+            type="button"
+            class="confirm-yes"
+            (click)="finalizeSubmit()"
+          >
+            Ja, endgültig bestätigen
+          </button>
+          <button
+            type="button"
+            class="confirm-no"
+            (click)="cancelConfirm()"
+          >
+            Abbrechen
+          </button>
+        </div>
+      </div>
     </form>
   </ng-container>
 

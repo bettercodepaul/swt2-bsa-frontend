@@ -2027,12 +2027,15 @@
     "TREE": {
       "TITLE": "League hierarchy",
       "EXPAND": "Expand node",
-      "COLLAPSE": "Collapse node"
+      "COLLAPSE": "Collapse node",
+      "EXPAND_ALL": "Expand all",
+      "COLLAPSE_ALL": "Collapse all"
     },
     "DEEPLINK": {
       "INVALID_ID": "The specified league ID is invalid.",
       "NOT_FOUND": "The specified league could not be found."
-    }
+    },
+    "REFRESH": "Refresh"
   }
   }
 }
