@@ -2,3 +2,30 @@
   padding: 16px;
 }
 
+.verein-card {
+  display: inline-flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  align-items: center;
+}
+
+/* Bild‑Wrapper – sorgt dafür, dass das Bild nicht größer wird */
+.logo img {
+  display: block;
+  width: auto;
+  max-height: 80px;
+  margin-right: 12.5%;
+}
+
+/* Text‑Wrapper – nimmt den restlichen Platz ein */
+.info {
+  flex: 1;
+}
+
+a.disabled-link {
+  pointer-events: none;   // Klicks werden ignoriert
+  cursor: default;        // Zeigt keinen Hand‑Cursor
+  color: inherit;         // Gleiche Farbe wie normaler Text
+  text-decoration: none; // Keine Unterstreichung
+}
+
