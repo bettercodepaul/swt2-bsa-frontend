@@ -21,6 +21,7 @@ import { WettkampfDO } from '@verwaltung/types/wettkampf-do.class';
 import { WettkampfDataProviderService } from '@verwaltung/services/wettkampf-data-provider.service';
 import { LigaDO } from '@verwaltung/types/liga-do.class';
 import {slugifyLigaName} from "@shared/functions/slug-utils";
+import {log} from "util";
 
 interface Wettkampftag {
   id: number;
@@ -52,7 +53,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public multipleSelections = true;
   public rowsLigatabelle: TableRow[] = [];
 
-  public providedID: number | undefined; // Liga-ID aus Resolver
+  public providedLigaID: number | undefined; // Liga-ID aus Resolver
   private hasID = false;
   private hasVeranstaltung = true;
 
@@ -61,7 +62,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
   public selectedVeranstaltung: VeranstaltungDO;
-  public loadedYears: SportjahrVeranstaltungDO[] = [];
+  public loadedYears: number[] = [];
   public availableYears: SportjahrVeranstaltungDO[] = [];
   public veranstaltungenForYear: VeranstaltungDO[] = [];
 
@@ -102,17 +103,25 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   async ngOnInit() {
     // Liga aus Resolver (QueryParam ?liga=...) übernehmen
+    console.log("Lade Liga aus Resolver...");
     const ligaFromResolver = this.route.snapshot.data['liga'] as LigaDO | null | undefined;
     if (ligaFromResolver?.id != null) {
-      this.providedID = ligaFromResolver.id;
+      this.providedLigaID = ligaFromResolver.id;
       this.hasID = true;
     } else {
-      this.providedID = undefined;
+      this.providedLigaID = undefined;
       this.hasID = false;
+    }
+    // Aktives Sportjahr setzen
+    console.log("Aktivee Sportjahr lade");
+    if (!this.onOfflineService.isOffline()) {
+      this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
     }
 
     if (this.isDeselected === false) {
+      console.log("Loading table data...");
       await this.loadTableData();
+      console.log("Table data loaded.");
       this.notificationService.discardNotification();
     }
   }
@@ -142,6 +151,73 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   private async loadTableData() {
+    this.loadedYears = [];
+    this.loadedVeranstaltungen = new Map();
+    this.veranstaltungIdMap = new Map();
+
+    // Jahre laden
+    try {
+      // Fetch all veranstaltungen for liga (Liga must be selected to show Ligatabelle anyway)
+      console.log("providedLigaID:", this.providedLigaID);
+      const veranstaltungenResponse = await this.veranstaltungsDataProvider.findByLigaId(this.providedLigaID);
+
+      const allVeranstaltungen = veranstaltungenResponse.payload ?? [];
+
+      if (allVeranstaltungen.length === 0) {
+        console.log("No veranstaltungen found for liga.");
+        return;
+      }
+      console.log("All Veranstaltungen:", allVeranstaltungen);
+
+      // Fülle loadedYears Array anhand der geladenen Veranstaltungen
+      for (const v of allVeranstaltungen) {
+        if (!this.loadedYears.includes(v.sportjahr)) {
+          this.loadedYears.push(v.sportjahr)
+        }
+      }
+
+      // Absteigend sortieren (neuestes Jahr zuerst)
+      this.loadedYears.sort((a, b) => b - a);
+
+      // Fülle loadedVeranstaltungen Map anhand der geladenen Veranstaltungen
+      this.loadedVeranstaltungen = new Map(
+        allVeranstaltungen.map(v =>
+          [v.sportjahr, [v]])
+      );
+      console.log("Loaded Veranstaltungen:", this.loadedVeranstaltungen);
+
+      this.selectMostRecentVeranstaltung();
+      this.loadVeranstaltung(this.selectedVeranstaltung);
+
+      this.loading = false;
+      this.loadingLigatabelle = false;
+
+    } catch (e) {
+      this.loading = false;
+      this.loadingLigatabelle = false;
+      console.log(e)
+
+    }
+  }
+
+  /**
+   * Selects the most recent Veranstaltung for the selected Liga.
+   */
+  private selectMostRecentVeranstaltung() {
+    // loadedVeranstaltungen ist mit Arrays der VeranstaltungDOs gefüllt, deswegen temporär mappen
+   const [,tempselectedveranstaltung] = [...this.loadedVeranstaltungen].filter(
+      ([year, _])=> (year <= this.aktivesSportjahr)).values().next().value;
+   // Dann das Array-Element persistieren auf einen normalen VeranstaltungDOr
+    this.selectedVeranstaltung = tempselectedveranstaltung[0]
+    this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
+    this.selectedVeranstaltungId = this.selectedVeranstaltung.id;
+    this.selectedYearForVeranstaltung = this.selectedVeranstaltung.sportjahr;
+    this.buttonForward = this.selectedVeranstaltung.id;
+    console.log("Selected Veranstaltung:", this.selectedVeranstaltung);
+  }
+
+  /*
+  private async loadTableDataLegacy() {
     this.loadedYears = [];
     this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
@@ -188,12 +264,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       // Wähle Veranstaltung:
       // - Wenn Liga (providedID) gesetzt: Veranstaltung mit passender ligaId, sonst fallback auf erstes Element
       let initialVeranstaltung: VeranstaltungDO | undefined;
-      if (this.hasID && this.providedID != null) {
-        initialVeranstaltung = this.veranstaltungenForYear.find(v => v.ligaId === this.providedID);
+      if (this.hasID && this.providedLigaID != null) {
+        initialVeranstaltung = this.veranstaltungenForYear.find(v => v.ligaId === this.providedLigaID);
         if (!initialVeranstaltung) {
           // Optional: versuche genaue Veranstaltung via Service (ein Jahr kann mehrere Ligen haben)
           try {
-            const resp = await this.veranstaltungsDataProvider.findByLigaIdAndYear(this.providedID, this.selectedYearForVeranstaltung);
+            const resp = await this.veranstaltungsDataProvider.findByLigaIdAndYear(this.providedLigaID, this.selectedYearForVeranstaltung);
             if (resp?.payload?.id != null) {
               initialVeranstaltung = resp.payload;
             }
@@ -222,9 +298,13 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       console.log(e);
     }
   }
+   */
 
   private loadLigaTableRows() {
+    console.trace()
     this.loadingLigatabelle = true;
+    console.log("selected id:", this.selectedVeranstaltung.id);
+    console.log("other selected id:", this.selectedVeranstaltungId)
     this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltung.id)
       .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response, true))
       .catch(() => this.handleLigatabelleFailure());
@@ -263,8 +343,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get(this.selectedYearForVeranstaltung) ?? [];
     // Wenn Liga gesetzt, wähle innerhalb des Jahres die passende Veranstaltung
     let next = this.veranstaltungenForYear[0];
-    if (this.hasID && this.providedID != null) {
-      next = this.veranstaltungenForYear.find(v => v.ligaId === this.providedID) ?? next;
+    if (this.hasID && this.providedLigaID != null) {
+      next = this.veranstaltungenForYear.find(v => v.ligaId === this.providedLigaID) ?? next;
     }
 
     this.selectedVeranstaltung = next;
@@ -313,6 +393,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   private loadVeranstaltung(veranstaltung: VeranstaltungDO) {
+    console.log("selected Veranstaltung", this.selectedVeranstaltung);
     this.selectedVeranstaltung = veranstaltung;
     // Tabelle und Wettkämpfe laden
     this.loadLigaTableRows();
@@ -345,7 +426,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     const slug = ligaName ? slugifyLigaName(ligaName) : null;
 
     // Fallback: ID nutzen, falls kein Name vorhanden
-    const ligaId = this.selectedVeranstaltung?.ligaId ?? this.providedID;
+    const ligaId = this.selectedVeranstaltung?.ligaId ?? this.providedLigaID;
 
     if (!slug && ligaId == null) {
       return;
