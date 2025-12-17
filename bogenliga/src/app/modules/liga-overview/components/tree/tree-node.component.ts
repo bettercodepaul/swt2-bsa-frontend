@@ -86,6 +86,24 @@ export class TreeNodeComponent implements OnChanges {
     return this.isSelected;
   }
 
+  /**
+   * Accessible Name für Screenreader: muss am treeitem selbst hängen
+   * (nicht an einem child mit role="presentation").
+   */
+  @HostBinding('attr.aria-label')
+  get ariaLabel(): string | null {
+    return this.node?.name ?? null;
+  }
+
+  /**
+   * Verknüpft treeitem mit seiner (sichtbaren) group.
+   * Nur setzen, wenn die group existiert (expanded), sonst gibt es A11y-Tool-Warnungen.
+   */
+  @HostBinding('attr.aria-controls')
+  get ariaControls(): string | null {
+    return this.hasChildren && this.expanded ? `league-tree-group-${this.node.id}` : null;
+  }
+
   @HostBinding('attr.tabindex')
   get tabIndex(): number {
     return this.isFocused ? 0 : -1;
@@ -138,7 +156,8 @@ export class TreeNodeComponent implements OnChanges {
   }
 
   get paddingLeft(): number {
-    return (this.node?.level ?? 0) * this.indentStepPx;
+    // Clamp indent to avoid excessive indentation on very deep trees (esp. on mobile)
+    return Math.min((this.node?.level ?? 0) * this.indentStepPx, 96);
   }
 
   trackByNodeId(_index: number, item: LeagueTreeNode): number {
@@ -153,6 +172,8 @@ export class TreeNodeComponent implements OnChanges {
 
   onToggleClick(event: MouseEvent): void {
     event.stopPropagation();
+    // Fokus nach dem Klicken auf den Toggle sicher auf dem treeitem behalten
+    this.focusRequest.emit(this.node.id);
     this.toggle.emit(this.node.id);
   }
 

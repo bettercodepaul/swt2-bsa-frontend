@@ -16,7 +16,15 @@ const SAMPLE_NODES: LeagueTreeNode[] = [
         name: 'Regionalliga',
         parentId: 1,
         level: 1,
-        children: []
+        children: [
+          {
+            id: 111,
+            name: 'Bezirksliga',
+            parentId: 11,
+            level: 2,
+            children: []
+          }
+        ]
       }
     ]
   },
@@ -32,6 +40,7 @@ const SAMPLE_NODES: LeagueTreeNode[] = [
 describe('TreeComponent', () => {
   let fixture: ComponentFixture<TreeComponent>;
   let component: TreeComponent;
+  let selectEmitSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,7 +53,7 @@ describe('TreeComponent', () => {
     fixture = TestBed.createComponent(TreeComponent);
     component = fixture.componentInstance;
     component.nodes = JSON.parse(JSON.stringify(SAMPLE_NODES));
-    spyOn(component.select, 'emit');
+    selectEmitSpy = spyOn(component.select, 'emit');
     fixture.detectChanges();
   });
 
@@ -61,23 +70,45 @@ describe('TreeComponent', () => {
     // Collapse
     toggleButton!.click();
     fixture.detectChanges();
-    expect(component.isExpanded(1)).toBeFalse();
+    expect(component.isExpanded(1)).toBe(false);
     let child = fixture.nativeElement.querySelector('[data-node-id="11"]');
     expect(child).toBeNull();
 
     // Expand again
     toggleButton!.click();
     fixture.detectChanges();
-    expect(component.isExpanded(1)).toBeTrue();
+    expect(component.isExpanded(1)).toBe(true);
     child = fixture.nativeElement.querySelector('[data-node-id="11"]');
     expect(child).not.toBeNull();
   });
 
   it('should emit selection events on click', () => {
-    component.select.emit.calls.reset();
+    selectEmitSpy.calls.reset();
     const label: HTMLElement = fixture.nativeElement.querySelector('.bla-league-tree__label');
     label.click();
-    expect(component.select.emit).toHaveBeenCalledWith(1);
+    expect(selectEmitSpy).toHaveBeenCalledWith(1);
+  });
+
+  it('should collapseAll to only show root nodes', () => {
+    component.collapseAll();
+    fixture.detectChanges();
+
+    expect(component.expandedIds.size).toBe(0);
+    expect(fixture.nativeElement.querySelector('[data-node-id="11"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-node-id="111"]')).toBeNull();
+  });
+
+  it('should expandAll to show all nodes', () => {
+    component.collapseAll();
+    fixture.detectChanges();
+
+    component.expandAll();
+    fixture.detectChanges();
+
+    expect(component.isExpanded(1)).toBe(true);
+    expect(component.isExpanded(11)).toBe(true);
+    expect(fixture.nativeElement.querySelector('[data-node-id="11"]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-node-id="111"]')).not.toBeNull();
   });
 
   it('should support keyboard navigation and selection', () => {
@@ -95,12 +126,12 @@ describe('TreeComponent', () => {
     fixture.detectChanges();
     expect(component.focusedNodeId).toBe(1);
 
-    component.select.emit.calls.reset();
+    selectEmitSpy.calls.reset();
     firstItem.dispatchEvent(new KeyboardEvent('keydown', {
       key: 'Enter',
       bubbles: true
     }));
-    expect(component.select.emit).toHaveBeenCalledWith(1);
+    expect(selectEmitSpy).toHaveBeenCalledWith(1);
   });
 });
 

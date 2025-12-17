@@ -1,39 +1,65 @@
 :host {
   display: block;
-}
-
-:host {
-  display: block;
+  width: 100%;
 }
 
 .bla-league-tree {
-  --bla-tree-focus-ring: 2px solid var(--bla-color-focus, #2c7be5);
-  --bla-tree-hover-bg: rgba(44, 123, 229, 0.08);
-  --bla-tree-selected-bg: rgba(44, 123, 229, 0.16);
-  --bla-tree-border-radius: 8px;
-  --bla-tree-row-height: 52px;
-  --bla-tree-node-gap: 32px;
-  --bla-tree-branch-length: 32px;
+  --bla-tree-focus-ring: 2px solid var(--bla-color-focus, #487AF5);
+  --bla-tree-hover-bg: rgba(72, 122, 245, 0.08);
+  --bla-tree-selected-bg: rgba(72, 122, 245, 0.16);
+  --bla-tree-border-radius: 6px;
+  --bla-tree-row-height: 48px;
+  --bla-tree-node-gap: 16px;
+  --bla-tree-branch-length: 24px;
   --bla-tree-branch-color: #d8dde8;
-  --bla-tree-level-0-bg: #d62828;
-  --bla-tree-level-0-border: #b71f21;
-  --bla-tree-level-1-bg: #f77f00;
-  --bla-tree-level-1-border: #d26a00;
-  --bla-tree-level-2-bg: #1d3557;
-  --bla-tree-level-2-border: #14253d;
-  --bla-tree-level-3-bg: #2b2d42;
-  --bla-tree-level-3-border: #1e1f30;
-  --bla-tree-level-4-bg: #6c757d;
-  --bla-tree-level-4-border: #545c63;
-  --bla-tree-level-default-bg: #ffffff;
-  --bla-tree-level-default-border: #d1d6e0;
-  --bla-tree-level-default-foreground: #1d2533;
-  --bla-tree-card-shadow: 0 8px 16px rgba(18, 33, 54, 0.12);
+  /* Bogenscheiben-Farben: Gelb, Rot, Blau, Schwarz, Weiß - Weiße Cards mit farbiger Umrandung */
+  /* Level 0: Gelb kräftig */
+  --bla-tree-level-0-bg: #FFFFFF;
+  --bla-tree-level-0-border: #FFCC34;
+  --bla-tree-level-0-color: #2A2A2A;
+  --bla-tree-level-0-icon-color: #FFCC34;
+  /* Level 1: Gelb leichter */
+  --bla-tree-level-1-bg: #FFFFFF;
+  --bla-tree-level-1-border: #FFE066;
+  --bla-tree-level-1-color: #2A2A2A;
+  --bla-tree-level-1-icon-color: #FFE066;
+  /* Level 2: Rot kräftig */
+  --bla-tree-level-2-bg: #FFFFFF;
+  --bla-tree-level-2-border: #F40E0E;
+  --bla-tree-level-2-color: #2A2A2A;
+  --bla-tree-level-2-icon-color: #F40E0E;
+  /* Level 3: Rot leichter */
+  --bla-tree-level-3-bg: #FFFFFF;
+  --bla-tree-level-3-border: #F85C5C;
+  --bla-tree-level-3-color: #2A2A2A;
+  --bla-tree-level-3-icon-color: #F85C5C;
+  /* Level 4: Blau kräftig */
+  --bla-tree-level-4-bg: #FFFFFF;
+  --bla-tree-level-4-border: #487AF5;
+  --bla-tree-level-4-color: #2A2A2A;
+  --bla-tree-level-4-icon-color: #487AF5;
+  /* Level 5: Blau leichter */
+  --bla-tree-level-5-bg: #FFFFFF;
+  --bla-tree-level-5-border: #7BA3F7;
+  --bla-tree-level-5-color: #2A2A2A;
+  --bla-tree-level-5-icon-color: #7BA3F7;
+  /* Level 6: Schwarz */
+  --bla-tree-level-6-bg: #FFFFFF;
+  --bla-tree-level-6-border: #2A2A2A;
+  --bla-tree-level-6-color: #2A2A2A;
+  --bla-tree-level-6-icon-color: #2A2A2A;
+  /* Level 7+: Grau (Default) */
+  --bla-tree-level-default-bg: #FFFFFF;
+  --bla-tree-level-default-border: #888888;
+  --bla-tree-level-default-foreground: #2A2A2A;
+  --bla-tree-level-default-icon-color: #888888;
+  --bla-tree-card-shadow: 0 4px 10px rgba(18, 33, 54, 0.1);
+  --bla-tree-mobile-indent-step: 16;
 
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.4;
-  width: 100%;
-  overflow-x: auto;
+  width: fit-content;
+  min-width: 100%;
   padding-bottom: 24px;
 }
 
@@ -42,7 +68,10 @@
   padding: 0;
   list-style: none;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
+  gap: 0;
+  width: 100%;
 }
 
 .bla-league-tree__root-item {
@@ -50,6 +79,30 @@
   position: relative;
   display: flex;
   justify-content: center;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
 }
 
+/* Tablet and below: stack vertically */
+@media (max-width: 992px) {
+  .bla-league-tree {
+    --bla-tree-node-gap: 16px;
+    --bla-tree-branch-length: 20px;
+
+    /* prevent horizontal overflow on narrow viewports */
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .bla-league-tree__list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bla-league-tree__root-item {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
