@@ -15,13 +15,13 @@ export class MatchDTO implements DataTransferObject {
 
 
   static copyFrom(optional: {
-    nr?: number,
+    matchNr?: number,
     id?: number,
     wettkampfId?: number,
     wettkampfTypId?: number,
     mannschaftId?: number,
     begegnung?: number,
-    scheibenNummer?: number,
+    matchScheibennummer?: number,
     matchpunkte?: number,
     satzpunkte?: number,
     version?: number
@@ -34,8 +34,8 @@ export class MatchDTO implements DataTransferObject {
       copy.id = null;
     }
 
-    if (optional.nr >= 0) {
-      copy.nr = optional.nr;
+    if (optional.matchNr >= 0) {
+      copy.nr = optional.matchNr;
     } else {
       copy.nr = null;
     }
@@ -64,8 +64,8 @@ export class MatchDTO implements DataTransferObject {
       copy.begegnung = null;
     }
 
-    if (optional.scheibenNummer >= 0) {
-      copy.scheibenNummer = optional.scheibenNummer;
+    if (optional.matchScheibennummer >= 0) {
+      copy.scheibenNummer = optional.matchScheibennummer;
     } else {
       copy.scheibenNummer = null;
     }
