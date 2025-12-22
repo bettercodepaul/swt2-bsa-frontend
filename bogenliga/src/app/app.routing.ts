@@ -16,6 +16,7 @@ export const ROUTES: Routes = [
   {path: 'user', loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule)},
   {path: 'vereine', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'vereine/:id', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
+  {path: 'vereine/:id/:mannschaftID', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
   {path: 'playground', loadChildren: () => import('src/app/modules/playground/playground.module').then((m) => m.PlaygroundModule)},
   {path: 'ligatabelle', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
   {path: 'ligatabelle/:id', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
@@ -23,7 +24,7 @@ export const ROUTES: Routes = [
   {path: 'spotter', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
   {path: 'schusszettel', loadChildren: () => import('./modules/schusszettel/schusszettel.module').then((m) => m.SchusszettelModule)},
   {path: 'hilfe', loadChildren: () => import('src/app/modules/hilfe/hilfe.module').then((m) => m.HilfeModule)},
-  {path: 'mannschaft/:veranstaltungId', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
-  {path: 'mannschaft/:veranstaltungId/:mannschaftId', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
+  {path: 'mannschaft/:id', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
+  {path: 'mannschaft/:id/:mannschaftId', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
   {path: 'wkdurchfuehrung/tabletadmin/:id/:id/:id', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
 ];
