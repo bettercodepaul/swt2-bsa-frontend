@@ -11,12 +11,21 @@
             id="vereine"
             name="VereinName"
             [(ngModel)]="currentMannschaft"
-            [disabled]="loading || mannschaften?.length === 0">
+            [disabled]="loading || mannschaften?.length === 0"
+            (ngModelChange)="onSelectMannschaft()">
       <option *ngFor="let mannschaft of mannschaften"
               [ngValue]="mannschaft"> {{ mannschaft.name }}
       </option>
     </select>
   </div>
+  <bla-actionbutton
+    class="item"
+    [color]="ActionButtonColors.PRIMARY"
+    [iconClass]="'users'"
+    (onClick)="onPushtoVerein()"
+  >
+    {{"zum Verein"}}
+  </bla-actionbutton>
   <!--<div class="row">
     <bla-data-table
       (onRowEntry)="getSelectedRow($event)"

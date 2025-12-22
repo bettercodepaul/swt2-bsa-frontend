@@ -10,6 +10,7 @@ import {VereinDTO} from "@verwaltung/types/datatransfer/verein-dto.class";
 import {MANNSCHAFT_CONFIG, MANNSCHAFTEN_TABLE_CONFIG} from "./mannschaft.config";
 import {TableRow} from "@shared/components/tables/types/table-row.class";
 import {MannschaftTabelleDO} from "@verwaltung/types/mannschfttabelle-do.class";
+import {TranslateService} from "@ngx-translate/core";
 import {
   NotificationOrigin,
   NotificationService,
@@ -17,20 +18,21 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services/notification';
+import {ActionButtonColors} from "@shared/components/buttons/button/actionbuttoncolors";
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
-const VERANSTALTUNG_PATH_PARAM = 'veranstaltungId';
+const VEREIN_PATH_PARAM = 'id';
 
 
 @Component({
-  selector: 'bla-mannschaftsuebersicht',
+  selector: 'bla-mannschaft',
   templateUrl: './mannschaft.component.html',
   styleUrls: ['./mannschaft.component.scss']
 })
 export class MannschaftComponent extends CommonComponentDirective implements OnInit {
   private mannschaftId: number | null = null;
-  private veranstaltungId: number | null = null;
+  private vereinId: number | null = null;
   public mannschaften: DsbMannschaftDTO[] | null = null;
   public verein: VereinDTO | null = null;
   public currentMannschaft : DsbMannschaftDTO = new DsbMannschaftDTO()
@@ -42,7 +44,8 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     private router: Router,
     private route: ActivatedRoute,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     super();
   }
@@ -53,8 +56,8 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     this.loading = true;
     this.loadingTable =true;
     this.route.params.subscribe((params) => {
-      if (!isUndefined(params[VERANSTALTUNG_PATH_PARAM])) {
-        this.veranstaltungId = parseInt(params[VERANSTALTUNG_PATH_PARAM], 10);
+      if (!isUndefined(params[VEREIN_PATH_PARAM])) {
+        this.vereinId = parseInt(params[VEREIN_PATH_PARAM], 10);
         // Load after we have the ID
         this.loadMannschaftenData();
       } else {
@@ -74,7 +77,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   loadMannschaftenData(): void{
     // set loading state
     this.loading = true;
-    this.mannschaftDataProvider.findAllByVeranstaltungsId(this.veranstaltungId)
+    this.mannschaftDataProvider.findAllByVereinsId(this.vereinId)
       .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         console.log(response)
         this.mannschaften = response.payload!;
@@ -93,10 +96,11 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
         if (this.mannschaftId!=null){
           this.currentMannschaft = this.mannschaften.find(mannschaft => mannschaft.id === this.mannschaftId)!;
           if (this.currentMannschaft==null){
-            this.router.navigate(['/mannschaft',this.veranstaltungId])
+            this.router.navigate(['/mannschaft',this.vereinId])
           }
         }else {
           this.currentMannschaft = this.mannschaften[0];
+          this.router.navigate([this.currentMannschaft.id], {relativeTo: this.route});
         }
         this.loading = false;
         //this.mannschaftenrows();
@@ -105,6 +109,14 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
         console.error(response);
         this.loading = false;
       });
+  }
+
+  public onPushtoVerein(): void {
+    this.router.navigate(['/verein',this.vereinId]);
+  }
+
+  public onSelectMannschaft(): void {
+    this.router.navigate([this.currentMannschaft.id], {relativeTo: this.route});
   }
 
   /*mannschaftenrows(): void{
@@ -124,6 +136,20 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     this.router.navigate(['/mannschaftsuebersicht',rowValues.id]);
   }
 
-  readonly config = MANNSCHAFT_CONFIG;
+  private updateBreadcrumb(): void {
+    const name = this.currentMannschaft?.name || this.translate.instant('MANNSCHAFT.STATUS.UNNAMED') || 'unbenannte Mannschaft';
+    this.config = {
+      ...this.config,
+      //navigationCardsConfig = new class implements NavigationCardsConfig {},
+      //breadcrumb: [
+      //  { label: this.translate.instant('NAV.HOME'), routerLink: ['/'] },
+      //  { label: this.translate.instant('MANNSCHAFT.LIST'), routerLink: ['/mannschaften'] },
+      //  { label: name }
+      //]
+    };
+  }
+
+  public config = MANNSCHAFT_CONFIG;
   readonly config_table = MANNSCHAFTEN_TABLE_CONFIG;
+  protected readonly ActionButtonColors = ActionButtonColors;
 }
