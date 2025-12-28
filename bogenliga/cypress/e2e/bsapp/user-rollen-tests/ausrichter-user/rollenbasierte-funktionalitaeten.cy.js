@@ -18,10 +18,6 @@ describe('testvontest', function () {
   })
 
 
-  it('Ausrichter - Regionen anzeigen', () => {
-    cy.get('.fa-bullseye').click();
-    cy.get('.sunburst-viz');
-  })
 
   it('Ausrichter - Regionen anzeigen, über Verwaltung', () => {
     cy.wait(3000)
@@ -37,13 +33,13 @@ describe('testvontest', function () {
   })
 
   it('Verwaltung aufrufen', () => {
-    cy.visit('http://localhost:4200/#/regionen');
+    cy.visit('http://localhost:4200/#/liga');
     cy.get('.fa-cogs > path').click();
   })
 
 
   it('Verein suchen', () => {
-    cy.visit('http://localhost:4200/#/regionen');
+    cy.visit('http://localhost:4200/#/liga');
     cy.get('.fa-users').click();
     cy.get('.input-group > #undefined').click();
     cy.get('.input-group > #undefined').type('Kreis');
@@ -51,7 +47,7 @@ describe('testvontest', function () {
 
 
   it('DSB Mitglieder Übersicht', () => {
-    cy.visit('http://localhost:4200/#/regionen');
+    cy.visit('http://localhost:4200/#/liga');
     cy.get('.fa-cogs').click();
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click();
   });
@@ -89,14 +85,14 @@ describe('testvontest', function () {
 
 
   it('Wettkampfklassen Übersicht', () => {
-    cy.visit('http://localhost:4200/#/regionen');
+    cy.visit('http://localhost:4200/#/liga');
     cy.get('.fa-cogs').click();
     cy.get('[data-cy=verwaltung-klassen-button]').click();
 
   });
 
   it('Vereine Übersicht', () => {
-    cy.visit('http://localhost:4200/#/regionen');
+    cy.visit('http://localhost:4200/#/liga');
     cy.get('[data-cy="sidebar-vereine-button"] .sidebar-link').click();
   });
 
@@ -105,83 +101,73 @@ describe('testvontest', function () {
   it('Wettkampfergebnisse anzeigen', () => {
     cy.visit('http://localhost:4200/#/wettkaempfe');
     cy.get('[id="Table0"]');
+  });
 
+  it('Liga Tabelle', () => {
+    cy.visit('http://localhost:4200/#/liga');
+    cy.get('.fa-list-ol').click();
+  });
 
-    it('Liga Tabelle', () => {
-      cy.visit('http://localhost:4200/#/regionen');
-      cy.get('.fa-list-ol').click();
-    });
+  it('Wettkampfdurchführung (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('[data-cy=bla-selection-list]').type('0: 0');
+    cy.get('option:nth-child(1)').click();
+    cy.get('#selectionListRegions > option:nth-child(2)').click();
+    cy.get('bla-actionbutton:nth-child(3)').click();
+  });
 
+  it('Setzliste - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('.expand-container')
+    cy.get('[id="downloadSetzliste"]').click({force: true});
+  });
 
-    it('Wettkampfdurchführung (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('[data-cy=bla-selection-list]').type('0: 0');
-      cy.get('option:nth-child(1)').click();
-      cy.get('#selectionListRegions > option:nth-child(2)').click();
-      cy.get('bla-actionbutton:nth-child(3)').click();
-    });
+  it('Schusszettel- Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('.expand-container')
+    cy.get('[id="downloadSchusszettel"]').click({force: true});
+  });
 
+  it('Bogenkontrollliste - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('.expand-container')
+    cy.get('[id="downloadBogenkontrollliste"]').click({force: true});
+  });
 
-    it('Setzliste - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('.expand-container')
-      cy.get('[id="downloadSetzliste"]').click({force: true});
-    });
+  it('Meldezettel - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.get('.expand-container')
+    cy.get('[id="downloadMeldezettel"]').click({force: true});
+  });
 
-    it('Schusszettel- Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('.expand-container')
-      cy.get('[id="downloadSchusszettel"]').click({force: true});
-    });
+  it('Ligatabelle (generiere Matches), Mannschaftsergebnisse eines Wettkampfs - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('#generiereMatches').click({force:true});
+  });
 
-    it('Bogenkontrollliste - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('.expand-container')
-      cy.get('[id="downloadBogenkontrollliste"]').click({force: true});
-    });
+  it('Setup Tablets (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('.subtitle').click();
+    cy.get('#setupTable #undefined').click({force:true});
+  });
 
-    it('Meldezettel - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.get('.expand-container')
-      cy.get('[id="downloadMeldezettel"]').click({force: true});
-    });
+  it('Wettkampfergebnisse Mannschaften anzeigen', () => {
+    cy.visit('http://localhost:4200/#/wettkaempfe');
+    cy.get('.fa-trophy > path').click();
+    cy.get('#showMannschaftsstatistik > .statistik-filter-button').click({force: true});
+    cy.get('#regionenForm').submit();
+  });
 
+  it('Mitglieder der Mannschaft anzeigen', () => {
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
+    cy.get('#payload-id-1');
+  });
 
-    it('Ligatabelle (generiere Matches), Mannschaftsergebnisse eines Wettkampfs - Dokumente erstellen (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('#generiereMatches').click({force:true});
-    });
-
-
-    it('Setup Tablets (x - nur die eigene, für den Wettkampftag, wo er Ausrichter ist)', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('.subtitle').click();
-      cy.get('#setupTable #undefined').click({force:true});
-    });
-
-
-    it('Wettkampfergebnisse Mannschaften anzeigen', () => {
-      cy.visit('http://localhost:4200/#/wettkaempfe');
-      cy.get('.fa-trophy > path').click();
-      cy.get('#showMannschaftsstatistik > .statistik-filter-button').click({force: true});
-      cy.get('#regionenForm').submit();
-    });
-
-
-    it('Mitglieder der Mannschaft anzeigen', () => {
-      cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
-      cy.get('#payload-id-1');
-    });
-
-
-    it('Ergebnisse eines Mannschaftsmitglieds anzeigen', () => {
-      cy.visit('http://localhost:4200/#/wkdurchfuehrung');
-      cy.get('.fa-trophy > path').click();
-      cy.get('.row:nth-child(2) .form-control > div').click();
-      cy.get('#statistiken').type('einzelstatistik');
-      cy.get('[id="Table0"]');
-    });
-
-
+  it('Ergebnisse eines Mannschaftsmitglieds anzeigen', () => {
+    cy.visit('http://localhost:4200/#/wkdurchfuehrung');
+    cy.get('.fa-trophy > path').click();
+    cy.get('.row:nth-child(2) .form-control > div').click();
+    cy.get('#statistiken').type('einzelstatistik');
+    cy.get('[id="Table0"]');
   });
 });
 
