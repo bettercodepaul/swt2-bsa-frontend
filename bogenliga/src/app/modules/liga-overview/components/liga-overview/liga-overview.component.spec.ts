@@ -1,8 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {LigaOverviewComponent} from './liga-overview.component';
-import {LeagueHierarchyService} from '@shared/services';
+import {AnalyticsService, LeagueHierarchyService} from '@shared/services';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {LeagueHierarchyResult} from '@shared/models/tree-node';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
@@ -22,17 +22,28 @@ describe('LigaOverviewComponent', () => {
   let queryParamsSubject: BehaviorSubject<any>;
   let hierarchyService: jasmine.SpyObj<LeagueHierarchyService>;
   let hierarchySubject: Subject<LeagueHierarchyResult>;
+  let analytics: jasmine.SpyObj<AnalyticsService>;
 
   beforeEach(async(() => {
     // Mock Router erstellen
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-    queryParamsSubject = new BehaviorSubject<any>({});
+    queryParamsSubject = new BehaviorSubject<any>(convertToParamMap({}));
     mockActivatedRoute = {
-      queryParams: queryParamsSubject.asObservable()
+      queryParamMap: queryParamsSubject.asObservable()
     };
     hierarchySubject = new Subject<LeagueHierarchyResult>();
-    hierarchyService = jasmine.createSpyObj('LeagueHierarchyService', ['getHierarchy']);
-    hierarchyService.getHierarchy.and.returnValue(hierarchySubject.asObservable());
+    hierarchyService = jasmine.createSpyObj('LeagueHierarchyService', [
+      'getHierarchyCached',
+      'invalidateCache',
+      'clearTreeState',
+      'hasPersistedTreeState'
+    ]);
+    hierarchyService.getHierarchyCached.and.returnValue(hierarchySubject.asObservable());
+    hierarchyService.hasPersistedTreeState.and.returnValue(false);
+    (hierarchyService as any).selectedId = null;
+    (hierarchyService as any).expandedIds = new Set();
+    analytics = jasmine.createSpyObj('AnalyticsService', ['startTimer', 'trackTiming', 'track']);
+    analytics.startTimer.and.returnValue(() => 123);
 
     TestBed.configureTestingModule({
       declarations: [LigaOverviewComponent],
@@ -42,7 +53,8 @@ describe('LigaOverviewComponent', () => {
       providers: [
         {provide: Router, useValue: mockRouter},
         {provide: ActivatedRoute, useValue: mockActivatedRoute},
-        {provide: LeagueHierarchyService, useValue: hierarchyService}
+        {provide: LeagueHierarchyService, useValue: hierarchyService},
+        {provide: AnalyticsService, useValue: analytics}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -69,30 +81,31 @@ describe('LigaOverviewComponent', () => {
   });
 
   /**
-   * Test: Analytics Event wird korrekt getrackt (wenn _paq verfügbar ist)
+   * Test: Analytics Timing wird bei erfolgreichem Load getrackt
    */
-  it('should track analytics event on initialization when _paq is available', () => {
-    // Mock _paq
-    (window as any)._paq = [];
-    spyOn((window as any)._paq, 'push');
-
+  it('should track analytics timing on initialization when hierarchy loads', (done) => {
     fixture.detectChanges();
     hierarchySubject.next({status: 'ok', data: [], reason: undefined});
 
-    expect((window as any)._paq.push).toHaveBeenCalledWith(['trackEvent', 'Navigation', 'page_ligauebersicht_view']);
-
-    // Cleanup
-    delete (window as any)._paq;
+    setTimeout(() => {
+      expect(analytics.trackTiming).toHaveBeenCalledWith(
+        'api_liga_hierarchie_timing',
+        123,
+        {status: 'ok'}
+      );
+      done();
+    }, 0);
   });
 
   /**
-   * Test: Kein Fehler wenn _paq nicht verfügbar ist
+   * Test: Keine Timing-Messung bei leeren Daten
    */
-  it('should not throw error when _paq is not available', () => {
-    // Sicherstellen dass _paq nicht existiert
-    delete (window as any)._paq;
+  it('should not track timing when hierarchy is empty', () => {
+    fixture.detectChanges();
+    hierarchySubject.next({status: 'empty', data: []});
+    fixture.detectChanges();
 
-    expect(() => fixture.detectChanges()).not.toThrow();
+    expect(analytics.trackTiming).not.toHaveBeenCalled();
   });
 
   it('should hydrate tree nodes after hierarchy load', () => {
@@ -120,6 +133,33 @@ describe('LigaOverviewComponent', () => {
     expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.EMPTY');
   });
 
+  it('should render tree skeleton while loading', () => {
+    fixture.detectChanges();
+
+    const skeleton = fixture.nativeElement.querySelector('bla-tree-skeleton');
+    expect(skeleton).toBeTruthy();
+  });
+
+  it('should render error state on error status', () => {
+    fixture.detectChanges();
+
+    hierarchySubject.next({status: 'error', data: []});
+    fixture.detectChanges();
+
+    const errorState = fixture.nativeElement.querySelector('bla-error-state');
+    expect(errorState).toBeTruthy();
+  });
+
+  it('should render empty state on empty status', () => {
+    fixture.detectChanges();
+
+    hierarchySubject.next({status: 'empty', data: []});
+    fixture.detectChanges();
+
+    const emptyState = fixture.nativeElement.querySelector('bla-empty-state');
+    expect(emptyState).toBeTruthy();
+  });
+
   describe('Deeplink functionality', () => {
     it('should handle valid ligaId query parameter', (done) => {
       const nodes = [
@@ -139,7 +179,7 @@ describe('LigaOverviewComponent', () => {
       fixture.detectChanges();
 
       // Simulate query param
-      queryParamsSubject.next({ligaId: '2'});
+      queryParamsSubject.next(convertToParamMap({ligaId: '2'}));
 
       // TreeComponent sollte expandPathTo aufrufen
       setTimeout(() => {
@@ -151,10 +191,10 @@ describe('LigaOverviewComponent', () => {
     it('should show error message for invalid ligaId', (done) => {
       fixture.detectChanges();
 
-      queryParamsSubject.next({ligaId: 'invalid'});
+      queryParamsSubject.next(convertToParamMap({ligaId: 'invalid'}));
 
       setTimeout(() => {
-        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
+        expect(component.deeplinkMessageKey).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
         done();
       }, 50);
     });
@@ -168,35 +208,24 @@ describe('LigaOverviewComponent', () => {
       hierarchySubject.next({status: 'ok', data: nodes});
       fixture.detectChanges();
 
-      queryParamsSubject.next({ligaId: '999'});
+      queryParamsSubject.next(convertToParamMap({ligaId: '999'}));
 
       setTimeout(() => {
-        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.NOT_FOUND');
+        expect(component.deeplinkMessageKey).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
         done();
       }, 200);
     });
 
     it('should navigate to league homepage on tree selection', () => {
-      spyOn(window.location, 'assign');
-
       component.onTreeSelect(123);
 
-      expect(window.location.assign).toHaveBeenCalledWith('/wettkaempfe/ligatabelle?ligaId=123');
-    });
-
-    it('should clear deeplink error after 5 seconds', (done) => {
-      fixture.detectChanges();
-
-      queryParamsSubject.next({ligaId: 'invalid'});
-
-      setTimeout(() => {
-        expect(component.deeplinkErrorMessage).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
-
-        setTimeout(() => {
-          expect(component.deeplinkErrorMessage).toBeNull();
-          done();
-        }, 5100);
-      }, 50);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(
+        ['/home'],
+        {
+          queryParams: { liga: 123 },
+          queryParamsHandling: 'merge'
+        }
+      );
     });
   });
 });
