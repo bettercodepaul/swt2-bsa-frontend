@@ -144,39 +144,19 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
           // Deeplink nach Datenladung anwenden
           this.applyDeeplinkIfPossible();
 
-          // Fehler-Status für Monitoring tracken
-          if (result.status === 'error' || result.status === 'timeout') {
-            this.analytics.track('liga_hierarchy_error', {
-              status: result.status,
-              httpStatus: (result as any).httpStatus,
-              reason: result.reason,
-              component: 'LigaOverviewComponent'
-            });
-          }
-
           this.runAfterRender(() => {
             this.updateTreeAllExpandedState();
-            const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            if (result.status === 'ok') {
+              const duration = stop();
+              this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            }
           });
         },
-        error: (err) => {
+        error: () => {
           this.hierarchyResult = { status: 'error', data: [], reason: 'Unhandled error' };
           this.treeNodes = [];
           this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
           this.isLoading = false;
-
-          // Unerwartete Fehler für Monitoring tracken
-          this.analytics.track('liga_hierarchy_error', {
-            status: 'unhandled',
-            reason: err?.message || 'Unknown error',
-            component: 'LigaOverviewComponent'
-          });
-
-          this.runAfterRender(() => {
-            const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'error' });
-          });
         }
       });
   }
@@ -287,16 +267,9 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Retry-Handler für Fehlerzustände.
-   * Invalidiert Cache und lädt Daten neu. Trackt Retry-Versuch für Analytics.
+   * Invalidiert Cache und lädt Daten neu.
    */
   onRetry(): void {
-    // Retry-Versuch tracken
-    this.analytics.track('liga_hierarchy_retry', {
-      previousStatus: this.hierarchyResult?.status,
-      httpStatus: (this.hierarchyResult as any)?.httpStatus,
-      reason: this.hierarchyResult?.reason
-    });
-
     // Cache invalidieren und neu laden
     this.leagueHierarchyService.invalidateCache();
     this.loadHierarchy();
@@ -361,4 +334,3 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
   }
 }
-
