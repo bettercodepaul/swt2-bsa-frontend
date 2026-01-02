@@ -470,42 +470,59 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   private async findByVeranstalungsIds(): Promise<void> {
     try {
-      // Step 1: Fetch all veranstaltungen for liga
-      const veranstaltungenResponse = await this.veranstaltungDataProvider.findByLigaId(this.selectedLigaID);
-
-      const allVeranstaltungen = veranstaltungenResponse.payload ?? [];
-
-      if (allVeranstaltungen.length === 0) {
-        console.log("No veranstaltungen found for liga.");
-        return;
-      }
-
-      // Step 2: Determine best year
-      const veranstaltungWithWettkampftage = await this.findClosestYearWithWettkampftage(
-        allVeranstaltungen,
+      // EIN EINZIGER Backend-Call!
+      const response = await this.wettkampfDataProvider.findByLigaIdWithVeranstaltung(
+        this.selectedLigaID,
         this.currentSportjahr
       );
 
-      if (!veranstaltungWithWettkampftage) {
-        console.log("No year with wettkampftage found.");
+      const wettkaempfe = response.payload;
+
+      if (! wettkaempfe || wettkaempfe.length === 0) {
+        console.log("No wettkämpfe found for liga.");
         return;
       }
 
-      // Step 3: Retrieve wettkampftage for the selected veranstaltung
-      const selectedVeranstaltung = veranstaltungWithWettkampftage.veranstaltung;
-      const wettkampftage = veranstaltungWithWettkampftage.wettkampftage;
-      wettkampftage.forEach((wettkampftag) => {
-              let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
-                wettkaempfeDO : wettkampftag,
-                veranstaltungDO: selectedVeranstaltung,
-                month: this.numberToMonth(parseInt(wettkampftag.wettkampfDatum.split("-")[1])),
-                day: parseInt(wettkampftag.wettkampfDatum.split("-")[2])
-              };
-              this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-      })
-      this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
-      this.veranstaltungWettkaempfeyear = veranstaltungWithWettkampftage.year;
-      //console.log("Wettkampftage found:", wettkampftage);
+      // Jahr aus dem ersten Wettkampf holen
+      this.veranstaltungWettkaempfeyear = wettkaempfe[0].veranstaltungSportjahr;
+
+      // Direkt die Daten vom Backend verwenden - ALLE Felder sind jetzt vorhanden!
+      wettkaempfe.forEach((wk: any) => {
+        const wettkampfDO = new WettkampfDO(
+          wk.wettkampfId,
+          wk.veranstaltungId,
+          wk.wettkampfDatum,
+          wk.wettkampfStrasse,
+          wk.wettkampfPlz,
+          wk.wettkampfOrtsname,
+          wk.wettkampfOrtsinfo,
+          wk.wettkampfBeginn,
+          wk.wettkampfTag,
+          wk.wettkampfDisziplinId,
+          wk.wettkampfTypId,
+          null,                       // version (nicht benötigt)
+          wk.wettkampfAusrichter
+        );
+
+        const veranstaltungWettkaempfeDOLocal:  VeranstaltungWettkaempfe = {
+          wettkaempfeDO: wettkampfDO,
+          veranstaltungDO: {
+            id: wk.veranstaltungId,
+            name: wk.veranstaltungName,
+            sportjahr: wk.veranstaltungSportjahr,
+            ligaId: wk.veranstaltungLigaId
+          } as VeranstaltungDO,
+          month: this.numberToMonth(parseInt(wk.wettkampfDatum. split("-")[1])),
+          day: parseInt(wk.wettkampfDatum.split("-")[2])
+        };
+        this.veranstaltungWettkaempfeDO. push(veranstaltungWettkaempfeDOLocal);
+      });
+
+      // Bereits vom Backend sortiert, aber zur Sicherheit:
+      this.veranstaltungWettkaempfeDO.sort((a,b) =>
+        Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum)
+      );
+
     } catch (e) {
       console.error(e);
     }
