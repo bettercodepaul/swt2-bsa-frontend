@@ -58,10 +58,14 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output()
   readonly select = new EventEmitter<NodeId>();
 
+
+
   /**
    * Intern verwaltete expandierte Knoten.
    */
   expandedIds = new Set<NodeId>();
+
+
 
   /**
    * Aktuell fokusierter Knoten (Roving Tabindex).
@@ -94,6 +98,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['nodes']) {
       this.rebuildLookup(this.nodes);
+      this.ensureRootsExpanded();
       this.ensureRootsExpanded();
       this.updateVisibleNodes();
       this.ensureFocusableNode();
