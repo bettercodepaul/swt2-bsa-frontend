@@ -69,6 +69,7 @@ import {
   FilterTimestampInputbarComponent
 } from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 import {PageNumberDisplayComponent} from '@shared/components/displays/pagenumber-display/pagenumber-display.component';
+import { A11yHoverAnnounceDirective } from '@shared/a11y/a11y-hover-announce.directive';
 
 @NgModule({
   imports: [
@@ -134,6 +135,7 @@ import {PageNumberDisplayComponent} from '@shared/components/displays/pagenumber
     ExpandComponent,
     StatusbarComponent,
     PageNumberDisplayComponent,
+    A11yHoverAnnounceDirective,
   ],
   declarations: [
     ExpandComponent,
@@ -180,7 +182,8 @@ import {PageNumberDisplayComponent} from '@shared/components/displays/pagenumber
     ShortcutButton,
     VeranstaltungenButtonComponent,
     StatusbarComponent,
-    PageNumberDisplayComponent
+    PageNumberDisplayComponent,
+    A11yHoverAnnounceDirective,
   ]
 })
 export class SharedModule {
