@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeagueHierarchyService } from '@shared/services';
 import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
@@ -19,7 +19,7 @@ import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
   templateUrl: './liga-overview.component.html',
   styleUrls: ['./liga-overview.component.scss']
 })
-export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LigaOverviewComponent implements OnInit, OnDestroy {
 
   /** Dialog-/Seitenkonfiguration für Breadcrumbs etc. */
   public config = LIGA_OVERVIEW_PAGE_CONFIG;
@@ -44,25 +44,13 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Aktuell ausgewählte Liga-ID (Tree Selection).
-   * Wird beim Init aus dem Service wiederhergestellt.
    */
   selectedLigaId: number | null = null;
-
-  /**
-   * Initial expandierte Knoten-IDs für den Tree.
-   * Wird beim Init aus dem Service wiederhergestellt.
-   */
-  initialExpandedIds: Set<number> = new Set();
 
   /**
    * Übersetzungsschlüssel für Statusmeldungen.
    */
   statusMessageKey: string | null = null;
-
-  /**
-   * UI-State für Expand-All/Collapse-All Button.
-   */
-  treeAllExpanded = false;
 
   /**
    * Optionaler Hinweistext aus Deeplink-Validierung.
@@ -87,19 +75,11 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // Restore persisted tree state
-    this.restoreTreeState();
     this.observeDeeplinkParam();
     this.loadHierarchy();
   }
 
-  ngAfterViewInit(): void {
-    this.updateTreeAllExpandedState();
-  }
-
   ngOnDestroy(): void {
-    // Persist tree state before destroy
-    this.saveTreeState();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -132,7 +112,7 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const stop = this.analytics.startTimer('api_liga_hierarchie');
 
-    this.leagueHierarchyService.getHierarchyCached()
+    this.leagueHierarchyService.getHierarchy()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (result) => {
@@ -144,34 +124,16 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
           // Deeplink nach Datenladung anwenden
           this.applyDeeplinkIfPossible();
 
-          // Fehler-Status für Monitoring tracken
-          if (result.status === 'error' || result.status === 'timeout') {
-            this.analytics.track('liga_hierarchy_error', {
-              status: result.status,
-              httpStatus: (result as any).httpStatus,
-              reason: result.reason,
-              component: 'LigaOverviewComponent'
-            });
-          }
-
           this.runAfterRender(() => {
-            this.updateTreeAllExpandedState();
             const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'ok' });
           });
         },
-        error: (err) => {
+        error: () => {
           this.hierarchyResult = { status: 'error', data: [], reason: 'Unhandled error' };
           this.treeNodes = [];
           this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
           this.isLoading = false;
-
-          // Unerwartete Fehler für Monitoring tracken
-          this.analytics.track('liga_hierarchy_error', {
-            status: 'unhandled',
-            reason: err?.message || 'Unknown error',
-            component: 'LigaOverviewComponent'
-          });
 
           this.runAfterRender(() => {
             const duration = stop();
@@ -272,38 +234,6 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Manuelles Aktualisieren: Cache und Tree-State löschen, neu laden.
-   */
-  onRefresh(): void {
-    // Cache und Tree-State invalidieren
-    this.leagueHierarchyService.invalidateCache();
-    this.leagueHierarchyService.clearTreeState();
-    // UI-State zurücksetzen
-    this.selectedLigaId = null;
-    this.initialExpandedIds = new Set();
-    // Neu laden
-    this.loadHierarchy();
-  }
-
-  /**
-   * Retry-Handler für Fehlerzustände.
-   * Invalidiert Cache und lädt Daten neu. Trackt Retry-Versuch für Analytics.
-   */
-  onRetry(): void {
-    // Retry-Versuch tracken
-    this.analytics.track('liga_hierarchy_retry', {
-      previousStatus: this.hierarchyResult?.status,
-      httpStatus: (this.hierarchyResult as any)?.httpStatus,
-      reason: this.hierarchyResult?.reason
-    });
-
-    // Cache invalidieren und neu laden
-    this.leagueHierarchyService.invalidateCache();
-    this.loadHierarchy();
-  }
-
-
-  /**
    * Analytics: Tree-Selektion tracken.
    */
   private trackSelection(ligaId: number): void {
@@ -311,54 +241,4 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.analytics.track('tree_select', { ligaId });
     } catch { /* no-op */ }
   }
-
-  /**
-   * Stellt den Tree-State aus dem Service wieder her.
-   */
-  private restoreTreeState(): void {
-    if (this.leagueHierarchyService.hasPersistedTreeState()) {
-      this.selectedLigaId = this.leagueHierarchyService.selectedId;
-      this.initialExpandedIds = new Set(this.leagueHierarchyService.expandedIds);
-    }
-  }
-
-  /**
-   * Speichert den aktuellen Tree-State im Service.
-   */
-  private saveTreeState(): void {
-    if (this.treeComponent) {
-      this.leagueHierarchyService.expandedIds = this.treeComponent.expandedIds;
-    }
-    this.leagueHierarchyService.selectedId = this.selectedLigaId;
-  }
-
-  /**
-   * Handler für Änderungen an den expandierten Knoten.
-   */
-  onExpandedIdsChange(expandedIds: Set<number>): void {
-    this.leagueHierarchyService.expandedIds = expandedIds;
-    this.updateTreeAllExpandedState();
-  }
-
-  /**
-   * Globale Baumsteuerung: Expand-All / Collapse-All.
-   */
-  onToggleExpandCollapseAll(): void {
-    if (!this.treeComponent) {
-      return;
-    }
-
-    if (this.treeAllExpanded) {
-      this.treeComponent.collapseAll();
-    } else {
-      this.treeComponent.expandAll();
-    }
-
-    this.updateTreeAllExpandedState();
-  }
-
-  private updateTreeAllExpandedState(): void {
-    this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
-  }
 }
-
