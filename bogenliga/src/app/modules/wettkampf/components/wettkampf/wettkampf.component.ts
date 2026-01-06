@@ -62,6 +62,7 @@ import {
 import {
   MannschaftTabellenverlaufWettkampftage
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
+import {MatchDTO} from "@verwaltung/types/datatransfer/match-dto.class";
 
 
 interface Wettkampftag {
@@ -719,9 +720,9 @@ public updateChartOptions(newXAxisLabel: string) {
     await Promise.all(loadPromises);
   }
 
-  public async loadMatches(wettkampfId: number, index: number) {
+ public async loadMatches(wettkampfId: number, index: number) {
     await this.matchDataProviderService.findByWettkampfId(wettkampfId)
-              .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
+              .then((response: BogenligaResponse<MatchDTO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
               .catch(() => this.handleSuccessLoadMatches([], wettkampfId, index));
   }
 

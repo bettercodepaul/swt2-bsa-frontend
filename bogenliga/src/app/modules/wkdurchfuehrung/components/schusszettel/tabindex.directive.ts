@@ -21,17 +21,6 @@ class IndexGenerator {
 }
 
 /**
- * Incremented each time when used on a schuetzenNr field in the schusszettel-Formular
- */
-class SchuetzenNrIndexGenerator extends IndexGenerator {
-  constructor() {
-    super();
-    this.indices = [1, 2, 3, 34, 35, 36];
-    this.currIdx = 0;
-  }
-}
-
-/**
  * Incremented each time when used on a ringzahl field in the schusszettel-Formular
  */
 class RingzahlIndexGenerator extends IndexGenerator {
@@ -56,7 +45,6 @@ class RingzahlIndexGenerator extends IndexGenerator {
   }
 }
 
-const schuetzenNrIdxGen = new SchuetzenNrIndexGenerator();
 const ringzahlIdxGen = new RingzahlIndexGenerator();
 
 export class TabIndexDirective {
@@ -64,20 +52,6 @@ export class TabIndexDirective {
 
   constructor(el: ElementRef) {
     this.el = el;
-  }
-}
-
-/**
- * Element-directive for schuetzenNr inputs.
- * Sets the next available schuetzenNr tabindex value as HTML-Attribute.
- */
-@Directive({
-  selector: '[blaSchuetzenTabIndexDirective]'
-})
-export class SchuetzenTabIndexDirective extends TabIndexDirective {
-  constructor(el: ElementRef) {
-    super(el);
-    this.el.nativeElement.setAttribute('tabindex', schuetzenNrIdxGen.getNext());
   }
 }
 

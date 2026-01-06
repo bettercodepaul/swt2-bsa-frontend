@@ -106,7 +106,7 @@ describe('LigaOverviewComponent', () => {
     fixture.detectChanges();
 
     expect(component.treeNodes).toEqual(nodes);
-    expect(component.isLoading).toBeFalse();
+    expect(component.isLoading).toBe(false);
     expect(component.statusMessageKey).toBeNull();
   });
 
