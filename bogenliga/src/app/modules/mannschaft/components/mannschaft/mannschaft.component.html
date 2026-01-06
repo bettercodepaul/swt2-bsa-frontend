@@ -1,15 +1,15 @@
 <bla-navigation-dialog [config]="config">
   <!-- Loading indicator -->
-  <div *ngIf="loading">{{"MANNSCHAFT.STATUS.LOADING" | translate}}</div>
+  <div *ngIf="loading">{{ "MANNSCHAFT.STATUS.LOADING" | translate }}</div>
 
   <!-- Mannschaft anzeigen -->
   <div *ngIf="!loading && currentMannschaft">
     <h1>{{ currentMannschaft.name || 'unbenannte Mannschaft' }} </h1>
   </div>
   <div>
-    <select class="form-control"
-            id="vereine"
-            name="VereinName"
+    <select class="form-control w-auto"
+            id="mannschaftSelect"
+            name="mannschaftSelect"
             [(ngModel)]="currentMannschaft"
             [disabled]="loading || mannschaften?.length === 0"
             (ngModelChange)="onSelectMannschaft()">
@@ -18,20 +18,17 @@
       </option>
     </select>
   </div>
+  <div class="my-4">
+    {{ "MANNSCHAFT.PLACEHOLDER" | translate }}
+  </div>
+
   <bla-actionbutton
     class="item"
+    id="jumpToVereinButton"
     [color]="ActionButtonColors.PRIMARY"
     [iconClass]="'users'"
     (onClick)="onPushtoVerein()"
   >
-    {{"zum Verein"}}
+    {{ "zum Verein" }}
   </bla-actionbutton>
-  <!--<div class="row">
-    <bla-data-table
-      (onRowEntry)="getSelectedRow($event)"
-      [config]="config_table"
-      [loading]="loadingTable"
-      [rows]="rows">
-    </bla-data-table>
-  </div>-->
 </bla-navigation-dialog>
