@@ -1,0 +1,66 @@
+/**
+ * Styles für die Error-State Komponente
+ */
+
+.error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.error-state__icon-wrapper {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fef3f2;
+    border-radius: 50%;
+    margin-bottom: 16px;
+}
+
+.error-state__icon {
+    font-size: 32px;
+    color: #dc3545;
+}
+
+.error-state__message {
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 24px;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+.error-state__retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    .fa-sync {
+        transition: transform 0.3s ease;
+    }
+
+    &:hover .fa-sync {
+        transform: rotate(180deg);
+    }
+}

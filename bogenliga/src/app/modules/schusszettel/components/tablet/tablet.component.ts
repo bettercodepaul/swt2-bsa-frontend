@@ -102,4 +102,13 @@ export class TabletComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  /**
+   * Aborts the current passe input and returns to the initial state view.
+   * This is used when the passe input cannot be performed safely,
+   * for example if the shooter data is inconsistent.
+   */
+  onPasseAbort(): void {
+    this.showZustandFirst = true;
+  }
 }

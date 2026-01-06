@@ -2036,13 +2036,17 @@
     "TREE": {
       "TITLE": "Liga-Hierarchie",
       "EXPAND": "Knoten ausklappen",
-      "COLLAPSE": "Knoten einklappen"
+      "COLLAPSE": "Knoten einklappen",
+      "EXPAND_ALL": "Alles ausklappen",
+      "COLLAPSE_ALL": "Alles einklappen"
     },
     "DEEPLINK": {
       "INVALID_ID": "Die angegebene Liga-ID ist ungültig.",
       "NOT_FOUND": "Die angegebene Liga konnte nicht gefunden werden."
-    }
-  },
+    },
+    "REFRESH": "Aktualisieren",
+    "RETRY": "Erneut versuchen"
+    },
   "MANNSCHAFT": {
     "TITLE": "Mannschaftsübersicht",
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht der Mannschaft.",

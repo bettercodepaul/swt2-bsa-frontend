@@ -13,15 +13,16 @@ export class MatchDTO implements DataTransferObject {
   matchpunkte: number;
   satzpunkte: number;
 
-
+// die Funktion copyFrom wird benutzt um die Daten der Schnittstelle aus dem Backend auszulesen.
+// dabei müssen die Variablem von optional so benannt sein, dass sie exakten den Namen des DTO im Backende entsprechen.
   static copyFrom(optional: {
-    nr?: number,
+    matchNr?: number,
     id?: number,
     wettkampfId?: number,
     wettkampfTypId?: number,
     mannschaftId?: number,
     begegnung?: number,
-    scheibenNummer?: number,
+    matchScheibennummer?: number,
     matchpunkte?: number,
     satzpunkte?: number,
     version?: number
@@ -34,8 +35,8 @@ export class MatchDTO implements DataTransferObject {
       copy.id = null;
     }
 
-    if (optional.nr >= 0) {
-      copy.nr = optional.nr;
+    if (optional.matchNr >= 0) {
+      copy.nr = optional.matchNr;
     } else {
       copy.nr = null;
     }
@@ -64,8 +65,8 @@ export class MatchDTO implements DataTransferObject {
       copy.begegnung = null;
     }
 
-    if (optional.scheibenNummer >= 0) {
-      copy.scheibenNummer = optional.scheibenNummer;
+    if (optional.matchScheibennummer >= 0) {
+      copy.scheibenNummer = optional.matchScheibennummer;
     } else {
       copy.scheibenNummer = null;
     }
