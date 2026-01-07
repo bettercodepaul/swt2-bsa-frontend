@@ -222,6 +222,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadJahre();
     await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
+    this.selectedMannschaftStatistik = 'alle_mannschaften';
+    await this.onSelectMannschaftStatistik();
   }
 
   printStatistics() {
@@ -888,13 +890,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
       await this.loadAllErgebnisse(undefined);
       this.onSelectWettkampfTag();
-    } /* else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
+    } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME.MANNSCHAFT_TABELLENVERLAUF_TITLE';
       await this.visualizeMannschaftTabellenverlaufSportjahre(this.currentVeranstaltung);
     } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_wettkampftage') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME2.MANNSCHAFT_TABELLENVERLAUF_TITLE';
       await this.visualizeMannschaftTabellenverlaufWettkampftage(this.currentWettkampf);
-    }*/
+    }
   }
 
   /**
