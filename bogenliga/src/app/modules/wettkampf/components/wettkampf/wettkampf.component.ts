@@ -63,7 +63,6 @@ import {
   MannschaftTabellenverlaufWettkampftage
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
-import {Router} from "@angular/router";
 
 
 interface Wettkampftag {
@@ -206,7 +205,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService,
     private ligaTabelleDataProvider: LigatabelleDataProviderService,
     private currentUserService: CurrentUserService,
-    private router: Router,
     private onOfflineService: OnOfflineService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -224,15 +222,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadJahre();
     await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
-    this.selectedMannschaftStatistik = 'alle_mannschaften';
-    await this.onSelectMannschaftStatistik();
-  }
-
-  // TODO: Navigation link anpassen
-  public onMannschaftLinkClicked(event: {row: any, column: any}) {
-    console.log('onMannschaftLinkClicked payload:', event);
-    const mannschaftID = /*event.row[column.linkKey];*/ 102;
-    this.router.navigate([`/vereine/1`]);
   }
 
   printStatistics() {
@@ -899,13 +888,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
       await this.loadAllErgebnisse(undefined);
       this.onSelectWettkampfTag();
-    } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
+    } /* else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME.MANNSCHAFT_TABELLENVERLAUF_TITLE';
       await this.visualizeMannschaftTabellenverlaufSportjahre(this.currentVeranstaltung);
     } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_wettkampftage') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME2.MANNSCHAFT_TABELLENVERLAUF_TITLE';
       await this.visualizeMannschaftTabellenverlaufWettkampftage(this.currentWettkampf);
-    }
+    }*/
   }
 
   /**
