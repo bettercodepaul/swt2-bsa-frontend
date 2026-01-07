@@ -15,139 +15,65 @@
 
       <!-- Jahr -->
       <div id="DropdownForPrintOut">
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
-        </label>
-        <div class="col-sm-8">
-          <select class="form-control"
-                  id="jahr"
-                  name="Jahre"
-                  [(ngModel)]="currentJahr"
-                  [disabled]="loadingData"
-                  (ngModelChange)="loadVeranstaltungen(currentJahr)"
-          >
-            <option *ngFor="let Jahr of jahre"> {{ Jahr.sportjahr }}</option>
-          </select>
-        </div>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-        </div>
-      </div>
-
-
-      <!-- Liga -->
-      <div id="selectVereink">
-        <div class="row">
+        <div class="row print1">
           <label class="form-label-box col-form-label">
-            <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.LIGA_NAME.LABEL' | translate }}</span>
-          </label>
-          <div class="col-sm-8">
-            <select
-              class="form-control"
-              id="veranstaltungen"
-              name="VeranstaltungName"
-              [(ngModel)]="currentVeranstaltung"
-              (ngModelChange)="onSelect()"
-              [disabled]="loadingData || veranstaltungen.length === 0"
-            >
-              <option *ngFor="let veranstaltung of veranstaltungen"
-                      [ngValue]="veranstaltung"> {{ veranstaltung.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- Mannschaft -->
-      <div id="selectVerein">
-        <div class="row">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+            <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
           </label>
           <div class="col-sm-8">
             <select class="form-control"
-                    id="vereine"
-                    name="VereinName"
-                    [(ngModel)]="currentMannschaft"
-                    [disabled]="loadingData || mannschaften.length === 0"
-                    (ngModelChange)="onSelectVerein()">
-              <option *ngFor="let mannschaft of mannschaften"
-                      [ngValue]="mannschaft"> {{ mannschaft.name }}
-              </option>
+                    id="jahr"
+                    name="Jahre"
+                    [(ngModel)]="currentJahr"
+                    [disabled]="loadingData"
+                    (ngModelChange)="loadVeranstaltungen(currentJahr)"
+            >
+              <option *ngFor="let Jahr of jahre"> {{ Jahr.sportjahr }}</option>
             </select>
-            <div class="invalid-feedback">
-              {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+          </div>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+          </div>
+        </div>
+
+        <!-- Wettkampftag -->
+        <div id="selectWettkampftag">
+          <div class="row">
+            <label class="form-label-box col-form-label">
+              <span>{{ 'Wettkampftag:' }}</span>
+            </label>
+            <div class="col-sm-8">
+              <select class="form-control"
+                      id="wettkampftage"
+                      name="WettkampfTag"
+                      [(ngModel)]="selectedWettkampfTag"
+                      [disabled]="loadingData"
+                      (ngModelChange)="onSelectWettkampfTag()">
+                <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of wettkampftage"> {{wettkampftag.name | translate}}</option>
+              </select>
             </div>
           </div>
         </div>
       </div>
-  </div>
 
-
-      <!-- Details zum Verein -->
-      <div id="vereinsinformationen" >
-        <h2>{{currentVerein.name != undefined ? currentVerein.name : 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h2>
-        <!-- Regionsname -->
-        <div class="row print1">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}:</span>
-          </label>
-          <div class="col-sm-8">
-            <div class="form-control">
-              <div>{{this.currentVerein.regionName}}</div>
-            </div>
-          </div>
-        </div>
-        <!-- Webseite -->
-        <div class="row print1">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}:</span>
-          </label>
-          <div class="col-sm-8">
-            <div class="form-control">
-              <div><a href="{{this.currentVerein.website}}">{{this.currentVerein.website}}</a></div>
-            </div>
-          </div>
-        </div>
-        <!-- Beschreibung -->
-        <div class="row print1">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}:</span>
-          </label>
-          <div class="col-sm-8">
-              <div class="form-control">{{this.currentVerein.description}}</div>
-          </div>
-        </div>
-        <!-- Vereinslogo -->
-        <div class="row print1">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}:</span>
-          </label>
-          <div class="col-sm-8">
-            <img src="{{this.currentVerein.icon}}"
-                 alt="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR_PLACEHOLDER' | translate }}"
-                 width="100" height="100"/>
-          </div>
-        </div>
-      </div>
 
       <!-- Überschrift Statistiken -->
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
       <!-- Filter Buttons für die verschiedenen Tabellen -->
-      <div style="margin-top: 20px">
-        <bla-statistik-filter-button
-          id="showSchuetzenstatistik"
-          [id]="'showResultsButton'"
-          (onClick)="showStatistikOptions();"
-          [active]="schuetzenStatistikActive"
-          [disabled]="loadingData"
-        >
-          {{ 'MANNSCHAFTEN.MANNSCHAFTEN.FILTER_BUTTON.SCHUETZEN' | translate }}
-        </bla-statistik-filter-button>
 
+
+      <div style="margin-top: 20px">
+        <!--
+          <bla-statistik-filter-button
+            id="showSchuetzenstatistik"
+            [id]="'showResultsButton'"
+            (onClick)="showStatistikOptions();"
+            [active]="schuetzenStatistikActive"
+            [disabled]="loadingData"
+          >
+            {{ 'MANNSCHAFTEN.MANNSCHAFTEN.FILTER_BUTTON.SCHUETZEN' | translate }}
+          </bla-statistik-filter-button>
+        -->
         <bla-statistik-filter-button
           id="showMannschaftsstatistik"
           [id]="''"
@@ -158,7 +84,6 @@
           {{ 'MANNSCHAFTEN.MANNSCHAFTEN.FILTER_BUTTON.MANNSCHAFTEN' | translate }}
         </bla-statistik-filter-button>
       </div>
-
 
       <!-- popup -->
       <div class="overlay" *ngIf="popup">
@@ -182,6 +107,7 @@
 
 
       <!-- Dropdown Schützenstatistik -->
+      <!--
       <div id="selectStatistik" class="hidden">
         <div class="row">
           <div class="col-sm-8">
@@ -196,7 +122,7 @@
               <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
               <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
               <option value="schuetzenstatistikWettkampftage">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION4.LABEL' | translate }}</option>
-              <!--<option value="alleligenstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION5.LABEL' | translate }} </option> -->
+              <option value="alleligenstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION5.LABEL' | translate }} </option>
               <option value="letztejahre"> {{'Schnitte über die letzten Jahre' | translate }} </option>
 
             </select>
@@ -206,7 +132,7 @@
           </div>
         </div>
       </div>
-
+      -->
 
       <!-- Dropdown Mannschaftsstatistik -->
       <div id="selectMannschaftStatistik" class="hidden">
@@ -219,7 +145,6 @@
                     [(ngModel)]="selectedMannschaftStatistik"
                     [disabled]="loadingData"
                     (ngModelChange)="onSelectMannschaftStatistik()">
-              <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft != null ? currentMannschaft.name : "Keine Veranstaltungen verfügbar"}}" </option>
               <option value="alle_mannschaften"> Alle Mannschaften </option>
               <option value="tabellenverlauf_statistik_wettkampftage">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION4.LABEL'| translate}}</option>
               <option value="tabellenverlauf_statistik_alle_sportjahre">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION3.LABEL'| translate}}</option>
@@ -231,69 +156,56 @@
         </div>
       </div>
 
-      <!-- Dropdown Wettkampftag -->
-      <div id="selectWettkampftag" class="hidden">
-        <div class="row">
-          <div class="col-sm-8">
-            <select class="form-control"
-                    style="width: 50%"
-                    id="wettkampftage"
-                    name="WettkampfTag"
-                    [(ngModel)]="selectedWettkampfTag"
-                    [disabled]="loadingData"
-                    (ngModelChange)="onSelectWettkampfTag()">
-              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of wettkampftage"> {{wettkampftag.name | translate}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
+
       <div style="margin-top: 20px">
-      <bla-statistik-filter-button
-        id="printButton"
-        [buttonType]="ButtonType.PRIMARY"
-        [buttonSize]="ButtonSize.NORMAL"
-        [active]="!loadingData"
-        [disabled]="loadingData"
-        (onClick)="printStatistics()"
-      >
-        {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
-      </bla-statistik-filter-button>
+        <bla-statistik-filter-button
+          id="printButton"
+          [buttonType]="ButtonType.PRIMARY"
+          [buttonSize]="ButtonSize.NORMAL"
+          [active]="!loadingData"
+          [disabled]="loadingData"
+          (onClick)="printStatistics()"
+        >
+          {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
+        </bla-statistik-filter-button>
       </div>
 
       <div id="StatsAndGraphForPrintOut">
-      <!-- Table for all Statistiken -->
-      <div class="row print1">
-        <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
-        data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
-         <h3>{{currentStatistikTitle | translate}}</h3>
-          <!-- Button - Gesamtstatistik Drucken -->
-          <bla-data-table id="row00"
-                          [loading]="loadingData"
-                          [config]="currentConfig"
-                          [rows]="rows[currentWettkampftag]"
-          data-cy="tableStatistik">
-          </bla-data-table>
+        <!-- Table for all Statistiken -->
+        <div class="row print1">
+          <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
+               data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
+            <h3>{{currentStatistikTitle | translate}}</h3>
+            <!-- Button - Gesamtstatistik Drucken -->
+            <bla-data-table id="row00"
+                            [loading]="loadingData"
+                            [config]="currentConfig"
+                            [rows]="rows[currentWettkampftag]"
+                            data-cy="tableStatistik">
+            </bla-data-table>
+          </div>
         </div>
-      </div>
-      <div [hidden]="!showLineChart">
-        <h3>{{currentStatistikTitle | translate}}</h3>
-        <div class="chart-container">
-          <canvas
-            baseChart
-            [datasets]="lineChartData"
-            [labels]="lineChartLabels"
-            [options]="lineChartOptions"
-            [legend]="lineChartLegend"
-            [chartType]="lineChartType"
-          > </canvas>
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-9 button-box">
+
+        <div [hidden]="!showLineChart">
+          <h3>{{currentStatistikTitle | translate}}</h3>
+          <div class="chart-container">
+            <canvas
+              baseChart
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+            > </canvas>
+          </div>
         </div>
-      </div>
+
+        <div class="form-group row">
+          <div class="col-sm-3"></div>
+          <div class="col-sm-9 button-box">
+          </div>
+        </div>
       </div>
     </form>
   </div>
