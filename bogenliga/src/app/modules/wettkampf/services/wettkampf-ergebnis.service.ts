@@ -53,7 +53,7 @@ export class WettkampfErgebnisService {
 
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
-          if(passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
+          if (passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
             Satz += i;
           }
         }
