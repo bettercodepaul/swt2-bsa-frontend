@@ -91,14 +91,13 @@ export class WettkampfDataProviderService extends DataProviderService {
     }
   }
   public findByLigaIdWithVeranstaltung(
-    ligaId: number,
-    sportjahr: number
+    ligaId: number
   ): Promise<BogenligaResponse<any[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<any[]>(
         new UriBuilder()
           .fromPath(this.getUrl())
-          .path(`byLigaIdWithVeranstaltung/${ligaId}/sportjahr/${sportjahr}`)
+          .path(`byLigaIdWithVeranstaltung/${ligaId}`)
           .build()
       )
         .then((data:  any[]) => {
