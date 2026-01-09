@@ -472,8 +472,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     try {
       // EIN EINZIGER Backend-Call!
       const response = await this.wettkampfDataProvider.findByLigaIdWithVeranstaltung(
-        this.selectedLigaID,
-        this.currentSportjahr
+        this.selectedLigaID
       );
 
       const wettkaempfe = response.payload;
