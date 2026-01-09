@@ -90,6 +90,27 @@ export class WettkampfDataProviderService extends DataProviderService {
       });
     }
   }
+  public findByLigaIdWithVeranstaltung(
+    ligaId: number
+  ): Promise<BogenligaResponse<any[]>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<any[]>(
+        new UriBuilder()
+          .fromPath(this.getUrl())
+          .path(`byLigaIdWithVeranstaltung/${ligaId}`)
+          .build()
+      )
+        .then((data:  any[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error:  HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult. FAILURE});
+          }
+        });
+    });
+  }
 
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
     if (this.onOfflineService.isOffline()) {

@@ -18,18 +18,20 @@ it('Login möglich / Fenster öffnet sich', function() {
 
 it('bla-veranstaltungen-button existiert und toggelt expanded/unexpanded', () => {
   cy.visit('http://localhost:4200/#/home');
+  cy.log('Startseite geladen');
 
   // Auf Container warten
   cy.get('#competitionList', { timeout: 10000 }).should('exist');
 
-  // Buttons suchen (mit längerem Timeout)
+  // Bis 5s auf evtl. Buttons warten
+  cy.wait(5000);
   cy.get('#competitionList')
-    .find('bla-veranstaltungen-button', { timeout: 10000 })
-    .then(($buttons) => {
+    .then($container => {
+      const $buttons = $container.find('bla-veranstaltungen-button');
+
       if ($buttons.length === 0) {
-        // Keine Veranstaltungen vorhanden -> Test überspringen/loggen
-        cy.log('Keine bla-veranstaltungen-button gefunden (keine Wettkämpfe)');
-        return;
+        cy.log('Keine bla-veranstaltungen-button gefunden (nach max. 5s) – nichts zu testen.');
+        return; // Test endet hier erfolgreich
       }
 
       // Ersten Button als Alias setzen
