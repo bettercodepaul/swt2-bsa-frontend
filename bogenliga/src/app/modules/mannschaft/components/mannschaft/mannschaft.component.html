@@ -6,7 +6,10 @@
   <div *ngIf="!loading && currentMannschaft">
     <h1>{{ currentMannschaft.name || 'unbenannte Mannschaft' }} </h1>
   </div>
-  <div>
+  <div class="row p-3">
+    <label class="form-label-box col-form-label pr-2" for="mannschaftSelect">
+      <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+    </label>
     <select class="form-control w-auto"
             id="mannschaftSelect"
             name="mannschaftSelect"

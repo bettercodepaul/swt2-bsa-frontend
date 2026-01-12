@@ -206,7 +206,6 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    */
   public async getSelectedRow($event): Promise<void> {
     const rowValues = $event;
-    console.log(rowValues);
     const veranstaltungsName = rowValues.veranstaltung_name;
     const mannschaftsName = rowValues.mannschaftsName.replace('. Mannschaft', '');
     const type = this.typeOfTableColumn;
