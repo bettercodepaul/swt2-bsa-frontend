@@ -45,7 +45,6 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     private route: ActivatedRoute,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
     private notificationService: NotificationService,
-    private translate: TranslateService
   ) {
     super();
   }
