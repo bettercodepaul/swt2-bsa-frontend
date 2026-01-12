@@ -22,7 +22,33 @@
     </select>
   </div>
   <div class="my-4">
-    {{ "MANNSCHAFT.PLACEHOLDER" | translate }}
+    <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let tab of tabs; let i = index">
+        <button
+          class="nav-link"
+          [class.active]="i === activeIndex"
+          (click)="selectTab(i)">
+          {{ tab.label }}
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3 pl-3">
+      <div
+        class="tab-pane fade"
+        [class.show]="activeIndex === 0"
+        [class.active]="activeIndex === 0">
+        <bla-mannschaft-text *ngIf="activeIndex === 0" [wettkaempfe]="wettkaempfe" [selectedMannschaft]="currentMannschaft"></bla-mannschaft-text>
+      </div>
+      <div
+        class="tab-pane fade"
+        [class.show]="activeIndex === 1"
+        [class.active]="activeIndex === 1">
+        Tab 2
+      </div>
+    </div>
+
+
   </div>
 
   <bla-actionbutton

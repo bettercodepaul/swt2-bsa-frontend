@@ -8,7 +8,6 @@ import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dt
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {MANNSCHAFT_CONFIG, MANNSCHAFTEN_TABLE_CONFIG} from './mannschaft.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {TranslateService} from '@ngx-translate/core';
 import {
   NotificationOrigin,
   NotificationService,
@@ -17,6 +16,10 @@ import {
   NotificationUserAction
 } from '@shared/services/notification';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
@@ -29,6 +32,17 @@ const VEREIN_PATH_PARAM = 'id';
   styleUrls: ['./mannschaft.component.scss']
 })
 export class MannschaftComponent extends CommonComponentDirective implements OnInit {
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private notificationService: NotificationService,
+    private wettkampfDataProvider: WettkampfDataProviderService,
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+  ) {
+    super();
+  }
   public mannschaften: DsbMannschaftDTO[] | null = null;
   public verein: VereinDTO | null = null;
   public currentMannschaft: DsbMannschaftDTO = new DsbMannschaftDTO();
@@ -39,15 +53,14 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   public readonly ActionButtonColors = ActionButtonColors;
   private mannschaftId: number | null = null;
   private vereinId: number | null = null;
+  private veranstaltung: VeranstaltungDTO;
+  private wettkaempfe: WettkampfDTO[];
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private notificationService: NotificationService,
-  ) {
-    super();
-  }
+  public activeIndex = 0;
+  public tabs = [
+    { label: 'Overview'},
+    { label: 'Mannschaften'}
+  ];
 
   ngOnInit(): void {
     this.mannschaftId = null;
@@ -120,8 +133,8 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
             }
           });
         }
-
         this.loading = false;
+        this.loadWettkampf();
       })
       .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
         console.error(response);
@@ -135,5 +148,24 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
 
   public onSelectMannschaft(): void {
     this.router.navigate(['../', this.currentMannschaft.id], {relativeTo: this.route});
+    this.loadWettkampf();
+  }
+
+  private loadWettkampf() {
+    this.wettkampfDataProvider.findAllByVeranstaltungId(this.currentMannschaft.veranstaltungId)
+      .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+        console.log('wettkampf, findAllByVeranstaltungId', response);
+        this.wettkaempfe = response.payload!;
+      });
+    this.veranstaltungsDataProvider.findById(this.currentMannschaft.veranstaltungId)
+      .then((response: BogenligaResponse<VeranstaltungDTO>) => {
+        console.log('veranstaltung', response);
+        this.veranstaltung = response.payload!;
+      });
+  }
+
+  public selectTab(index: number): void {
+    console.log('Tab chnaged to: ' + index);
+    this.activeIndex = index;
   }
 }
