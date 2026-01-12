@@ -1,7 +1,6 @@
 import {Routes} from '@angular/router';
 
 import {HomeComponent} from '@home/components/home/home.component';
-import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -14,6 +13,7 @@ export const ROUTES: Routes = [
   {path: 'wkdurchfuehrung', loadChildren: () => import('src/app/modules/wkdurchfuehrung/wkdurchfuehrung.module').then((m) => m.WkdurchfuehrungModule)},
   {path: 'wkdurchfuehrung/:id', loadChildren: () => import('src/app/modules/wkdurchfuehrung/wkdurchfuehrung.module').then((m) => m.WkdurchfuehrungModule)},
   {path: 'user', loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule)},
+  {path: 'vereine/:id/:mannschaftId', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
   {path: 'vereine', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'vereine/:id', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
   {path: 'playground', loadChildren: () => import('src/app/modules/playground/playground.module').then((m) => m.PlaygroundModule)},
@@ -23,6 +23,5 @@ export const ROUTES: Routes = [
   {path: 'spotter', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
   {path: 'schusszettel', loadChildren: () => import('./modules/schusszettel/schusszettel.module').then((m) => m.SchusszettelModule)},
   {path: 'hilfe', loadChildren: () => import('src/app/modules/hilfe/hilfe.module').then((m) => m.HilfeModule)},
-  {path: 'mannschaft/:id/:mannschaftId', loadChildren: () => import('src/app/modules/mannschaft/mannschaft.module').then((m) => m.MannschaftModule)},
   {path: 'wkdurchfuehrung/tabletadmin/:id/:id/:id', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
 ];

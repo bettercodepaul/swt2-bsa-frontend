@@ -79,16 +79,17 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   }
 
   loadMannschaftenData(): void {
-    if (this.mannschaften !== null ) { return; } // Don't load Mannschaften again if we already have them
+    if (this.mannschaften !== null) {
+      return;
+    } // Don't load Mannschaften again if we already have them
 
     this.loading = true;
     this.mannschaftDataProvider.findAllByVereinsId(this.vereinId)
       .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
-        console.log(response);
         this.mannschaften = response.payload!;
         if (this.mannschaften.length === 0) {
           this.notificationService.showNotification({
-            id: 'LigaIDWarning',
+            id: 'NoMannschaftenFound',
             description: '',
             title: 'MANNSCHAFT.STATUS.NOT_FOUND',
             origin: NotificationOrigin.SYSTEM,
@@ -96,17 +97,31 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
             type: NotificationType.OK,
             severity: NotificationSeverity.INFO,
           });
-          this.router.navigate(['/home']);
+          this.notificationService.observeNotification('NoMannschaftenFound').subscribe((n) => {
+            if (n.userAction === NotificationUserAction.ACCEPTED) {
+              this.router.navigate(['/vereine', this.vereinId]);
+            }
+          });
         }
-        if (this.mannschaftId != null) {
-          this.currentMannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === this.mannschaftId)!;
-          if (this.currentMannschaft == null) {
-            this.router.navigate(['/mannschaft', this.vereinId]);
-          }
-        } else {
-          this.currentMannschaft = this.mannschaften[0];
-          this.router.navigate(['../', this.currentMannschaft.id], {relativeTo: this.route});
+
+        this.currentMannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === this.mannschaftId)!;
+        if (this.currentMannschaft == null) {
+          this.notificationService.showNotification({
+            id: 'showNotification',
+            description: '',
+            title: 'MANNSCHAFT.STATUS.NOT_FOUND',
+            origin: NotificationOrigin.SYSTEM,
+            userAction: NotificationUserAction.PENDING,
+            type: NotificationType.OK,
+            severity: NotificationSeverity.ERROR,
+          });
+          this.notificationService.observeNotification('showNotification').subscribe((n) => {
+            if (n.userAction === NotificationUserAction.ACCEPTED) {
+              this.router.navigate(['/vereine', this.vereinId]);
+            }
+          });
         }
+
         this.loading = false;
       })
       .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
