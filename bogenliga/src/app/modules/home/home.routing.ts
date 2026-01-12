@@ -13,7 +13,7 @@ import {
 } from '@verwaltung/components';
 import {
   DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard, VereinDetailGuard,
+  DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard,
   VereinOverviewGuard, VerwaltungGuard
 } from '@verwaltung/guards';
 
