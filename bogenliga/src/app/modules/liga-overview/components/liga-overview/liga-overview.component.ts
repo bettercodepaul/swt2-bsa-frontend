@@ -326,4 +326,85 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   private updateTreeAllExpandedState(): void {
     this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
   }
+
+  // --- Lazy Loading Handler ---
+
+  /**
+   * Handler für Lazy Loading von Kind-Knoten.
+   * Wird beim Expand eines Knotens mit lazyState aufgerufen.
+   */
+  onLoadChildren(event: { nodeId: number; offset: number }): void {
+    const node = this.findNodeRecursive(this.treeNodes, event.nodeId);
+    if (!node) return;
+
+    // Children are already in tree (from initial load) - just mark as loaded
+    // No need for async IndexedDB access since data is already in memory
+    if (node.lazyState) {
+      node.lazyState.childrenLoaded = true;
+      node.lazyState.childrenLoading = false;
+      node.lazyState.loadedChildrenCount = node.children?.length ?? 0;
+    }
+
+    // Force change detection
+    this.treeNodes = [...this.treeNodes];
+  }
+
+  /**
+   * Handler für Pagination: Mehr Kinder nachladen.
+   */
+  onLoadMore(event: { parentId: number; offset: number }): void {
+    const node = this.findNodeRecursive(this.treeNodes, event.parentId);
+    if (!node || !node.lazyState) return;
+
+    const offset = node.lazyState.loadedChildrenCount;
+    this.onLoadChildren({ nodeId: event.parentId, offset });
+  }
+
+  /**
+   * Merged nachgeladene Kinder in den Baum.
+   * Simpler approach: Mutate lazyState in place and trigger change detection.
+   */
+  private mergeChildrenIntoTree(
+    parentId: number,
+    newChildren: LeagueTreeNode[],
+    hasMore: boolean,
+    offset: number
+  ): void {
+    console.log('[LigaOverview] mergeChildrenIntoTree:', parentId, 'children:', newChildren.length);
+
+    const parent = this.findNodeRecursive(this.treeNodes, parentId);
+    if (!parent) {
+      console.warn('[LigaOverview] Parent node not found:', parentId);
+      return;
+    }
+
+    // Update lazyState to mark as loaded
+    if (parent.lazyState) {
+      parent.lazyState.childrenLoaded = true;
+      parent.lazyState.childrenLoading = false;
+      parent.lazyState.loadedChildrenCount = parent.children?.length ?? 0;
+      parent.lazyState.hasMoreChildren = hasMore;
+    }
+
+    // Force change detection by creating new root array reference
+    this.treeNodes = [...this.treeNodes];
+
+    console.log('[LigaOverview] Tree updated, lazyState:', parent.lazyState);
+  }
+
+  /**
+   * Findet einen Knoten rekursiv im Baum.
+   */
+  private findNodeRecursive(nodes: LeagueTreeNode[], id: number): LeagueTreeNode | null {
+    for (const node of nodes ?? []) {
+      if (node.id === id) {
+        return node;
+      }
+      if (node.children?.length) {
+        const found = this.findNodeRecursive(node.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
 }

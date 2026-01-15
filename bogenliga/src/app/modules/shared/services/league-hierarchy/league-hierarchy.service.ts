@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '@environment';
 import { UriBuilder } from '@shared/data-provider/services/utils/uri-builder.class';
 import { LeagueDTO } from '@shared/models/league.dto';
-import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
+import { LeagueHierarchyResult, LeagueTreeNode, PaginatedChildrenResult } from '@shared/models/tree-node';
 import { Observable, of, from } from 'rxjs';
 import { catchError, map, timeout, tap, switchMap, retry } from 'rxjs/operators';
 import { db } from '@shared/data-provider/offlinedb/offlinedb';
@@ -15,8 +15,12 @@ const DEFAULT_TIMEOUT_MS = 6000;
 const MOCK_FLAT_LIST_URL = './assets/mocks/league-hierarchy.json';
 // Default cache TTL: 5 minutes
 const DEFAULT_CACHE_TTL_MS = 5 * 60 * 1000;
-// Fixed cache entry ID (singleton)
-const CACHE_ENTRY_ID = 1;
+// Default page size for pagination
+const DEFAULT_PAGE_SIZE = 50;
+// Fixed cache entry ID (singleton) - Changed to force cache refresh for lazy loading
+const CACHE_ENTRY_ID = 4;
+// Aktiviert echtes Lazy Loading: Kinder werden erst beim Expand geladen
+const LAZY_LOADING_ENABLED = true;
 
 /**
  * Service für das Laden der Liga-Hierarchie.
@@ -245,11 +249,13 @@ export class LeagueHierarchyService {
 
   /**
    * Build a hierarchical tree from flat league list using ligaUebergeordnetId as parent reference.
+   * If LAZY_LOADING_ENABLED, children are not included - they will be loaded on demand.
    */
   private fromFlatList(list: LeagueDTO[]): LeagueTreeNode[] {
     if (!Array.isArray(list) || list.length === 0) { return []; }
 
     const byId = new Map<number, LeagueTreeNode>();
+    const childrenByParent = new Map<number, LeagueTreeNode[]>();
     const roots: LeagueTreeNode[] = [];
 
     // Create nodes
@@ -264,7 +270,7 @@ export class LeagueHierarchyService {
       byId.set(item.id, node);
     }
 
-    // Link children and collect roots
+    // Collect children per parent
     for (const item of list) {
       const node = byId.get(item.id)!;
       const parentId = item.ligaUebergeordnetId ?? null;
@@ -274,7 +280,10 @@ export class LeagueHierarchyService {
         const parent = byId.get(parentId);
         if (parent) {
           node.level = parent.level + 1;
-          parent.children.push(node);
+          if (!childrenByParent.has(parentId)) {
+            childrenByParent.set(parentId, []);
+          }
+          childrenByParent.get(parentId)!.push(node);
         } else {
           // Orphan node without existing parent -> treat as root
           roots.push(node);
@@ -282,6 +291,97 @@ export class LeagueHierarchyService {
       }
     }
 
+    // Set children and lazyState based on LAZY_LOADING_ENABLED
+    for (const [parentId, children] of childrenByParent) {
+      const parent = byId.get(parentId);
+      if (parent) {
+        // Always store children in the tree (needed for getChildrenOf to work)
+        parent.children = children;
+
+        if (LAZY_LOADING_ENABLED) {
+          // Mark as "not yet loaded" for UI - children will be rendered after expand
+          parent.childCount = children.length;
+          parent.lazyState = {
+            childrenLoaded: false,
+            childrenLoading: false,
+            loadedChildrenCount: 0,
+            hasMoreChildren: children.length > DEFAULT_PAGE_SIZE,
+            totalChildren: children.length
+          };
+        }
+      }
+    }
+
     return roots;
+  }
+
+  // --- Lazy Loading / Pagination ---
+
+  /**
+   * Konfigurierbare Page Size für Pagination.
+   */
+  readonly PAGE_SIZE = DEFAULT_PAGE_SIZE;
+
+  /**
+   * Lädt Kinder eines Knotens mit Pagination.
+   * Client-Side Implementierung: Filtert aus dem gecachten Gesamtbaum.
+   * Sobald Backend-Endpunkt verfügbar, kann auf API umgestellt werden.
+   *
+   * @param parentId ID des Eltern-Knotens
+   * @param options limit/offset für Pagination
+   */
+  getChildrenOf(
+    parentId: number,
+    options?: { limit?: number; offset?: number }
+  ): Observable<PaginatedChildrenResult> {
+    const limit = options?.limit ?? DEFAULT_PAGE_SIZE;
+    const offset = options?.offset ?? 0;
+
+    // Client-Side: Aus Cache laden und filtern
+    return from(this.getCachedEntry()).pipe(
+      map((cached) => {
+        if (!cached?.data) {
+          return { data: [], offset, limit, hasMore: false };
+        }
+
+        // Finde den Parent-Knoten rekursiv
+        const parent = this.findNodeById(cached.data, parentId);
+        if (!parent) {
+          return { data: [], offset, limit, hasMore: false };
+        }
+
+        const allChildren = parent.children ?? [];
+        const total = allChildren.length;
+        const paginatedChildren = allChildren.slice(offset, offset + limit);
+        const hasMore = offset + limit < total;
+
+        return {
+          data: paginatedChildren,
+          offset,
+          limit,
+          total,
+          hasMore
+        };
+      }),
+      catchError(() => of({ data: [], offset, limit, hasMore: false }))
+    );
+  }
+
+  /**
+   * Findet einen Knoten rekursiv im Baum.
+   */
+  private findNodeById(nodes: LeagueTreeNode[], id: number): LeagueTreeNode | null {
+    for (const node of nodes ?? []) {
+      if (node.id === id) {
+        return node;
+      }
+      if (node.children?.length) {
+        const found = this.findNodeById(node.children, id);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
   }
 }

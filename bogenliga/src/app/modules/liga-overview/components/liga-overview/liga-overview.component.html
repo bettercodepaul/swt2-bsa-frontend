@@ -55,7 +55,8 @@
                   <div class="liga-tree-wrapper">
                     <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId"
                       [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
-                      (expandedIdsChange)="onExpandedIdsChange($event)">
+                      (expandedIdsChange)="onExpandedIdsChange($event)" (loadChildren)="onLoadChildren($event)"
+                      (loadMore)="onLoadMore($event)">
                     </bla-league-tree>
                   </div>
                   <!-- Statushinweis für offline-fallback -->

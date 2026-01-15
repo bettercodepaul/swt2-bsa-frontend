@@ -1,21 +1,12 @@
-<div
-  class="bla-league-tree"
-  role="tree"
-  [attr.aria-multiselectable]="false"
+<div class="bla-league-tree" role="tree" [attr.aria-multiselectable]="false"
   [attr.aria-label]="'LIGAUEBERSICHT.TREE.TITLE' | translate">
   <ul class="bla-league-tree__list" role="presentation">
     <li class="bla-league-tree__root-item" role="none" *ngFor="let node of nodes; trackBy: trackByNodeId">
-      <bla-league-tree-node
-        [node]="node"
-        [expanded]="isExpanded(node.id)"
-        [expandedIds]="expandedIds"
-        [focusedId]="focusedNodeId"
-        [selectedId]="selectedId"
-        (toggle)="onToggle($event)"
-        (focusRequest)="onFocusRequest($event)"
-        (selectRequest)="selectNode($event)">
+      <bla-league-tree-node [node]="node" [expanded]="isExpanded(node.id)" [expandedIds]="expandedIds"
+        [focusedId]="focusedNodeId" [selectedId]="selectedId" (toggle)="onToggle($event)"
+        (focusRequest)="onFocusRequest($event)" (selectRequest)="selectNode($event)"
+        (loadMoreRequest)="loadMore.emit({parentId: $event, offset: 0})">
       </bla-league-tree-node>
     </li>
   </ul>
 </div>
-

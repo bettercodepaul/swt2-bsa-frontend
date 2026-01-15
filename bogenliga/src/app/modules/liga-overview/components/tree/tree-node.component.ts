@@ -10,7 +10,7 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import {LeagueTreeNode} from '@shared/models/tree-node';
+import { LeagueTreeNode } from '@shared/models/tree-node';
 
 type NodeId = number;
 
@@ -51,6 +51,12 @@ export class TreeNodeComponent implements OnChanges {
 
   @Output()
   readonly selectRequest = new EventEmitter<NodeId>();
+
+  /**
+   * Event: Wird ausgelöst wenn mehr Kinder geladen werden sollen (Pagination).
+   */
+  @Output()
+  readonly loadMoreRequest = new EventEmitter<NodeId>();
 
   readonly indentStepPx = 20;
 
@@ -148,10 +154,17 @@ export class TreeNodeComponent implements OnChanges {
   }
 
   get hasChildren(): boolean {
-    return Array.isArray(this.node?.children) && this.node.children.length > 0;
+    // Check for actual children OR lazyState (children not yet loaded) OR childCount
+    const hasActualChildren = Array.isArray(this.node?.children) && this.node.children.length > 0;
+    const hasLazyChildren = this.node?.lazyState != null || (this.node?.childCount ?? 0) > 0;
+    return hasActualChildren || hasLazyChildren;
   }
 
   get children(): LeagueTreeNode[] {
+    // For lazy loading: only return children if they've been loaded
+    if (this.node?.lazyState && !this.node.lazyState.childrenLoaded) {
+      return [];
+    }
     return this.node?.children ?? [];
   }
 
@@ -165,6 +178,9 @@ export class TreeNodeComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['expanded']) {
+      console.log(`[TreeNode] ${this.node?.name} expanded changed:`, changes['expanded'].currentValue);
+    }
     if (changes['focusedId'] || changes['selectedId'] || changes['expanded'] || changes['node']) {
       this.cdr.markForCheck();
     }
@@ -184,5 +200,27 @@ export class TreeNodeComponent implements OnChanges {
   @HostListener('focus')
   onFocus(): void {
     this.focusRequest.emit(this.node.id);
+  }
+
+  /**
+   * Prüft ob Kinder gerade geladen werden.
+   */
+  get isChildrenLoading(): boolean {
+    return this.node?.lazyState?.childrenLoading ?? false;
+  }
+
+  /**
+   * Prüft ob weitere Kinder nachgeladen werden können.
+   */
+  get showLoadMore(): boolean {
+    return this.expanded && (this.node?.lazyState?.hasMoreChildren ?? false);
+  }
+
+  /**
+   * Handler für 'Mehr laden' Button.
+   */
+  onLoadMoreClick(event: MouseEvent): void {
+    event.stopPropagation();
+    this.loadMoreRequest.emit(this.node.id);
   }
 }

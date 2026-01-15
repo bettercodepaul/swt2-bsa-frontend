@@ -65,6 +65,18 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   readonly expandedIdsChange = new EventEmitter<Set<NodeId>>();
 
   /**
+   * Event: Wird ausgelöst wenn Kinder eines Knotens geladen werden sollen (Lazy Loading).
+   */
+  @Output()
+  readonly loadChildren = new EventEmitter<{ nodeId: NodeId; offset: number }>();
+
+  /**
+   * Event: Wird ausgelöst wenn mehr Kinder nachgeladen werden sollen (Pagination).
+   */
+  @Output()
+  readonly loadMore = new EventEmitter<{ parentId: NodeId; offset: number }>();
+
+  /**
    * Optional: Initiale expandierte Knoten-IDs für State-Wiederherstellung.
    */
   @Input()
@@ -222,6 +234,13 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.expandedIds.add(nodeId);
         this.expandedIds = new Set(this.expandedIds);
         this.updateVisibleNodes();
+
+        // Lazy Loading: Emit loadChildren wenn Kinder noch nicht geladen
+        console.log('[TreeComponent] onToggle - node:', node?.id, 'lazyState:', node?.lazyState);
+        if (node && node.lazyState && !node.lazyState.childrenLoaded) {
+          console.log('[TreeComponent] Emitting loadChildren for node:', nodeId);
+          this.loadChildren.emit({ nodeId, offset: 0 });
+        }
       }
     } else if (isExpanded) {
       this.expandedIds.delete(nodeId);

@@ -1,20 +1,10 @@
-<div
-  class="bla-league-tree__item-row"
-  (click)="onItemClick()"
-  [style.--bla-node-indent.px]="paddingLeft"
-  [attr.data-has-children]="hasChildren"
-  [attr.data-node-id]="node.id"
-  role="presentation">
-  <button
-    *ngIf="hasChildren"
-    type="button"
-    class="bla-league-tree__toggle"
-    (click)="onToggleClick($event)"
+<div class="bla-league-tree__item-row" (click)="onItemClick()" [style.--bla-node-indent.px]="paddingLeft"
+  [attr.data-has-children]="hasChildren" [attr.data-node-id]="node.id" role="presentation">
+  <button *ngIf="hasChildren" type="button" class="bla-league-tree__toggle" (click)="onToggleClick($event)"
     [attr.aria-label]="(expanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE' : 'LIGAUEBERSICHT.TREE.EXPAND') | translate"
     tabindex="-1">
-    <span class="bla-league-tree__toggle-icon" 
-          [class.bla-league-tree__toggle-icon--expanded]="expanded" 
-          aria-hidden="true"></span>
+    <span class="bla-league-tree__toggle-icon" [class.bla-league-tree__toggle-icon--expanded]="expanded"
+      aria-hidden="true"></span>
   </button>
   <span *ngIf="!hasChildren" class="bla-league-tree__toggle-placeholder" aria-hidden="true"></span>
   <span class="bla-league-tree__label">
@@ -22,25 +12,29 @@
   </span>
 </div>
 
-<ul
-  *ngIf="hasChildren && expanded"
-  [id]="'league-tree-group-' + node.id"
-  role="group"
-  class="bla-league-tree__group">
-  <li
-    class="bla-league-tree__child-item"
-    role="none"
-    *ngFor="let child of children; trackBy: trackByNodeId">
-    <bla-league-tree-node
-      [node]="child"
-      [expanded]="expandedIds ? expandedIds.has(child.id) : false"
-      [expandedIds]="expandedIds"
-      [focusedId]="focusedId"
-      [selectedId]="selectedId"
-      (toggle)="toggle.emit($event)"
-      (focusRequest)="focusRequest.emit($event)"
-      (selectRequest)="selectRequest.emit($event)">
+<ul *ngIf="hasChildren && expanded" [id]="'league-tree-group-' + node.id" role="group" class="bla-league-tree__group">
+
+  <!-- Loading Indicator für Kinder -->
+  <li *ngIf="isChildrenLoading" class="bla-league-tree__loading-item" role="none">
+    <div class="bla-league-tree__loading" role="status" [style.--bla-node-indent.px]="paddingLeft + indentStepPx">
+      <span class="bla-league-tree__spinner" aria-hidden="true"></span>
+      <span class="sr-only">{{ 'LIGAUEBERSICHT.LOADING_CHILDREN' | translate }}</span>
+    </div>
+  </li>
+
+  <li class="bla-league-tree__child-item" role="none" *ngFor="let child of children; trackBy: trackByNodeId">
+    <bla-league-tree-node [node]="child" [expanded]="expandedIds ? expandedIds.has(child.id) : false"
+      [expandedIds]="expandedIds" [focusedId]="focusedId" [selectedId]="selectedId" (toggle)="toggle.emit($event)"
+      (focusRequest)="focusRequest.emit($event)" (selectRequest)="selectRequest.emit($event)"
+      (loadMoreRequest)="loadMoreRequest.emit($event)">
     </bla-league-tree-node>
   </li>
-</ul>
 
+  <!-- Mehr laden Button (Pagination) -->
+  <li *ngIf="showLoadMore" class="bla-league-tree__load-more-item" role="none">
+    <button type="button" class="bla-league-tree__load-more" (click)="onLoadMoreClick($event)"
+      [style.--bla-node-indent.px]="paddingLeft + indentStepPx">
+      {{ 'LIGAUEBERSICHT.LOAD_MORE' | translate }}
+    </button>
+  </li>
+</ul>
