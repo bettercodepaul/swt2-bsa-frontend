@@ -18,12 +18,6 @@
                   translate }}
                 </span>
               </button>
-
-              <button class="btn btn-outline-secondary btn-sm" (click)="onRefresh()" [disabled]="isLoading"
-                [attr.aria-label]="'LIGAUEBERSICHT.REFRESH' | translate">
-                <i class="fa fa-sync" [class.fa-spin]="isLoading" aria-hidden="true"></i>
-                <span class="ms-1">{{ 'LIGAUEBERSICHT.REFRESH' | translate }}</span>
-              </button>
             </div>
           </div>
 
@@ -59,9 +53,7 @@
                 <!-- Success State: Tree with data -->
                 <ng-container *ngIf="treeNodes.length > 0">
                   <div class="liga-tree-wrapper">
-                    <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId"
-                      [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
-                      (expandedIdsChange)="onExpandedIdsChange($event)">
+                    <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId" (select)="onTreeSelect($event)">
                     </bla-league-tree>
                   </div>
                   <!-- Statushinweis für offline-fallback -->
