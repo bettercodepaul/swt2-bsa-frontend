@@ -53,7 +53,9 @@
                 <!-- Success State: Tree with data -->
                 <ng-container *ngIf="treeNodes.length > 0">
                   <div class="liga-tree-wrapper">
-                    <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId" (select)="onTreeSelect($event)">
+                    <bla-league-tree [nodes]="treeNodes" [selectedId]="selectedLigaId"
+                      [initialExpandedIds]="initialExpandedIds" (select)="onTreeSelect($event)"
+                      (expandedIdsChange)="onExpandedIdsChange($event)">
                     </bla-league-tree>
                   </div>
                   <!-- Statushinweis für offline-fallback -->

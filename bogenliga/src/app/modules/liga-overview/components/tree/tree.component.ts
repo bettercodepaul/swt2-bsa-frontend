@@ -59,9 +59,26 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   readonly select = new EventEmitter<NodeId>();
 
   /**
+   * Event: Wird bei Änderung der expandierten Knoten ausgelöst.
+   */
+  @Output()
+  readonly expandedIdsChange = new EventEmitter<Set<NodeId>>();
+
+  /**
+   * Optional: Initiale expandierte Knoten-IDs für State-Wiederherstellung.
+   */
+  @Input()
+  initialExpandedIds: Set<NodeId> = new Set();
+
+  /**
    * Intern verwaltete expandierte Knoten.
    */
   expandedIds = new Set<NodeId>();
+
+  /**
+   * Flag ob initiale expandedIds bereits angewendet wurden.
+   */
+  private initialStateApplied = false;
 
   /**
    * Aktuell fokusierter Knoten (Roving Tabindex).
@@ -94,12 +111,27 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['nodes']) {
       this.rebuildLookup(this.nodes);
-      this.ensureRootsExpanded();
+      // Initialen State anwenden wenn vorhanden und noch nicht angewendet
+      if (!this.initialStateApplied && this.initialExpandedIds.size > 0) {
+        this.expandedIds = new Set(this.initialExpandedIds);
+        this.initialStateApplied = true;
+      } else {
+        this.ensureRootsExpanded();
+      }
       this.updateVisibleNodes();
       this.ensureFocusableNode();
       // Falls bereits eine Selektion vorliegt, Pfad expandieren
       if (this.selectedId != null) {
         this.expandAncestors(this.selectedId);
+      }
+    }
+
+    if (changes['initialExpandedIds'] && !this.initialStateApplied) {
+      const newInitial = changes['initialExpandedIds'].currentValue as Set<NodeId>;
+      if (newInitial && newInitial.size > 0) {
+        this.expandedIds = new Set(newInitial);
+        this.initialStateApplied = true;
+        this.updateVisibleNodes();
       }
     }
 
@@ -199,6 +231,8 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.focusNode(nodeId);
       }
     }
+    // Emit state change for persistence
+    this.expandedIdsChange.emit(this.expandedIds);
     this.cdr.markForCheck();
   }
 
@@ -231,6 +265,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.expandedIds = new Set(allExpandable);
     this.updateVisibleNodes();
     this.ensureFocusableNode();
+    this.expandedIdsChange.emit(this.expandedIds);
     this.cdr.markForCheck();
   }
 
@@ -247,6 +282,7 @@ export class TreeComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.focusNode(this.visibleNodes[0].id);
     }
 
+    this.expandedIdsChange.emit(this.expandedIds);
     this.cdr.markForCheck();
   }
 
