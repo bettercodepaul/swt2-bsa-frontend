@@ -44,15 +44,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Aktuell ausgewählte Liga-ID (Tree Selection).
-   * Wird beim Init aus dem Service wiederhergestellt.
    */
   selectedLigaId: number | null = null;
-
-  /**
-   * Initial expandierte Knoten-IDs für den Tree.
-   * Wird beim Init aus dem Service wiederhergestellt.
-   */
-  initialExpandedIds: Set<number> = new Set();
 
   /**
    * Übersetzungsschlüssel für Statusmeldungen.
@@ -87,8 +80,6 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // Restore persisted tree state
-    this.restoreTreeState();
     this.observeDeeplinkParam();
     this.loadHierarchy();
   }
@@ -98,8 +89,6 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Persist tree state before destroy
-    this.saveTreeState();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -132,7 +121,7 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const stop = this.analytics.startTimer('api_liga_hierarchie');
 
-    this.leagueHierarchyService.getHierarchyCached()
+    this.leagueHierarchyService.getHierarchy()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (result) => {
@@ -272,22 +261,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Manuelles Aktualisieren: Cache und Tree-State löschen, neu laden.
-   */
-  onRefresh(): void {
-    // Cache und Tree-State invalidieren
-    this.leagueHierarchyService.invalidateCache();
-    this.leagueHierarchyService.clearTreeState();
-    // UI-State zurücksetzen
-    this.selectedLigaId = null;
-    this.initialExpandedIds = new Set();
-    // Neu laden
-    this.loadHierarchy();
-  }
-
-  /**
    * Retry-Handler für Fehlerzustände.
-   * Invalidiert Cache und lädt Daten neu. Trackt Retry-Versuch für Analytics.
+   * Lädt Daten neu. Trackt Retry-Versuch für Analytics.
    */
   onRetry(): void {
     // Retry-Versuch tracken
@@ -297,11 +272,9 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       reason: this.hierarchyResult?.reason
     });
 
-    // Cache invalidieren und neu laden
-    this.leagueHierarchyService.invalidateCache();
+    // Neu laden
     this.loadHierarchy();
   }
-
 
   /**
    * Analytics: Tree-Selektion tracken.
@@ -310,34 +283,6 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.analytics.track('tree_select', { ligaId });
     } catch { /* no-op */ }
-  }
-
-  /**
-   * Stellt den Tree-State aus dem Service wieder her.
-   */
-  private restoreTreeState(): void {
-    if (this.leagueHierarchyService.hasPersistedTreeState()) {
-      this.selectedLigaId = this.leagueHierarchyService.selectedId;
-      this.initialExpandedIds = new Set(this.leagueHierarchyService.expandedIds);
-    }
-  }
-
-  /**
-   * Speichert den aktuellen Tree-State im Service.
-   */
-  private saveTreeState(): void {
-    if (this.treeComponent) {
-      this.leagueHierarchyService.expandedIds = this.treeComponent.expandedIds;
-    }
-    this.leagueHierarchyService.selectedId = this.selectedLigaId;
-  }
-
-  /**
-   * Handler für Änderungen an den expandierten Knoten.
-   */
-  onExpandedIdsChange(expandedIds: Set<number>): void {
-    this.leagueHierarchyService.expandedIds = expandedIds;
-    this.updateTreeAllExpandedState();
   }
 
   /**
@@ -361,4 +306,3 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
   }
 }
-
