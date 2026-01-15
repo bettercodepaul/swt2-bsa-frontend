@@ -1,11 +1,11 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
-import {TranslateModule} from '@ngx-translate/core';
-import {LigaOverviewComponent} from './liga-overview.component';
-import {AnalyticsService, LeagueHierarchyService} from '@shared/services';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {LeagueHierarchyResult} from '@shared/models/tree-node';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { LigaOverviewComponent } from './liga-overview.component';
+import { AnalyticsService, LeagueHierarchyService } from '@shared/services';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { LeagueHierarchyResult } from '@shared/models/tree-node';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 /**
  * Unit Tests für die Ligaübersicht-Komponente
@@ -36,10 +36,19 @@ describe('LigaOverviewComponent', () => {
       'getHierarchyCached',
       'invalidateCache',
       'clearTreeState',
-      'hasPersistedTreeState'
+      'hasPersistedTreeState',
+      'getExpandedIds',
+      'getSelectedId',
+      'saveExpandedIds',
+      'saveSelectedId'
     ]);
     hierarchyService.getHierarchyCached.and.returnValue(hierarchySubject.asObservable());
-    hierarchyService.hasPersistedTreeState.and.returnValue(false);
+    hierarchyService.hasPersistedTreeState.and.returnValue(Promise.resolve(false));
+    hierarchyService.getExpandedIds.and.returnValue(Promise.resolve(new Set<number>()));
+    hierarchyService.getSelectedId.and.returnValue(Promise.resolve(null));
+    hierarchyService.saveExpandedIds.and.returnValue(Promise.resolve());
+    hierarchyService.saveSelectedId.and.returnValue(Promise.resolve());
+    hierarchyService.invalidateCache.and.returnValue(Promise.resolve());
     (hierarchyService as any).selectedId = null;
     (hierarchyService as any).expandedIds = new Set();
     analytics = jasmine.createSpyObj('AnalyticsService', ['startTimer', 'trackTiming', 'track']);
@@ -51,10 +60,10 @@ describe('LigaOverviewComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        {provide: Router, useValue: mockRouter},
-        {provide: ActivatedRoute, useValue: mockActivatedRoute},
-        {provide: LeagueHierarchyService, useValue: hierarchyService},
-        {provide: AnalyticsService, useValue: analytics}
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: LeagueHierarchyService, useValue: hierarchyService },
+        { provide: AnalyticsService, useValue: analytics }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -85,13 +94,13 @@ describe('LigaOverviewComponent', () => {
    */
   it('should track analytics timing on initialization when hierarchy loads', (done) => {
     fixture.detectChanges();
-    hierarchySubject.next({status: 'ok', data: [], reason: undefined});
+    hierarchySubject.next({ status: 'ok', data: [], reason: undefined });
 
     setTimeout(() => {
       expect(analytics.trackTiming).toHaveBeenCalledWith(
         'api_liga_hierarchie_timing',
         123,
-        {status: 'ok'}
+        { status: 'ok' }
       );
       done();
     }, 0);
@@ -102,7 +111,7 @@ describe('LigaOverviewComponent', () => {
    */
   it('should not track timing when hierarchy is empty', () => {
     fixture.detectChanges();
-    hierarchySubject.next({status: 'empty', data: []});
+    hierarchySubject.next({ status: 'empty', data: [] });
     fixture.detectChanges();
 
     expect(analytics.trackTiming).not.toHaveBeenCalled();
@@ -110,11 +119,11 @@ describe('LigaOverviewComponent', () => {
 
   it('should hydrate tree nodes after hierarchy load', () => {
     const nodes = [
-      {id: 1, name: 'Bundesliga', level: 0, parentId: null, children: []}
+      { id: 1, name: 'Bundesliga', level: 0, parentId: null, children: [] }
     ];
     fixture.detectChanges();
 
-    hierarchySubject.next({status: 'ok', data: nodes});
+    hierarchySubject.next({ status: 'ok', data: nodes });
     hierarchySubject.complete();
     fixture.detectChanges();
 
@@ -126,7 +135,7 @@ describe('LigaOverviewComponent', () => {
   it('should map empty state to status message', () => {
     fixture.detectChanges();
 
-    hierarchySubject.next({status: 'empty', data: []});
+    hierarchySubject.next({ status: 'empty', data: [] });
     fixture.detectChanges();
 
     expect(component.treeNodes.length).toBe(0);
@@ -143,7 +152,7 @@ describe('LigaOverviewComponent', () => {
   it('should render error state on error status', () => {
     fixture.detectChanges();
 
-    hierarchySubject.next({status: 'error', data: []});
+    hierarchySubject.next({ status: 'error', data: [] });
     fixture.detectChanges();
 
     const errorState = fixture.nativeElement.querySelector('bla-error-state');
@@ -153,7 +162,7 @@ describe('LigaOverviewComponent', () => {
   it('should render empty state on empty status', () => {
     fixture.detectChanges();
 
-    hierarchySubject.next({status: 'empty', data: []});
+    hierarchySubject.next({ status: 'empty', data: [] });
     fixture.detectChanges();
 
     const emptyState = fixture.nativeElement.querySelector('bla-empty-state');
@@ -169,17 +178,17 @@ describe('LigaOverviewComponent', () => {
           level: 0,
           parentId: null,
           children: [
-            {id: 2, name: 'Region A', level: 1, parentId: 1, children: []}
+            { id: 2, name: 'Region A', level: 1, parentId: 1, children: [] }
           ]
         }
       ];
 
       fixture.detectChanges();
-      hierarchySubject.next({status: 'ok', data: nodes});
+      hierarchySubject.next({ status: 'ok', data: nodes });
       fixture.detectChanges();
 
       // Simulate query param
-      queryParamsSubject.next(convertToParamMap({ligaId: '2'}));
+      queryParamsSubject.next(convertToParamMap({ ligaId: '2' }));
 
       // TreeComponent sollte expandPathTo aufrufen
       setTimeout(() => {
@@ -191,7 +200,7 @@ describe('LigaOverviewComponent', () => {
     it('should show error message for invalid ligaId', (done) => {
       fixture.detectChanges();
 
-      queryParamsSubject.next(convertToParamMap({ligaId: 'invalid'}));
+      queryParamsSubject.next(convertToParamMap({ ligaId: 'invalid' }));
 
       setTimeout(() => {
         expect(component.deeplinkMessageKey).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
@@ -201,14 +210,14 @@ describe('LigaOverviewComponent', () => {
 
     it('should show error message for non-existent ligaId', (done) => {
       const nodes = [
-        {id: 1, name: 'Bundesliga', level: 0, parentId: null, children: []}
+        { id: 1, name: 'Bundesliga', level: 0, parentId: null, children: [] }
       ];
 
       fixture.detectChanges();
-      hierarchySubject.next({status: 'ok', data: nodes});
+      hierarchySubject.next({ status: 'ok', data: nodes });
       fixture.detectChanges();
 
-      queryParamsSubject.next(convertToParamMap({ligaId: '999'}));
+      queryParamsSubject.next(convertToParamMap({ ligaId: '999' }));
 
       setTimeout(() => {
         expect(component.deeplinkMessageKey).toBe('LIGAUEBERSICHT.DEEPLINK.INVALID_ID');
@@ -226,6 +235,163 @@ describe('LigaOverviewComponent', () => {
           queryParamsHandling: 'merge'
         }
       );
+    });
+  });
+
+  /**
+   * Tests für Retry-Funktionalität
+   */
+  describe('Retry functionality', () => {
+    it('should invalidate cache and reload on retry', async () => {
+      hierarchyService.invalidateCache.and.returnValue(Promise.resolve());
+      fixture.detectChanges();
+
+      // Simulate error state
+      hierarchySubject.next({ status: 'error', data: [], reason: 'Server error' });
+      fixture.detectChanges();
+
+      // Trigger retry
+      component.onRetry();
+
+      // Wait for async invalidateCache
+      await fixture.whenStable();
+
+      expect(hierarchyService.invalidateCache).toHaveBeenCalled();
+      expect(hierarchyService.getHierarchyCached).toHaveBeenCalledTimes(2);
+    });
+
+    it('should show loading state during retry', async () => {
+      hierarchyService.invalidateCache.and.returnValue(Promise.resolve());
+      fixture.detectChanges();
+
+      // Initial load
+      hierarchySubject.next({ status: 'error', data: [] });
+      fixture.detectChanges();
+
+      // Trigger retry
+      component.onRetry();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(component.isLoading).toBe(true);
+    });
+
+    it('should render retry button in error state', () => {
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'error', data: [] });
+      fixture.detectChanges();
+
+      const retryButton = fixture.nativeElement.querySelector('bla-error-state');
+      expect(retryButton).toBeTruthy();
+      expect(retryButton.getAttribute('ng-reflect-show-retry')).toBe('true');
+    });
+  });
+
+  /**
+   * Tests für Timeout-State
+   */
+  describe('Timeout state', () => {
+    it('should render error state on timeout status', () => {
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'timeout', data: [], reason: 'Request timed out' });
+      fixture.detectChanges();
+
+      const errorState = fixture.nativeElement.querySelector('bla-error-state');
+      expect(errorState).toBeTruthy();
+    });
+
+    it('should set timeout status message key', () => {
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'timeout', data: [], reason: 'Request timed out' });
+      fixture.detectChanges();
+
+      expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.TIMEOUT');
+    });
+
+    it('should allow retry on timeout', () => {
+      hierarchyService.invalidateCache.and.returnValue(Promise.resolve());
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'timeout', data: [] });
+      fixture.detectChanges();
+
+      const errorState = fixture.nativeElement.querySelector('bla-error-state');
+      expect(errorState.getAttribute('ng-reflect-show-retry')).toBe('true');
+    });
+  });
+
+  /**
+   * Tests für Offline-Fallback-State
+   */
+  describe('Offline-fallback state', () => {
+    it('should render tree with offline-fallback data', () => {
+      const nodes = [
+        { id: 1, name: 'Offline Liga', level: 0, parentId: null, children: [] }
+      ];
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'offline-fallback', data: nodes });
+      fixture.detectChanges();
+
+      expect(component.treeNodes).toEqual(nodes);
+      expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.OFFLINE_FALLBACK');
+    });
+
+    it('should show info alert for offline-fallback', () => {
+      const nodes = [
+        { id: 1, name: 'Offline Liga', level: 0, parentId: null, children: [] }
+      ];
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'offline-fallback', data: nodes });
+      fixture.detectChanges();
+
+      const infoAlert = fixture.nativeElement.querySelector('.alert-info');
+      expect(infoAlert).toBeTruthy();
+    });
+
+    it('should still render tree component in offline-fallback mode', () => {
+      const nodes = [
+        { id: 1, name: 'Fallback Liga', level: 0, parentId: null, children: [] }
+      ];
+      fixture.detectChanges();
+
+      hierarchySubject.next({ status: 'offline-fallback', data: nodes });
+      fixture.detectChanges();
+
+      const tree = fixture.nativeElement.querySelector('bla-league-tree');
+      expect(tree).toBeTruthy();
+    });
+  });
+
+  /**
+   * Tests für Error-Handler im Subscribe
+   */
+  describe('Error handling in subscribe', () => {
+    it('should handle unhandled errors in subscribe error callback', () => {
+      fixture.detectChanges();
+
+      // Simulate unhandled error via subject.error()
+      hierarchySubject.error(new Error('Unhandled error'));
+      fixture.detectChanges();
+
+      expect(component.hierarchyResult?.status).toBe('error');
+      expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.ERROR');
+      expect(component.isLoading).toBe(false);
+    });
+
+    it('should clear tree nodes on unhandled error', () => {
+      const nodes = [{ id: 1, name: 'Test', level: 0, parentId: null, children: [] }];
+      component.treeNodes = nodes;
+      fixture.detectChanges();
+
+      hierarchySubject.error(new Error('Unhandled error'));
+      fixture.detectChanges();
+
+      expect(component.treeNodes).toEqual([]);
     });
   });
 });
