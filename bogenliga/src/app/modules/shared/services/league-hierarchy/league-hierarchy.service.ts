@@ -5,7 +5,7 @@ import { UriBuilder } from '@shared/data-provider/services/utils/uri-builder.cla
 import { LeagueDTO } from '@shared/models/league.dto';
 import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
 import { Observable, of, from } from 'rxjs';
-import { catchError, map, timeout, tap, switchMap } from 'rxjs/operators';
+import { catchError, map, timeout, tap, switchMap, retry } from 'rxjs/operators';
 import { db } from '@shared/data-provider/offlinedb/offlinedb';
 import { OfflineLeagueHierarchyCache } from '@shared/data-provider/offlinedb/types/offline-league-hierarchy-cache.interface';
 
@@ -41,6 +41,7 @@ export class LeagueHierarchyService {
 
     return this.http.get<LeagueDTO[]>(url).pipe(
       timeout(timeoutMs),
+      retry(2),
       map((list) => this.fromFlatList(list)),
       map((nodes) => nodes.length === 0
         ? ({ status: 'empty', data: nodes } as LeagueHierarchyResult)
