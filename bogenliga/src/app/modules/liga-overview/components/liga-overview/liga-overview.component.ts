@@ -272,20 +272,6 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Manuelles Aktualisieren: Cache und Tree-State löschen, neu laden.
-   */
-  onRefresh(): void {
-    // Cache und Tree-State invalidieren
-    this.leagueHierarchyService.invalidateCache();
-    this.leagueHierarchyService.clearTreeState();
-    // UI-State zurücksetzen
-    this.selectedLigaId = null;
-    this.initialExpandedIds = new Set();
-    // Neu laden
-    this.loadHierarchy();
-  }
-
-  /**
    * Retry-Handler für Fehlerzustände.
    * Invalidiert Cache und lädt Daten neu. Trackt Retry-Versuch für Analytics.
    */
@@ -298,10 +284,10 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     // Cache invalidieren und neu laden
-    this.leagueHierarchyService.invalidateCache();
-    this.loadHierarchy();
+    this.leagueHierarchyService.invalidateCache().then(() => {
+      this.loadHierarchy();
+    });
   }
-
 
   /**
    * Analytics: Tree-Selektion tracken.
@@ -316,10 +302,17 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
    * Stellt den Tree-State aus dem Service wieder her.
    */
   private restoreTreeState(): void {
-    if (this.leagueHierarchyService.hasPersistedTreeState()) {
-      this.selectedLigaId = this.leagueHierarchyService.selectedId;
-      this.initialExpandedIds = new Set(this.leagueHierarchyService.expandedIds);
-    }
+    // Async restore - will update UI when data arrives
+    this.leagueHierarchyService.getExpandedIds().then((ids) => {
+      if (ids.size > 0) {
+        this.initialExpandedIds = ids;
+      }
+    });
+    this.leagueHierarchyService.getSelectedId().then((id) => {
+      if (id != null) {
+        this.selectedLigaId = id;
+      }
+    });
   }
 
   /**
@@ -327,16 +320,16 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   private saveTreeState(): void {
     if (this.treeComponent) {
-      this.leagueHierarchyService.expandedIds = this.treeComponent.expandedIds;
+      this.leagueHierarchyService.saveExpandedIds(this.treeComponent.expandedIds);
     }
-    this.leagueHierarchyService.selectedId = this.selectedLigaId;
+    this.leagueHierarchyService.saveSelectedId(this.selectedLigaId);
   }
 
   /**
    * Handler für Änderungen an den expandierten Knoten.
    */
   onExpandedIdsChange(expandedIds: Set<number>): void {
-    this.leagueHierarchyService.expandedIds = expandedIds;
+    this.leagueHierarchyService.saveExpandedIds(expandedIds);
     this.updateTreeAllExpandedState();
   }
 
@@ -361,4 +354,3 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
   }
 }
-
