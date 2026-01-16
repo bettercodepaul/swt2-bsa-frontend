@@ -1,4 +1,5 @@
-<div class="row pb-2">
+<div class="row pb-2"
+     *ngIf="[SchuetzenStatistikType.EINZELSTATISTIK, SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK].includes(selectedStatistic)">
   <select class="form-control w-auto"
           id="wettkampftagSelect"
           name="wettkampftagSelect"
@@ -12,13 +13,15 @@
 </div>
 
 <div class="row pb-1">
-  {{ "MANNSCHAFT.TABS.EINZELSTATISTIK.HELPER" | translate }}
+  {{ "MANNSCHAFT.TABS." + selectedStatistic.valueOf() + ".HELPER" | translate }}
 </div>
-<div class="row">
-  <bla-data-table id="row00"
-                  [loading]="loadingData"
-                  [config]="currentConfig"
-                  [rows]="rows[currentWettkampftag]"
-                  data-cy="tableStatistik">
-  </bla-data-table>
+<div class="row overflow-auto">
+  <div>
+    <bla-data-table id="row00"
+                    [loading]="loadingData"
+                    [config]="currentConfig"
+                    [rows]="rows[currentWettkampftag]"
+                    data-cy="tableStatistik">
+    </bla-data-table>
+  </div>
 </div>
