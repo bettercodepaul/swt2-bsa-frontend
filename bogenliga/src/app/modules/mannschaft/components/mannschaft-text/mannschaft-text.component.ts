@@ -100,7 +100,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
   }
 
   public onSelectWettkampfTag() {
-    this.loadEinzelstatistik();
+    this.statisticChange();
   }
 
   public async loadEinzelstatistik() {
