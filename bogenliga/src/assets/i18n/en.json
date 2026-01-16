@@ -2052,20 +2052,24 @@
     },
     "TABS": {
       "GESAMTSTATISTIK": {
-        "TITLE": "Complete statistics"
+        "TITLE": "Complete statistics",
+        "HELPER": "Overall statistics per shooter"
       },
       "EINZELSTATISTIK": {
         "TITLE": "Statistics per archer",
         "HELPER": "Passe-values of matches per shooter in a competition"
       },
       "WETTKAMPFSTATISTIK": {
-        "TITLE": "Statistics per competition day"
+        "TITLE": "Statistics per competition day",
+        "HELPER": "Average competition score per shooter"
       },
       "WETTKAMPFTAGESSTATISTIK": {
-        "TITLE": "Archer statistics per league"
+        "TITLE": "Archer statistics per match",
+        "HELPER": "Average match score per competitor in a competition"
       },
       "SAISONSTATISTIK": {
-        "TITLE": "Archer statistics across all leagues"
+        "TITLE": "Statistics per season",
+        "HELPER": "Statistics of an archer over the last five years"
       }
     },
     "NO_LIGA_WARNING": "The selected team is not assigned to a league."

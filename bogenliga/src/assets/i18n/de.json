@@ -2060,20 +2060,24 @@
     },
     "TABS": {
       "GESAMTSTATISTIK": {
-        "TITLE": "Gesamtstatistik"
+        "TITLE": "Gesamtstatistik",
+        "HELPER": "Gesamtstatistik pro Schütze"
       },
       "EINZELSTATISTIK": {
         "TITLE": "Einzelstatistik",
         "HELPER": "Schusswerte der Matches pro Schütze"
       },
       "WETTKAMPFSTATISTIK": {
-        "TITLE": "Wettkampfstatistik"
+        "TITLE": "Wettkampfstatistik",
+        "HELPER": "Wettkampftagschnitte pro Schütze"
       },
       "WETTKAMPFTAGESSTATISTIK": {
-        "TITLE": "Wettkampftagestatistik"
+        "TITLE": "Wettkampftagestatistik",
+        "HELPER": "Matchschnitte pro Schütze"
       },
       "SAISONSTATISTIK": {
-        "TITLE": "Saisonschnittstatistik"
+        "TITLE": "Schnitt pro Saison",
+        "HELPER": "Statistik eines Schützen über die letzten fünf Jahre"
       }
     },
     "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."

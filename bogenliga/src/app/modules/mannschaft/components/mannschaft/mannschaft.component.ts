@@ -21,6 +21,7 @@ import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {TranslatePipe} from '@ngx-translate/core';
+import {SchuetzenStatistikType} from '../index';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
@@ -57,12 +58,16 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   private mannschaftId: number | null = null;
   private vereinId: number | null = null;
   public veranstaltung: VeranstaltungDTO;
-  private wettkaempfe: WettkampfDTO[];
+  public wettkaempfe: WettkampfDTO[];
+  public selectedStatistic = SchuetzenStatistikType.GESAMTSTATISTIK;
 
   public activeIndex = 0;
   public tabs = [
-    { label: this.translate.transform('MANNSCHAFT.TABS.EINZELSTATISTIK.TITLE')},
-    { label: 'Mannschaften'}
+    {type: SchuetzenStatistikType.GESAMTSTATISTIK},
+    {type: SchuetzenStatistikType.EINZELSTATISTIK},
+    {type: SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK},
+    {type: SchuetzenStatistikType.WETTKAMPFSTATISTIK},
+    {type: SchuetzenStatistikType.SAISONSTATISTIK},
   ];
 
   ngOnInit(): void {
@@ -180,8 +185,8 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
       });
   }
 
-  public selectTab(index: number): void {
-    console.log('Tab chnaged to: ' + index);
+  public selectTab(index: number, type: SchuetzenStatistikType): void {
     this.activeIndex = index;
+    this.selectedStatistic = type;
   }
 }
