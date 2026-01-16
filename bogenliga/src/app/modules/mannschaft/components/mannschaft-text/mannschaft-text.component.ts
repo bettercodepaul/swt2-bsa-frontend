@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   WETTKAMPF_TABLE_EINZELGESAMT_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
@@ -13,8 +13,6 @@ import {
 import {
   SchuetzenstatistikletztejahreDataProviderService
 } from '@wettkampf/services/schuetzenstatistikletztejahre-data-provider-service';
-import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzel.config';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -38,13 +36,17 @@ import {
   WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.wettkampftage.config';
 import {SchuetzenstatistikLetzteJahreDO} from '@verwaltung/types/schuetzenstatistikletztejahre-do.class';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {
+  WETTKAMPF_TABLE_MOBILE_MATCHES_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.match.mobile.config';
 
 @Component({
   selector: 'bla-mannschaft-text',
   templateUrl: './mannschaft-text.component.html',
   styleUrls: ['./mannschaft-text.component.scss']
 })
-export class MannschaftTextComponent extends CommonComponentDirective implements OnChanges {
+export class MannschaftTextComponent extends CommonComponentDirective implements OnInit, OnChanges {
 
   constructor(private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
               private schuetzenstatistikMatchDataProvider: SchuetzenstatistikMatchDataProviderService,
@@ -52,6 +54,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
               private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService) {
     super();
   }
+
   @Input() wettkaempfe: WettkampfDTO[];
   @Input() selectedMannschaft: DsbMannschaftDTO;
   @Input() veranstaltung: VeranstaltungDTO;
@@ -63,8 +66,13 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public selectedWettkampfTag: WettkampfDTO;
   public loading: false;
+  public mobileView = false;
 
   public readonly SchuetzenStatistikType = SchuetzenStatistikType;
+
+  ngOnInit() {
+    // this.mobileView = window.innerWidth < 1200;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedMannschaft'] || changes['selectedStatistic']) {
@@ -104,7 +112,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
   }
 
   public async loadEinzelstatistik() {
-    if ( !this.selectedMannschaft || !this.wettkaempfe) {
+    if (!this.selectedMannschaft || !this.wettkaempfe) {
       return;
     }
     if (this.selectedMannschaft.veranstaltungId === null) {
@@ -145,6 +153,9 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
           this.currentConfig = WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG;
         } else {
           this.currentConfig = WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG;
+        }
+        if (this.mobileView) {
+          this.currentConfig = WETTKAMPF_TABLE_MOBILE_MATCHES_CONFIG;
         }
       } else {
         this.rows = [];
@@ -220,7 +231,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
 
   private async loadSchuetzenstatistiken(index) {
     await this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(this.selectedMannschaft.vereinId, this.selectedWettkampfTag.id)
-  .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadStatisticSuccess(response.payload));
+      .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadStatisticSuccess(response.payload));
     if (index < this.wettkaempfe.length - 1) {
       index += 1;
       return this.loadSchuetzenstatistiken(index);
@@ -229,8 +240,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
 
   private async loadSchuetzenstatistikenMatch(index) {
     await this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(this.selectedMannschaft.vereinId, this.selectedWettkampfTag.id, this.selectedWettkampfTag.wettkampfTag)
-      .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadStatisticSuccess(response.payload))
-      .catch((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadStatisticSuccess(response.payload));
+      .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadWettkampfTagesSuccess(response.payload));
     if (index < this.wettkaempfe.length - 1 && this.loadingData) {
       index += 1;
       return this.loadSchuetzenstatistikenMatch(index);
@@ -238,11 +248,49 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
   }
 
   private handleLoadStatisticSuccess(payload) {
+    console.log(payload);
     if (payload.length > 0) {
       const formattedRows = this.formatStatistik(toTableRows(payload));
+      console.log(formattedRows);
       this.rows.push(formattedRows);
       this.currentWettkampftag = 0;
     }
+  }
+
+  private handleLoadWettkampfTagesSuccess(payload) {
+    console.log(payload);
+    if (payload.length > 0) {
+      const formattedRows = (this.toTableRows(payload));
+      console.log(formattedRows);
+      this.rows.push(formattedRows);
+      this.currentWettkampftag = 0;
+    }
+  }
+
+  private toTableRows(payload: VersionedDataObject[]): TableRow[] {
+    const rows: TableRow[] = [];
+
+    payload.forEach((mitglied) => {
+      console.log('tablerow', mitglied);
+      console.log('mobileview', this.mobileView);
+      if (this.mobileView) {
+        const matchesArray = Object.entries(mitglied)
+          .filter(([key, value]) => key.startsWith('match'))
+          .map((e) => {
+            e[0] = e[0].replace('match', '');
+            e[1] = e[1] == null ? '-' : e[1];
+            return e.join(': ');
+          });
+
+        console.log(matchesArray);
+        const test = {...mitglied, matches: matchesArray.join('\n')};
+        rows.push(new TableRow({payload: test}));
+      } else {
+        rows.push(new TableRow({payload: mitglied}));
+      }
+    });
+
+    return rows;
   }
 
   /**
@@ -251,7 +299,7 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
    */
   private formatStatistik(statistikRow: TableRow[]): TableRow[] {
     statistikRow.forEach((row) => {
-      for (const columnKey in row.payload ) {
+      for (const columnKey in row.payload) {
         // formats numbers into country-dependent format
         if (typeof row.payload[columnKey] === 'number' && row.payload[columnKey] != null) {
           row.payload[columnKey] = row.payload[columnKey].toLocaleString();
