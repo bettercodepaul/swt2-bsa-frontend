@@ -10,7 +10,7 @@
           [style.width]="getColumnWidth(column.width)">
 
         <!-- sortable columns -->
-        <div style="white-space: nowrap;">
+        <div [class]="getHeaderStyleClass(column)" style="white-space: nowrap;">
           {{ column.translationKey | translate}}
           <span id="{{column.translationKey.toLowerCase()}}Sorted"
                 (click)="sortColumn(column)">
@@ -49,30 +49,30 @@
           [ngSwitch]="column.type"
           [class]="getStyleClass(row, column)">
 
-       <span *ngSwitchCase="TableColumnType.NUMBER">
+       <span *ngSwitchCase="TableColumnType.NUMBER" [class]="getSpanStyleClass(row, column)">
              {{formatNumber(row, column)}}
            </span>
 
-        <span *ngSwitchCase="TableColumnType.TEXT">
+        <span *ngSwitchCase="TableColumnType.TEXT" [class]="getSpanStyleClass(row, column)">
              {{formatText(row, column)}}
           </span>
 
-        <span *ngSwitchCase="TableColumnType.DATE">
+        <span *ngSwitchCase="TableColumnType.DATE" [class]="getSpanStyleClass(row, column)">
              {{ row.getText(column) | date: 'dd.MM.yyyy' }}
 
           <!--{{formatDate(row, column)}}-->
 
           </span>
 
-        <span *ngSwitchCase="TableColumnType.TRANSLATION_KEY">
+        <span *ngSwitchCase="TableColumnType.TRANSLATION_KEY" [class]="getSpanStyleClass(row, column)">
            {{getLocalizedText(row, column)}}
           </span>
 
-        <span *ngSwitchCase="TableColumnType.CUSTOM_MAPPING">
+        <span *ngSwitchCase="TableColumnType.CUSTOM_MAPPING" [class]="getSpanStyleClass(row, column)">
            {{getMappedText(row, column)}}
           </span>
 
-        <span *ngSwitchDefault>
+        <span *ngSwitchDefault [class]="getSpanStyleClass(row, column)">
             {{formatText(row, column)}}
           </span>
       </td>

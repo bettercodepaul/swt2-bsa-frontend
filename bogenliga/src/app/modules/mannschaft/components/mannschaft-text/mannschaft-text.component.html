@@ -21,7 +21,9 @@
                     [loading]="loadingData"
                     [config]="currentConfig"
                     [rows]="rows[currentWettkampftag]"
-                    data-cy="tableStatistik">
+                    data-cy="tableStatistik"
+                    [class.preWrap]="mobileView"
+    >
     </bla-data-table>
   </div>
 </div>
