@@ -20,6 +20,7 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {TranslatePipe} from '@ngx-translate/core';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
@@ -29,7 +30,8 @@ const VEREIN_PATH_PARAM = 'id';
 @Component({
   selector: 'bla-mannschaft',
   templateUrl: './mannschaft.component.html',
-  styleUrls: ['./mannschaft.component.scss']
+  styleUrls: ['./mannschaft.component.scss'],
+  providers: [TranslatePipe]
 })
 export class MannschaftComponent extends CommonComponentDirective implements OnInit {
 
@@ -40,6 +42,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     private notificationService: NotificationService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+    private translate: TranslatePipe
   ) {
     super();
   }
@@ -53,12 +56,12 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   public readonly ActionButtonColors = ActionButtonColors;
   private mannschaftId: number | null = null;
   private vereinId: number | null = null;
-  private veranstaltung: VeranstaltungDTO;
+  public veranstaltung: VeranstaltungDTO;
   private wettkaempfe: WettkampfDTO[];
 
   public activeIndex = 0;
   public tabs = [
-    { label: 'Overview'},
+    { label: this.translate.transform('MANNSCHAFT.TABS.EINZELSTATISTIK.TITLE')},
     { label: 'Mannschaften'}
   ];
 
@@ -152,6 +155,19 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   }
 
   private loadWettkampf() {
+    if (this.currentMannschaft.veranstaltungId === null) {
+      this.notificationService.showNotification({
+        id: 'showNotification',
+        description: '',
+        title: 'MANNSCHAFT.NO_LIGA_WARNING',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.ERROR,
+      });
+      this.veranstaltung = null;
+      return;
+    }
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.currentMannschaft.veranstaltungId)
       .then((response: BogenligaResponse<WettkampfDTO[]>) => {
         console.log('wettkampf, findAllByVeranstaltungId', response);

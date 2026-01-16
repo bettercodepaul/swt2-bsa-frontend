@@ -1,7 +1,4 @@
-<div class="row">
-  <label class="form-label-box col-form-label pr-2" for="wettkampftagSelect">
-    <span>test</span>
-  </label>
+<div class="row pb-2">
   <select class="form-control w-auto"
           id="wettkampftagSelect"
           name="wettkampftagSelect"
@@ -9,11 +6,14 @@
           [disabled]="loading"
           (ngModelChange)="onSelectWettkampfTag()">
     <option *ngFor="let wettkampf of wettkaempfe"
-            [ngValue]="wettkampf"> {{ wettkampf.wettkampfTag }}
+            [ngValue]="wettkampf">{{ "MANNSCHAFT.WETTKAMPF_DAY" | translate }}&nbsp;{{ wettkampf.wettkampfTag }}
     </option>
   </select>
 </div>
 
+<div class="row pb-1">
+  {{ "MANNSCHAFT.TABS.EINZELSTATISTIK.HELPER" | translate }}
+</div>
 <div class="row">
   <bla-data-table id="row00"
                   [loading]="loadingData"

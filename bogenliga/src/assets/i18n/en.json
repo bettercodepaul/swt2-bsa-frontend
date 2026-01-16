@@ -2041,6 +2041,7 @@
     "TITLE": "Team overview",
     "DESCRIPTION": "Here you will find a central overview a team.",
     "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
+    "WETTKAMPF_DAY": "Competition day",
     "STATUS": {
       "NOT_FOUND": "The specified team could not be found.",
       "LOADING": "Team overview is loading ...",
@@ -2048,7 +2049,26 @@
       "TIMEOUT": "The team overview could not be loaded (timeout). Please try again later.",
       "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
       "ERROR": "The team overview could not be loaded."
-    }
+    },
+    "TABS": {
+      "GESAMTSTATISTIK": {
+        "TITLE": "Complete statistics"
+      },
+      "EINZELSTATISTIK": {
+        "TITLE": "Statistics per archer",
+        "HELPER": "Passe-values of matches per shooter in a competition"
+      },
+      "WETTKAMPFSTATISTIK": {
+        "TITLE": "Statistics per competition day"
+      },
+      "WETTKAMPFTAGESSTATISTIK": {
+        "TITLE": "Archer statistics per league"
+      },
+      "SAISONSTATISTIK": {
+        "TITLE": "Archer statistics across all leagues"
+      }
+    },
+    "NO_LIGA_WARNING": "The selected team is not assigned to a league."
   }
   }
 }

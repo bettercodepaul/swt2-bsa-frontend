@@ -54,36 +54,41 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedMannschaft']) {
-      this.loadEinzelstatistik(this.selectedMannschaft);
+      this.loadEinzelstatistik();
     }
     if (changes['wettkaempfe']) {
-      this.loadEinzelstatistik(this.selectedMannschaft);
+      this.selectedWettkampfTag = this.getLatestWettkampfTag();
+      this.currentWettkampftag = this.wettkaempfe?.indexOf(this.selectedWettkampfTag) || 0;
+
+      this.loadEinzelstatistik();
     }
   }
 
   public onSelectWettkampfTag() {
-    console.log('wechsel');
-    // TODO: preselect latest Wettkampftag
-    // TODO: reload data for selected Wettkampftag
+    this.loadEinzelstatistik();
   }
 
-  public async loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
+  public async loadEinzelstatistik() {
     if ( !this.selectedMannschaft || !this.wettkaempfe) {
+      return;
+    }
+    if (this.selectedMannschaft.veranstaltungId === null) {
+      this.rows = [];
       return;
     }
     this.loadingData = true;
     this.currentConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
     this.rows = [];
-    await this.loadSchuetzenstatistiken(selectedMannschaft.vereinId, 0);
+    await this.loadSchuetzenstatistiken(0);
     this.loadingData = false;
   }
 
-  private async loadSchuetzenstatistiken(vereinId, index) {
-    await this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(vereinId, this.wettkaempfe[index].id) // TODO: change to selected wettkampf
+  private async loadSchuetzenstatistiken(index) {
+    await this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(this.selectedMannschaft.vereinId, this.selectedWettkampfTag.id)
   .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
     if (index < this.wettkaempfe.length - 1) {
       index += 1;
-      return this.loadSchuetzenstatistiken(vereinId, index);
+      return this.loadSchuetzenstatistiken(index);
     }
   }
 
@@ -111,6 +116,21 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
       }
     });
     return statistikRow;
+  }
+
+  private getLatestWettkampfTag(): WettkampfDTO {
+    if (!this.wettkaempfe) {
+      return null;
+    }
+    let latestWettkampf: WettkampfDTO = this.wettkaempfe[0];
+    this.wettkaempfe.forEach((wettkampf) => {
+      const wkDate = new Date(wettkampf.wettkampfDatum);
+      if (wkDate > new Date(latestWettkampf.wettkampfDatum) && wkDate <= new Date()) {
+        latestWettkampf = wettkampf;
+      }
+    });
+    console.log(latestWettkampf);
+    return latestWettkampf;
   }
 }
 

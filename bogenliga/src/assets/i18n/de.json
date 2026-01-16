@@ -38,7 +38,7 @@
     "HOME": {
       "TITLE": "Home",
       "WELCOME": "Willkommen",
-      "WETTKAEMPFE":{
+      "WETTKAEMPFE": {
         "NAECHSTE": "Unsere nächsten Wettkämpfe",
         "VERGANGENE": "Unsere vergangenen Wettkämpfe"
       },
@@ -126,7 +126,6 @@
       "STATISTIK_DRUCKEN": "Statistik drucken"
     }
   },
-
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
       "HEADERS": {
@@ -225,7 +224,6 @@
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
       "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
-
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
@@ -389,7 +387,7 @@
         "VERANSTALTUNG": "Auswahl der Veranstaltung und Mannschaft",
         "STATISTIKEN": "Statistiken"
       },
-      "FILTER_BUTTON":{
+      "FILTER_BUTTON": {
         "SCHUETZEN": "Schützen",
         "MANNSCHAFTEN": "Mannschaften"
       },
@@ -1581,7 +1579,7 @@
           "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         },
         "UPDATE_VERANSTALTUNG_FAILURE": {
-         "TITLE": "Update fehlgeschlagen",
+          "TITLE": "Update fehlgeschlagen",
           "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bitte generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
         },
         "UPDATE_DATABASE_FAILURE": {
@@ -2046,11 +2044,12 @@
     },
     "REFRESH": "Aktualisieren",
     "RETRY": "Erneut versuchen"
-    },
+  },
   "MANNSCHAFT": {
     "TITLE": "Mannschaftsübersicht",
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht der Mannschaft.",
     "PLACEHOLDER": "Die Mannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+    "WETTKAMPF_DAY": "Wettkampftag",
     "STATUS": {
       "NOT_FOUND": "Die angegebene Mannschaft konnte nicht gefunden werden.",
       "LOADING": "Manschaftenübersicht wird geladen …",
@@ -2058,6 +2057,25 @@
       "TIMEOUT": "Die Manschaftenübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
       "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
       "ERROR": "Die Manschaftenübersicht konnte nicht geladen werden."
-    }
+    },
+    "TABS": {
+      "GESAMTSTATISTIK": {
+        "TITLE": "Gesamtstatistik"
+      },
+      "EINZELSTATISTIK": {
+        "TITLE": "Einzelstatistik",
+        "HELPER": "Schusswerte der Matches pro Schütze"
+      },
+      "WETTKAMPFSTATISTIK": {
+        "TITLE": "Wettkampfstatistik"
+      },
+      "WETTKAMPFTAGESSTATISTIK": {
+        "TITLE": "Wettkampftagestatistik"
+      },
+      "SAISONSTATISTIK": {
+        "TITLE": "Saisonschnittstatistik"
+      }
+    },
+    "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."
   }
 }
