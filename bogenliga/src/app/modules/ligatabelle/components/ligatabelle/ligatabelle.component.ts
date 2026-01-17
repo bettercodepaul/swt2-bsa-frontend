@@ -184,7 +184,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
       // Fülle loadedVeranstaltungen Map anhand der geladenen Veranstaltungen
       this.loadedVeranstaltungen = new Map(
-        allVeranstaltungen.map(v =>
+        allVeranstaltungen
+          .sort((a, b) => b.sportjahr - a.sportjahr) // Sortiere absteigend nach sportjahr
+          .map(v =>
           [v.sportjahr, [v]])
       );
 
