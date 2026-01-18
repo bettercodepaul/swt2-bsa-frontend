@@ -37,6 +37,73 @@ const SAMPLE_NODES: LeagueTreeNode[] = [
   }
 ];
 
+// Deep hierarchy sample for expandToLevel / isExpandedUpToLevel tests
+const DEEP_NODES: LeagueTreeNode[] = [
+  {
+    id: 1,
+    name: 'L0',
+    parentId: null,
+    level: 0,
+    children: [
+      {
+        id: 2,
+        name: 'L1',
+        parentId: 1,
+        level: 1,
+        children: [
+          {
+            id: 3,
+            name: 'L2',
+            parentId: 2,
+            level: 2,
+            children: [
+              {
+                id: 4,
+                name: 'L3',
+                parentId: 3,
+                level: 3,
+                children: [
+                  {
+                    id: 5,
+                    name: 'L4',
+                    parentId: 4,
+                    level: 4,
+                    children: [
+                      {
+                        id: 6,
+                        name: 'L5',
+                        parentId: 5,
+                        level: 5,
+                        children: [
+                          {
+                            id: 7,
+                            name: 'L6',
+                            parentId: 6,
+                            level: 6,
+                            children: [
+                              {
+                                id: 8,
+                                name: 'L7',
+                                parentId: 7,
+                                level: 7,
+                                children: []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+
 describe('TreeComponent', () => {
   let fixture: ComponentFixture<TreeComponent>;
   let component: TreeComponent;
@@ -107,8 +174,49 @@ describe('TreeComponent', () => {
 
     expect(component.isExpanded(1)).toBe(true);
     expect(component.isExpanded(11)).toBe(true);
-    expect(fixture.nativeElement.querySelector('[data-node-id="11"]')).not.toBeNull();
-    expect(fixture.nativeElement.querySelector('[data-node-id="111"]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-node-id="11"]').not).toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-node-id="111"]').not).toBeNull();
+  });
+
+  it('should expand only nodes up to the given maxLevel in expandToLevel', () => {
+    const deepFixture = TestBed.createComponent(TreeComponent);
+    const deepComponent = deepFixture.componentInstance;
+    deepComponent.nodes = JSON.parse(JSON.stringify(DEEP_NODES));
+    deepFixture.detectChanges();
+
+    const MAX_LEVEL = 4;
+    deepComponent.collapseAll();
+    deepComponent.expandToLevel(MAX_LEVEL);
+    deepFixture.detectChanges();
+
+    // nodes with level <= 4 are expanded
+    [1, 2, 3, 4, 5].forEach(id => {
+      expect(deepComponent.isExpanded(id as any)).toBeTrue();
+    });
+
+    // nodes deeper than level 4 are not expanded
+    [6, 7, 8].forEach(id => {
+      expect(deepComponent.isExpanded(id as any)).toBeFalse();
+    });
+  });
+
+  it('should report all nodes up to maxLevel as expanded in isExpandedUpToLevel', () => {
+    const deepFixture = TestBed.createComponent(TreeComponent);
+    const deepComponent = deepFixture.componentInstance;
+    deepComponent.nodes = JSON.parse(JSON.stringify(DEEP_NODES));
+    deepFixture.detectChanges();
+
+    const MAX_LEVEL = 4;
+    deepComponent.expandToLevel(MAX_LEVEL);
+    deepFixture.detectChanges();
+
+    expect(deepComponent.isExpandedUpToLevel(MAX_LEVEL)).toBeTrue();
+
+    // If we collapse everything, the check must fail
+    deepComponent.collapseAll();
+    deepFixture.detectChanges();
+
+    expect(deepComponent.isExpandedUpToLevel(MAX_LEVEL)).toBeFalse();
   });
 
   it('should support keyboard navigation and selection', () => {
