@@ -7,38 +7,32 @@
             <p class="mb-0">{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
 
             <div class="liga-overview__actions">
-              <button
-                type="button"
-                class="action-btn action-btn-primary liga-tree-toggle-all-btn"
+              <bla-actionbutton
+                class="liga-tree-toggle-all-btn"
                 blaA11yHoverAnnounce
                 data-cy="liga-tree-toggle-all-button"
-                (click)="onToggleExpandCollapseAll()"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="treeAllExpanded ? 'chevron-right' : 'chevron-down'"
                 [disabled]="isLoading || treeNodes.length === 0"
                 [attr.aria-label]="(treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate"
                 [attr.aria-controls]="'liga-tree'"
-                [attr.aria-pressed]="treeAllExpanded">
-                <span class="action-btn-circle">
-                  <i class="fa" [ngClass]="treeAllExpanded ? 'fa-compress' : 'fa-expand'" aria-hidden="true"></i>
-                </span>
-                <span>
-                  {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate }}
-                </span>
-              </button>
+                [attr.aria-pressed]="treeAllExpanded"
+                (onClick)="onToggleExpandCollapseAll()">
+                {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate }}
+              </bla-actionbutton>
 
-              <button
-                type="button"
-                class="action-btn action-btn-secondary liga-refresh-btn"
+              <bla-actionbutton
+                class="liga-refresh-btn"
                 blaA11yHoverAnnounce
-                (click)="onRefresh()"
+                data-cy="liga-tree-refresh-button"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'sync'"
                 [disabled]="isLoading"
-                [attr.aria-label]="'LIGAUEBERSICHT.REFRESH' | translate">
-                <span class="action-btn-circle">
-                  <i class="fa fa-sync" [class.fa-spin]="isLoading" aria-hidden="true"></i>
-                </span>
-                <span>
-                  {{ 'LIGAUEBERSICHT.REFRESH' | translate }}
-                </span>
-              </button>
+                [loading]="isLoading"
+                [attr.aria-label]="'LIGAUEBERSICHT.REFRESH' | translate"
+                (onClick)="onRefresh()">
+                {{ 'LIGAUEBERSICHT.REFRESH' | translate }}
+              </bla-actionbutton>
             </div>
           </div>
 
