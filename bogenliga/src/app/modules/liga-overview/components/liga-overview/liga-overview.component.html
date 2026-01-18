@@ -7,17 +7,20 @@
             <p class="mb-0">{{ 'LIGAUEBERSICHT.DESCRIPTION' | translate }}</p>
 
             <div class="liga-overview__actions">
-              <button type="button" class="btn btn-outline-secondary btn-sm liga-tree-toggle-all-btn"
-                data-cy="liga-tree-toggle-all-button" (click)="onToggleExpandCollapseAll()"
+              <bla-actionbutton
+                class="liga-tree-toggle-all-btn"
+                blaA11yHoverAnnounce
+                data-cy="liga-tree-toggle-all-button"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="treeAllExpanded ? 'chevron-right' : 'chevron-down'"
                 [disabled]="isLoading || treeNodes.length === 0"
                 [attr.aria-label]="(treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate"
-                [attr.aria-controls]="'liga-tree'" [attr.aria-pressed]="treeAllExpanded">
-                <i class="fa" [ngClass]="treeAllExpanded ? 'fa-compress' : 'fa-expand'" aria-hidden="true"></i>
-                <span class="ms-1">
-                  {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') |
-                  translate }}
-                </span>
-              </button>
+                [attr.aria-controls]="'liga-tree'"
+                [attr.aria-pressed]="treeAllExpanded"
+                (onClick)="onToggleExpandCollapseAll()">
+                {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate }}
+              </bla-actionbutton>
+
             </div>
           </div>
 

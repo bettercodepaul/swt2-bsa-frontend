@@ -7,12 +7,13 @@ import { takeUntil } from 'rxjs/operators';
 import { TreeComponent } from '../tree/tree.component';
 import { AnalyticsService } from '@shared/services';
 import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
+import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
 
 /**
- * Komponente für die Ligaübersicht.
+ * Component for the league overview.
  *
- * Stellt die Liga-Hierarchie über eine barrierearme Tree-Komponente dar
- * und kümmert sich um Datenladung, Statuskommunikation und Analytics-Tracking.
+ * Renders the league hierarchy using an accessible tree component
+ * and handles data loading, status communication and analytics tracking.
  */
 @Component({
   selector: 'bla-liga-overview',
@@ -21,60 +22,73 @@ import { LIGA_OVERVIEW_PAGE_CONFIG } from './liga-overview.config';
 })
 export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  /** Dialog-/Seitenkonfiguration für Breadcrumbs etc. */
-  public config = LIGA_OVERVIEW_PAGE_CONFIG;
+  /**
+   * Maximum tree depth (0-based level) used for "Expand all".
+   *
+   * Level 4 means 5 expanded levels (0..4). Because children of expanded nodes are visible,
+   * this effectively shows 6 levels in the tree.
+   */
+  private static readonly MAX_TREE_EXPAND_LEVEL = 4;
 
-  /** ViewChild-Referenz auf die Tree-Komponente (für Deeplink-Expand). */
+/**
+   * Dialog/page configuration for breadcrumbs, etc. */
+  public config = LIGA_OVERVIEW_PAGE_CONFIG;
+/** ViewChild reference to the tree component (for deeplink expand). */
   @ViewChild(TreeComponent, { static: false }) treeComponent?: TreeComponent;
 
-  /**
-   * Aktueller Ladezustand.
+/**
+   * Current loading state.
    */
   isLoading = false;
 
   /**
-   * Ergebnis des Hierarchie-Loads inklusive Status.
+   * Result of the hierarchy load including status.
    */
   hierarchyResult: LeagueHierarchyResult | null = null;
 
   /**
-   * Datenquelle für die Tree-Komponente.
+   * Button color enum for template binding.
+   */
+  readonly ActionButtonColors = ActionButtonColors;
+
+/**
+   * Data source for the tree component.
    */
   treeNodes: LeagueTreeNode[] = [];
 
-  /**
-   * Aktuell ausgewählte Liga-ID (Tree Selection).
-   * Wird beim Init aus dem Service wiederhergestellt.
+/**
+   * Currently selected league ID (tree selection).
+   * Restored from the service during initialization.
    */
   selectedLigaId: number | null = null;
 
-  /**
-   * Initial expandierte Knoten-IDs für den Tree.
-   * Wird beim Init aus dem Service wiederhergestellt.
+/**
+   * Initially expanded node IDs for the tree.
+   * Restored from the service during initialization.
    */
   initialExpandedIds: Set<number> = new Set();
 
-  /**
-   * Übersetzungsschlüssel für Statusmeldungen.
+/**
+   * Translation key for status messages.
    */
   statusMessageKey: string | null = null;
 
-  /**
-   * UI-State für Expand-All/Collapse-All Button.
+/**
+   * UI state for the Expand-All/Collapse-All button.
    */
   treeAllExpanded = false;
 
-  /**
-   * Optionaler Hinweistext aus Deeplink-Validierung.
+/**
+   * Optional hint text from deeplink validation.
    */
   deeplinkMessageKey: string | null = null;
 
-  /**
-   * Flüchtige Fehlermeldung für Deeplink-Probleme; wird automatisch ausgeblendet.
+/**
+   * Transient error message for deeplink problems; automatically hidden after a timeout.
    */
   deeplinkErrorMessage: string | null = null;
 
-  /** Merkt sich die via URL gewünschte Liga-ID (falls vorhanden). */
+/** Remembers the desired league ID from the URL (if present). */
   private deeplinkLigaId: number | null = null;
 
   private readonly destroy$ = new Subject<void>();
@@ -104,9 +118,9 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /**
-   * Wird aufgerufen, wenn ein Tree-Knoten selektiert wird.
-   * Navigiert zur Ligatabelle mit dem liga-QueryParam (Resolver übernimmt die Auflösung).
+/**
+   * Called when a tree node is selected.
+   * Navigates to the league table with the `liga` query param (resolved by the router resolver).
    */
   onTreeSelect(ligaId: number): void {
     this.selectedLigaId = ligaId;
@@ -122,8 +136,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  /**
-   * Lädt die Liga-Hierarchie und bereitet den Tree vor.
+/**
+   * Loads the league hierarchy and prepares the tree.
    */
   private loadHierarchy(): void {
     this.isLoading = true;
@@ -161,8 +175,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  /**
-   * Bestimmt die passende Statusmeldung.
+/**
+   * Determines the appropriate status message key.
    */
   private resolveStatusMessageKey(result: LeagueHierarchyResult): string | null {
     switch (result.status) {
@@ -174,9 +188,9 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   * Beobachtet Query-Params und liest liga (oder legacy: ligaId) für Deeplink-Expand.
-   * Unterstützt beides, priorisiert aber 'liga'.
+/**
+   * Observes query params and reads `liga` (or legacy: `ligaId`) for deeplink expansion.
+   * Supports both, but prioritizes `liga`.
    */
   private observeDeeplinkParam(): void {
     this.route.queryParamMap
@@ -207,8 +221,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  /**
-   * Wendet die Deeplink-Selektion an, sobald Baumdaten verfügbar sind.
+/**
+   * Applies the deeplink selection as soon as tree data is available.
    */
   private applyDeeplinkIfPossible(): void {
     if (this.deeplinkLigaId == null || !Array.isArray(this.treeNodes) || this.treeNodes.length === 0) {
@@ -230,8 +244,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     return false;
   }
 
-  /**
-   * Zeigt eine nicht-blockierende Fehlermeldung für Deeplink-Probleme.
+/**
+   * Shows a non-blocking error message for deeplink problems.
    */
   private showDeeplinkError(messageKey: string): void {
     this.deeplinkErrorMessage = messageKey;
@@ -251,9 +265,23 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   * Retry-Handler für Fehlerzustände.
-   * Invalidiert Cache und lädt Daten neu.
+/**
+   * Manual refresh: clear cache and tree state and reload data.
+   */
+  onRefresh(): void {
+    // Cache und Tree-State invalidieren
+    this.leagueHierarchyService.invalidateCache();
+    this.leagueHierarchyService.clearTreeState();
+    // UI-State zurücksetzen
+    this.selectedLigaId = null;
+    this.initialExpandedIds = new Set();
+    // Neu laden
+    this.loadHierarchy();
+  }
+
+/**
+   * Retry handler for error states.
+   * Invalidates the cache and reloads data. Tracks retry attempts for analytics.
    */
   onRetry(): void {
     // Cache invalidieren und neu laden
@@ -262,8 +290,9 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  /**
-   * Analytics: Tree-Selektion tracken.
+
+/**
+   * Analytics: track tree selection.
    */
   private trackSelection(ligaId: number): void {
     try {
@@ -271,8 +300,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch { /* no-op */ }
   }
 
-  /**
-   * Stellt den Tree-State aus dem Service wieder her.
+/**
+   * Restores the tree state from the service.
    */
   private restoreTreeState(): void {
     // Async restore - will update UI when data arrives
@@ -288,8 +317,8 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  /**
-   * Speichert den aktuellen Tree-State im Service.
+/**
+   * Persists the current tree state in the service.
    */
   private saveTreeState(): void {
     if (this.treeComponent) {
@@ -298,16 +327,19 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.leagueHierarchyService.saveSelectedId(this.selectedLigaId);
   }
 
-  /**
-   * Handler für Änderungen an den expandierten Knoten.
+/**
+   * Handler for changes to the set of expanded nodes.
    */
   onExpandedIdsChange(expandedIds: Set<number>): void {
     this.leagueHierarchyService.saveExpandedIds(expandedIds);
     this.updateTreeAllExpandedState();
   }
 
-  /**
-   * Globale Baumsteuerung: Expand-All / Collapse-All.
+/**
+   * Global tree control: Expand-All / Collapse-All.
+   *
+   * "Expand all" opens the tree only up to the configured depth.
+   * "Collapse all" still collapses the entire tree.
    */
   onToggleExpandCollapseAll(): void {
     if (!this.treeComponent) {
@@ -317,13 +349,18 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.treeAllExpanded) {
       this.treeComponent.collapseAll();
     } else {
-      this.treeComponent.expandAll();
+      this.treeComponent.expandToLevel(LigaOverviewComponent.MAX_TREE_EXPAND_LEVEL);
     }
 
     this.updateTreeAllExpandedState();
   }
 
   private updateTreeAllExpandedState(): void {
-    this.treeAllExpanded = this.treeComponent?.isAllExpanded() ?? false;
+    if (!this.treeComponent) {
+      this.treeAllExpanded = false;
+      return;
+    }
+
+    this.treeAllExpanded = this.treeComponent.isExpandedUpToLevel(LigaOverviewComponent.MAX_TREE_EXPAND_LEVEL);
   }
 }
