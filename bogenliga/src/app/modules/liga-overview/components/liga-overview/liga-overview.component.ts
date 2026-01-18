@@ -158,39 +158,19 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
           // Deeplink nach Datenladung anwenden
           this.applyDeeplinkIfPossible();
 
-          // Fehler-Status für Monitoring tracken
-          if (result.status === 'error' || result.status === 'timeout') {
-            this.analytics.track('liga_hierarchy_error', {
-              status: result.status,
-              httpStatus: (result as any).httpStatus,
-              reason: result.reason,
-              component: 'LigaOverviewComponent'
-            });
-          }
-
           this.runAfterRender(() => {
             this.updateTreeAllExpandedState();
-            const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            if (result.status === 'ok') {
+              const duration = stop();
+              this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: result.status });
+            }
           });
         },
-        error: (err) => {
+        error: () => {
           this.hierarchyResult = { status: 'error', data: [], reason: 'Unhandled error' };
           this.treeNodes = [];
           this.statusMessageKey = 'LIGAUEBERSICHT.STATUS.ERROR';
           this.isLoading = false;
-
-          // Unerwartete Fehler für Monitoring tracken
-          this.analytics.track('liga_hierarchy_error', {
-            status: 'unhandled',
-            reason: err?.message || 'Unknown error',
-            component: 'LigaOverviewComponent'
-          });
-
-          this.runAfterRender(() => {
-            const duration = stop();
-            this.analytics.trackTiming('api_liga_hierarchie_timing', duration, { status: 'error' });
-          });
         }
       });
   }
@@ -304,16 +284,10 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
    * Invalidates the cache and reloads data. Tracks retry attempts for analytics.
    */
   onRetry(): void {
-    // Retry-Versuch tracken
-    this.analytics.track('liga_hierarchy_retry', {
-      previousStatus: this.hierarchyResult?.status,
-      httpStatus: (this.hierarchyResult as any)?.httpStatus,
-      reason: this.hierarchyResult?.reason
-    });
-
     // Cache invalidieren und neu laden
-    this.leagueHierarchyService.invalidateCache();
-    this.loadHierarchy();
+    this.leagueHierarchyService.invalidateCache().then(() => {
+      this.loadHierarchy();
+    });
   }
 
 
@@ -330,10 +304,17 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
    * Restores the tree state from the service.
    */
   private restoreTreeState(): void {
-    if (this.leagueHierarchyService.hasPersistedTreeState()) {
-      this.selectedLigaId = this.leagueHierarchyService.selectedId;
-      this.initialExpandedIds = new Set(this.leagueHierarchyService.expandedIds);
-    }
+    // Async restore - will update UI when data arrives
+    this.leagueHierarchyService.getExpandedIds().then((ids) => {
+      if (ids.size > 0) {
+        this.initialExpandedIds = ids;
+      }
+    });
+    this.leagueHierarchyService.getSelectedId().then((id) => {
+      if (id != null) {
+        this.selectedLigaId = id;
+      }
+    });
   }
 
 /**
@@ -341,16 +322,16 @@ export class LigaOverviewComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   private saveTreeState(): void {
     if (this.treeComponent) {
-      this.leagueHierarchyService.expandedIds = this.treeComponent.expandedIds;
+      this.leagueHierarchyService.saveExpandedIds(this.treeComponent.expandedIds);
     }
-    this.leagueHierarchyService.selectedId = this.selectedLigaId;
+    this.leagueHierarchyService.saveSelectedId(this.selectedLigaId);
   }
 
 /**
    * Handler for changes to the set of expanded nodes.
    */
   onExpandedIdsChange(expandedIds: Set<number>): void {
-    this.leagueHierarchyService.expandedIds = expandedIds;
+    this.leagueHierarchyService.saveExpandedIds(expandedIds);
     this.updateTreeAllExpandedState();
   }
 
