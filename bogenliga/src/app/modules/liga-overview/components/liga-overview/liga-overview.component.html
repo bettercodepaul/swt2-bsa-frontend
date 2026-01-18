@@ -21,18 +21,6 @@
                 {{ (treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate }}
               </bla-actionbutton>
 
-              <bla-actionbutton
-                class="liga-refresh-btn"
-                blaA11yHoverAnnounce
-                data-cy="liga-tree-refresh-button"
-                [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="'sync'"
-                [disabled]="isLoading"
-                [loading]="isLoading"
-                [attr.aria-label]="'LIGAUEBERSICHT.REFRESH' | translate"
-                (onClick)="onRefresh()">
-                {{ 'LIGAUEBERSICHT.REFRESH' | translate }}
-              </bla-actionbutton>
             </div>
           </div>
 
