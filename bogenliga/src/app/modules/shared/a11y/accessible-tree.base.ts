@@ -10,45 +10,45 @@ interface VisibleNode {
 }
 
 /**
- * Accessibility-Basis für League-Tree-Strukturen.
+ * Accessibility base for league tree structures.
  *
- * Kapselt:
- * - Expand-/Collapse-State (expandedIds)
- * - Berechnung der sichtbaren Knoten (visibleNodes)
- * - Fokusverwaltung (Roving-Tabindex) und Tastaturnavigation
+ * Encapsulates:
+ * - expand/collapse state (expandedIds)
+ * - computation of visible nodes (visibleNodes)
+ * - focus management (roving tabindex) and keyboard navigation
  *
- * Die konkrete Komponente (z. B. TreeComponent) ist verantwortlich für:
- * - Bereitstellung der Root-Knoten (treeNodes)
- * - Emission von Events (select, expandedIdsChange)
- * - Analytics-Tracking
+ * The concrete component (e.g. TreeComponent) is responsible for:
+ * - providing the root nodes (treeNodes)
+ * - emitting events (select, expandedIdsChange)
+ * - analytics tracking
  */
 export abstract class AccessibleTreeBase {
 
-  /**
-   * Intern verwaltete expandierte Knoten.
-   * Wird absichtlich public gehalten, da bestehende Tests direkt darauf zugreifen.
+/**
+   * Internally managed expanded node IDs.
+   * Intentionally kept public, because existing tests access it directly.
    */
   public expandedIds = new Set<NodeId>();
 
-  /**
-   * Aktuell fokusierter Knoten (Roving Tabindex).
-   * Ebenfalls public für Tests.
+/**
+   * Currently focused node (roving tabindex).
+   * Also public for tests.
    */
   public focusedNodeId: NodeId | null = null;
 
-  /**
-   * Sichtbare Knoten (nach Expand-Status gefiltert) zur Tastaturnavigation.
+/**
+   * Visible nodes (filtered by expand state) used for keyboard navigation.
    */
   protected visibleNodes: VisibleNode[] = [];
 
-  /**
-   * Lookup-Tabellen für Eltern-Kind-Beziehungen.
+/**
+   * Lookup tables for parent/child relationships.
    */
   protected readonly nodeById = new Map<NodeId, LeagueTreeNode>();
   protected readonly parentById = new Map<NodeId, NodeId | null>();
 
-  /**
-   * Flag, ob der Host bereits initial gerendert wurde (wichtig für Fokus-Setzung).
+/**
+   * Flag indicating whether the host view has been initially rendered (important for focus handling).
    */
   protected viewInitialized = false;
 
@@ -58,15 +58,15 @@ export abstract class AccessibleTreeBase {
   ) {
   }
 
-  /**
-   * Von der konkreten Komponente bereitzustellende Root-Knoten.
+/**
+   * Root nodes that must be provided by the concrete component.
    */
   protected abstract get treeNodes(): LeagueTreeNode[];
 
-  /**
-   * Keydown-Handler für Roving-Tabindex und Expand/Collapse via Tastatur.
+/**
+   * Keydown handler for roving tabindex and expand/collapse via keyboard.
    *
-   * Soll von der konkreten Komponente über einen @HostListener aufgerufen werden.
+   * Should be called by the concrete component via a @HostListener.
    */
   public onKeydown(event: KeyboardEvent): void {
     const target = event.target as HTMLElement | null;
@@ -109,27 +109,27 @@ export abstract class AccessibleTreeBase {
     }
   }
 
-  /**
-   * Muss von der konkreten Komponente implementiert werden, um Selektion abzubilden
-   * (z. B. Analytics + EventEmitter).
+/**
+   * Must be implemented by the concrete component to represent selection
+   * (e.g. analytics + EventEmitter).
    */
   protected abstract handleSelection(nodeId: NodeId): void;
 
-  /**
-   * Muss von der konkreten Komponente implementiert werden, um Expand/Collapse abzubilden
-   * (inkl. Analytics + EventEmitter).
+/**
+   * Must be implemented by the concrete component to represent expand/collapse
+   * (including analytics + EventEmitter).
    */
   protected abstract handleToggle(nodeId: NodeId, expand?: boolean): void;
 
-  /**
-   * Prüft, ob ein Knoten expandiert ist.
+/**
+   * Checks whether a node is expanded.
    */
   public isExpanded(nodeId: NodeId): boolean {
     return this.expandedIds.has(nodeId);
   }
 
-  /**
-   * Expandiert alle Knoten, die Kinder besitzen.
+/**
+   * Expands all nodes that have children.
    */
   public expandAll(): void {
     const allExpandable = this.collectExpandableNodeIds(this.treeNodes);
@@ -139,8 +139,8 @@ export abstract class AccessibleTreeBase {
     this.cdr.markForCheck();
   }
 
-  /**
-   * Klappt alle Knoten ein.
+/**
+   * Collapses all nodes.
    */
   public collapseAll(): void {
     this.expandedIds = new Set<NodeId>();
@@ -155,8 +155,8 @@ export abstract class AccessibleTreeBase {
     this.cdr.markForCheck();
   }
 
-  /**
-   * true, wenn alle expandierbaren Knoten expandiert sind.
+/**
+   * Returns true if all expandable nodes are expanded.
    */
   public isAllExpanded(): boolean {
     const expandable = this.collectExpandableNodeIds(this.treeNodes);
@@ -171,15 +171,15 @@ export abstract class AccessibleTreeBase {
     return true;
   }
 
-  /**
-   * Expandiert den Pfad zu einem Knoten und markiert ihn.
+/**
+   * Expands the path to a node and marks it as selected.
    *
-   * Findet alle Eltern-Knoten bis zur Wurzel und expandiert sie,
-   * damit der Zielknoten sichtbar wird. Delegiert anschließende Selektion
-   * an handleSelection().
+   * Finds all parent nodes up to the root and expands them
+   * so that the target node becomes visible. Delegates final selection
+   * to handleSelection().
    *
-   * @param nodeId Die ID des Zielknotens
-   * @returns true, wenn der Knoten gefunden und expandiert wurde, sonst false
+   * @param nodeId The ID of the target node
+   * @returns true if the node was found and expanded, otherwise false
    */
   public expandPathTo(nodeId: NodeId): boolean {
     if (!this.nodeById.has(nodeId)) {
@@ -219,8 +219,8 @@ export abstract class AccessibleTreeBase {
     return true;
   }
 
-  /**
-   * Fügt alle Knoten in Lookup-Tabellen ein.
+/**
+   * Inserts all nodes into the lookup tables.
    */
   protected rebuildLookup(list: LeagueTreeNode[]): void {
     this.nodeById.clear();
@@ -238,8 +238,8 @@ export abstract class AccessibleTreeBase {
     this.cleanupExpandedIds();
   }
 
-  /**
-   * Sammelt alle Knoten-IDs, die Kinder besitzen (also expandierbar sind).
+/**
+   * Collects all node IDs that have children (i.e. can be expanded).
    */
   protected collectExpandableNodeIds(nodes: LeagueTreeNode[]): Set<NodeId> {
     const result = new Set<NodeId>();
@@ -255,8 +255,8 @@ export abstract class AccessibleTreeBase {
     return result;
   }
 
-  /**
-   * Expandiert standardmäßig alle Wurzelknoten bei erstmaliger Bereitstellung von Daten.
+/**
+   * By default expands all root nodes when data is provided for the first time.
    */
   protected ensureRootsExpanded(): void {
     if (this.expandedIds.size > 0) {
@@ -274,8 +274,8 @@ export abstract class AccessibleTreeBase {
     }
   }
 
-  /**
-   * Aktualisiert die Liste sichtbarer Knoten (flach).
+/**
+   * Updates the list of visible nodes (flattened sequence).
    */
   protected updateVisibleNodes(): void {
     const result: VisibleNode[] = [];
@@ -291,8 +291,8 @@ export abstract class AccessibleTreeBase {
     this.visibleNodes = result;
   }
 
-  /**
-   * Stellt sicher, dass mindestens ein Knoten fokusierbar ist.
+/**
+   * Ensures that at least one node is focusable.
    */
   protected ensureFocusableNode(): void {
     if (this.visibleNodes.length === 0) {
@@ -305,8 +305,8 @@ export abstract class AccessibleTreeBase {
     }
   }
 
-  /**
-   * Setzt den Fokus auf einen Knoten (inkl. DOM-Fokus, sobald View bereit).
+/**
+   * Sets focus to a node (including DOM focus once the view is ready).
    */
   protected focusNode(nodeId: NodeId): void {
     if (!this.nodeById.has(nodeId)) {
@@ -317,8 +317,8 @@ export abstract class AccessibleTreeBase {
     this.focusCurrentNode();
   }
 
-  /**
-   * Fokussiert das aktuell gesetzte Fokusziel im DOM.
+/**
+   * Focuses the currently targeted node in the DOM.
    */
   protected focusCurrentNode(): void {
     if (!this.viewInitialized || this.focusedNodeId == null) {
@@ -398,8 +398,8 @@ export abstract class AccessibleTreeBase {
     }
   }
 
-  /**
-   * Expandiert alle Vorfahren eines Knotens, sodass er sichtbar wird.
+/**
+   * Expands all ancestors of a node so that it becomes visible.
    */
   protected expandAncestors(nodeId: NodeId): void {
     if (!this.nodeById.has(nodeId)) {
@@ -425,15 +425,15 @@ export abstract class AccessibleTreeBase {
     }
   }
 
-  /**
-   * Markiert die View als initialisiert (soll in ngAfterViewInit der Komponente aufgerufen werden).
+/**
+   * Marks the view as initialized (should be called from the component's ngAfterViewInit).
    */
   public markViewInitialized(): void {
     this.viewInitialized = true;
   }
 
-  /**
-   * Bereinigt interne Strukturen (soll in ngOnDestroy aufgerufen werden).
+/**
+   * Cleans up internal structures (should be called from ngOnDestroy).
    */
   public cleanupTreeState(): void {
     this.nodeById.clear();

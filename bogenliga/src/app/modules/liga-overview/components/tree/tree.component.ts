@@ -17,13 +17,13 @@ import { AnalyticsService } from '@shared/services';
 import { AccessibleTreeBase, NodeId } from '@shared/a11y/accessible-tree.base';
 
 /**
- * Barrierearme Baum-Komponente zur Darstellung der Liga-Hierarchie.
+ * Accessible tree component for rendering the league hierarchy.
  *
- * - Unterstützt Expand/Collapse, Selektion und Tastaturnavigation (Pfeiltasten, Enter, Space)
- * - Verwendet Roving-Tabindex für Fokussteuerung
- * - Setzt ARIA-Rollen (tree, treeitem, group) und Attribute (aria-expanded, aria-selected)
+ * - Supports expand/collapse, selection and keyboard navigation (arrow keys, Enter, Space)
+ * - Uses a roving tabindex for focus management
+ * - Applies ARIA roles (tree, treeitem, group) and attributes (aria-expanded, aria-selected)
  *
- * Virtualisierung wird vorbereitet, aber erst in späteren Sprints aktiviert.
+ * Virtualisation is prepared but will only be enabled in later sprints.
  */
 @Component({
   selector: 'bla-league-tree',
@@ -33,38 +33,38 @@ import { AccessibleTreeBase, NodeId } from '@shared/a11y/accessible-tree.base';
 })
 export class TreeComponent extends AccessibleTreeBase implements OnChanges, AfterViewInit, OnDestroy {
 
-  /**
-   * Eingabedaten: Baum-Knoten (Wald). Die Reihenfolge entspricht der Anzeige.
+/**
+   * Input data: tree nodes (forest). The order corresponds to the visual order.
    */
   @Input()
   nodes: LeagueTreeNode[] = [];
 
-  /**
-   * Optional vorselektierte Liga-ID.
+/**
+   * Optional preselected league ID.
    */
   @Input()
   selectedId: NodeId | null = null;
 
-  /**
-   * Event: Wird ausgelöst, wenn der Benutzer einen Knoten selektiert (Enter/Space oder Klick).
+/**
+   * Event: emitted when the user selects a node (Enter/Space or click).
    */
   @Output()
   readonly select = new EventEmitter<NodeId>();
 
-  /**
-   * Event: Wird bei Änderung der expandierten Knoten ausgelöst.
+/**
+   * Event: emitted whenever the set of expanded nodes changes.
    */
   @Output()
   readonly expandedIdsChange = new EventEmitter<Set<NodeId>>();
 
-  /**
-   * Optional: Initiale expandierte Knoten-IDs für State-Wiederherstellung.
+/**
+   * Optional: initial expanded node IDs used for state restoration.
    */
   @Input()
   initialExpandedIds: Set<NodeId> = new Set();
 
-  /**
-   * Flag ob initiale expandedIds bereits angewendet wurden.
+/**
+   * Flag indicating whether initial expanded IDs have already been applied.
    */
   private initialStateApplied = false;
 
@@ -83,7 +83,7 @@ export class TreeComponent extends AccessibleTreeBase implements OnChanges, Afte
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['nodes']) {
       this.rebuildLookup(this.nodes);
-      // Initialen State anwenden wenn vorhanden und noch nicht angewendet
+      // Apply initial state if present and not yet applied
       if (!this.initialStateApplied && this.initialExpandedIds.size > 0) {
         this.expandedIds = new Set(this.initialExpandedIds);
         this.initialStateApplied = true;
@@ -92,7 +92,7 @@ export class TreeComponent extends AccessibleTreeBase implements OnChanges, Afte
       }
       this.updateVisibleNodes();
       this.ensureFocusableNode();
-      // Falls bereits eine Selektion vorliegt, Pfad expandieren
+      // If there is already a selection, expand its ancestor path
       if (this.selectedId != null) {
         this.expandAncestors(this.selectedId);
       }
@@ -126,16 +126,16 @@ export class TreeComponent extends AccessibleTreeBase implements OnChanges, Afte
     this.cleanupTreeState();
   }
 
-  /**
-   * Keydown-Handler für Roving-Tabindex und Expand/Collapse via Tastatur.
+/**
+   * Keydown handler for roving tabindex and expand/collapse via keyboard.
    */
   @HostListener('keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
     this.onKeydown(event);
   }
 
-  /**
-   * Wird vom Kind ausgelöst: toggelt Expand/Collapse eines Knotens.
+/**
+   * Triggered from child node: toggles expand/collapse of a node.
    */
   onToggle(nodeId: NodeId, expand?: boolean): void {
     this.handleToggle(nodeId, expand);
@@ -172,52 +172,97 @@ export class TreeComponent extends AccessibleTreeBase implements OnChanges, Afte
     this.cdr.markForCheck();
   }
 
-  /**
-   * Wird vom Kind ausgelöst: Fokuswechsel bei Pointer-Fokus.
+/**
+   * Triggered from child node: focus change when pointer focus is requested.
    */
   onFocusRequest(nodeId: NodeId): void {
     this.focusNode(nodeId);
   }
 
-  /**
-   * TrackBy-Funktion für *ngFor.
+/**
+   * TrackBy function for *ngFor.
    */
   trackByNodeId(_index: number, item: LeagueTreeNode): NodeId {
     return item.id;
   }
 
-  /**
-   * Prüft, ob ein Knoten expandiert ist.
+/**
+   * Checks whether a node is expanded.
    */
   isExpanded(nodeId: NodeId): boolean {
     return this.expandedIds.has(nodeId);
   }
 
-  /**
-   * Expandiert alle Knoten, die Kinder besitzen.
+/**
+   * Expands all nodes that have children.
    */
   expandAll(): void {
     super.expandAll();
     this.expandedIdsChange.emit(this.expandedIds);
   }
 
-  /**
-   * Klappt alle Knoten ein.
+/**
+   * Expands all nodes only up to a maximum depth level (0-based).
+   *
+   * Example: maxLevel = 5 => levels 0..5 (6 levels total) are fully expanded,
+   * deeper levels remain collapsed.
+   */
+  expandToLevel(maxLevel: number): void {
+    const allExpandable = this.collectExpandableNodeIds(this.treeNodes);
+
+    const limited = new Set<NodeId>();
+    for (const id of allExpandable) {
+      const node = this.nodeById.get(id);
+      if (node && node.level <= maxLevel) {
+        limited.add(id);
+      }
+    }
+
+    this.expandedIds = limited;
+    this.updateVisibleNodes();
+    this.ensureFocusableNode();
+    this.cdr.markForCheck();
+    this.expandedIdsChange.emit(this.expandedIds);
+  }
+
+/**
+   * Collapses all nodes.
    */
   collapseAll(): void {
     super.collapseAll();
     this.expandedIdsChange.emit(this.expandedIds);
   }
 
-  /**
-   * true, wenn alle expandierbaren Knoten expandiert sind.
+/**
+   * Returns true if all expandable nodes are expanded.
    */
   isAllExpanded(): boolean {
     return super.isAllExpanded();
   }
 
-  /**
-   * Wird ausgelöst, wenn ein Knoten selektiert wurde.
+/**
+   * Returns true if all expandable nodes up to a maximum level are expanded.
+   */
+  isExpandedUpToLevel(maxLevel: number): boolean {
+    const expandable = this.collectExpandableNodeIds(this.treeNodes);
+    let hasCandidate = false;
+
+    for (const id of expandable) {
+      const node = this.nodeById.get(id);
+      if (!node || node.level > maxLevel) {
+        continue;
+      }
+      hasCandidate = true;
+      if (!this.expandedIds.has(id)) {
+        return false;
+      }
+    }
+
+    return hasCandidate;
+  }
+
+/**
+   * Triggered when a node is selected.
    */
   selectNode(nodeId: NodeId): void {
     this.handleSelection(nodeId);
