@@ -332,13 +332,10 @@ export class SchusszettelComponent implements OnInit {
     if (!this.allowedMitglieder1) {
       return [];
     }
-
-    // aktuell ausgewählte Nummern
     const used = this.match1.schuetzen
       .map(s => s[0].rueckennummer)
       .filter(nr => nr != null);
 
-    // eigene Nummer behalten
     const own = this.match1.schuetzen[schuetzeIndex][0].rueckennummer;
 
     return this.allowedMitglieder1.filter(nr =>
@@ -346,17 +343,18 @@ export class SchusszettelComponent implements OnInit {
     );
   }
 
-
-  // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
-    if (!this.allowedMitglieder2 || !this.initialUsed2) {
+    if (!this.allowedMitglieder2) {
       return [];
     }
-    const originallyUsed = this.initialUsed2;
+    const used = this.match2.schuetzen
+      .map(s => s[0].rueckennummer)
+      .filter(nr => nr != null);
+
+    const own = this.match2.schuetzen[schuetzeIndex][0].rueckennummer;
 
     return this.allowedMitglieder2.filter(nr =>
-      nr === originallyUsed[schuetzeIndex] ||
-      !originallyUsed.includes(nr)
+      nr === own || !used.includes(nr)
     );
   }
 
