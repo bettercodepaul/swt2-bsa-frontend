@@ -63,6 +63,7 @@ import {
   MannschaftTabellenverlaufWettkampftage
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
+import {Router} from "@angular/router";
 
 
 interface Wettkampftag {
@@ -205,6 +206,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService,
     private ligaTabelleDataProvider: LigatabelleDataProviderService,
     private currentUserService: CurrentUserService,
+    private router: Router,
     private onOfflineService: OnOfflineService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -224,6 +226,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.selectedWettkampfTag =  this.alleTage[0];
     this.selectedMannschaftStatistik = 'alle_mannschaften';
     await this.onSelectMannschaftStatistik();
+  }
+
+  // TODO: Navigation link anpassen
+  public onMannschaftLinkClicked(event: {row: any, column: any}) {
+    console.log('onMannschaftLinkClicked payload:', event);
+    const mannschaftID = /*event.row[column.linkKey];*/ 102;
+    this.router.navigate([`/vereine/1`]);
   }
 
   printStatistics() {
