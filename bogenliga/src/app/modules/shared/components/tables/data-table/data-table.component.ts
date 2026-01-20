@@ -43,6 +43,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
   @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public onLinkClicked = new EventEmitter<{row: any; column: any; }>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
