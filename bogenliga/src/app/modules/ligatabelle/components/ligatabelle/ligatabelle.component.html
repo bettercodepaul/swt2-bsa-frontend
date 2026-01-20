@@ -71,15 +71,18 @@
             <h2>{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</h2>
           </label>
         </div>
-        <div class="row" id="rowTable" style="margin-left: 5px">
-          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
-          <bla-data-table
-            [config]="config_table"
-            [rows]="rowsLigatabelle"
-            [loading]="loadingLigatabelle"
-            (onRowEntry)="ligatabelleLinking();"
-          >
-          </bla-data-table>
+
+        <div class="row" id="rowTable">
+          <div class="col-12 ligatabelle-table-wrapper">
+            <!-- Dies ist die aktuelle Ligatabelle zur Veranstaltung -->
+            <bla-data-table
+              [config]="config_table"
+              [rows]="rowsLigatabelle"
+              [loading]="loadingLigatabelle"
+              (onRowEntry)="ligatabelleLinking();"
+            >
+            </bla-data-table>
+          </div>
         </div>
 
         <!-- Button -->
