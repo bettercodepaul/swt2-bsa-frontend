@@ -70,10 +70,13 @@
                             [loading]="loadingData"
                             [config]="currentConfig"
                             [rows]="rows[currentWettkampftag]"
+                            (onLinkClicked)="onMannschaftLinkClicked($event)"
                             data-cy="tableStatistik">
             </bla-data-table>
           </div>
         </div>
+
+        <!--
         <div [hidden]="!showLineChart">
           <h3>{{currentStatistikTitle | translate}}</h3>
           <div class="chart-container">
@@ -93,6 +96,7 @@
           <div class="col-sm-9 button-box">
           </div>
         </div>
+        -->
       </div>
 
       <!-- Button - Statistik Drucken -->
