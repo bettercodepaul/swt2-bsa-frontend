@@ -7,15 +7,17 @@
 
       <bla-row-layout>
         <!-- Ligatabelle -->
-        <div class="row" id="rowTable" style="margin-left: 5px">
-          <!-- Dies ist die aktuelle Ligatabelle zur Veranstaltung  -->
-          <bla-data-table
-            [config]="config_table"
-            [rows]="rowsLigatabelle"
-            [loading]="loadingLigatabelle"
-            (onRowEntry)="ligatabelleLinking();"
-          >
-          </bla-data-table>
+        <div class="row" id="rowTable">
+          <div class="col-12 ligatabelle-table-wrapper">
+            <!-- Dies ist die aktuelle Ligatabelle zur Veranstaltung -->
+            <bla-data-table
+              [config]="config_table"
+              [rows]="rowsLigatabelle"
+              [loading]="loadingLigatabelle"
+              (onRowEntry)="ligatabelleLinking();"
+            >
+            </bla-data-table>
+          </div>
         </div>
 
         <h2 style="margin-top: 0">Auswahl der Veranstaltung und Wettkampftag</h2>
