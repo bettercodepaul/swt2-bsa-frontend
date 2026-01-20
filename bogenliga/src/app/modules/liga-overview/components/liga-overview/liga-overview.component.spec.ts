@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { LigaOverviewComponent } from './liga-overview.component';
 import { AnalyticsService, LeagueHierarchyService } from '@shared/services';
@@ -57,6 +58,7 @@ describe('LigaOverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [LigaOverviewComponent],
       imports: [
+        HttpClientTestingModule,
         TranslateModule.forRoot()
       ],
       providers: [
