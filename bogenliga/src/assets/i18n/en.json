@@ -351,7 +351,7 @@
         "LABEL": "Competition day 4"
       },
       "OPTION5": {
-        "LABEL": "Overall"
+        "LABEL": "Live"
       }
     },
     "MANNSCHAFTEN": {
@@ -360,7 +360,7 @@
         "VERANSTALTUNG": "Selection of the event and team",
         "STATISTIKEN": "Statistics"
       },
-      "FILTER_BUTTON": {
+      "FILTER_BUTTON":{
         "SCHUETZEN": "Archers",
         "MANNSCHAFTEN": "Teams"
       },
@@ -745,7 +745,8 @@
           "DELETE": {
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-          },
+          }
+
           "NOTIFICATION": {
             "DELETE": {
               "TITLE": "Delete Association Member",
@@ -814,6 +815,7 @@
                 "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
               }
             }
+
           }
         },
         "LIGA_DETAIL": {
@@ -839,7 +841,7 @@
               "PLACEHOLDER": "Please select a league responsible",
               "ERROR": "Please enter a valid E-Mail"
             },
-            "LIGA_DETAIL": {
+            "LIGA_DETAIL" : {
               "LABEL": "League details",
               "MAX_WORDS_WARNING": "(max. 300 words)"
             },
@@ -1222,6 +1224,7 @@
               }
             }
           },
+
           "SCHUETZE_HINZUFUEGEN": {
             "TITLE": "Add marksman to team",
             "FORM": {
@@ -1244,7 +1247,7 @@
               "SAVE": "Save",
               "UPDATE": "Refresh",
               "DELETE": "Delete",
-              "RESET_FILTER": "Reset filter",
+              "RESET_FILTER": "Reset filter"
               "NOTIFICATION": {
                 "SAVE": {
                   "TITLE": "Success",
@@ -1356,7 +1359,7 @@
                   "SAVE_AND_LIZENZ_ERSTELLT": {
                     "TITLE": "Success",
                     "DESCRIPTION": "Successfully added marksman to team and created a licence."
-                  },
+                  }
                   "DUPLICATE": {
                     "TITLE": "Failed to add",
                     "DESCRIPTION": "Member number already taken. Please choose a different number."
@@ -1376,7 +1379,7 @@
                     "WETTKAMPFTYPNAME": "Competition type name",
                     "SPORTJAHR": "Sport year",
                     "MELDEDEADLINE": "Registration deadline",
-                    "PHASE": "Phase",
+                    "PHASE" : "Phase",
                     "LIGANAME": "League name",
                     "LIGALEITERID": "League leader ID",
                     "LIGALEITERMAIL": "League leader E-Mail"
@@ -2069,21 +2072,24 @@
                     "HELPER": "Statistics of an archer over the last five years"
                   }
                 },
-                "VEREINSMANNSCHAFTENUEBERSICHT": {
-                  "TITLE": "Club overview",
-                  "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
-                  "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
-                  "STATUS": {
-                    "LOADING": "Club overview is loading ...",
-                    "EMPTY": "No club found. The data source is currently not providing any entries.",
-                    "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
-                    "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-                    "ERROR": "The club overview could not be loaded."
-                  },
-                  "TABLE": {
-                    "HEADERS": {
-                      "MANNSCHAFTSNAME": "Team name"
-                    }
+                "NO_LIGA_WARNING": "The selected team is not assigned to a league."
+              },
+              "VEREINSMANNSCHAFTENUEBERSICHT": {
+                "TITLE": "Club overview",
+                "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
+                "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
+                "STATUS": {
+                  "LOADING": "Club overview is loading ...",
+                  "EMPTY": "No club found. The data source is currently not providing any entries.",
+                  "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
+                  "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
+                  "ERROR": "The club overview could not be loaded."
+                },
+                "TABLE": {
+                  "HEADERS": {
+                    "MANNSCHAFTSNAME": "Team name"
                   }
                 }
               }
+            }
+          }
