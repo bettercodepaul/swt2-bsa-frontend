@@ -63,7 +63,8 @@ import {
   MannschaftTabellenverlaufWettkampftage
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
+import {LigaDO} from "@verwaltung/types/liga-do.class";
 
 
 interface Wettkampftag {
@@ -80,6 +81,8 @@ interface Wettkampftag {
 
 export class WettkampfComponent extends CommonComponentDirective implements OnInit {
 
+  public providedLigaID: number | undefined; // Liga-ID aus Resolver
+  public hasID = false;
   public show = false;
   public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
@@ -207,6 +210,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private ligaTabelleDataProvider: LigatabelleDataProviderService,
     private currentUserService: CurrentUserService,
     private router: Router,
+    private route: ActivatedRoute,
     private onOfflineService: OnOfflineService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -221,6 +225,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   async init() {
+    const ligaFromResolver = this.route.snapshot.data['liga'] as LigaDO | null | undefined;
+    if (ligaFromResolver?.id != null) {
+      this.providedLigaID = ligaFromResolver.id;
+      this.hasID = true;
+    } else {
+      this.providedLigaID = undefined;
+      this.hasID = false;
+    }
+    console.log('LigaID from resolver:', this.providedLigaID);
+
     await this.loadJahre();
     await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
