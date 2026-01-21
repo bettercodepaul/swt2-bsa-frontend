@@ -8,7 +8,6 @@ import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dt
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {MANNSCHAFT_CONFIG, MANNSCHAFTEN_TABLE_CONFIG} from './mannschaft.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {TranslateService} from '@ngx-translate/core';
 import {
   NotificationOrigin,
   NotificationService,
@@ -17,6 +16,12 @@ import {
   NotificationUserAction
 } from '@shared/services/notification';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {TranslatePipe} from '@ngx-translate/core';
+import {SchuetzenStatistikType} from '../index';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';
@@ -26,9 +31,22 @@ const VEREIN_PATH_PARAM = 'id';
 @Component({
   selector: 'bla-mannschaft',
   templateUrl: './mannschaft.component.html',
-  styleUrls: ['./mannschaft.component.scss']
+  styleUrls: ['./mannschaft.component.scss'],
+  providers: [TranslatePipe]
 })
 export class MannschaftComponent extends CommonComponentDirective implements OnInit {
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private notificationService: NotificationService,
+    private wettkampfDataProvider: WettkampfDataProviderService,
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+    public translate: TranslatePipe
+  ) {
+    super();
+  }
   public mannschaften: DsbMannschaftDTO[] | null = null;
   public verein: VereinDTO | null = null;
   public currentMannschaft: DsbMannschaftDTO = new DsbMannschaftDTO();
@@ -39,15 +57,16 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   public readonly ActionButtonColors = ActionButtonColors;
   private mannschaftId: number | null = null;
   private vereinId: number | null = null;
+  public veranstaltung: VeranstaltungDTO;
+  public wettkaempfe: WettkampfDTO[];
+  public selectedStatistic = SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private notificationService: NotificationService,
-  ) {
-    super();
-  }
+  public tabs = [
+    {type: SchuetzenStatistikType.EINZELSTATISTIK},
+    {type: SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK},
+    {type: SchuetzenStatistikType.WETTKAMPFSTATISTIK},
+    {type: SchuetzenStatistikType.SAISONSTATISTIK},
+  ];
 
   ngOnInit(): void {
     this.mannschaftId = null;
@@ -120,8 +139,8 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
             }
           });
         }
-
         this.loading = false;
+        this.loadWettkampf();
       })
       .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
         console.error(response);
@@ -135,5 +154,34 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
 
   public onSelectMannschaft(): void {
     this.router.navigate(['../', this.currentMannschaft.id], {relativeTo: this.route});
+    this.loadWettkampf();
+  }
+
+  private loadWettkampf() {
+    if (this.currentMannschaft.veranstaltungId === null) {
+      this.notificationService.showNotification({
+        id: 'showNotification',
+        description: '',
+        title: 'MANNSCHAFT.NO_LIGA_WARNING',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.ERROR,
+      });
+      this.veranstaltung = null;
+      return;
+    }
+    this.wettkampfDataProvider.findAllByVeranstaltungId(this.currentMannschaft.veranstaltungId)
+      .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+        this.wettkaempfe = response.payload!;
+      });
+    this.veranstaltungsDataProvider.findById(this.currentMannschaft.veranstaltungId)
+      .then((response: BogenligaResponse<VeranstaltungDTO>) => {
+        this.veranstaltung = response.payload!;
+      });
+  }
+
+  public selectTab(type: SchuetzenStatistikType): void {
+    this.selectedStatistic = type;
   }
 }
