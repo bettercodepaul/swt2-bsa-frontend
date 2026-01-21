@@ -26,11 +26,12 @@
   </div>
   <div class="my-3">
     <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let tab of tabs; let i = index">
+      <li class="nav-item" *ngFor="let tab of tabs">
         <button
+          data-cy="statisticTabButton"
           class="nav-link"
-          [class.active]="i === activeIndex"
-          (click)="selectTab(i, tab.type)">
+          [class.active]="tab.type === selectedStatistic"
+          (click)="selectTab(tab.type)">
           {{ "MANNSCHAFT.TABS." + tab.type.valueOf() + ".TITLE" | translate }}
         </button>
       </li>

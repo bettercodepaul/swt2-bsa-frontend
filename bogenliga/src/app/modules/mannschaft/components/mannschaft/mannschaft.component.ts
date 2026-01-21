@@ -61,7 +61,6 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   public wettkaempfe: WettkampfDTO[];
   public selectedStatistic = SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK;
 
-  public activeIndex = 0;
   public tabs = [
     {type: SchuetzenStatistikType.EINZELSTATISTIK},
     {type: SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK},
@@ -182,8 +181,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
       });
   }
 
-  public selectTab(index: number, type: SchuetzenStatistikType): void {
-    this.activeIndex = index;
+  public selectTab(type: SchuetzenStatistikType): void {
     this.selectedStatistic = type;
   }
 }
