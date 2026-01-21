@@ -138,6 +138,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.rows = [];
     this.tableContent = [];
     if (this.selectedVereinsId != null) {
+      this.router.navigate(['../', this.selectedVereinsId], {relativeTo: this.route});
       this.loadTableRows();
     }
   }
@@ -347,7 +348,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
 
   private handleFindVeranstaltungSuccess(veranstaltungsname: string, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
     console.log('Content:' + veranstaltungsname + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(veranstaltungsname, wettkampfTag+ '. Wettkampftag', mannschaftsName, wettkampfOrtsname);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(veranstaltungsname, wettkampfTag + '. Wettkampftag', mannschaftsName, wettkampfOrtsname);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
