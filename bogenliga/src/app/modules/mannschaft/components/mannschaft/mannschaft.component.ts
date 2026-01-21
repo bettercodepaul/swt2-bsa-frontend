@@ -43,7 +43,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     private notificationService: NotificationService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private translate: TranslatePipe
+    public translate: TranslatePipe
   ) {
     super();
   }
@@ -59,11 +59,10 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   private vereinId: number | null = null;
   public veranstaltung: VeranstaltungDTO;
   public wettkaempfe: WettkampfDTO[];
-  public selectedStatistic = SchuetzenStatistikType.GESAMTSTATISTIK;
+  public selectedStatistic = SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK;
 
   public activeIndex = 0;
   public tabs = [
-    {type: SchuetzenStatistikType.GESAMTSTATISTIK},
     {type: SchuetzenStatistikType.EINZELSTATISTIK},
     {type: SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK},
     {type: SchuetzenStatistikType.WETTKAMPFSTATISTIK},
@@ -175,12 +174,10 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     }
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.currentMannschaft.veranstaltungId)
       .then((response: BogenligaResponse<WettkampfDTO[]>) => {
-        console.log('wettkampf, findAllByVeranstaltungId', response);
         this.wettkaempfe = response.payload!;
       });
     this.veranstaltungsDataProvider.findById(this.currentMannschaft.veranstaltungId)
       .then((response: BogenligaResponse<VeranstaltungDTO>) => {
-        console.log('veranstaltung', response);
         this.veranstaltung = response.payload!;
       });
   }

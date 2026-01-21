@@ -13,8 +13,6 @@ import {
 import {
   SchuetzenstatistikletztejahreDataProviderService
 } from '@wettkampf/services/schuetzenstatistikletztejahre-data-provider-service';
-import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzel.config';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -38,18 +36,20 @@ import {
   WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.wettkampftage.config';
 import {SchuetzenstatistikLetzteJahreDO} from '@verwaltung/types/schuetzenstatistikletztejahre-do.class';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'bla-mannschaft-text',
-  templateUrl: './mannschaft-text.component.html',
-  styleUrls: ['./mannschaft-text.component.scss']
+  selector: 'bla-mannschaft-table',
+  templateUrl: './mannschaft-table.component.html',
+  styleUrls: ['./mannschaft-table.component.scss']
 })
-export class MannschaftTextComponent extends CommonComponentDirective implements OnChanges {
+export class MannschaftTableComponent extends CommonComponentDirective implements OnChanges {
 
   constructor(private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
               private schuetzenstatistikMatchDataProvider: SchuetzenstatistikMatchDataProviderService,
               private schuetzenstatistikWettkampftageDataProvider: SchuetzenstatistikwettkampftageDataProviderService,
-              private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService) {
+              private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService,
+              public translate: TranslatePipe) {
     super();
   }
   @Input() wettkaempfe: WettkampfDTO[];
@@ -84,9 +84,6 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
       case SchuetzenStatistikType.EINZELSTATISTIK:
         this.loadEinzelstatistik();
         break;
-      case SchuetzenStatistikType.GESAMTSTATISTIK:
-        this.loadGesamtstatistik();
-        break;
       case SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK:
         this.loadSchuetzenstatistikMatch();
         break;
@@ -115,17 +112,6 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
     this.currentConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
     this.rows = [];
     await this.loadSchuetzenstatistiken(0);
-    this.loadingData = false;
-  }
-
-  public async loadGesamtstatistik() {
-    this.loadingData = true;
-    this.currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
-    if (this.selectedMannschaft?.veranstaltungId != null) {
-      this.rows = [];
-      await this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(this.selectedMannschaft.vereinId, this.selectedMannschaft.veranstaltungId)
-        .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadStatisticSuccess(response.payload));
-    }
     this.loadingData = false;
   }
 
@@ -275,7 +261,6 @@ export class MannschaftTextComponent extends CommonComponentDirective implements
         latestWettkampf = wettkampf;
       }
     });
-    console.log(latestWettkampf);
     return latestWettkampf;
   }
 }

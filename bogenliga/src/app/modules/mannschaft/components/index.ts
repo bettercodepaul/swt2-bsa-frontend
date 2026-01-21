@@ -1,8 +1,7 @@
 export * from './mannschaft/mannschaft.component';
-export * from './mannschaft-text/mannschaft-text.component';
+export * from './mannschaft-table/mannschaft-table.component';
 
 export enum SchuetzenStatistikType {
-  GESAMTSTATISTIK = 'GESAMTSTATISTIK',
   EINZELSTATISTIK = 'EINZELSTATISTIK',
   WETTKAMPFSTATISTIK = 'WETTKAMPFSTATISTIK',
   WETTKAMPFTAGESSTATISTIK = 'WETTKAMPFTAGESSTATISTIK',
