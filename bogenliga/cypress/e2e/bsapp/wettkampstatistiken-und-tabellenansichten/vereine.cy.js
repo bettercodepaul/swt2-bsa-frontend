@@ -2,7 +2,7 @@ describe("Vereine und Mannschaften Übersicht Tests", () => {
 
 
   it('Mannschaftsseite mit Auswahl exisitert', function () {
-    cy.visit('http://localhost:4200/#/mannschaft/1/102');
+    cy.visit('http://localhost:4200/#/vereine/1/102');
 
     cy.get('#mannschaftSelect').should('be.ok');
     cy.get('#mannschaftSelect option')
@@ -21,4 +21,22 @@ describe("Vereine und Mannschaften Übersicht Tests", () => {
     cy.url().should('include', '/vereine/1');
   });
 
+ it ('Mannschaftsübersicht mit Statistiken existiert', function () {
+    cy.visit('http://localhost:4200/#/vereine/1/102');
+
+    cy.get('#wettkampftagSelect').should('be.ok');
+    cy.get('#wettkampftagSelect').select(0);
+
+    cy.get('[data-cy=statisticTabButton]').first().click();
+    cy.get('[data-cy=tableStatistik] > div > table > tbody > tr').should('have.length', 3);
+
+    cy.get('[data-cy=statisticTabButton]').eq(1).click();
+    cy.get('[data-cy=tableStatistik] > div > table > tbody > tr').should('have.length', 3);
+
+    cy.get('[data-cy=statisticTabButton]').eq(2).click();
+    cy.get('[data-cy=tableStatistik] > div > table > tbody > tr').should('have.length', 3);
+
+    cy.get('[data-cy=statisticTabButton]').eq(3).click();
+    cy.get('[data-cy=tableStatistik] > div > table > tbody > tr').should('have.length', 3);
+  });
 });

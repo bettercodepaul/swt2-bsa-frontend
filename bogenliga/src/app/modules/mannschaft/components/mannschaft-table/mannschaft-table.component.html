@@ -1,0 +1,27 @@
+<div class="row pb-2"
+     *ngIf="[SchuetzenStatistikType.EINZELSTATISTIK, SchuetzenStatistikType.WETTKAMPFTAGESSTATISTIK].includes(selectedStatistic)">
+  <select class="form-control w-auto"
+          id="wettkampftagSelect"
+          name="wettkampftagSelect"
+          [(ngModel)]="selectedWettkampfTag"
+          [disabled]="loading"
+          (ngModelChange)="onSelectWettkampfTag()">
+    <option *ngFor="let wettkampf of wettkaempfe"
+            [ngValue]="wettkampf">{{ "MANNSCHAFT.WETTKAMPF_DAY" | translate }}&nbsp;{{ wettkampf.wettkampfTag }}
+    </option>
+  </select>
+</div>
+
+<div class="row pb-1">
+  {{ "MANNSCHAFT.TABS." + selectedStatistic.valueOf() + ".HELPER" | translate }}
+</div>
+<div class="row overflow-auto">
+  <div>
+    <bla-data-table id="row00"
+                    [loading]="loadingData"
+                    [config]="currentConfig"
+                    [rows]="rows[currentWettkampftag]"
+                    data-cy="tableStatistik">
+    </bla-data-table>
+  </div>
+</div>
