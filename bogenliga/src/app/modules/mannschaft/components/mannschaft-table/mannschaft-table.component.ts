@@ -117,7 +117,7 @@ export class MannschaftTableComponent extends CommonComponentDirective implement
 
   private async loadSchuetzenstatistikMatch() {
     this.loadingData = true;
-    if (this.selectedMannschaft !== undefined && this.selectedMannschaft !== null) {
+    if (this.selectedMannschaft !== undefined && this.selectedMannschaft !== null && this.selectedWettkampfTag?.id ) {
       this.rows = [];
       // make first wettkampftag row visible
       this.currentConfig = WETTKAMPF_TABLE_MATCH_CONFIG;
