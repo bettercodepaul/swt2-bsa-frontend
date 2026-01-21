@@ -333,9 +333,10 @@ describe('LigaOverviewComponent', () => {
       hierarchySubject.next({ status: 'error', data: [] });
       fixture.detectChanges();
 
-      const errorState = fixture.nativeElement.querySelector('bla-error-state');
-      expect(errorState).toBeTruthy();
-      // Detailprüfung des Buttons ist Aufgabe der ErrorStateComponent-Tests
+      const retryButton = fixture.nativeElement.querySelector('bla-error-state');
+      expect(retryButton).toBeTruthy();
+      // Error state allows retry
+      expect(component.hierarchyResult?.status).toBe('error');
     });
   });
 
@@ -371,6 +372,8 @@ describe('LigaOverviewComponent', () => {
 
       const errorState = fixture.nativeElement.querySelector('bla-error-state');
       expect(errorState).toBeTruthy();
+      // Timeout state allows retry
+      expect(component.hierarchyResult?.status).toBe('timeout');
     });
   });
 
