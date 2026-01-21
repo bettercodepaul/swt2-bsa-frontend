@@ -2073,23 +2073,6 @@
                   }
                 },
                 "NO_LIGA_WARNING": "The selected team is not assigned to a league."
-              },
-              "VEREINSMANNSCHAFTENUEBERSICHT": {
-                "TITLE": "Club overview",
-                "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
-                "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
-                "STATUS": {
-                  "LOADING": "Club overview is loading ...",
-                  "EMPTY": "No club found. The data source is currently not providing any entries.",
-                  "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
-                  "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-                  "ERROR": "The club overview could not be loaded."
-                },
-                "TABLE": {
-                  "HEADERS": {
-                    "MANNSCHAFTSNAME": "Team name"
-                  }
-                }
               }
             }
           }
