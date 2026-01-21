@@ -103,7 +103,7 @@ export class VereinsmannschaftenuebersichtComponent extends CommonComponentDirec
   public async getSelectedRow($event): Promise<void> {
     const rowValues = $event;
     console.log(rowValues);
-    this.router.navigate(['/mannschaftsuebersicht',rowValues.id]);
+    this.router.navigate([`vereine/${this.verein.id}/${rowValues.id}`]);
   }
 
   readonly config = VEREINSMANNSCHAFTENUEBERSICHT_CONFIG;
