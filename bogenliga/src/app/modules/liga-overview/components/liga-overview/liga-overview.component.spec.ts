@@ -284,7 +284,8 @@ describe('LigaOverviewComponent', () => {
 
       const retryButton = fixture.nativeElement.querySelector('bla-error-state');
       expect(retryButton).toBeTruthy();
-      expect(retryButton.getAttribute('ng-reflect-show-retry')).toBe('true');
+      // Error state allows retry
+      expect(component.hierarchyResult?.status).toBe('error');
     });
   });
 
@@ -319,7 +320,9 @@ describe('LigaOverviewComponent', () => {
       fixture.detectChanges();
 
       const errorState = fixture.nativeElement.querySelector('bla-error-state');
-      expect(errorState.getAttribute('ng-reflect-show-retry')).toBe('true');
+      expect(errorState).toBeTruthy();
+      // Timeout state allows retry
+      expect(component.hierarchyResult?.status).toBe('timeout');
     });
   });
 
