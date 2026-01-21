@@ -1,0 +1,37 @@
+<bla-navigation-dialog [config]="config">
+  <!-- Loading indicator -->
+  <div *ngIf="loading">{{ "MANNSCHAFT.STATUS.LOADING" | translate }}</div>
+
+  <!-- Mannschaft anzeigen -->
+  <div *ngIf="!loading && currentMannschaft">
+    <h1>{{ currentMannschaft.name || 'unbenannte Mannschaft' }} </h1>
+  </div>
+  <div class="row p-3">
+    <label class="form-label-box col-form-label pr-2" for="mannschaftSelect">
+      <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+    </label>
+    <select class="form-control w-auto"
+            id="mannschaftSelect"
+            name="mannschaftSelect"
+            [(ngModel)]="currentMannschaft"
+            [disabled]="loading || mannschaften?.length === 0"
+            (ngModelChange)="onSelectMannschaft()">
+      <option *ngFor="let mannschaft of mannschaften"
+              [ngValue]="mannschaft"> {{ mannschaft.name }}
+      </option>
+    </select>
+  </div>
+  <div class="my-4">
+    {{ "MANNSCHAFT.PLACEHOLDER" | translate }}
+  </div>
+
+  <bla-actionbutton
+    class="item"
+    id="jumpToVereinButton"
+    [color]="ActionButtonColors.PRIMARY"
+    [iconClass]="'users'"
+    (onClick)="onPushtoVerein()"
+  >
+    {{ "zum Verein" }}
+  </bla-actionbutton>
+</bla-navigation-dialog>
