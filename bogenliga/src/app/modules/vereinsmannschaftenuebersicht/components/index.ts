@@ -1,2 +1,2 @@
-export * from './Vereinsmannschaftenuebersicht/vereinsmannschaftenuebersicht.component';
+export * from './vereinsmannschaftenuebersicht/vereinsmannschaftenuebersicht.component';
 
