@@ -64,7 +64,7 @@ import {
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LigaDO} from "@verwaltung/types/liga-do.class";
+import {LigaDO} from '@verwaltung/types/liga-do.class';
 
 
 interface Wettkampftag {
@@ -235,13 +235,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     console.log('LigaID from resolver:', this.providedLigaID);
 
+    await this.loadVeranstaltungen(this.providedLigaID);
     await this.loadJahre();
-    await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
     this.selectedMannschaftStatistik = 'alle_mannschaften';
     await this.onSelectMannschaftStatistik();
   }
-
 
   public onMannschaftLinkClicked(event: {row, target: 'own' | 'opponent'}) {
 
@@ -639,11 +638,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   // backend-calls to get data from DB
-  public async loadVeranstaltungen(sportjahr) {
+  public async loadVeranstaltungen(ligaID) {
     this.clear();
     this.loadingData = true;
     this.cleanLineChart();
-    await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
+    await this.veranstaltungsDataProvider.findByLigaId(ligaID)
       .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
       .catch(() => {
         this.veranstaltungen = [];
