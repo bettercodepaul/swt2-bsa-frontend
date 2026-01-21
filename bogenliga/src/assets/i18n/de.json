@@ -93,6 +93,9 @@
       "WETTKAMPFTAGVIER": "⌀ Tag 4",
       "WETTKAMPFTAGESCHNITT": "Wettkampftage Schnitt"
     },
+    "WETTKAMPFTAG": {
+      "LINKDESCRIPTION": "Zur Ligatabelle"
+    },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
     },

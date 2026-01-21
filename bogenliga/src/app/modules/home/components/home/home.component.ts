@@ -484,7 +484,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
       // Jahr aus dem ersten Wettkampf holen
       this.veranstaltungWettkaempfeyear = wettkaempfe[0].veranstaltungSportjahr;
-
+      console.log(wettkaempfe);
       // Direkt die Daten vom Backend verwenden - ALLE Felder sind jetzt vorhanden!
       wettkaempfe.forEach((wk: any) => {
         const wettkampfDO = new WettkampfDO(
@@ -509,7 +509,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
             id: wk.veranstaltungId,
             name: wk.veranstaltungName,
             sportjahr: wk.veranstaltungSportjahr,
-            ligaId: wk.veranstaltungLigaId
+            ligaId: wk.veranstaltungLigaId,
+            ligaName: wk.veranstaltungLigaName
           } as VeranstaltungDO,
           month: this.numberToMonth(parseInt(wk.wettkampfDatum. split("-")[1])),
           day: parseInt(wk.wettkampfDatum.split("-")[2])
@@ -687,12 +688,26 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
   }
 
-  public ligatabelleLinking() {
+  public wettkampfErgebnisseLinking() {
     this.router.navigate(
       ['/wettkaempfe', this.veranstaltung.id],
       { queryParamsHandling: 'merge' }
     );
   }
+
+  public wettkampfButtonToLigatabelleLinking(ligaId: number, ligaName?: string) {
+    // If ligaName is defined, use slug, otherwise use ligaId
+    const ligaParam = ligaName ? slugifyLigaName(ligaName) : String(ligaId);
+
+    this.router.navigate(
+      ['/ligatabelle'],
+      {
+        queryParams: { liga: ligaParam },
+        queryParamsHandling: 'merge'
+      }
+    );
+  }
+
 
 
   //BSAPP-1384
