@@ -39,4 +39,11 @@ describe("Vereine und Mannschaften Übersicht Tests", () => {
     cy.get('[data-cy=statisticTabButton]').eq(3).click();
     cy.get('[data-cy=tableStatistik] > div > table > tbody > tr').should('have.length', 3);
   });
+
+it('Vereinsseite exisitert und kann navigieren', function () {
+    cy.visit('http://localhost:4200/#/vereine/1');
+    cy.get('#mannschaftentabelle > div > table > tbody > tr').should('have.length', 1);
+    cy.get('#mannschaftentabelle > div > table > tbody > tr').first().click();
+    cy.url().should('include','vereine/1/102');
+  });
 });

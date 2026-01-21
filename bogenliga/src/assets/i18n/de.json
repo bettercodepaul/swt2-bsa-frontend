@@ -129,6 +129,7 @@
       "STATISTIK_DRUCKEN": "Statistik drucken"
     }
   },
+
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
       "HEADERS": {
@@ -227,6 +228,7 @@
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
       "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
+
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
@@ -1582,7 +1584,7 @@
           "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         },
         "UPDATE_VERANSTALTUNG_FAILURE": {
-          "TITLE": "Update fehlgeschlagen",
+         "TITLE": "Update fehlgeschlagen",
           "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bitte generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
         },
         "UPDATE_DATABASE_FAILURE": {
@@ -2084,5 +2086,22 @@
       }
     },
     "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."
+  },
+  "VEREINSMANNSCHAFTENUEBERSICHT": {
+    "TITLE": "Vereinsübersicht",
+    "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften eines Vereins.",
+    "PLACEHOLDER": "Die Vereinsübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
+    "STATUS": {
+      "LOADING": "Vereinsübersicht wird geladen …",
+      "EMPTY": "Keine Verein gefunden. Die Datenquelle liefert aktuell keine Einträge.",
+      "TIMEOUT": "Die Vereinsübersicht konnte nicht geladen werden (Timeout). Bitte später erneut versuchen.",
+      "OFFLINE_FALLBACK": "Keine Live-Daten verfügbar. Es werden lokale Referenzdaten angezeigt.",
+      "ERROR": "Die Vereinsübersicht konnte nicht geladen werden."
+    },
+    "TABLE": {
+      "HEADERS": {
+        "MANNSCHAFTSNAME": "Mannschaftsname"
+      }
+    }
   }
 }
