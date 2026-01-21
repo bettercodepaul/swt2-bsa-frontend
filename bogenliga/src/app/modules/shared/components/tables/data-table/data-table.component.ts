@@ -43,7 +43,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
   @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
-  @Output() public onLinkClicked = new EventEmitter<{row: any; column: any; }>();
+  @Output() public onLinkClicked = new EventEmitter<{row: any; target: 'own' | 'opponent'}>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -55,6 +55,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     private translatePipe: TranslatePipe,
     private currentUserService: CurrentUserService) {
     super();
+  }
+
+  public linkClicked(row: any, target: 'own' | 'opponent') {
+    this.onLinkClicked.emit({row, target});
   }
 
   // Returns true if actions in table should be displayed as colored buttons with text
