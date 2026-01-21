@@ -4,8 +4,10 @@ import { environment } from '@environment';
 import { UriBuilder } from '@shared/data-provider/services/utils/uri-builder.class';
 import { LeagueDTO } from '@shared/models/league.dto';
 import { LeagueHierarchyResult, LeagueTreeNode } from '@shared/models/tree-node';
-import { Observable, of } from 'rxjs';
-import { catchError, map, timeout, tap, shareReplay } from 'rxjs/operators';
+import { Observable, of, from } from 'rxjs';
+import { catchError, map, timeout, tap, switchMap, retry } from 'rxjs/operators';
+import { db } from '@shared/data-provider/offlinedb/offlinedb';
+import { OfflineLeagueHierarchyCache } from '@shared/data-provider/offlinedb/types/offline-league-hierarchy-cache.interface';
 
 // Default timeout for API calls (ms)
 const DEFAULT_TIMEOUT_MS = 6000;
@@ -13,111 +15,21 @@ const DEFAULT_TIMEOUT_MS = 6000;
 const MOCK_FLAT_LIST_URL = './assets/mocks/league-hierarchy.json';
 // Default cache TTL: 5 minutes
 const DEFAULT_CACHE_TTL_MS = 5 * 60 * 1000;
-
-// SessionStorage keys
-const STORAGE_KEY_CACHE = 'liga-hierarchy-cache';
-const STORAGE_KEY_CACHE_TIMESTAMP = 'liga-hierarchy-cache-timestamp';
-const STORAGE_KEY_EXPANDED_IDS = 'liga-hierarchy-expanded-ids';
-const STORAGE_KEY_SELECTED_ID = 'liga-hierarchy-selected-id';
+// Fixed cache entry ID (singleton)
+const CACHE_ENTRY_ID = 1;
 
 /**
  * Service für das Laden der Liga-Hierarchie.
  *
- * Beinhaltet SessionStorage-basiertes Caching mit konfigurierbarer TTL zur Reduzierung
- * von wiederholten API-Aufrufen. Cache überlebt Page-Reloads.
+ * Beinhaltet IndexedDB-basiertes Caching (über offlinedb/Dexie) mit konfigurierbarer TTL.
+ * Cache überlebt Browser-Neustarts und bietet bessere Performance als SessionStorage.
  */
 @Injectable({ providedIn: 'root' })
 export class LeagueHierarchyService {
   private readonly baseUrl = environment.backendBaseUrl;
   private readonly ligaPath = 'v1/liga';
 
-  // For deduplication of in-flight requests (in-memory only)
-  private pendingRequest$: Observable<LeagueHierarchyResult> | null = null;
-  private cacheTtlMs: number = DEFAULT_CACHE_TTL_MS;
-
   constructor(private http: HttpClient) { }
-
-  // --- Tree State Persistence (SessionStorage) ---
-
-  /** Speichert die IDs der expandierten Knoten. */
-  get expandedIds(): Set<number> {
-    try {
-      const stored = sessionStorage.getItem(STORAGE_KEY_EXPANDED_IDS);
-      if (stored) {
-        return new Set<number>(JSON.parse(stored));
-      }
-    } catch { /* ignore */ }
-    return new Set<number>();
-  }
-
-  set expandedIds(ids: Set<number>) {
-    try {
-      sessionStorage.setItem(STORAGE_KEY_EXPANDED_IDS, JSON.stringify([...ids]));
-    } catch { /* ignore */ }
-  }
-
-  /** Speichert die aktuell selektierte Liga-ID. */
-  get selectedId(): number | null {
-    try {
-      const stored = sessionStorage.getItem(STORAGE_KEY_SELECTED_ID);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch { /* ignore */ }
-    return null;
-  }
-
-  set selectedId(id: number | null) {
-    try {
-      if (id === null) {
-        sessionStorage.removeItem(STORAGE_KEY_SELECTED_ID);
-      } else {
-        sessionStorage.setItem(STORAGE_KEY_SELECTED_ID, JSON.stringify(id));
-      }
-    } catch { /* ignore */ }
-  }
-
-  /** Prüft ob ein gespeicherter Tree-State existiert. */
-  hasPersistedTreeState(): boolean {
-    return this.expandedIds.size > 0 || this.selectedId !== null;
-  }
-
-  /** Setzt den Tree-State zurück. */
-  clearTreeState(): void {
-    try {
-      sessionStorage.removeItem(STORAGE_KEY_EXPANDED_IDS);
-      sessionStorage.removeItem(STORAGE_KEY_SELECTED_ID);
-    } catch { /* ignore */ }
-  }
-
-  // --- Cache Persistence (SessionStorage) ---
-
-  private getCachedResult(): LeagueHierarchyResult | null {
-    try {
-      const stored = sessionStorage.getItem(STORAGE_KEY_CACHE);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch { /* ignore */ }
-    return null;
-  }
-
-  private setCachedResult(result: LeagueHierarchyResult): void {
-    try {
-      sessionStorage.setItem(STORAGE_KEY_CACHE, JSON.stringify(result));
-      sessionStorage.setItem(STORAGE_KEY_CACHE_TIMESTAMP, JSON.stringify(Date.now()));
-    } catch { /* ignore */ }
-  }
-
-  private getCacheTimestamp(): number {
-    try {
-      const stored = sessionStorage.getItem(STORAGE_KEY_CACHE_TIMESTAMP);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch { /* ignore */ }
-    return 0;
-  }
 
   /**
    * Loads league hierarchy as a tree. Builds the tree client-side from the flat league list.
@@ -129,6 +41,7 @@ export class LeagueHierarchyService {
 
     return this.http.get<LeagueDTO[]>(url).pipe(
       timeout(timeoutMs),
+      retry(2),
       map((list) => this.fromFlatList(list)),
       map((nodes) => nodes.length === 0
         ? ({ status: 'empty', data: nodes } as LeagueHierarchyResult)
@@ -139,65 +52,171 @@ export class LeagueHierarchyService {
   }
 
   /**
-   * Loads league hierarchy with client-side caching (sessionStorage).
+   * Loads league hierarchy with IndexedDB caching (offlinedb).
    * Repeated calls within TTL return cached data instantly.
-   * Cache persists across page reloads.
+   * Cache persists across browser restarts.
    *
    * @param options.timeoutMs HTTP timeout (default: 6000ms)
    * @param options.ttlMs Cache TTL (default: 5 min)
    */
   getHierarchyCached(options?: { timeoutMs?: number; ttlMs?: number }): Observable<LeagueHierarchyResult> {
     const ttlMs = options?.ttlMs ?? DEFAULT_CACHE_TTL_MS;
-    this.cacheTtlMs = ttlMs;
 
-    // Check if we have valid cached data
-    const now = Date.now();
-    const cacheTimestamp = this.getCacheTimestamp();
-    const cacheAge = now - cacheTimestamp;
-    const cachedResult = this.getCachedResult();
-    const isCacheValid = cachedResult !== null && cacheAge < this.cacheTtlMs;
+    return from(this.getCachedEntry()).pipe(
+      switchMap((cached) => {
+        const now = Date.now();
+        const isCacheValid = cached !== undefined && (now - cached.cachedAt) < ttlMs;
 
-    if (isCacheValid && cachedResult) {
-      return of(cachedResult);
-    }
+        if (isCacheValid && cached) {
+          // Cache hit - return cached data
+          return of({
+            status: cached.status,
+            data: cached.data
+          } as LeagueHierarchyResult);
+        }
 
-    // If there's already a request in flight, return that
-    if (this.pendingRequest$) {
-      return this.pendingRequest$;
-    }
-
-    // Make a new request
-    this.pendingRequest$ = this.getHierarchy({ timeoutMs: options?.timeoutMs }).pipe(
-      tap((result) => {
-        this.setCachedResult(result);
-        this.pendingRequest$ = null;
+        // Cache miss or expired - fetch fresh data
+        return this.getHierarchy({ timeoutMs: options?.timeoutMs }).pipe(
+          tap((result) => {
+            // Only cache successful results
+            if (result.status === 'ok' || result.status === 'empty' || result.status === 'offline-fallback') {
+              this.setCachedEntry(result).catch(() => { /* ignore cache write errors */ });
+            }
+          })
+        );
       }),
-      shareReplay(1)
+      catchError(() => {
+        // If cache access fails, fall back to direct API call
+        return this.getHierarchy({ timeoutMs: options?.timeoutMs });
+      })
     );
-
-    return this.pendingRequest$;
   }
 
   /**
    * Invalidates the cached hierarchy data.
    * Next call to getHierarchyCached will fetch fresh data from the API.
    */
-  invalidateCache(): void {
+  async invalidateCache(): Promise<void> {
     try {
-      sessionStorage.removeItem(STORAGE_KEY_CACHE);
-      sessionStorage.removeItem(STORAGE_KEY_CACHE_TIMESTAMP);
-    } catch { /* ignore */ }
-    this.pendingRequest$ = null;
+      await db.leagueHierarchyCache.delete(CACHE_ENTRY_ID);
+    } catch {
+      // Ignore errors during cache invalidation
+    }
   }
 
   /**
    * Checks if cached hierarchy data is still valid.
    */
-  isCacheValid(): boolean {
-    const now = Date.now();
-    const cacheAge = now - this.getCacheTimestamp();
-    return this.getCachedResult() !== null && cacheAge < this.cacheTtlMs;
+  async isCacheValid(ttlMs: number = DEFAULT_CACHE_TTL_MS): Promise<boolean> {
+    try {
+      const cached = await this.getCachedEntry();
+      if (!cached) return false;
+      return (Date.now() - cached.cachedAt) < ttlMs;
+    } catch {
+      return false;
+    }
   }
+
+  // --- Private cache helpers ---
+
+  private async getCachedEntry(): Promise<OfflineLeagueHierarchyCache | undefined> {
+    return db.leagueHierarchyCache.get(CACHE_ENTRY_ID);
+  }
+
+  private async setCachedEntry(result: LeagueHierarchyResult): Promise<void> {
+    // Preserve existing tree state when updating cache
+    const existing = await this.getCachedEntry();
+    const entry: OfflineLeagueHierarchyCache = {
+      id: CACHE_ENTRY_ID,
+      data: result.data,
+      cachedAt: Date.now(),
+      status: result.status as 'ok' | 'empty' | 'offline-fallback',
+      expandedIds: existing?.expandedIds,
+      selectedId: existing?.selectedId
+    };
+    await db.leagueHierarchyCache.put(entry);
+  }
+
+  // --- Tree State Persistence ---
+
+  /**
+   * Speichert die IDs der expandierten Knoten.
+   */
+  async saveExpandedIds(ids: Set<number>): Promise<void> {
+    try {
+      const entry = await this.getCachedEntry();
+      if (entry) {
+        entry.expandedIds = [...ids];
+        await db.leagueHierarchyCache.put(entry);
+      }
+    } catch { /* ignore */ }
+  }
+
+  /**
+   * Lädt die gespeicherten expandierten Knoten-IDs.
+   */
+  async getExpandedIds(): Promise<Set<number>> {
+    try {
+      const entry = await this.getCachedEntry();
+      if (entry?.expandedIds) {
+        return new Set(entry.expandedIds);
+      }
+    } catch { /* ignore */ }
+    return new Set();
+  }
+
+  /**
+   * Speichert die aktuell selektierte Liga-ID.
+   */
+  async saveSelectedId(id: number | null): Promise<void> {
+    try {
+      const entry = await this.getCachedEntry();
+      if (entry) {
+        entry.selectedId = id;
+        await db.leagueHierarchyCache.put(entry);
+      }
+    } catch { /* ignore */ }
+  }
+
+  /**
+   * Lädt die gespeicherte selektierte Liga-ID.
+   */
+  async getSelectedId(): Promise<number | null> {
+    try {
+      const entry = await this.getCachedEntry();
+      return entry?.selectedId ?? null;
+    } catch { /* ignore */ }
+    return null;
+  }
+
+  /**
+   * Prüft ob ein gespeicherter Tree-State existiert.
+   */
+  async hasPersistedTreeState(): Promise<boolean> {
+    try {
+      const entry = await this.getCachedEntry();
+      if (!entry) return false;
+      return (entry.expandedIds?.length ?? 0) > 0 || entry.selectedId != null;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Setzt den Tree-State zurück.
+   */
+  async clearTreeState(): Promise<void> {
+    try {
+      const entry = await this.getCachedEntry();
+      if (entry) {
+        entry.expandedIds = undefined;
+        entry.selectedId = undefined;
+        await db.leagueHierarchyCache.put(entry);
+      }
+    } catch { /* ignore */ }
+  }
+
+  // --- Error handling ---
 
   /**
    * Try to recover by serving local mock data if available; otherwise emit mapped error.
@@ -221,6 +240,8 @@ export class LeagueHierarchyService {
     }
     return { status: 'error', data: [], reason: 'Unknown error' };
   }
+
+  // --- Tree building ---
 
   /**
    * Build a hierarchical tree from flat league list using ligaUebergeordnetId as parent reference.

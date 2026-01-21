@@ -10,48 +10,33 @@
   outline: none;
 }
 
+/* Vertikale Linie nach oben - geht bis zur horizontalen Linie */
 :host::before {
   content: '';
   position: absolute;
-  top: calc(-1 * var(--bla-tree-branch-length, 32px));
+  top: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
   left: 50%;
-  width: 1px;
-  height: var(--bla-tree-branch-length, 32px);
-  background: var(--bla-tree-branch-color, #d8dde8);
+  width: 2px;
+  height: calc(var(--bla-tree-branch-length, 32px) / 2 + 2px);
+  background: var(--bla-tree-branch-color, #9ba5b8);
   transform: translateX(-50%);
   display: block;
+  z-index: 0;
 }
 
-:host::after {
-  content: '';
-  position: absolute;
-  top: calc(-1 * var(--bla-tree-branch-length, 32px));
-  left: 0;
-  right: 0;
-  border-top: 1px solid var(--bla-tree-branch-color, #d8dde8);
-  display: block;
-}
+/* Horizontale Linie ist jetzt auf .bla-league-tree__child-item::after */
+/* Weil :host immer :only-child seines <li> ist */
 
-:host(:first-child)::after {
-  left: 50%;
-}
+/* Diese Regeln sind jetzt auf .bla-league-tree__child-item */
 
-:host(:last-child)::after {
-  right: 50%;
-}
-
-:host(:only-child)::after {
-  display: none;
-}
-
-:host(.bla-league-tree__item--root)::before,
-:host(.bla-league-tree__item--root)::after {
+:host(.bla-league-tree__item--root)::before {
   display: none;
 }
 
 .bla-league-tree__item-row {
   position: relative;
-  z-index: 1; /* Über den Verbindungslinien */
+  z-index: 2;
+  /* Über den Verbindungslinien (die z-index: 0 haben) */
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -68,8 +53,12 @@
   min-width: 150px;
   max-width: 220px;
   margin: 0 auto;
-  isolation: isolate; /* Stacking Context für z-index */
+  isolation: isolate;
+  /* Stacking Context für z-index */
 }
+
+/* Vertikale Linie nach oben - gehört jetzt zur Card */
+
 
 .bla-league-tree__item-row:hover {
   transform: translateY(-2px);
@@ -140,7 +129,8 @@
   width: 10px;
   height: 10px;
   transition: transform 200ms ease;
-  color: inherit; /* Übernimmt die Icon-Farbe vom Toggle-Button */
+  color: inherit;
+  /* Übernimmt die Icon-Farbe vom Toggle-Button */
 }
 
 /* Chevron als CSS-Pfeil - Default: Zeigt nach rechts (▶) */
@@ -184,15 +174,52 @@
   flex: 0 0 auto;
 }
 
+/* Horizontale Verbindungslinie zwischen Geschwister-Knoten */
+/* Liegt in der MITTE zwischen Eltern und Kindern */
+.bla-league-tree__child-item::after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
+  left: 0;
+  right: 0;
+  border-top: 2px solid var(--bla-tree-branch-color, #9ba5b8);
+  display: block;
+  z-index: 0;
+}
+
+.bla-league-tree__child-item:first-child::after {
+  left: 50%;
+}
+
+.bla-league-tree__child-item:last-child::after {
+  right: 50%;
+}
+
+.bla-league-tree__child-item:only-child::after {
+  display: none;
+}
+
+/* Vertikale Linie nach unten - NUR bei expandierten Knoten mit sichtbaren Kindern */
+/* Geht von der Card bis zur horizontalen Linie (halbe Höhe) */
+
+/* Standardmäßig keine Linie nach unten - content: none verhindert Pseudo-Element */
+/* Standardmäßig keine Linie nach unten - content: none verhindert Pseudo-Element */
+.bla-league-tree__item-row::after {
+  content: none;
+}
+
+/* Nur bei expandierten Knoten mit Kindern */
 :host(.bla-league-tree__item--has-children.bla-league-tree__item--expanded) .bla-league-tree__item-row::after {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: calc(-1 * var(--bla-tree-branch-length, 32px));
-  width: 1px;
-  height: var(--bla-tree-branch-length, 32px);
-  background: var(--bla-tree-branch-color, #d8dde8);
+  bottom: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
+  width: 2px;
+  height: calc(var(--bla-tree-branch-length, 32px) / 2 + 2px);
+  background: var(--bla-tree-branch-color, #9ba5b8);
   transform: translateX(-50%);
+  z-index: 0;
+  display: block;
 }
 
 /* Level theming - Bogenscheiben-Farben: Weiße Cards mit farbiger Umrandung */
