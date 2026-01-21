@@ -2097,8 +2097,7 @@
     },
     "TABLE": {
       "HEADERS": {
-        "MANNSCHAFTSNAME": "Mannschaftsname",
-        "LIGANAME": "Liganame"
+        "MANNSCHAFTSNAME": "Mannschaftsname"
       }
     }
   }

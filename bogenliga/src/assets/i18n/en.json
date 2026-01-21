@@ -745,8 +745,7 @@
           "DELETE": {
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-          }
-
+          },
           "NOTIFICATION": {
             "DELETE": {
               "TITLE": "Delete Association Member",
@@ -1245,7 +1244,7 @@
               "SAVE": "Save",
               "UPDATE": "Refresh",
               "DELETE": "Delete",
-              "RESET_FILTER": "Reset filter"
+              "RESET_FILTER": "Reset filter",
               "NOTIFICATION": {
                 "SAVE": {
                   "TITLE": "Success",
@@ -1357,7 +1356,7 @@
                   "SAVE_AND_LIZENZ_ERSTELLT": {
                     "TITLE": "Success",
                     "DESCRIPTION": "Successfully added marksman to team and created a licence."
-                  }
+                  },
                   "DUPLICATE": {
                     "TITLE": "Failed to add",
                     "DESCRIPTION": "Member number already taken. Please choose a different number."
@@ -2025,68 +2024,66 @@
                 "TREE": {
                   "TITLE": "League hierarchy",
                   "EXPAND": "Expand node",
-      "COLLAPSE": "Collapse node",
-      "EXPAND_ALL": "Expand all",
-      "COLLAPSE_ALL": "Collapse all"
-    },
-    "DEEPLINK": {
-      "INVALID_ID": "The specified league ID is invalid.",
-      "NOT_FOUND": "The specified league could not be found."
-    },
-    "REFRESH": "Refresh"
-  },
-  "MANNSCHAFT": {
-    "TITLE": "Team overview",
-    "DESCRIPTION": "Here you will find a central overview a team.",
-    "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
-    "WETTKAMPF_DAY": "Competition day",
-    "STATUS": {
-      "NOT_FOUND": "The specified team could not be found.",
-      "LOADING": "Team overview is loading ...",
-      "EMPTY": "No team found. The data source is currently not providing any entries.",
-      "TIMEOUT": "The team overview could not be loaded (timeout). Please try again later.",
-      "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-      "ERROR": "The team overview could not be loaded."
-    },
-    "TABS": {
-      "GESAMTSTATISTIK": {
-        "TITLE": "Complete statistics",
-        "HELPER": "Overall statistics per shooter"
-      },
-      "EINZELSTATISTIK": {
-        "TITLE": "Statistics per archer",
-        "HELPER": "Passe-values of matches per shooter in a competition"
-      },
-      "WETTKAMPFSTATISTIK": {
-        "TITLE": "Statistics per competition day",
-        "HELPER": "Average competition score per shooter"
-      },
-      "WETTKAMPFTAGESSTATISTIK": {
-        "TITLE": "Archer statistics per match",
-        "HELPER": "Average match score per competitor in a competition"
-      },
-      "SAISONSTATISTIK": {
-        "TITLE": "Statistics per season",
-        "HELPER": "Statistics of an archer over the last five years"
-    }
-  },
-            "VEREINSMANNSCHAFTENUEBERSICHT": {
-              "TITLE": "Club overview",
-              "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
-              "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
-              "STATUS": {
-              "LOADING": "Club overview is loading ...",
-              "EMPTY": "No club found. The data source is currently not providing any entries.",
-              "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
-              "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
-              "ERROR": "The club overview could not be loaded.",
-                "TABLE": {
-                  "HEADERS": {
-                    "MANNSCHAFTSNAME": "Team name",
-                    "LIGANAME": "League name"
+                  "COLLAPSE": "Collapse node",
+                  "EXPAND_ALL": "Expand all",
+                  "COLLAPSE_ALL": "Collapse all"
+                },
+                "DEEPLINK": {
+                  "INVALID_ID": "The specified league ID is invalid.",
+                  "NOT_FOUND": "The specified league could not be found."
+                },
+                "REFRESH": "Refresh"
+              },
+              "MANNSCHAFT": {
+                "TITLE": "Team overview",
+                "DESCRIPTION": "Here you will find a central overview a team.",
+                "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
+                "WETTKAMPF_DAY": "Competition day",
+                "STATUS": {
+                  "NOT_FOUND": "The specified team could not be found.",
+                  "LOADING": "Team overview is loading ...",
+                  "EMPTY": "No team found. The data source is currently not providing any entries.",
+                  "TIMEOUT": "The team overview could not be loaded (timeout). Please try again later.",
+                  "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
+                  "ERROR": "The team overview could not be loaded."
+                },
+                "TABS": {
+                  "GESAMTSTATISTIK": {
+                    "TITLE": "Complete statistics",
+                    "HELPER": "Overall statistics per shooter"
+                  },
+                  "EINZELSTATISTIK": {
+                    "TITLE": "Statistics per archer",
+                    "HELPER": "Passe-values of matches per shooter in a competition"
+                  },
+                  "WETTKAMPFSTATISTIK": {
+                    "TITLE": "Statistics per competition day",
+                    "HELPER": "Average competition score per shooter"
+                  },
+                  "WETTKAMPFTAGESSTATISTIK": {
+                    "TITLE": "Archer statistics per match",
+                    "HELPER": "Average match score per competitor in a competition"
+                  },
+                  "SAISONSTATISTIK": {
+                    "TITLE": "Statistics per season",
+                    "HELPER": "Statistics of an archer over the last five years"
+                  }
+                },
+                "VEREINSMANNSCHAFTENUEBERSICHT": {
+                  "TITLE": "Club overview",
+                  "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
+                  "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
+                  "STATUS": {
+                    "LOADING": "Club overview is loading ...",
+                    "EMPTY": "No club found. The data source is currently not providing any entries.",
+                    "TIMEOUT": "The club overview could not be loaded (timeout). Please try again later.",
+                    "OFFLINE_FALLBACK": "No live data available. Local reference data is displayed.",
+                    "ERROR": "The club overview could not be loaded."
+                  },
+                  "TABLE": {
+                    "HEADERS": {
+                      "MANNSCHAFTSNAME": "Team name"
+                    }
                   }
                 }
-      }
-    }
-  }
-}
+              }
