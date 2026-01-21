@@ -68,6 +68,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private veranstaltungIdMap: Map<number, VeranstaltungDO>;
 
+  private initialVeranstaltungId?: number;
+  private initialWettkampfId?: number;
+  private initialSelectionApplied = false;
+
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
   public selectedItemId: number;
@@ -104,6 +108,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   async ngOnInit() {
+    const state = window.history.state;
+    console.log("State is: "+state);
+    this.initialVeranstaltungId = state?.initialVeranstaltungId;
+    this.initialWettkampfId = state?.initialWettkampfId;
+
     // Liga aus Resolver (QueryParam ?liga=...) übernehmen
     console.log("Lade Liga aus Resolver...");
     const ligaFromResolver = this.route.snapshot.data['liga'] as LigaDO | null | undefined;
@@ -165,7 +174,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
       const allVeranstaltungen = veranstaltungenResponse.payload ?? [];
 
-
       if (allVeranstaltungen.length === 0) {
         console.log("No veranstaltungen found for liga.");
         return;
@@ -175,7 +183,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       // Fülle loadedYears Array anhand der geladenen Veranstaltungen
       for (const v of allVeranstaltungen) {
         if (!this.loadedYears.includes(v.sportjahr)) {
-          this.loadedYears.push(v.sportjahr)
+          this.loadedYears.push(v.sportjahr);
         }
       }
 
@@ -186,13 +194,27 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadedVeranstaltungen = new Map(
         allVeranstaltungen
           .sort((a, b) => b.sportjahr - a.sportjahr) // Sortiere absteigend nach sportjahr
-          .map(v =>
-          [v.sportjahr, [v]])
+          .map(v => [v.sportjahr, [v]])
       );
 
       console.log("Loaded Veranstaltungen:", this.loadedVeranstaltungen);
 
-      this.selectMostRecentVeranstaltung();
+      // Initiale Veranstaltung/Sportjahr aus Router-State bevorzugen
+      const explicitV = (this.initialVeranstaltungId != null)
+        ? allVeranstaltungen.find(v => v.id === this.initialVeranstaltungId)
+        : undefined;
+
+      if (explicitV) {
+        this.selectedVeranstaltung = explicitV;
+        this.selectedVeranstaltungName = explicitV.name;
+        this.selectedVeranstaltungId = explicitV.id;
+        this.selectedYearForVeranstaltung = explicitV.sportjahr;
+        this.buttonForward = explicitV.id;
+        console.log("Selected Veranstaltung (from navigation state):", explicitV);
+      } else {
+        this.selectMostRecentVeranstaltung();
+      }
+
       this.loadVeranstaltung(this.selectedVeranstaltung);
 
       this.loading = false;
@@ -201,8 +223,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     } catch (e) {
       this.loading = false;
       this.loadingLigatabelle = false;
-      console.log(e)
-
+      console.log(e);
     }
   }
 
@@ -298,13 +319,14 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.wettkampf_ids.push(wk.id);
     }
 
+
     const currentWettkampftag = Math.max(...(wettkaempfe).map((item) => item.wettkampfTag));
     console.log("Current Wettkampftag:", currentWettkampftag);
     for (let i = 0; i < currentWettkampftag; i++) {
       this.wettkampftage.push(this.alleTage[i]);
     }
 
-    this.wettkampftage. push(this.alleTage[4]); // "Aktuell" (letztes Element)
+    this.wettkampftage.push(this.alleTage[4]); // "Aktuell" (letztes Element)
 
     const today = new Date();
     let currentWettkampf = wettkaempfe[0];
@@ -318,6 +340,34 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     // Speichere den Index des neuesten Wettkampftags
     this.latestWettkampftagIndex = currentWettkampf.wettkampfTag - 1;
 
+    // Initialen Wettkampf (konkreter Wettkampftag) aus Router-State bevorzugen
+    console.log("Initial Wettkampf ID:", this.initialWettkampfId);
+    console.log("Initial Selection Applied:", this.initialSelectionApplied);
+    if (!this.initialSelectionApplied && this.initialWettkampfId != null) {
+      const explicitWk = wettkaempfe.find(wk => wk.id === this.initialWettkampfId);
+
+      if (explicitWk) {
+        const idx = explicitWk.wettkampfTag - 1;
+
+        // Dropdown auf den konkreten Wettkampftag setzen (nicht "Aktuell")
+        if (idx >= 0 && idx < this.wettkampftage.length) {
+          this.selectedWettkampfTag = this.wettkampftage[idx];
+        } else {
+          // Fallback, falls Tag außerhalb des erwarteten Bereichs liegt
+          this.selectedWettkampfTag = this.wettkampftage[this.wettkampftage.length - 1];
+        }
+
+        // Optional: "Aktuell" später konsistent halten
+        // this.latestWettkampftagIndex = Math.max(0, idx);
+
+        this.initialSelectionApplied = true;
+        this.loadLigaTableWettkampftag(explicitWk.id);
+        return;
+      }
+    }
+
+    // Fallback: "Aktuell" -> currentWettkampf
+    console.log("Fallback Aktuell was triggered");
     this.selectedWettkampfTag = this.wettkampftage[this.wettkampftage.length - 1];
     this.loadLigaTableWettkampftag(currentWettkampf.id);
   }

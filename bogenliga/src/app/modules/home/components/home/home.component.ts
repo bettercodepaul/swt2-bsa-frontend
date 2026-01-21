@@ -695,20 +695,28 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     );
   }
 
-  public wettkampfButtonToLigatabelleLinking(ligaId: number, ligaName?: string) {
-    // If ligaName is defined, use slug, otherwise use ligaId
+  public wettkampfButtonToLigatabelleLinking(
+    ligaId: number,
+    ligaName?: string,
+    veranstaltungId?: number,
+    wettkampfId?: number
+  ) {
     const ligaParam = ligaName ? slugifyLigaName(ligaName) : String(ligaId);
+    console.log("VeranstaldunId" + veranstaltungId);
+    console.log("WettkampfId" + wettkampfId);
 
     this.router.navigate(
       ['/ligatabelle'],
       {
         queryParams: { liga: ligaParam },
-        queryParamsHandling: 'merge'
+        queryParamsHandling: 'merge',
+        state: {
+          initialVeranstaltungId: veranstaltungId,
+          initialWettkampfId: wettkampfId
+        }
       }
     );
   }
-
-
 
   //BSAPP-1384
   private getVeranstaltungen(ligaId: number) {

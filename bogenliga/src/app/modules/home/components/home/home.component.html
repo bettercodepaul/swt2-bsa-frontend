@@ -74,7 +74,9 @@
               [iconClass]="'th-list'"
               (onClick)="wettkampfButtonToLigatabelleLinking(
                 veranstaltung.veranstaltungDO.ligaId,
-                veranstaltung.veranstaltungDO.ligaName
+                veranstaltung.veranstaltungDO.ligaName,
+                veranstaltung.veranstaltungDO.id,
+                veranstaltung.wettkaempfeDO.id
               )">
               {{ 'WETTKAEMPFE.WETTKAMPFTAG.LINKDESCRIPTION' | translate }}
             </bla-actionbutton>
