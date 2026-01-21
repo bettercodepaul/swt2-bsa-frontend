@@ -12,7 +12,7 @@
                 blaA11yHoverAnnounce
                 data-cy="liga-tree-toggle-all-button"
                 [color]="ActionButtonColors.PRIMARY"
-                [iconClass]="treeAllExpanded ? 'chevron-right' : 'chevron-down'"
+                [iconClass]="treeAllExpanded ? 'chevron-down' : 'chevron-right'"
                 [disabled]="isLoading || treeNodes.length === 0"
                 [attr.aria-label]="(treeAllExpanded ? 'LIGAUEBERSICHT.TREE.COLLAPSE_ALL' : 'LIGAUEBERSICHT.TREE.EXPAND_ALL') | translate"
                 [attr.aria-controls]="'liga-tree'"
