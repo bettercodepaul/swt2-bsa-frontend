@@ -18,11 +18,6 @@ export const MANNSCHAFTEN_TABLE_CONFIG: TableConfig = {
       propertyName:   'name',
       width:          20,
     },
-    {
-      translationKey: 'VEREINSMANNSCHAFTENUEBERSICHT.TABLE.HEADERS.LIGANAME',
-      propertyName:   'liga',
-      width:          20,
-    },
 
 
   ],
