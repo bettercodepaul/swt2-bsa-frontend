@@ -2,7 +2,6 @@ $gap: 1.25rem;
 $pad: 1.5rem;
 $border: #ccc;
 $error: #b00020;
-$hover: #def;
 
 :host {
   display: block;
@@ -19,7 +18,7 @@ $hover: #def;
   width: 100%;
 }
 
-//Hinweistext
+// Hinweistext
 .info-box {
   background: #eef;
   padding: 0.75rem 1rem;
@@ -32,95 +31,37 @@ $hover: #def;
 .register-layout {
   display: flex;
   gap: $gap;
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
 }
 
-//LINK: Schützenliste
-.schuetzen-list {
-  flex: 0 0 200px;
-
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid $border;
-    border-radius: 4px;
-  }
-
-  .list {
-    max-height: 250px;
-    overflow-y: auto;
-    border: 1px solid $border;
-    border-radius: 4px;
-  }
-
-  .schuetze-item {
-    padding: 0.5rem;
-    cursor: pointer;
-
-    &:hover,
-    &:focus {
-      background: $hover;
-      outline: none;
-    }
-  }
+.menu-col {
+  flex: 1 1 0;
+  min-width: 220px;
 }
 
-//RECHTS: Slots als Boxen
-.slot-grid {
-  flex: 0 0 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.slot-container {
-  border: 1px solid #999;
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  cursor: pointer;
-  background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-
-  &.active {
-    border-color: #1976d2;
-    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
-  }
-}
-
-.slot-label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  opacity: 0.7;
-}
-
-.slot-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.slot-text {
-  font-size: 0.95rem;
-}
-
-.slot-empty {
+.menu-title {
   font-size: 0.9rem;
-  color: #777;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  opacity: 0.85;
 }
 
-.slot-remove {
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
+.shooter-menu {
+  width: 100%;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.35rem;
+  font-size: 0.95rem;
+
+  //sorgt dafür, dass es sich "offen" wie eine Liste anfühlt
+  option {
+    padding: 0.35rem 0.25rem;
+  }
 }
 
-//Fehlermeldung unter der Box
+//Fehlermeldung unter dem Menü
 .error {
   color: $error;
   font-size: 0.8rem;
@@ -136,9 +77,9 @@ $hover: #def;
   font-size: 14px;
   font-weight: 700;
 
-  height: 40px;              // größer
-  padding: 0 28px;           // mehr Fläche
-  border-radius: 8px;        // weniger Rundung
+  height: 40px;
+  padding: 0 28px;
+  border-radius: 8px;
 
   border: none;
   cursor: pointer;
@@ -164,18 +105,29 @@ $hover: #def;
   }
 }
 
-//NEU: Box für die zweite Bestätigung (gleiche Farbe wie info-box)
-.confirm-box {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: #eef;
-  font-size: 0.9rem;
-  border-radius: 8px;
 
-  p {
-    margin: 0 0 0.5rem 0;
-  }
+//Bestätigungsbox
+.confirm-button {
+  margin-top: 30px; // ≈ 1 cm Abstand zu den Menüs / Box darüber
+
+  background-color: #3579f6;
+  color: #ffffff;
+  font-family: "Poppins-semibold", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+
+  height: 40px;
+  padding: 0 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
 
 .confirm-actions {
   display: flex;
@@ -211,20 +163,10 @@ $hover: #def;
   text-align: center;
 }
 
-//Portrait: Liste über Slots, Slots zentriert
-@media (orientation: portrait), (max-width: 600px) {
+//Portrait / Mobile: Menüs untereinander
+@media (orientation: portrait), (max-width: 800px) {
   .register-layout {
     flex-direction: column;
-  }
-
-  .schuetzen-list {
-    width: 100%;
-    flex: none;
-  }
-
-  .slot-grid {
-    flex: none;
-    width: 220px;
-    align-self: center;
+    max-width: 500px;
   }
 }
