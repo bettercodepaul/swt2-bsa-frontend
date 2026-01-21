@@ -228,11 +228,20 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.onSelectMannschaftStatistik();
   }
 
-  // TODO: Navigation link anpassen
-  public onMannschaftLinkClicked(event: {row: any, column: any}) {
-    console.log('onMannschaftLinkClicked payload:', event);
-    const mannschaftID = /*event.row[column.linkKey];*/ 102;
-    this.router.navigate([`/vereine/1`]);
+
+  public onMannschaftLinkClicked(event: {row, target: 'own' | 'opponent'}) {
+
+    let mannschaftID;
+    let vereinId;
+
+    if (event.target === 'own') {
+      mannschaftID = event.row.payload.mannschaftId;
+      vereinId = event.row.payload.vereinId;
+    } else if (event.target === 'opponent') {
+      mannschaftID = event.row.payload.opponentId;
+      vereinId = event.row.payload.opponentVereinId;
+    }
+    this.router.navigate(['/vereine', vereinId , mannschaftID]);
   }
 
   printStatistics() {
