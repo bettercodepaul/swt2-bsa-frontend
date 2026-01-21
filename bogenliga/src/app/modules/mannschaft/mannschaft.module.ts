@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {MANNSCHAFTSUEBERSICHT_ROUTES} from './mannschaft.routing';
-import {MannschaftComponent, MannschaftTextComponent} from './components';
+import {MannschaftComponent, MannschaftTableComponent} from './components';
 
 @NgModule({
   imports: [
@@ -13,8 +13,8 @@ import {MannschaftComponent, MannschaftTextComponent} from './components';
     SharedModule,
     FormsModule
   ],
-  declarations: [MannschaftComponent, MannschaftTextComponent],
-  exports: [MannschaftComponent, MannschaftTextComponent]
+  declarations: [MannschaftComponent, MannschaftTableComponent],
+  exports: [MannschaftComponent, MannschaftTableComponent]
 })
 export class MannschaftModule {
 }
