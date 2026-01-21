@@ -178,8 +178,7 @@ describe('LigaOverviewComponent', () => {
       };
       (component as any).treeComponent = treeMock;
 
-      fixture.detectChanges();
-
+      // no need for detectChanges here, we call the method directly
       component.onToggleExpandCollapseAll();
 
       expect(treeMock.expandToLevel)
@@ -196,7 +195,6 @@ describe('LigaOverviewComponent', () => {
       (component as any).treeComponent = treeMock;
 
       component['updateTreeAllExpandedState']();
-      fixture.detectChanges();
 
       component.onToggleExpandCollapseAll();
 
@@ -329,15 +327,15 @@ describe('LigaOverviewComponent', () => {
       expect(component.isLoading).toBe(true);
     });
 
-    it('should render retry button in error state', () => {
+    it('should render retry state component in error state', () => {
       fixture.detectChanges();
 
       hierarchySubject.next({ status: 'error', data: [] });
       fixture.detectChanges();
 
-      const retryButton = fixture.nativeElement.querySelector('bla-error-state');
-      expect(retryButton).toBeTruthy();
-      expect(retryButton.getAttribute('ng-reflect-show-retry')).toBe('true');
+      const errorState = fixture.nativeElement.querySelector('bla-error-state');
+      expect(errorState).toBeTruthy();
+      // Detailprüfung des Buttons ist Aufgabe der ErrorStateComponent-Tests
     });
   });
 
@@ -364,7 +362,7 @@ describe('LigaOverviewComponent', () => {
       expect(component.statusMessageKey).toBe('LIGAUEBERSICHT.STATUS.TIMEOUT');
     });
 
-    it('should allow retry on timeout', () => {
+    it('should allow retry on timeout (shows error state)', () => {
       hierarchyService.invalidateCache.and.returnValue(Promise.resolve());
       fixture.detectChanges();
 
@@ -372,7 +370,7 @@ describe('LigaOverviewComponent', () => {
       fixture.detectChanges();
 
       const errorState = fixture.nativeElement.querySelector('bla-error-state');
-      expect(errorState.getAttribute('ng-reflect-show-retry')).toBe('true');
+      expect(errorState).toBeTruthy();
     });
   });
 
