@@ -72,8 +72,13 @@
               [id]="'goToLigaTabelle'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'th-list'"
-              (onClick)="ligatabelleLinking()">
-              {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+              (onClick)="wettkampfButtonToLigatabelleLinking(
+                veranstaltung.veranstaltungDO.ligaId,
+                veranstaltung.veranstaltungDO.ligaName,
+                veranstaltung.veranstaltungDO.id,
+                veranstaltung.wettkaempfeDO.id
+              )">
+              {{ 'WETTKAEMPFE.WETTKAMPFTAG.LINKDESCRIPTION' | translate }}
             </bla-actionbutton>
           </div>
         </bla-veranstaltungen-button>
@@ -119,7 +124,7 @@
             [id]="'ligadetailRegionSaveButton'"
             [color]="ActionButtonColors.SUCCESS"
             [iconClass]="'th-list'"
-            (onClick)="ligatabelleLinking()">
+            (onClick)="wettkampfErgebnisseLinking()">
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
           </bla-actionbutton>
 
