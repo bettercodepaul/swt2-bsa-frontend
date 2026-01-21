@@ -4,6 +4,7 @@
   [style.--bla-node-indent.px]="paddingLeft"
   [attr.data-has-children]="hasChildren"
   [attr.data-node-id]="node.id"
+  [attr.data-level]="node.level"
   role="presentation">
   <button
     *ngIf="hasChildren"
