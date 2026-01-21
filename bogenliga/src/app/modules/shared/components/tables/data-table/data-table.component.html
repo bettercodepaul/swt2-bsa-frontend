@@ -75,7 +75,7 @@
         <span *ngSwitchCase="TableColumnType.LINK">
           <bla-actionbutton
             [iconClass]="'th-list'"
-            (onClick)="onLinkClicked.emit(row, column)"
+            (onClick)="linkClicked(row, column.linkTarget)"
           >
           {{ formatText(row, column) }}
           </bla-actionbutton>
