@@ -7,7 +7,7 @@ export interface TableColumnConfig {
   translationKey: string; // key of the column
   propertyName?: string; // to access the payload parameter field
   propertyMapper?: Function; // if defined maps extracted property
-
+  linkTarget?: string;
   type?: TableColumnType; // optional: Use a specific data type pipe; default = TEXT
   localizationSet?: string; // optional: Used with TableColumnType.TRANSLATION_KEY
   width?: number; // optional: Set the column width in percent, e.g. '25'; default = width of content
