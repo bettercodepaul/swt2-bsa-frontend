@@ -1,19 +1,59 @@
-@import 'src/styles.scss';
-.form-label-box{
-  margin-left:20px;
+/* --- allgemeine Styles für die Seite --- */
+
+.form-label-box {
+  margin-left: 20px;
   min-width: 150px;
 }
-.row{
+
+.row {
   margin-top: 20px;
 }
-#rowTable{
-  margin-top: 0px;
+
+#rowTable {
+  margin-top: 0;
+  margin-left: 5px; // Desktop-Abstand, auf Mobile schalten wir den ab
 }
+
 h2 {
-  color: $hero-blue;
+  color: #2e6ce3;
   font-size: 1.2em;
   font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
-
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-top: 60px;
+}
+
+/* --- WICHTIG: Wrapper für horizontales Scrollen --- */
+
+.ligatabelle-table-wrapper {
+  width: 100%;
+  overflow-x: auto;              /* horizontales Scrollen */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;  /* weiches Scrollen auf iOS */
+}
+
+/* Optional: Helfer, falls irgendwo global max-width/overflow gesetzt ist */
+.ligatabelle-table-wrapper * {
+  max-width: none;
+}
+
+/* --- Mobile-Optimierungen nur für kleinere Screens --- */
+
+@media (max-width: 576px) {
+  #rowTable {
+    margin-left: 0; /* am Rand ausrichten */
+  }
+
+  .ligatabelle-table-wrapper table {
+    font-size: 0.8rem;
+  }
+
+  .ligatabelle-table-wrapper th {
+    white-space: normal;  /* Überschriften dürfen umbrechen */
+    padding: 0.25rem 0.3rem;
+  }
+
+  .ligatabelle-table-wrapper td {
+    white-space: nowrap;  /* Werte nach Möglichkeit in einer Zeile */
+    padding: 0.25rem 0.3rem;
+  }
 }

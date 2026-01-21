@@ -8,6 +8,12 @@ h1{
   font-size: 2.8em;
 }
 
+.intro-block {
+  max-width: 75%;
+  margin: 15px;
+  padding: 5px;
+}
+
 // container for pictures and text
 .flexChild {
   flex: 1 0 45%; // 45% -> two in one row
@@ -41,7 +47,6 @@ h1{
 }
 
 // workaround for breadcrumbs/pageTitle
-// TODO: Change size to accommodate other pages layout ( ... height )
 .home-page-wrapper {
   padding: 1em;
   display: flex;
@@ -59,45 +64,118 @@ h1{
   min-height: 40vh
 }
 
-  .calendar {
-    grid-area: calendar;
-    width: 100%;
-    display: block;
-    vertical-align: top;
+.calendar {
+  grid-area: calendar;
+  width: 100%;
+  display: block;
+  vertical-align: top;
+}
+
+.shortcuts {
+  grid-area: shortcuts;
+  width: 100%;
+  display: block;
+  vertical-align: top;
+}
+
+.news {
+  grid-area: news;
+  width: 100%;
+  display: block;
+  clear: left;
+}
+
+// Small devices
+@media (max-width: 768px) {
+  /* Einheitliche horizontale Innenabstände für die gesamte Seite, sowie 100% fill */
+  #homePage {
+    max-width: 100%;
+    padding: 0 12px; /* sorgt für gleiche linke/rechte Kante */
   }
 
-  .shortcuts {
-    grid-area: shortcuts;
-    width: 100%;
-    display: block;
-    vertical-align: top;
+  /* Intro-Blöcke: keine seitlichen Außenabstände, stattdessen innen konsistent */
+  .intro-block {
+    max-width: 100%;
+    margin: 10px 0;     /* nur vertikale Abstände */
+    padding: 0;         /* seitliche Padding kommt vom #homePage */
   }
 
+  /* Container selbst braucht kein zusätzliches Padding */
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "calendar"
+      "shortcuts"
+      "news";
+    column-gap: 0;
+    padding: 0;        /* sicherstellen, dass hier nichts zusätzlich schiebt */
+    margin: 0;         /* keine seitliche Margin auf Mobile */
+  }
+
+  /* Alle Grid-Sektionen erhalten die gleiche horizontale Innenkante */
+  .calendar,
+  .shortcuts,
   .news {
-    grid-area: news;
-    width: 100%;
-    display: block;
-    clear: left;
-
-    /*
-        position: absolute;
-        text-align: left;
-        margin: 5px;
-        padding: 15px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        align-content: space-around;
-        flex-wrap: wrap;*/
+    padding: 0;        /* horizontale Kante kommt vom #homePage */
+    margin: 10px 0;    /* nur vertikal, damit gleichmäßige Abstände zwischen den Blöcken */
   }
 
+  /* Falls innerhalb der Sektionen Elemente zusätzliche Ränder haben, vermeiden wir Überstände */
+  #competitionList,
+  .news-container {
+    width: 100%;
+  }
 
+  /* Bilder bleiben zentriert und innerhalb der gleichen Kante */
+  .mosaikImg {
+    width: 100%;
+    display: block;
+    margin: 0;         /* keine zusätzliche seitliche Margin */
+  }
 
+  /* News-Inhalt untereinander */
+  .news-container {
+    flex-direction: column;
+  }
 
+  .flexChild {
+    flex: 1 1 100%;
+    min-height: auto;
+  }
 
+  /* Custom Element: mobil volle Breite sicherstellen */
+  bla-veranstaltungen-button {
+    display: block;
+    width: 100%;
+  }
 
+  /* Mobile Typografie: etwas kleiner und flexibel */
+  h1 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+  h2 {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+  h3 {
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+  }
 
+  /* Sicherheit gegen horizontales Scrollen auf sehr kleinen Geräten */
+  html, body {
+    overflow-x: hidden;
+  }
+}
 
-
-
+// Really small devices
+@media (max-width:460px) {
+  /* Etwas kompaktere Typografie */
+  h1 {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+  h2 {
+    font-size: clamp(1.2rem, 6vw, 1.6rem);
+  }
+  h3 {
+    font-size: clamp(1rem, 5.5vw, 1.4rem);
+  }
+}

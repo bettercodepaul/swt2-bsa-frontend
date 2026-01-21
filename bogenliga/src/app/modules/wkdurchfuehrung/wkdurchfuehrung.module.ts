@@ -9,11 +9,9 @@ import {
   WkdurchfuehrungComponent,
   SchusszettelComponent,
   RingzahlTabIndexDirective,
-  SchuetzenTabIndexDirective,
   TabletEingabeComponent,
   TabletAdminComponent,
   PfeilNumberOnlyDirective,
-  SchuetzeNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,
 } from '../wkdurchfuehrung/components';
 
@@ -23,10 +21,13 @@ import {
   TableteingabeGuard,
   TabletadminGuard
 } from '../wkdurchfuehrung/guards';
-import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
-import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
-import { TabletAdminPopUpComponent } from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
+import {
+  TeilnemendeManschaftenTabelleComponent
+} from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
+import {FullscreenComponent} from './components/fullscreen/fullscreen.component';
+import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 import {QRCodeModule} from 'angularx-qrcode';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -39,17 +40,15 @@ import {QRCodeModule} from 'angularx-qrcode';
     WkdurchfuehrungComponent,
     SchusszettelComponent,
     PfeilNumberOnlyDirective,
-    SchuetzeNumberOnlyDirective,
     FehlerpunkteNumberOnlyDirective,
     RingzahlTabIndexDirective,
-    SchuetzenTabIndexDirective,
     TabletEingabeComponent,
     TabletAdminComponent,
     TeilnemendeManschaftenTabelleComponent,
     FullscreenComponent,
     TabletAdminPopUpComponent,
   ],
-  providers:    [
+  providers: [
     WkdurchfuehrungGuard,
     SchusszettelGuard,
     TableteingabeGuard,

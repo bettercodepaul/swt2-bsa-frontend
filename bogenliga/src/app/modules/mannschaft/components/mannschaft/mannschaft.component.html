@@ -1,0 +1,57 @@
+<bla-navigation-dialog [config]="config">
+  <!-- Loading indicator -->
+  <div *ngIf="loading">{{ "MANNSCHAFT.STATUS.LOADING" | translate }}</div>
+
+  <!-- Mannschaft anzeigen -->
+  <div *ngIf="!loading && currentMannschaft">
+    <h1>{{ currentMannschaft.name || 'unbenannte Mannschaft' }} </h1>
+  </div>
+  <div class="row p-3">
+    <label class="form-label-box col-form-label pr-2" for="mannschaftSelect">
+      <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+    </label>
+    <select class="form-control w-auto"
+            id="mannschaftSelect"
+            name="mannschaftSelect"
+            [(ngModel)]="currentMannschaft"
+            [disabled]="loading || mannschaften?.length === 0"
+            (ngModelChange)="onSelectMannschaft()">
+      <option *ngFor="let mannschaft of mannschaften"
+              [ngValue]="mannschaft"> {{ mannschaft.name }}
+      </option>
+    </select>
+  </div>
+  <div class="row px-3">
+    <h2>{{ veranstaltung?.ligaName }}</h2>
+  </div>
+  <div class="my-3">
+    <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let tab of tabs">
+        <button
+          data-cy="statisticTabButton"
+          class="nav-link"
+          [class.active]="tab.type === selectedStatistic"
+          (click)="selectTab(tab.type)">
+          {{ "MANNSCHAFT.TABS." + tab.type.valueOf() + ".TITLE" | translate }}
+        </button>
+      </li>
+    </ul>
+
+    <div class="mt-3 pl-3">
+      <bla-mannschaft-table [wettkaempfe]="wettkaempfe"
+                           [selectedMannschaft]="currentMannschaft" [selectedStatistic]="selectedStatistic" [veranstaltung]="veranstaltung"></bla-mannschaft-table>
+    </div>
+
+
+  </div>
+
+  <bla-actionbutton
+    class="item"
+    id="jumpToVereinButton"
+    [color]="ActionButtonColors.PRIMARY"
+    [iconClass]="'users'"
+    (onClick)="onPushtoVerein()"
+  >
+    {{ "zum Verein" }}
+  </bla-actionbutton>
+</bla-navigation-dialog>

@@ -3,69 +3,62 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 260px;
-  min-width: 240px;
-  max-width: 320px;
-  padding: 0 calc(var(--bla-tree-node-gap, 32px) / 2);
+  flex: 0 0 auto;
+  min-width: max-content;
+  padding: 0 calc(var(--bla-tree-node-gap, 16px) / 2);
   box-sizing: border-box;
   outline: none;
 }
 
+/* Vertikale Linie nach oben - geht bis zur horizontalen Linie */
 :host::before {
   content: '';
   position: absolute;
-  top: calc(-1 * var(--bla-tree-branch-length, 32px));
+  top: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
   left: 50%;
-  width: 1px;
-  height: var(--bla-tree-branch-length, 32px);
-  background: var(--bla-tree-branch-color, #d8dde8);
+  width: 2px;
+  height: calc(var(--bla-tree-branch-length, 32px) / 2 + 2px);
+  background: var(--bla-tree-branch-color, #9ba5b8);
   transform: translateX(-50%);
   display: block;
+  z-index: 0;
 }
 
-:host::after {
-  content: '';
-  position: absolute;
-  top: calc(-1 * var(--bla-tree-branch-length, 32px));
-  left: 0;
-  right: 0;
-  border-top: 1px solid var(--bla-tree-branch-color, #d8dde8);
-  display: block;
-}
+/* Horizontale Linie ist jetzt auf .bla-league-tree__child-item::after */
+/* Weil :host immer :only-child seines <li> ist */
 
-:host(:first-child)::after {
-  left: 50%;
-}
+/* Diese Regeln sind jetzt auf .bla-league-tree__child-item */
 
-:host(:last-child)::after {
-  right: 50%;
-}
-
-:host(:only-child)::after {
-  display: none;
-}
-
-:host(.bla-league-tree__item--root)::before,
-:host(.bla-league-tree__item--root)::after {
+:host(.bla-league-tree__item--root)::before {
   display: none;
 }
 
 .bla-league-tree__item-row {
   position: relative;
+  z-index: 2;
+  /* Über den Verbindungslinien (die z-index: 0 haben) */
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  min-height: var(--bla-tree-row-height, 52px);
-  padding: 0.75rem 1.5rem;
+  gap: 0.4rem;
+  min-height: var(--bla-tree-row-height, 40px);
+  padding: 0.4rem 0.6rem;
   cursor: pointer;
-  border-radius: var(--bla-tree-border-radius, 8px);
+  border-radius: var(--bla-tree-border-radius, 6px);
   box-shadow: var(--bla-tree-card-shadow);
-  border: 1px solid var(--bla-tree-level-default-border);
-  background: var(--bla-tree-level-default-bg);
-  color: var(--bla-tree-level-default-foreground, #1d2533);
+  border: 2px solid var(--bla-tree-level-default-border, #888888);
+  background: var(--bla-tree-level-default-bg, #FFFFFF);
+  color: var(--bla-tree-level-default-foreground, #2A2A2A);
   transition: box-shadow 160ms ease, transform 160ms ease;
-  width: 100%;
+  width: auto;
+  min-width: 150px;
+  max-width: 220px;
+  margin: 0 auto;
+  isolation: isolate;
+  /* Stacking Context für z-index */
 }
+
+/* Vertikale Linie nach oben - gehört jetzt zur Card */
+
 
 .bla-league-tree__item-row:hover {
   transform: translateY(-2px);
@@ -73,42 +66,49 @@
 }
 
 .bla-league-tree__item--selected .bla-league-tree__item-row {
-  background: var(--bla-tree-selected-bg);
-  border-color: #2c7be5;
-  box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.35), var(--bla-tree-card-shadow);
+  background: var(--bla-tree-selected-bg, rgba(72, 122, 245, 0.08));
+  /* Border-Farbe bleibt erhalten, nur zusätzlicher Focus-Ring */
+  box-shadow: 0 0 0 3px rgba(72, 122, 245, 0.35), var(--bla-tree-card-shadow);
 }
 
 .bla-league-tree__item--focused .bla-league-tree__item-row {
-  box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.35), var(--bla-tree-card-shadow);
+  box-shadow: 0 0 0 3px rgba(72, 122, 245, 0.35), var(--bla-tree-card-shadow);
+}
+
+
+:host(:focus-visible) .bla-league-tree__item-row {
+  outline: 3px solid #2c7be5;
+  outline-offset: 2px;
 }
 
 .bla-league-tree__label {
   flex: 1 1 auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
 .bla-league-tree__toggle {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   border: none;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.18);
-  color: inherit;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--bla-tree-level-default-icon-color, #888888);
   cursor: pointer;
   transition: background-color 120ms ease;
+  touch-action: manipulation;
 }
 
 .bla-league-tree__toggle:hover {
-  background-color: rgba(255, 255, 255, 0.32);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bla-league-tree__toggle:focus {
@@ -117,44 +117,39 @@
 }
 
 .bla-league-tree__toggle-placeholder {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
-  flex: 0 0 40px;
+  flex: 0 0 28px;
 }
 
+/* Chevron-Icon gemäß Styleguide UI-STYLE-004 */
 .bla-league-tree__toggle-icon {
   position: relative;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
+  transition: transform 200ms ease;
+  color: inherit;
+  /* Übernimmt die Icon-Farbe vom Toggle-Button */
 }
 
-.bla-league-tree__toggle-icon::before,
-.bla-league-tree__toggle-icon::after {
+/* Chevron als CSS-Pfeil - Default: Zeigt nach rechts (▶) */
+.bla-league-tree__toggle-icon::before {
   content: '';
   position: absolute;
-  background-color: currentColor;
-  transition: transform 140ms ease;
-}
-
-.bla-league-tree__toggle-icon::before {
   top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  transform: translateY(-50%);
-}
-
-.bla-league-tree__toggle-icon::after {
   left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translate(-60%, -50%) rotate(-45deg);
+  transition: transform 200ms ease;
 }
 
-.bla-league-tree__item--expanded .bla-league-tree__toggle-icon::after {
-  transform: translateX(-50%) scaleY(0);
+/* Ausgeklappt: Pfeil zeigt nach unten (▼) - Direkte Klasse auf dem Element */
+.bla-league-tree__toggle-icon--expanded::before {
+  transform: translate(-50%, -70%) rotate(45deg);
 }
 
 .bla-league-tree__item-row[data-has-children="false"] .bla-league-tree__toggle {
@@ -167,6 +162,7 @@
   list-style: none;
   display: flex;
   justify-content: center;
+  gap: 0;
   position: relative;
 }
 
@@ -175,74 +171,195 @@
   position: relative;
   display: flex;
   justify-content: center;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
 }
 
+/* Horizontale Verbindungslinie zwischen Geschwister-Knoten */
+/* Liegt in der MITTE zwischen Eltern und Kindern */
+.bla-league-tree__child-item::after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
+  left: 0;
+  right: 0;
+  border-top: 2px solid var(--bla-tree-branch-color, #9ba5b8);
+  display: block;
+  z-index: 0;
+}
+
+.bla-league-tree__child-item:first-child::after {
+  left: 50%;
+}
+
+.bla-league-tree__child-item:last-child::after {
+  right: 50%;
+}
+
+.bla-league-tree__child-item:only-child::after {
+  display: none;
+}
+
+/* Vertikale Linie nach unten - NUR bei expandierten Knoten mit sichtbaren Kindern */
+/* Geht von der Card bis zur horizontalen Linie (halbe Höhe) */
+
+/* Standardmäßig keine Linie nach unten - content: none verhindert Pseudo-Element */
+/* Standardmäßig keine Linie nach unten - content: none verhindert Pseudo-Element */
+.bla-league-tree__item-row::after {
+  content: none;
+}
+
+/* Nur bei expandierten Knoten mit Kindern */
 :host(.bla-league-tree__item--has-children.bla-league-tree__item--expanded) .bla-league-tree__item-row::after {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: calc(-1 * var(--bla-tree-branch-length, 32px));
-  width: 1px;
-  height: var(--bla-tree-branch-length, 32px);
-  background: var(--bla-tree-branch-color, #d8dde8);
+  bottom: calc(-1 * var(--bla-tree-branch-length, 32px) / 2);
+  width: 2px;
+  height: calc(var(--bla-tree-branch-length, 32px) / 2 + 2px);
+  background: var(--bla-tree-branch-color, #9ba5b8);
   transform: translateX(-50%);
+  z-index: 0;
+  display: block;
 }
 
-/* Level theming */
+/* Level theming - Bogenscheiben-Farben: Weiße Cards mit farbiger Umrandung */
 :host([data-level="0"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-0-bg);
-  border-color: var(--bla-tree-level-0-border);
-  color: #ffffff;
+  border: 2px solid var(--bla-tree-level-0-border);
+  color: var(--bla-tree-level-0-color, #2A2A2A);
+}
+
+:host([data-level="0"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-0-icon-color, #FFCC34);
 }
 
 :host([data-level="1"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-1-bg);
-  border-color: var(--bla-tree-level-1-border);
-  color: #1f1300;
+  border: 2px solid var(--bla-tree-level-1-border);
+  color: var(--bla-tree-level-1-color, #2A2A2A);
+}
+
+:host([data-level="1"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-1-icon-color, #FFE066);
 }
 
 :host([data-level="2"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-2-bg);
-  border-color: var(--bla-tree-level-2-border);
-  color: #f0f4ff;
+  border: 2px solid var(--bla-tree-level-2-border);
+  color: var(--bla-tree-level-2-color, #2A2A2A);
+}
+
+:host([data-level="2"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-2-icon-color, #F40E0E);
 }
 
 :host([data-level="3"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-3-bg);
-  border-color: var(--bla-tree-level-3-border);
-  color: #f6f7fb;
+  border: 2px solid var(--bla-tree-level-3-border);
+  color: var(--bla-tree-level-3-color, #2A2A2A);
+}
+
+:host([data-level="3"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-3-icon-color, #F85C5C);
 }
 
 :host([data-level="4"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-4-bg);
-  border-color: var(--bla-tree-level-4-border);
-  color: #f8f9fb;
+  border: 2px solid var(--bla-tree-level-4-border);
+  color: var(--bla-tree-level-4-color, #2A2A2A);
 }
 
-:host([data-level="5"]) .bla-league-tree__item-row,
-:host([data-level="6"]) .bla-league-tree__item-row,
-:host([data-level="7"]) .bla-league-tree__item-row {
+:host([data-level="4"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-4-icon-color, #487AF5);
+}
+
+:host([data-level="5"]) .bla-league-tree__item-row {
+  background: var(--bla-tree-level-5-bg);
+  border: 2px solid var(--bla-tree-level-5-border);
+  color: var(--bla-tree-level-5-color, #2A2A2A);
+}
+
+:host([data-level="5"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-5-icon-color, #7BA3F7);
+}
+
+:host([data-level="6"]) .bla-league-tree__item-row {
+  background: var(--bla-tree-level-6-bg);
+  border: 2px solid var(--bla-tree-level-6-border);
+  color: var(--bla-tree-level-6-color, #2A2A2A);
+}
+
+:host([data-level="6"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-6-icon-color, #2A2A2A);
+}
+
+:host([data-level="7"]) .bla-league-tree__item-row,
+:host([data-level="8"]) .bla-league-tree__item-row {
   background: var(--bla-tree-level-default-bg);
-  border-color: var(--bla-tree-level-default-border);
-  color: #1d2533;
+  border: 2px solid var(--bla-tree-level-default-border);
+  color: var(--bla-tree-level-default-foreground, #2A2A2A);
+}
+
+:host([data-level="7"]) .bla-league-tree__toggle,
+:host([data-level="8"]) .bla-league-tree__toggle {
+  color: var(--bla-tree-level-default-icon-color, #888888);
 }
 
 @media (max-width: 992px) {
   :host {
-    padding: 0 calc(var(--bla-tree-node-gap, 32px) / 3);
-    min-width: 180px;
-    max-width: 240px;
+    padding: 0;
+    min-width: 100%;
+    max-width: 100%;
+    align-items: stretch;
+  }
+
+  /* Simplify layout + prevent horizontal overflow */
+  :host::before,
+  :host::after,
+  :host(.bla-league-tree__item--has-children.bla-league-tree__item--expanded) .bla-league-tree__item-row::after {
+    display: none;
   }
 
   .bla-league-tree__item-row {
     width: 100%;
-    padding: 0.75rem 1.25rem;
+    max-width: 100%;
+    padding: 0.75rem 1rem;
+    margin-left: var(--bla-node-indent, 0px);
+    width: calc(100% - var(--bla-node-indent, 0px));
+    touch-action: manipulation;
   }
 
   .bla-league-tree__group {
-    flex-wrap: wrap;
-    row-gap: calc(var(--bla-tree-node-gap, 32px) / 1.5);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 8px 0 0;
+  }
+
+  .bla-league-tree__child-item {
+    justify-content: flex-start;
   }
 }
 
+@media (max-width: 576px) {
+  .bla-league-tree__item-row {
+    padding: 0.625rem 0.875rem;
+    min-height: 44px;
+  }
+
+  /* Touch targets >= 44x44 */
+  .bla-league-tree__toggle,
+  .bla-league-tree__toggle-placeholder {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .bla-league-tree__toggle-icon {
+    width: 14px;
+    height: 14px;
+  }
+}

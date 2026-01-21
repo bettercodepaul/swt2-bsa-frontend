@@ -19,13 +19,19 @@ import { AppComponent } from 'src/app/app.component';
   templateUrl: './register-rueckennummer.component.html',
   styleUrls: ['./register-rueckennummer.component.scss']
 })
-export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDestroy {
+export class RegisterRueckennummerComponent
+  implements OnChanges, OnInit, OnDestroy {
+
   @Input() infos!: TabletSchusszettel;
   @Output() register = new EventEmitter<number[]>();
 
   form!: FormGroup;
-  activeInputIndex = -1;
+  activeInputIndex = 0;
   private formBuilt = false;
+
+  //Status für Bestätigungs-Schritt + zwischengespeicherte IDs
+  confirmStep = false;
+  private pendingIds: number[] | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -45,22 +51,25 @@ export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDest
   }
 
   ngOnInit(): void {
-    this.app.fullscreen = true; //  Navbar und Footer ausblenden
+    //Navbar und Footer ausblenden
+    this.app.fullscreen = true;
   }
+
   ngOnDestroy(): void {
-    this.app.fullscreen = false; //  Beim Verlassen wieder anzeigen
+    //Beim Verlassen wieder anzeigen
+    this.app.fullscreen = false;
   }
 
   private buildForm(): void {
     this.form = this.fb.group({
       filter: [''],
+      //In den Slots speichern wir direkt die schuetzenId (oder null)
       ids: this.fb.array(
-        Array(3).fill(null).map(() =>
-          this.fb.control('', [
-            Validators.required,
-            Validators.pattern(/^[0-9]+$/)
-          ])
-        )
+        Array(3)
+          .fill(null)
+          .map(() =>
+            this.fb.control(null, Validators.required)
+          )
       )
     });
   }
@@ -77,20 +86,13 @@ export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDest
     this.activeInputIndex = i;
   }
 
-  selectShooter(sh: SchuetzeStammdatenDTO): void {
-    if (this.activeInputIndex < 0) {
-      return;
-    }
-    const ctrl = this.ids.at(this.activeInputIndex);
-    ctrl.setValue(sh.rueckennummer.toString());
-    ctrl.markAsTouched();
-  }
-
+  //Gefilterte Schützenliste (Name oder Rückennummer)
   get filteredShooters(): SchuetzeStammdatenDTO[] {
     if (!this.infos?.schuetzeStammDaten) {
       return [];
     }
-    const term = this.filterControl.value.toLowerCase().trim();
+    const raw = this.filterControl.value;
+    const term = (raw || '').toString().toLowerCase().trim();
     if (!term) {
       return this.infos.schuetzeStammDaten;
     }
@@ -107,25 +109,94 @@ export class RegisterRueckennummerComponent implements OnChanges, OnInit, OnDest
     return sh.schuetzenId;
   }
 
+  //Schützenobjekt für einen Slot holen
+  getShooterForSlot(i: number): SchuetzeStammdatenDTO | undefined {
+    if (!this.infos?.schuetzeStammDaten) {
+      return undefined;
+    }
+    const ctrl = this.ids.at(i);
+    const id = ctrl.value as number | null;
+    if (id == null) {
+      return undefined;
+    }
+    return this.infos.schuetzeStammDaten.find(
+      (sh) => sh.schuetzenId === id
+    );
+  }
+
+  //Slot leeren
+  clearSlot(i: number): void {
+    const ctrl = this.ids.at(i);
+    ctrl.setValue(null);
+    ctrl.markAsTouched();
+  }
+
+  //Schützen aus der Liste in aktiven Slot setzen
+  selectShooter(sh: SchuetzeStammdatenDTO): void {
+    if (!this.form) {
+      return;
+    }
+
+    const currentIds = this.ids.value as (number | null)[];
+
+    //Wenn Schütze bereits eingetragen ist → Slot aktivieren
+    const existingIndex = currentIds.indexOf(sh.schuetzenId);
+    if (existingIndex !== -1) {
+      this.activeInputIndex = existingIndex;
+      return;
+    }
+
+    //Falls noch kein Slot gewählt wurde, ersten freien Slot suchen
+    if (this.activeInputIndex < 0) {
+      const freeIndex = currentIds.findIndex((id) => id === null);
+      this.activeInputIndex = freeIndex !== -1 ? freeIndex : 0;
+    }
+
+    const ctrl = this.ids.at(this.activeInputIndex);
+    ctrl.setValue(sh.schuetzenId);
+    ctrl.markAsTouched();
+  }
+
+  //1. Klick auf "BESTÄTIGEN": validieren und Bestätigungsbox anzeigen
   onSubmit(): void {
     if (!this.form || this.form.invalid) {
       this.form?.markAllAsTouched();
       return;
     }
 
-    const rnums: number[] = this.ids.value.map((v: string) => Number(v));
-    const mappedIds: (number | null)[] = rnums.map((rn) => {
-      const found = this.infos.schuetzeStammDaten.find(
-        (sh) => sh.rueckennummer === rn
-      );
-      return found ? found.schuetzenId : null;
-    });
-
-    const invalidIdx = mappedIds.findIndex((id) => id === null);
-    if (invalidIdx > -1) {
+    const idsValue = this.ids.value as (number | null)[];
+    if (idsValue.includes(null)) {
+      this.form.markAllAsTouched();
       return;
     }
 
-    this.register.emit(mappedIds as number[]);
+    const nonNullIds = idsValue as number[];
+
+    //optional: Duplikate verhindern
+    const unique = new Set(nonNullIds);
+    if (unique.size !== nonNullIds.length) {
+      //hier könntest du noch eine eigene Fehlermeldung setzen
+      return;
+    }
+
+    //IDs zwischenspeichern und Bestätigungsbox anzeigen
+    this.confirmStep = true;
+    this.pendingIds = nonNullIds;
+  }
+
+  //Klick auf "Ja, endgültig bestätigen"
+  finalizeSubmit(): void {
+    if (!this.pendingIds) {
+      return;
+    }
+    this.register.emit(this.pendingIds);
+    this.confirmStep = false;
+    this.pendingIds = null;
+  }
+
+  //Klick auf "Abbrechen" in der Bestätigungsbox
+  cancelConfirm(): void {
+    this.confirmStep = false;
+    this.pendingIds = null;
   }
 }

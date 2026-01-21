@@ -19,10 +19,10 @@ $hover: #def;
   width: 100%;
 }
 
-/* left-aligned helper text, full width */
+//Hinweistext
 .info-box {
   background: #eef;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 4px;
   text-align: left;
   width: 100%;
@@ -36,13 +36,14 @@ $hover: #def;
   width: 100%;
 }
 
+//LINK: Schützenliste
 .schuetzen-list {
   flex: 0 0 200px;
 
   input {
     width: 100%;
-    padding: .5rem;
-    margin-bottom: .5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
     border: 1px solid $border;
     border-radius: 4px;
   }
@@ -55,7 +56,7 @@ $hover: #def;
   }
 
   .schuetze-item {
-    padding: .5rem;
+    padding: 0.5rem;
     cursor: pointer;
 
     &:hover,
@@ -66,45 +67,151 @@ $hover: #def;
   }
 }
 
-/* slots stacked vertically, narrow */
-.input-grid {
-  flex: 0 0 140px;
+//RECHTS: Slots als Boxen
+.slot-grid {
+  flex: 0 0 220px;
   display: flex;
   flex-direction: column;
-  gap: .75rem;
+  gap: 0.75rem;
+}
 
-  input {
-    width: 100%;
-    padding: .5rem;
-    font-size: 1rem;
-    border: 1px solid #999;
-    border-radius: 4px;
-  }
+.slot-container {
+  border: 1px solid #999;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
-  .error {
-    color: $error;
-    font-size: .8rem;
-    margin-top: .25rem;
+  &.active {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
   }
 }
 
+.slot-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  opacity: 0.7;
+}
+
+.slot-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.slot-text {
+  font-size: 0.95rem;
+}
+
+.slot-empty {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.slot-remove {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+//Fehlermeldung unter der Box
+.error {
+  color: $error;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+//Bestätigen-Button
 .confirm-button {
-  align-self: flex-end;
-  margin-top: 1rem;
+  background-color: #3579f6;
+  color: #ffffff;
+
+  font-family: "Poppins-semibold", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
   font-weight: 700;
-  padding: .75rem 1.5rem;
+
+  height: 40px;              // größer
+  padding: 0 28px;           // mehr Fläche
+  border-radius: 8px;        // weniger Rundung
+
+  border: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #2f6de0;
+  }
 
   &:disabled {
-    opacity: .5;
+    opacity: 0.75;
     cursor: not-allowed;
   }
 
-  &:hover:not(:disabled) {
-    background: #e3f2fd;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(53, 121, 246, 0.35);
   }
 }
 
-/* portrait: list above slots, slots centered */
+//NEU: Box für die zweite Bestätigung (gleiche Farbe wie info-box)
+.confirm-box {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #eef;
+  font-size: 0.9rem;
+  border-radius: 8px;
+
+  p {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.confirm-yes,
+.confirm-no {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.confirm-yes {
+  background: #3579f6;
+  color: #fff;
+  border-color: #1b5e20;
+}
+
+.confirm-no {
+  background: #fff;
+  color: #333;
+  border-color: #999;
+}
+
+//Kein Data / Loading
+.no-data,
+.loading-container {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+//Portrait: Liste über Slots, Slots zentriert
 @media (orientation: portrait), (max-width: 600px) {
   .register-layout {
     flex-direction: column;
@@ -115,9 +222,9 @@ $hover: #def;
     flex: none;
   }
 
-  .input-grid {
+  .slot-grid {
     flex: none;
-    width: 140px;
+    width: 220px;
     align-self: center;
   }
 }
