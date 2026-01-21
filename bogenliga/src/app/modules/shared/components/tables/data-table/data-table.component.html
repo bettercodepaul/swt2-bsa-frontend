@@ -72,6 +72,15 @@
            {{getMappedText(row, column)}}
           </span>
 
+        <span *ngSwitchCase="TableColumnType.LINK">
+          <bla-actionbutton
+            [iconClass]="'th-list'"
+            (onClick)="linkClicked(row, column.linkTarget)"
+          >
+          {{ formatText(row, column) }}
+          </bla-actionbutton>
+        </span>
+
         <span *ngSwitchDefault>
             {{formatText(row, column)}}
           </span>
