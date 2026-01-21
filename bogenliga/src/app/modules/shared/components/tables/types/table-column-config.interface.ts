@@ -17,8 +17,6 @@ export interface TableColumnConfig {
   truncationLength?: number; // optional: Define a truncation length to cut the text after X chars
 
   stylesMapper?: Function; // optional: you can change the style of the column
-  spanStylesMapper?: Function; // optional: you can change the style of the span inside the column
-  headerStylesMapper?: Function; // optional: you can change the style of the header cell
 
   mappingFunction?: Function; // optional: you can change the value of a cell (enum -> string, boolean -> string)
   /* tslint:enable */

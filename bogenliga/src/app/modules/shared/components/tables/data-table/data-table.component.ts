@@ -376,18 +376,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     }
   }
 
-  getSpanStyleClass(row: TableRow, column: TableColumnConfig) {
-    if (!isNullOrUndefined(column.spanStylesMapper)) {
-      return column.spanStylesMapper(row.getText(column));
-    }
-  }
-
-  getHeaderStyleClass(column: TableColumnConfig) {
-    if (!isNullOrUndefined(column.headerStylesMapper)) {
-      return column.headerStylesMapper(column);
-    }
-  }
-
   /*
    * ~~~~ private methods ~~~~
    */
