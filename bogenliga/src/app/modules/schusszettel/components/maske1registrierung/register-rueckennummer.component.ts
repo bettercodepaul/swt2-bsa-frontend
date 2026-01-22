@@ -26,7 +26,6 @@ export class RegisterRueckennummerComponent
   @Output() register = new EventEmitter<number[]>();
 
   form!: FormGroup;
-  activeInputIndex = 0;
   private formBuilt = false;
 
   //Status für Bestätigungs-Schritt + zwischengespeicherte IDs
@@ -62,99 +61,40 @@ export class RegisterRueckennummerComponent
 
   private buildForm(): void {
     this.form = this.fb.group({
-      filter: [''],
-      //In den Slots speichern wir direkt die schuetzenId (oder null)
+      //3 feste Positionen: Menü 1, 2, 3 -> ids[0..2]
       ids: this.fb.array(
         Array(3)
           .fill(null)
-          .map(() =>
-            this.fb.control(null, Validators.required)
-          )
+          .map(() => this.fb.control(null, Validators.required))
       )
     });
+  }
+  get menuSize(): number {
+    const count = this.infos?.schuetzeStammDaten?.length ?? 0;
+
+    //+1 wegen "Schützen auswählen…" Platzhalter
+    //max 4 Zeilen hoch -> ab 4 Schützen scrollbar
+    return Math.min(count + 1, 4);
   }
 
   get ids(): FormArray {
     return this.form.get('ids') as FormArray;
   }
 
-  get filterControl() {
-    return this.form.get('filter')!;
-  }
-
-  setActiveInput(i: number): void {
-    this.activeInputIndex = i;
-  }
-
-  //Gefilterte Schützenliste (Name oder Rückennummer)
-  get filteredShooters(): SchuetzeStammdatenDTO[] {
-    if (!this.infos?.schuetzeStammDaten) {
-      return [];
-    }
-    const raw = this.filterControl.value;
-    const term = (raw || '').toString().toLowerCase().trim();
-    if (!term) {
-      return this.infos.schuetzeStammDaten;
-    }
-    return this.infos.schuetzeStammDaten.filter((sh) => {
-      const fullName = `${sh.vorname} ${sh.nachname}`.toLowerCase();
-      return (
-        fullName.includes(term) ||
-        sh.rueckennummer.toString().includes(term)
-      );
-    });
-  }
-
   trackById(_: number, sh: SchuetzeStammdatenDTO): number {
     return sh.schuetzenId;
   }
 
-  //Schützenobjekt für einen Slot holen
-  getShooterForSlot(i: number): SchuetzeStammdatenDTO | undefined {
-    if (!this.infos?.schuetzeStammDaten) {
-      return undefined;
-    }
-    const ctrl = this.ids.at(i);
-    const id = ctrl.value as number | null;
-    if (id == null) {
-      return undefined;
-    }
-    return this.infos.schuetzeStammDaten.find(
-      (sh) => sh.schuetzenId === id
-    );
+  //Hilfsfunktion: gewählte IDs (ohne null)
+  private getSelectedIds(): number[] {
+    const values = this.ids.value as (number | null)[];
+    return values.filter((v): v is number => v != null);
   }
 
-  //Slot leeren
-  clearSlot(i: number): void {
-    const ctrl = this.ids.at(i);
-    ctrl.setValue(null);
-    ctrl.markAsTouched();
-  }
-
-  //Schützen aus der Liste in aktiven Slot setzen
-  selectShooter(sh: SchuetzeStammdatenDTO): void {
-    if (!this.form) {
-      return;
-    }
-
-    const currentIds = this.ids.value as (number | null)[];
-
-    //Wenn Schütze bereits eingetragen ist → Slot aktivieren
-    const existingIndex = currentIds.indexOf(sh.schuetzenId);
-    if (existingIndex !== -1) {
-      this.activeInputIndex = existingIndex;
-      return;
-    }
-
-    //Falls noch kein Slot gewählt wurde, ersten freien Slot suchen
-    if (this.activeInputIndex < 0) {
-      const freeIndex = currentIds.findIndex((id) => id === null);
-      this.activeInputIndex = freeIndex !== -1 ? freeIndex : 0;
-    }
-
-    const ctrl = this.ids.at(this.activeInputIndex);
-    ctrl.setValue(sh.schuetzenId);
-    ctrl.markAsTouched();
+  //Duplikate verhindern: Option in anderen Menüs deaktivieren
+  isDisabledOption(shId: number, currentIndex: number): boolean {
+    const values = this.ids.value as (number | null)[];
+    return values.some((v, idx) => idx !== currentIndex && v === shId);
   }
 
   //1. Klick auf "BESTÄTIGEN": validieren und Bestätigungsbox anzeigen
@@ -172,10 +112,9 @@ export class RegisterRueckennummerComponent
 
     const nonNullIds = idsValue as number[];
 
-    //optional: Duplikate verhindern
+    // Duplikate verhindern (sicherheitshalber auch backendseitig prüfen)
     const unique = new Set(nonNullIds);
     if (unique.size !== nonNullIds.length) {
-      //hier könntest du noch eine eigene Fehlermeldung setzen
       return;
     }
 
