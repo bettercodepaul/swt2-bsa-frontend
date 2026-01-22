@@ -85,24 +85,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private selectedLigaDetailBase64: string;
   private selectedLigaDetailFileName: string;
   private selectedLigaDetailFileType: string;
-  public loadingWettkampf = true;
-  public loadingTable = false;
   public rows: TableRow[] = [];
-  public currentDate: number = Date.now();
-  public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
   public veranstaltungWettkaempfeyear: number;
   public recentLigas: RecentLigaEntry[] = [];
   public ligaSelected = false;
   public VereinsID: number;
-  public providedID: number;
   public ligaName: string;
-  public hasID: boolean;
-  public hasLigaIDInUrl: boolean;
-  public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
-  private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
   public currentSportjahr: number;
 
@@ -192,11 +183,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription?.unsubscribe();
   }
 
-  /**Check if LigaID of URL exists and load the corresponding page*/
-  private checkingAndLoadingLiga(){
-    this.hasID ? this.loadLiga(this.providedID) : null;
-  }
-
   private applyLiga(liga: LigaDO): void {
     this.selectedLigaName               = liga.name;
     this.selectedLigaID                 = liga.id;
@@ -207,16 +193,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.ligaSelected                   = true;
     this.recentLigaService.add({ id: liga.id, name: liga.name });
     this.recentLigas = this.recentLigaService.getAll();
-    this.getVeranstaltungen(liga.id);
     this.getWettkampfTableContent();
-  }
-
-  private handleLigaPayload(liga: LigaDO): void {
-    if (!liga || liga.id == null) {
-      this.clearLigaSelection();
-      return;
-    }
-    this.applyLiga(liga);
   }
 
   private clearLigaSelection(): void {
@@ -241,29 +218,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     const slug = entry.slug || slugifyLigaName(entry.name ?? '');
     return slug || String(entry.id);
   }
-
-// Falls du bei buildRecentLigaLink bleiben willst, ändere es so (aber Template-Anpassung ist besser):
-  public buildRecentLigaLink(entry: { id: number; name: string; slug?: string }): string {
-    const value = this.getLigaQueryParam(entry);
-    return `/home/liga?liga=${encodeURIComponent(value)}`;
-  }
-
-
-  /**
-   * backend call to get list
-  */
-  private loadWettkaempfe(): void {
-    this.wettkaempfeDTO = [];
-    this.wettkaempfeDO = [];
-    this.wettkampfDataProvider.findFutureSix()
-        .then((response: BogenligaResponse<WettkampfDTO[]>) => {
-          this.handleSuccessLoadWettkaempfe(response.payload);
-        })
-        .catch((response: BogenligaResponse<WettkampfDTO[]>) => {
-          this.wettkaempfeDTO = response.payload;
-        });
-  }
-
 
   /**File Download, converts Base64 string back to its original file with its original name*/
   public fileDownload(){
@@ -308,86 +262,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
 
-
-
-  /**
-   * Backend call to get Liga from the Parameter in the URL (LigaID or Liganame)
-   * to display LigaDetailSeite.
-   * Because checkExists and checkExistsLigaName always return an object, handleGotLigaObject has to check
-   * if the liga truly exists (if not, function returns empty LigaObject)
-   * */
-
-
-  private async loadLiga(urlLigaID : number | string){
-    //If number or string, verschiedener backend call
-    if (typeof urlLigaID === 'number'){
-      await this.ligaDataProvider.checkExists(urlLigaID)
-                .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
-                .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
-    } else {
-      //check if underscore in text and replace with space
-      urlLigaID = urlLigaID.replace(/_/g, ' ')
-      urlLigaID=urlLigaID.toLowerCase()
-      await this.ligaDataProvider.checkExistsLigaName(urlLigaID)
-                .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
-                .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
-    }
-  }
-
-
-  /**
-   *Handling a successfull backendcall to get Liga by LigaID
-   * the response object is either:
-   * - a liga
-   * - null -> no liga with that id does exist
-   **/
-
-  private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-    if(response.payload.id==null){
-      //routing back to home URL
-      const link = '/home';
-      this.router.navigateByUrl(link);
-
-      //show a pop-up if liga with that id does not exist
-      this.notificationService.showNotification({
-        id: 'LigaIDWarning',
-        description: 'HOME.LIGADETAILES.DESCRIPTION',
-        title: 'HOME.LIGADETAILES.IDWARNING',
-        origin: NotificationOrigin.SYSTEM,
-        userAction: NotificationUserAction.PENDING,
-        type: NotificationType.OK,
-        severity: NotificationSeverity.INFO,
-      });
-    }
-    else{
-      //store Liga information
-      this.selectedLigaName=response.payload.name;
-      this.selectedLigaID=response.payload.id;
-      this.selectedLigaDetails=response.payload.ligaDetail;
-      this.selectedLigaDetailBase64=response.payload.ligaDetailFileBase64;
-      this.selectedLigaDetailFileName=response.payload.ligaDetailFileName;
-      this.selectedLigaDetailFileType=response.payload.ligaDetailFileType;
-      this.loadedLigaData=true;
-      this.recentLigaService.add({id: this.selectedLigaID, name: this.selectedLigaName});
-      this.recentLigas = this.recentLigaService.getAll();
-      if(this.hasLigaNameInUrl){
-        const link = '/home/' + this.selectedLigaID;
-        this.router.navigateByUrl(link);
-      }
-    }
-  }
-
-
-  /**
-   * Handling a failed backendcall to get Liga by LigaID
-   **/
-  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {//routing back to home URL
-    const link = '/home';
-    this.router.navigateByUrl(link);
-  }
-
-
-
   private async handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): Promise<void> {
     this.wettkaempfeDTO = payload;
 
@@ -421,24 +295,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       .sort((a, b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
   }
 
-  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDO): void {
-    this.veranstaltungDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-        .then((response: BogenligaResponse<VeranstaltungDTO>) => {
-          wettkampf.wettkampfLiga = response.payload.name;
-        })
-        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
-          console.log('LigaName not found');
-        });
 
-  }
-
-  public buildVeranstaltungskalender(): void {
-    this.findByVeranstalungsIds().then(r => {
-      let competitionList: any;
-      console.log(this.wettkaempfeDO);
-    });
-
-  }
   //get current sportjahr from einstellungen
   private async setCurrentSportjahr(): Promise<void> {
     await this.einstellungenDataProvider.findAll().then((x: BogenligaResponse<EinstellungenDO[]>) => {
@@ -528,67 +385,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
   }
 
-  private async getYearWithWettkampftage(
-    veranstaltungen: any[],
-    year: number
-  ): Promise<{ year: number, veranstaltung: any,wettkampftage: any[] } | null> {
-
-    const eventsThisYear = this.findVeranstaltungenForYear(veranstaltungen, year);
-
-    if (eventsThisYear.length !== 1)
-      return null;
-
-    const veranstaltung = eventsThisYear[0];
-    const wettkampftage = await this.findWettkampftageForVeranstaltung(veranstaltung.id);
-
-    if (wettkampftage.length > 0)
-      return { year, veranstaltung, wettkampftage };
-
-    return null;
-  }
-
-  private async findClosestYearWithWettkampftage(
-    allVeranstaltungen: any[],
-    currentYear: number
-  ): Promise<{ year: number, veranstaltung: any, wettkampftage: any[]} | null> {
-
-    // 1 → Current year
-    let result = await this.getYearWithWettkampftage(allVeranstaltungen, currentYear);
-    if (result) return result;
-
-    // 2 → Next year
-    result = await this.getYearWithWettkampftage(allVeranstaltungen, currentYear + 1);
-    if (result) return result;
-
-    // 3 → Past years backwards
-    const years = [...new Set(allVeranstaltungen.map(v => v.sportjahr))];
-    const pastYears = years.filter(y => y < currentYear).sort((a, b) => b - a); // newest past first
-
-    for (const year of pastYears) {
-      result = await this.getYearWithWettkampftage(allVeranstaltungen, year);
-      if (result) return result;
-    }
-
-    // Nothing found
-    return null;
-  }
-
-  private async findWettkampftageForVeranstaltung(veranstaltungId: number): Promise<any[]> {
-    const wettkampfResponse = await this.wettkampfDataProvider.findByVeranstaltungId(veranstaltungId);
-
-    const wettkampftage = wettkampfResponse.payload ?? [];
-
-    return wettkampftage.length > 0 ? wettkampftage : [];
-  }
-
-  private findVeranstaltungenForYear(
-    veranstaltungen: any[],
-    year: number
-  ): any[] {
-    return veranstaltungen.filter(v => v.sportjahr === year);
-  }
-
-
   private numberToMonth(m:number):string{
     switch (m){
       case 1:
@@ -622,71 +418,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   }
 
-
-  /**
-   * Creates Link to Google Maps
-   * Splits given Location at every comma and passes it to Google Maps
-   * @param $event
-   */
-  public onMap($event: WettkampfDO): void {
-    onMapService($event);
-  }
-
-  /**
-   * Restriction that only a maximum of six events are portrayed
-   * BSAPP- 367
-   */
-  private fillTableRows(): void {
-    this.rows = [];
-
-    if (this.wettkaempfeDO.length < 6) {
-      this.rows = toTableRows(this.wettkaempfeDO);
-    } else {
-      this.rows = toTableRows(this.wettkaempfeDO.slice(0, 5));
-    }
-  }
-
-  /**
-   * BSAPP - 783
-   * Check if Table is empty
-   */
-  public checkIfTableIsEmpty(): boolean {
-    return this.rows.length === 0;
-  }
-
   public chekIfVeranstaltungskalender(): boolean{
     return this.veranstaltungWettkaempfeDO.length === 0;
   }
 
-  /**
-   * Checks that only dates that are in the future will be portrayed
-   * BSAPP-366
-   */
-  private checkDate() {
-    /**
-     * Gives the german date - otherwise always the american
-     */
-
-    registerLocaleData(localeDE);
-    this.dateHelper = formatDate(this.currentDate, 'yyyy-MM-dd', 'de');
-
-    for (let i = 0; i < this.wettkaempfeDO.length; i++) {
-      /**
-       * Turns the strings into date objects which can be easily compared
-       */
-      const wettkampfDate = new Date(this.wettkaempfeDO[i].wettkampfDatum);
-      const heuteDate = new Date(this.currentDate);
-
-      if (wettkampfDate < heuteDate) {
-        /**
-         * Splice takes out the number of values/objects defined in 'deleteCount'
-         * it then moves the rest objects up - that's why we need the i--
-         */
-        this.wettkaempfeDO.splice(i, 1);
-        i--;
-      }
-    }
-  }
 
   public wettkampfErgebnisseLinking() {
     this.router.navigate(
@@ -717,34 +452,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       }
     );
   }
-
-  //BSAPP-1384
-  private getVeranstaltungen(ligaId: number) {
-    var veranstaltungsListe = [];
-
-    this.veranstaltungDataProvider.findByLigaId(ligaId)
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-
-          veranstaltungsListe=response.payload
-          if (veranstaltungsListe.length == 1) {
-            this.veranstaltung = veranstaltungsListe[0]
-          } else {
-            this.veranstaltung = veranstaltungsListe.reduce((prev, current) => {
-              return (prev.sportjahr > current.sportjahr) ? prev : current;
-            })
-          }
-        })
-        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
-          console.log('Veranstaltung not found for LigaID');
-        });
-  }
-
-
-  private handleSuccessfulLogin() {
-    this.loadWettkaempfe();
-  }
-
-
 
 
 }
