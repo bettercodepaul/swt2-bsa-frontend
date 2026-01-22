@@ -87,7 +87,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
   public mannschaftenConfig = WETTKAMPF_TABLE_CONFIG;
-  public jahre: Array<SportjahrVeranstaltungDO> = [];
+  public jahre: Array<VeranstaltungDO> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
@@ -233,17 +233,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.providedLigaID = undefined;
       this.hasID = false;
     }
-    console.log('LigaID from resolver:', this.providedLigaID);
 
     await this.loadVeranstaltungen(this.providedLigaID);
-    await this.loadJahre();
+
     this.selectedWettkampfTag =  this.alleTage[0];
     this.selectedMannschaftStatistik = 'alle_mannschaften';
     await this.onSelectMannschaftStatistik();
+
+    console.log('Veranstaltungen geladen', this.veranstaltungen);
   }
 
   public onMannschaftLinkClicked(event: {row, target: 'own' | 'opponent'}) {
 
+    console.log('Event on button click:', event);
     let mannschaftID;
     let vereinId;
 
@@ -676,6 +678,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.loadMannschaften(this.currentVeranstaltung.id);
       const loadWettkaempfePromise = this.loadWettkaempfe(this.currentVeranstaltung.id);
 
+      this.handleSuccessLoadJahre(this.veranstaltungen);
+
       if (this.mannschaftStatistikActive) {
         this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
         await this.loadErgebnisse(this.currentMannschaft);
@@ -704,10 +708,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.currentMannschaft = this.mannschaften[0];
     this.loadVerein(this.currentMannschaft.vereinId);
   }
-
+ /*
   public async loadJahre() {
     await this.veranstaltungsDataProvider.findAllSportyearDestinct()
-      .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+      .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
         this.handleSuccessLoadJahre(response.payload);
       })
       .catch(() => {
@@ -716,9 +720,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       });
 
   }
+*/
 
-  private handleSuccessLoadJahre(response: SportjahrVeranstaltungDO[]) {
-    this.jahre = response;
+  private handleSuccessLoadJahre(veranstaltungen: VeranstaltungDO[]) {
+    this.jahre = veranstaltungen;
     this.currentJahr = this.jahre[0].sportjahr;
   }
 
