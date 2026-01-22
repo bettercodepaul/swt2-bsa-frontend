@@ -11,19 +11,45 @@ it('Anzeige Wettkampf Ergebnisse', function() {
  * This test checks if the selection of Sportjahr Liga and Mannschaft works
  */
 it('Auswahl Sportjahr und Wettkampftag', function () {
-  cy.wait(2000);
+  cy.wait(4000);
 
-  // Jahr auswählen
+  // Jahr auswaehlen
   cy.get('[data-cy=jahr-dropdown]').should('be.visible')
   cy.get('[data-cy=jahr-dropdown]').should('not.be.disabled')
   cy.get('[data-cy=jahr-dropdown]').select(0);
   cy.wait(1000);
 
 
-  // Wettkampftag ausw#hlen
+  // Wettkampftag auswaehlen
+  cy.get('[data-cy=wettkampftage-dropdown]').should('be.visible')
+  cy.get('[data-cy=wettkampftage-dropdown]').should('not.be.disabled')
   cy.get('[data-cy=wettkampftage-dropdown]').select(0);
   cy.wait(1000);
 });
 
+it('Anzeige Wettkampfergebnisse Liste', function () {
 
+  cy.get('[data-cy=tableStatistik]').should('be.visible')
+})
 
+/**
+ * Thi test checks if clicking on a team link in the results table navigates to the correct team page
+ */
+it('Finde Link zur Mannschaft und betätige ihn', () => {
+  cy.get('[data-cy=tableStatistik]')
+    .find('bla-actionbutton')
+    .first()
+    .should('exist')
+    .then(($comp) => {
+      const innerButton = $comp.find('button').first();
+      if (innerButton.length) {
+        cy.wrap(innerButton).should('be.visible').click();
+      } else {
+        cy.wrap($comp).should('be.visible').click();
+      }
+    });
+
+  // Prüfe ob die URL den erwarteten Pfad enthält
+  cy.url({ timeout: 4000 }).should('include', '#/vereine/');
+
+});
