@@ -1,0 +1,28 @@
+<div class="timeline" *ngIf="!hideBar">
+
+  <div class="timeline__track">
+
+    <ng-container *ngFor="let step of steps; let i = index">
+
+      <!-- Schritt -->
+      <div
+        class="timeline__step"
+        [class.active]="isActive(i)"
+        [class.done]="isDone(i)"
+      >
+        <div class="dot"></div>
+        <div class="label">{{ step.label }}</div>
+      </div>
+
+      <!-- Verbindungslinie -->
+      <div
+        class="line"
+        *ngIf="i < steps.length - 1"
+        [class.done]="isDone(i)"
+      ></div>
+
+    </ng-container>
+
+  </div>
+
+</div>
