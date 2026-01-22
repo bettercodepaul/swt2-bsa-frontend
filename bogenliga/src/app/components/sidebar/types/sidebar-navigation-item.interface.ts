@@ -11,4 +11,5 @@ export interface SideBarNavigationItem {
   subitems?: SideBarNavigationSubitem[];
   inProdVisible?: boolean;
   datacy: string;
+  requiresLigaContext?: boolean;
 }
