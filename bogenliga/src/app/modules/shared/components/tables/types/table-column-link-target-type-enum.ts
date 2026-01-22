@@ -1,4 +1,4 @@
 export enum TableLinkTarget {
     OWN = 'own',
-    OPPONENT = 'Opponent'
+    OPPONENT = 'opponent'
 }
