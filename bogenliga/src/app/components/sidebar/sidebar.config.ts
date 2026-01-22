@@ -115,7 +115,8 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     route: '/wettkaempfe',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-wettkampf-button'
+    datacy: 'sidebar-wettkampf-button',
+    requiresLigaContext: true
   },
 
   {
@@ -132,7 +133,8 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     route: '/ligatabelle',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
+    datacy: 'sidebar-ligatabelle-button',
+    requiresLigaContext: true
   },
   {
     label: 'SIDEBAR.SPOTTING',
