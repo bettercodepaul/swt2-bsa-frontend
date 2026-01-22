@@ -100,8 +100,8 @@
       "VERANSTALTUNG": "Ligen-Auswahl"
     },
     "LIGATABELLE": {
-      "TITEL": "Liga-Tabelle",
-      "DESCRIPTION": "Alle Ligen und die jeweiligen Ligatabellen des ausgewählten Jahres",
+      "TITEL": "Ligatabelle",
+      "DESCRIPTION": "Alle Tabellen der ausgewählten Liga für das ausgewählte Sportjahr.",
       "LINKDESCRIPTION": "Zu den Wettkampfergebnissen",
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",

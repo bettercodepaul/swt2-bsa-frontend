@@ -22,25 +22,26 @@ h2 {
   margin-top: 60px;
 }
 
-/* --- WICHTIG: Wrapper für horizontales Scrollen --- */
+/* --- Wrapper für horizontales Scrollen --- */
 
 .ligatabelle-table-wrapper {
-  width: 100%;
+  max-width: 800px;
   overflow-x: auto;              /* horizontales Scrollen */
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;  /* weiches Scrollen auf iOS */
 }
 
-/* Optional: Helfer, falls irgendwo global max-width/overflow gesetzt ist */
-.ligatabelle-table-wrapper * {
-  max-width: none;
-}
 
 /* --- Mobile-Optimierungen nur für kleinere Screens --- */
 
 @media (max-width: 576px) {
   #rowTable {
     margin-left: 0; /* am Rand ausrichten */
+  }
+
+  .ligatabelle-table-wrapper {
+    width: 100%;
+    max-width: none;
   }
 
   .ligatabelle-table-wrapper table {
