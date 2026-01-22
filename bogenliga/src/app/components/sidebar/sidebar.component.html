@@ -12,7 +12,7 @@
       <ng-container *ngFor="let item of CONFIG">
         <li *ngIf="hasUserPermissions(item.permissons)
                    && !(inProd === true && item.inProdVisible === false)
-                   && (item.route !== '/ligatabelle' || hasActiveLigaContext())"
+                   && (!item.requiresLigaContext || hasActiveLigaContext())"
             [class.selected]="isSelected(item.route)">
 
           <!-- Haupt-Item -->
