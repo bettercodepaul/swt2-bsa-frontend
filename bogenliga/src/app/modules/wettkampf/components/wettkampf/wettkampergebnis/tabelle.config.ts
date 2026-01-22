@@ -17,7 +17,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       width:          20,
       sortable: true,
       type: TableColumnType.LINK,
-      linkTarget: 'own'
+      linkTarget: TableLinkTarget.OWN
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -50,7 +50,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       width:          20,
       sortable: true,
       type: TableColumnType.LINK,
-      linkTarget: 'opponent'
+      linkTarget: TableLinkTarget.OPPONENT
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
