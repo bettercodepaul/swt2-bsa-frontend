@@ -17,6 +17,8 @@ import {CurrentUserService, UserPermission} from '@shared/services';
 import {ExpandComponent} from '@shared/components/expand';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {EnumValue} from "@angular/compiler-cli/src/ngtsc/partial_evaluator";
+import {TableLinkTarget} from "@shared/components/tables/types/table-column-link-target-type-enum";
 
 
 @Component({
@@ -43,7 +45,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
   @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
-  @Output() public onLinkClicked = new EventEmitter<{row: any; target: 'own' | 'opponent'}>();
+  @Output() public onLinkClicked = new EventEmitter<{row: any; target: TableLinkTarget}>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -57,7 +59,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     super();
   }
 
-  public linkClicked(row: any, target: 'own' | 'opponent') {
+  public linkClicked(row: any, target: TableLinkTarget) {
+    console.log('Link clicked in data table component:', row, target);
     this.onLinkClicked.emit({row, target});
   }
 
