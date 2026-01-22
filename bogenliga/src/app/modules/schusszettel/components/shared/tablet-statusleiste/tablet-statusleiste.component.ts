@@ -39,7 +39,7 @@ export class TabletStatusleisteComponent {
       return [
         ...base,
         { key: 'SCHUETZENMELDUNG', label: 'Schützenmeldung' },
-        { key: 'SATZEINGABE', label: 'Passe' },
+        { key: 'SATZEINGABE', label: 'Passeeingabe' },
         { key: 'WARTE', label: 'Warten' },
       ];
     }
