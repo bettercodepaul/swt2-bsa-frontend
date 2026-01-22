@@ -17,8 +17,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
 import {ExpandComponent} from '@shared/components/expand';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {EnumValue} from "@angular/compiler-cli/src/ngtsc/partial_evaluator";
-import {TableLinkTarget} from "@shared/components/tables/types/table-column-link-target-type-enum";
+import {TableLinkTarget} from '@shared/components/tables/types/table-column-link-target-type-enum';
 
 
 @Component({
@@ -28,6 +27,12 @@ import {TableLinkTarget} from "@shared/components/tables/types/table-column-link
   providers:   [TranslatePipe, TruncationPipe]
 })
 export class DataTableComponent extends CommonComponentDirective implements OnInit, OnChanges {
+
+  constructor(private truncationPipe: TruncationPipe,
+              private translatePipe: TranslatePipe,
+              private currentUserService: CurrentUserService) {
+    super();
+  }
   @ViewChild(ExpandComponent) expandMenu: ExpandComponent;
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
@@ -53,11 +58,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   initialized = false;
   private router: Router;
 
-  constructor(private truncationPipe: TruncationPipe,
-    private translatePipe: TranslatePipe,
-    private currentUserService: CurrentUserService) {
-    super();
-  }
+  protected readonly ActionButtonColors = ActionButtonColors;
 
   public linkClicked(row: any, target: TableLinkTarget) {
     console.log('Link clicked in data table component:', row, target);
@@ -66,7 +67,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   // Returns true if actions in table should be displayed as colored buttons with text
   public hasColoredActionsWithText(): boolean {
-    if(this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText){
+    if (this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText) {
       return true;
     }
     return false;
@@ -74,8 +75,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   // Gets icons for colored buttons
 
-  public getColoredActionsWithTextIcon(action: TableActionType): IconProp{
-    switch(action) {
+  public getColoredActionsWithTextIcon(action: TableActionType): IconProp {
+    switch (action) {
       case TableActionType.EDIT:
         return 'edit';
       case TableActionType.VIEW:
@@ -92,14 +93,14 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   }
 
   // Gets translation key for colored buttons
-  public getColoredActionsWithTextTranslationKey(action: TableActionType): string{
-    let actionName = TableActionType[action];
+  public getColoredActionsWithTextTranslationKey(action: TableActionType): string {
+    const actionName = TableActionType[action];
     return 'TABLE.ACTION_TEXT.' + actionName;
   }
 
   // Gets color scheme for colored buttons
   public getColoredActionsWithTextColor(action: TableActionType): ActionButtonColors {
-    switch(action){
+    switch (action) {
       case TableActionType.DOWNLOAD:
       case TableActionType.DOWNLOADRUECKENNUMMER:
       case TableActionType.DOWNLOADLIZENZEN:
@@ -473,6 +474,4 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     const sortingClasses = this.tableSorter.getSortingClasses(column);
     return sortingClasses.indexOf('sortable') > -1;
   }
-
-  protected readonly ActionButtonColors = ActionButtonColors;
 }
