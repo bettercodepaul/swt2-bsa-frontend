@@ -3,97 +3,85 @@
 
   <ng-container *ngIf="infos.schuetzeStammDaten?.length; else emptyData">
     <p class="info-box">
-      Wähle ein Feld (Box), dann klicke auf einen Schützen, um ihn zuzuweisen.
+      Bitte wählen Sie die drei Schützen aus. Menü 1 = Schütze 1, Menü 2 = Schütze 2, Menü 3 = Schütze 3.
     </p>
 
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="register-layout">
-        <!-- LINK: Schützenliste mit Filter -->
-        <div class="schuetzen-list">
-          <input
-            formControlName="filter"
-            placeholder="Schützen filtern…"
-            aria-label="Filter Schützen (Name oder Rückennummer)"
-          />
-          <div class="list">
-            <div
-              *ngFor="let sh of filteredShooters; trackBy: trackById"
-              class="schuetze-item"
-              tabindex="0"
-              (click)="selectShooter(sh)"
-              (keydown.enter)="selectShooter(sh)"
+      <div class="register-layout" formArrayName="ids">
+        <!--Menü 1-->
+        <div class="menu-col">
+          <div class="menu-title">Schütze 1</div>
+          <select class="shooter-menu" [formControlName]="0" [attr.size]="menuSize" aria-label="Schütze 1 auswählen">
+          <option [ngValue]="null" disabled>Schützen auswählen…</option>
+            <option
+              *ngFor="let sh of infos.schuetzeStammDaten; trackBy: trackById"
+              [ngValue]="sh.schuetzenId"
+              [disabled]="isDisabledOption(sh.schuetzenId, 0)"
             >
               {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
-            </div>
+            </option>
+          </select>
+          <div class="error" *ngIf="ids.at(0).invalid && form.touched">
+            Bitte einen Schützen auswählen
           </div>
         </div>
 
-        <!-- RECHTS: Slots als Boxen -->
-        <div class="slot-grid" formArrayName="ids">
-          <div
-            class="slot-container"
-            *ngFor="let ctrl of ids.controls; let i = index"
-            [class.active]="activeInputIndex === i"
-            (click)="setActiveInput(i)"
-          >
-            <div class="slot-label">Position {{ i + 1 }}</div>
+        <!--Menü 2-->
+        <div class="menu-col">
+          <div class="menu-title">Schütze 2</div>
+          <select class="shooter-menu" [formControlName]="1" [attr.size]="menuSize" aria-label="Schütze 2 auswählen">
+          <option [ngValue]="null" disabled>Schützen auswählen…</option>
+            <option
+              *ngFor="let sh of infos.schuetzeStammDaten; trackBy: trackById"
+              [ngValue]="sh.schuetzenId"
+              [disabled]="isDisabledOption(sh.schuetzenId, 1)"
+            >
+              {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
+            </option>
+          </select>
+          <div class="error" *ngIf="ids.at(1).invalid && form.touched">
+            Bitte einen Schützen auswählen
+          </div>
+        </div>
 
-            <ng-container *ngIf="getShooterForSlot(i) as sh; else emptySlot">
-              <div class="slot-content">
-                <div class="slot-text">
-                  {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
-                </div>
-                <button
-                  type="button"
-                  class="slot-remove"
-                  aria-label="Schütze aus Slot entfernen"
-                  (click)="clearSlot(i); $event.stopPropagation()"
-                >
-                  ✕
-                </button>
-              </div>
-            </ng-container>
-
-            <ng-template #emptySlot>
-              <div class="slot-empty">
-                Schützen auswählen…
-              </div>
-            </ng-template>
-
-            <div class="error" *ngIf="ctrl.invalid && form.touched">
-              Bitte einen Schützen auswählen
-            </div>
+        <!--Menü 3-->
+        <div class="menu-col">
+          <div class="menu-title">Schütze 3</div>
+          <select class="shooter-menu" [formControlName]="2" [attr.size]="menuSize" aria-label="Schütze 3 auswählen">
+          <option [ngValue]="null" disabled>Schützen auswählen…</option>
+            <option
+              *ngFor="let sh of infos.schuetzeStammDaten; trackBy: trackById"
+              [ngValue]="sh.schuetzenId"
+              [disabled]="isDisabledOption(sh.schuetzenId, 2)"
+            >
+              {{ sh.rueckennummer }} – {{ sh.vorname }} {{ sh.nachname }}
+            </option>
+          </select>
+          <div class="error" *ngIf="ids.at(2).invalid && form.touched">
+            Bitte einen Schützen auswählen
           </div>
         </div>
       </div>
-
       <button type="submit" [disabled]="form.invalid" class="confirm-button">
         BESTÄTIGEN
       </button>
-
-      <!-- NEU: Bestätigungs-Meldung direkt auf der Seite -->
       <div class="confirm-box" *ngIf="confirmStep">
         <p>
           Sind Sie sicher, dass Sie diese Schützenzuordnung bestätigen möchten?
           <strong>Sie können die Eingabe später nicht mehr ändern.</strong>
         </p>
         <div class="confirm-actions">
-          <button
-            type="button"
-            class="confirm-yes"
-            (click)="finalizeSubmit()"
-          >
+          <button type="button" class="confirm-yes" (click)="finalizeSubmit()">
             Ja, endgültig bestätigen
           </button>
-          <button
-            type="button"
-            class="confirm-no"
-            (click)="cancelConfirm()"
-          >
+          <button type="button" class="confirm-no" (click)="cancelConfirm()">
             Abbrechen
           </button>
         </div>
       </div>
+
+
+
     </form>
   </ng-container>
 
