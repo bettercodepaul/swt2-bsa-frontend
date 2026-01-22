@@ -746,7 +746,7 @@
           "DELETE": {
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-          }
+          },
 
       "NOTIFICATION": {
         "DELETE": {
@@ -1248,7 +1248,7 @@
           "SAVE": "Save",
           "UPDATE": "Refresh",
           "DELETE": "Delete",
-          "RESET_FILTER": "Reset filter"
+          "RESET_FILTER": "Reset filter",
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Success",
@@ -1360,7 +1360,7 @@
           "SAVE_AND_LIZENZ_ERSTELLT": {
             "TITLE": "Success",
             "DESCRIPTION": "Successfully added marksman to team and created a licence."
-          }
+          },
         "DUPLICATE": {
           "TITLE": "Failed to add",
           "DESCRIPTION": "Member number already taken. Please choose a different number."
