@@ -69,6 +69,7 @@
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Clubs",
+      "DESCRIPTION": "A summary of the results achieved by the teams from the current league at an event during a sports year.",
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Competition",
@@ -357,7 +358,7 @@
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
       "HEADING": {
-        "VERANSTALTUNG": "Selection of the event and team",
+        "VERANSTALTUNG": "Selection of the event year and day",
         "STATISTIKEN": "Statistics"
       },
       "FILTER_BUTTON":{
