@@ -72,7 +72,7 @@
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Vereine",
-      "DESCRIPTION": "Eine Übersicht aller Vereine. Ein Klick auf einen Verein aus der Tabelle gibt Auskunft über die aktuellen Wettkämpfe und Mannschaften dieses Vereins.",
+      "DESCRIPTION": "Eine Übersicht der Ergebnisse die an einer Veranstaltung in einem Sportjahr von den Mannschaften erbracht wurden aus der aktuellen Liga.",
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Wettkampf",
@@ -384,7 +384,7 @@
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
       "HEADING": {
-        "VERANSTALTUNG": "Auswahl der Veranstaltung und Mannschaft",
+        "VERANSTALTUNG": "Auswahl des Sportjahres und Wettkampftages",
         "STATISTIKEN": "Statistiken"
       },
       "FILTER_BUTTON": {
