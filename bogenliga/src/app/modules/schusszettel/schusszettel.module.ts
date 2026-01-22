@@ -24,6 +24,7 @@ import {MatchKontextComponent} from './components/shared/match-kontext/match-kon
 import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
+import {TabletStatusleisteComponent} from './components/shared/tablet-statusleiste/tablet-statusleiste.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
     WarteBestaetigungComponent,
     SchusszettelTabletAdminComponent,
     TabletComponent,
+    TabletStatusleisteComponent,
     NotAllowedComponent,
     WettkampfbeendetComponent,
     Maske4ZustandComponent,

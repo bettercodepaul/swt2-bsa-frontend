@@ -12,6 +12,12 @@
 
   <!-- 3) Main content only when loaded and no error -->
   <ng-container *ngIf="!loading && data">
+
+    <bla-tablet-statusleiste
+      [status]="data.status"
+      [showZustandFirst]="showZustandFirst">
+    </bla-tablet-statusleiste>
+
     <ng-container [ngSwitch]="data.status">
 
       <!-- Not allowed -->
@@ -34,6 +40,7 @@
           [infos]="data"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
+
         <bla-maske1registrierung
           *ngIf="!showZustandFirst"
           [infos]="data"
@@ -48,11 +55,11 @@
           [infos]="data"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
+
         <bla-maske2eingabe
           *ngIf="!showZustandFirst"
           [infos]="data"
-          (satzSubmit)="onSatz($event)"
-          (abort)="onPasseAbort()">
+          (satzSubmit)="onSatz($event)">
         </bla-maske2eingabe>
       </ng-container>
 
@@ -70,6 +77,7 @@
           [infos]="data"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
+
         <bla-maske4wettkampbeendet
           *ngIf="!showZustandFirst"
           [infos]="data"
@@ -79,7 +87,8 @@
 
       <!-- Unexpected status -->
       <div *ngSwitchDefault class="error-box">
-        Unbekannter Status "{{ data.status }}". Bitte wenden Sie sich an den Support.
+        Unbekannter Status "{{ data.status }}".
+        Bitte wenden Sie sich an den Support.
       </div>
 
     </ng-container>
