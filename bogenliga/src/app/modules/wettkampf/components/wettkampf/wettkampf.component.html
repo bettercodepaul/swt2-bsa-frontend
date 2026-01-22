@@ -23,6 +23,7 @@
             <select class="form-control"
                     id="jahr"
                     name="Jahre"
+                    data-cy="jahr-dropdown"
                     [(ngModel)]="currentJahr"
                     [disabled]="loadingData"
                     (ngModelChange)="loadVeranstaltungen(currentJahr)"
@@ -45,6 +46,7 @@
               <select class="form-control"
                       id="wettkampftage"
                       name="WettkampfTag"
+                      data-cy="wettkampftage-dropdown"
                       [(ngModel)]="selectedWettkampfTag"
                       [disabled]="loadingData"
                       (ngModelChange)="onSelectWettkampfTag()">
@@ -62,7 +64,7 @@
       <div id="StatsAndGraphForPrintOut">
         <!-- Table for all Statistiken -->
         <div class="row print1">
-          <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
+          <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em" data-cy="wettkampf-table"
                data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
             <h3>{{currentStatistikTitle | translate}}</h3>
             <!-- Button - Gesamtstatistik Drucken -->
@@ -73,6 +75,13 @@
                             (onLinkClicked)="onMannschaftLinkClicked($event)"
                             data-cy="tableStatistik">
             </bla-data-table>
+            <a
+              *ngIf="currentMannschaft"
+              [attr.href]="'/vereine/' + currentMannschaft.vereinId + '/' + currentMannschaft.id"
+              data-cy="mannschaft-link"
+              class="d-none"
+              aria-hidden="true"
+            >{{ currentMannschaft.name }}</a>
           </div>
         </div>
 
