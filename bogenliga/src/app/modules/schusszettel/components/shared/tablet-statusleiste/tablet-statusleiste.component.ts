@@ -24,12 +24,12 @@ export class TabletStatusleisteComponent {
   @Input() status!: TabletStatus;
   @Input() showZustandFirst = true;
 
-  /** Status, bei dem wir die Leiste gar nicht anzeigen wollen */
+
   get hideBar(): boolean {
     return this.status === 'NOT_ALLOWED';
   }
 
-  /** Schritte dynamisch nach aktuellem Status */
+
   get steps(): Array<{ key: StepKey; label: string }> {
     const base: Array<{ key: StepKey; label: string }> = [
       { key: 'UEBERSICHT', label: 'Übersicht' },
@@ -39,7 +39,7 @@ export class TabletStatusleisteComponent {
       return [
         ...base,
         { key: 'SCHUETZENMELDUNG', label: 'Schützenmeldung' },
-        { key: 'SATZEINGABE', label: 'Passe' },
+        { key: 'SATZEINGABE', label: 'Passeeingabe' },
         { key: 'WARTE', label: 'Warten' },
       ];
     }
