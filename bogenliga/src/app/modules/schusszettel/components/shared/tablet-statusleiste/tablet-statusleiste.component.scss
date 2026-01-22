@@ -1,0 +1,67 @@
+.timeline {
+  margin: 20px 0;
+}
+
+.timeline__track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* einzelner Schritt */
+.timeline__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.timeline__step .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.timeline__step .label {
+  font-size: 14px;
+  color: #475569;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Linie zwischen Schritten */
+.line {
+  flex: 1;
+  height: 2px;
+  background: #cbd5e1;
+  margin: 0 10px;
+}
+
+/* aktiver Schritt */
+.timeline__step.active .dot {
+  background: #2563eb;
+}
+
+.timeline__step.active .label {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+/* erledigte Schritte */
+.timeline__step.done .dot {
+  background: #64748b;
+}
+
+.line.done {
+  background: #64748b;
+}
+
+/* Text unten */
+.timeline__info {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #475569;
+}
