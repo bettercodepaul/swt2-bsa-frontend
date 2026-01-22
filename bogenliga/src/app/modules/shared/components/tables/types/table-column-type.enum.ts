@@ -4,6 +4,5 @@ export enum TableColumnType {
   DATE,
   TRANSLATION_KEY, // i18n key
   CUSTOM_MAPPING, // use a function to manipulate the cell value
-  NULLORNUMBER= 5, // used in wkdurchfuehrung.config.ts to make sure null values are sorted before numbers
-  LINK // used for creating links in table columns
+  NULLORNUMBER= 5 // used in wkdurchfuehrung.config.ts to make sure null values are sorted before numbers
 }

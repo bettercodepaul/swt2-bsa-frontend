@@ -243,16 +243,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     console.log('Veranstaltungen geladen', this.veranstaltungen);
   }
 
-  public onMannschaftLinkClicked(event: {row, target: 'own' | 'opponent'}) {
+  public onMannschaftLinkClicked(event: {row, target; TableLinkTarget}) {
 
     console.log('Event on button click:', event);
     let mannschaftID;
     let vereinId;
 
-    if (event.target === 'own') {
+    if (event.target === TableLinkTarget.OWN) {
       mannschaftID = event.row.payload.mannschaftId;
       vereinId = event.row.payload.vereinId;
-    } else if (event.target === 'opponent') {
+    } else if (event.target === TableLinkTarget.OPPONENT) {
       mannschaftID = event.row.payload.opponentId;
       vereinId = event.row.payload.opponentVereinId;
     }
