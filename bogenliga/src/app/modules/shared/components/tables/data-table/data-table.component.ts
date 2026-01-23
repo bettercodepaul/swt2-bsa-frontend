@@ -61,7 +61,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   protected readonly ActionButtonColors = ActionButtonColors;
 
   public linkClicked(row: any, target: TableLinkTarget) {
-    console.log('Link clicked in data table component:', row, target);
     this.onLinkClicked.emit({row, target});
   }
 
