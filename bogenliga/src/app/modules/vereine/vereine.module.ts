@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {VEREINE_ROUTES} from './vereine.routing';
-import {VereineComponent} from './components';
+import {VereineComponent, VereinComponent, MannschaftComponent, MannschaftTableComponent} from './components';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import {VereineComponent} from './components';
     SharedModule,
     FormsModule
   ],
-  declarations: [VereineComponent]
+  declarations: [VereineComponent, VereinComponent, MannschaftComponent, MannschaftTableComponent]
 })
 export class VereineModule {
 }
