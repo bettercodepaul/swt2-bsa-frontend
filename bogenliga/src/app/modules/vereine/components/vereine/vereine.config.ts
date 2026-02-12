@@ -11,36 +11,20 @@ export const VEREINE_CONFIG: NavigationDialogConfig = {
 };
 
 export const VEREINE_TABLE_CONFIG: TableConfig = {
-
-    columns: [
-      {
-        translationKey: 'VEREINE.VEREINE.TABLE.HEADERS.VERANSTALTUNG',
-        propertyName:   'veranstaltung_name',
-        width:          20,
-      },
-      {
-        translationKey: 'VEREINE.VEREINE.TABLE.HEADERS.WETTKAMPF',
-        propertyName:   'wettkampfTag',
-        width:          20,
-      },
-      {
-        translationKey: 'TABLE.PLACE',
-        propertyName:   'wettkampfOrtsname',
-        width:          20,
-      },
-      {
-        translationKey: 'VEREINE.VEREINE.TABLE.HEADERS.MANNSCHAFT',
-        propertyName:   'mannschaftsName',
-        width:          20,
-      },
-
-
-    ],
+  columns: [
+    {
+      translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.NAME',
+      propertyName: 'name',
+      width: 100
+    },
+    {
+      translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_NAME',
+      propertyName: 'regionName',
+      width: 100
+    },
+  ],
   actions: {
-    actionTypes: [TableActionType.MAP],
-    width: 6
+    actionTypes: [TableActionType.VIEW],
   }
-
-
 };
 

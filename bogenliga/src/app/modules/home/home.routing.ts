@@ -8,17 +8,15 @@ import {
   DsbMitgliedOverviewComponent,
   VeranstaltungDetailComponent,
   VeranstaltungOverviewComponent,
-  VereinOverviewComponent,
   VerwaltungComponent,
 } from '@verwaltung/components';
 import {
   DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard,
-  VereinOverviewGuard, VerwaltungGuard
+  DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard, VerwaltungGuard
 } from '@verwaltung/guards';
 
 import {WkdurchfuehrungComponent} from '@wkdurchfuehrung/components';
-import {LigaResolver} from "@shared/routing/resolvers/liga.resolver";
+import {LigaResolver} from '@shared/routing/resolvers/liga.resolver';
 
 export const HOME_ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -36,7 +34,6 @@ export const HOME_ROUTES: Routes = [
 export const BUTTON_ROUTES: Routes = [
   {path: 'dsbmitglieder', component: DsbMitgliedOverviewComponent, canActivate: [DsbMitgliedOverviewGuard]},
   {path: 'dsbmitglieder/add', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
-  {path: 'vereine', component: VereinOverviewComponent, canActivate: [VereinOverviewGuard]},
   {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {path: 'veranstaltung', component: VeranstaltungOverviewComponent, canActivate: [VeranstaltungOverviewGuard]},
   {path: 'veranstaltung/add', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
