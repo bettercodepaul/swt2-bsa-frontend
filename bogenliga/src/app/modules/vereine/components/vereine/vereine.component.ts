@@ -35,7 +35,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   public findBySearch($event: string) {
     this.vereinDataProvider.findBySearch($event)
       .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-      .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+      .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure());
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VereinDTO[]>): void {
@@ -52,7 +52,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private async loadVereine() {
     await this.vereinDataProvider.findAll()
       .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-      .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+      .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure());
   }
 
   public async getSelectedRow($event): Promise<void> {
