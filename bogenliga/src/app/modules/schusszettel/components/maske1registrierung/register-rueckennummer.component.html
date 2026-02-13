@@ -10,7 +10,7 @@
       <div class="register-layout" formArrayName="ids">
         <!--Menü 1-->
         <div class="menu-col">
-          <div class="menu-title">Schütze 1</div>
+          <div class="menu-title">Menü 1</div>
           <select class="shooter-menu" [formControlName]="0" [attr.size]="menuSize" aria-label="Schütze 1 auswählen">
           <option [ngValue]="null" disabled>Schützen auswählen…</option>
             <option
@@ -28,7 +28,7 @@
 
         <!--Menü 2-->
         <div class="menu-col">
-          <div class="menu-title">Schütze 2</div>
+          <div class="menu-title">Menü 2</div>
           <select class="shooter-menu" [formControlName]="1" [attr.size]="menuSize" aria-label="Schütze 2 auswählen">
           <option [ngValue]="null" disabled>Schützen auswählen…</option>
             <option
@@ -46,7 +46,7 @@
 
         <!--Menü 3-->
         <div class="menu-col">
-          <div class="menu-title">Schütze 3</div>
+          <div class="menu-title">Menü 3</div>
           <select class="shooter-menu" [formControlName]="2" [attr.size]="menuSize" aria-label="Schütze 3 auswählen">
           <option [ngValue]="null" disabled>Schützen auswählen…</option>
             <option
@@ -63,16 +63,16 @@
         </div>
       </div>
       <button type="submit" [disabled]="form.invalid" class="confirm-button">
-        BESTÄTIGEN
+        Melden
       </button>
       <div class="confirm-box" *ngIf="confirmStep">
         <p>
-          Sind Sie sicher, dass Sie diese Schützenzuordnung bestätigen möchten?
-          <strong>Sie können die Eingabe später nicht mehr ändern.</strong>
+          Sind Sie sich mir der Meldung der Schützen sicher?
+          <strong>Bei einer Falschmeldung gilt das Match als verloren.</strong>
         </p>
         <div class="confirm-actions">
           <button type="button" class="confirm-yes" (click)="finalizeSubmit()">
-            Ja, endgültig bestätigen
+            Ja, Meldung bestätigen
           </button>
           <button type="button" class="confirm-no" (click)="cancelConfirm()">
             Abbrechen
