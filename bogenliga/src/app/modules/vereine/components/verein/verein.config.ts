@@ -2,9 +2,9 @@ import {NavigationDialogConfig} from '@shared/components';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
-export const VEREINSMANNSCHAFTENUEBERSICHT_CONFIG: NavigationDialogConfig = {
-  moduleTranslationKey: 'VEREINSMANNSCHAFTENUEBERSICHT',
-  pageTitleTranslationKey: 'VEREINSMANNSCHAFTENUEBERSICHT.TITLE',
+export const VEREIN_CONFIG: NavigationDialogConfig = {
+  moduleTranslationKey: 'VEREIN',
+  pageTitleTranslationKey: 'VEREIN.TITLE',
   navigationCardsConfig: {
     navigationCards: []
   },
@@ -14,8 +14,20 @@ export const MANNSCHAFTEN_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'VEREINSMANNSCHAFTENUEBERSICHT.TABLE.HEADERS.MANNSCHAFTSNAME',
+      translationKey: 'VEREIN.TABLE.HEADERS.MANNSCHAFTSNAME',
       propertyName:   'name',
+      width:          20,
+    },
+
+    {
+      translationKey: 'VEREIN.TABLE.HEADERS.VERANSTALTUNGSNAME',
+      propertyName:   'veranstaltungName',
+      width:          20,
+    },
+
+    {
+      translationKey: 'VEREIN.TABLE.HEADERS.SPORTJAHR',
+      propertyName:   'sportjahr',
       width:          20,
     },
 
