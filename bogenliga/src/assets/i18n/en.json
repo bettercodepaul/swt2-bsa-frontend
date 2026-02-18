@@ -2074,7 +2074,7 @@
     },
     "NO_LIGA_WARNING": "The selected team is not assigned to a league."
   },
-  "VEREINSMANNSCHAFTENUEBERSICHT": {
+  "VEREIN": {
     "TITLE": "Club overview",
     "DESCRIPTION": "Here you will find a central overview of, all teams in th club.",
     "PLACEHOLDER": "The club overview is currently under development. Data integration will take place shortly.",
@@ -2087,7 +2087,9 @@
     },
     "TABLE": {
       "HEADERS": {
-        "MANNSCHAFTSNAME": "Team name"
+        "MANNSCHAFTSNAME": "Team name",
+        "SPORTJAHR": "Sport year",
+        "VERANSTALTUNGSNAME": "Event"
       }
     }
   }

@@ -27,8 +27,9 @@ it('Navigation von Vereine zu Verein', function () {
     });
 });
 
-it('Vereinsseite exisitert und kann navigieren', function () {
+it('Vereinsseite existiert und kann navigieren', function () {
   cy.visit('http://localhost:4200/#/vereine/1');
+  cy.get('[data-cy="vereinName"]').should('eq', 'SV Schwieberdingen');
   cy.get('#mannschaftentabelle > div > table > tbody > tr').should('have.length', 1);
   cy.get('#mannschaftentabelle > div > table > tbody > tr').first().click();
   cy.url().should('include', 'vereine/1/102');
