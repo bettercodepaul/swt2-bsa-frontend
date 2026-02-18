@@ -10,8 +10,6 @@ import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {MANNSCHAFTEN_TABLE_CONFIG, VEREINSMANNSCHAFTENUEBERSICHT_CONFIG} from './verein.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftTabelleDO} from '@verwaltung/types/mannschfttabelle-do.class';
-import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
-import {VeranstaltungDataProviderService} from "@verwaltung/services/veranstaltung-data-provider.service";
 
 
 const ID_PATH_PARAM = 'id';
@@ -28,8 +26,7 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
     private router: Router,
     private route: ActivatedRoute,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private vereinsDataProvider: VereinDataProviderService,
-    private veranstaltungsDataProvider: VeranstaltungDataProviderService
+    private vereinsDataProvider: VereinDataProviderService
   ) {
     super();
   }
@@ -92,7 +89,7 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
 
   mannschaftenrows(): void {
     this.mannschaften.forEach((mannschaft) => {
-      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, mannschaft.veranstaltungId);
+      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, mannschaft.veranstaltungName, mannschaft.ligaId);
       this.tableContent.push(test);
     });
 
@@ -102,10 +99,7 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
   }
 
   public async getSelectedRow($event): Promise<void> {
-    this.veranstaltungsDataProvider.findById($event.veranstaltungId)
-      .then((response: BogenligaResponse<VeranstaltungDTO>) => {
-        const veranstaltung = response.payload!;
-        this.router.navigate([`vereine/${this.verein.id}/${$event.id}`], { queryParams: { liga: veranstaltung.ligaId}, queryParamsHandling: 'merge'});
-      });
+    console.log($event);
+    this.router.navigate([`vereine/${this.verein.id}/${$event.id}`], { queryParams: { liga: $event.ligaId}, queryParamsHandling: 'merge'});
   }
 }
