@@ -19,7 +19,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
-import {SchuetzenStatistikType} from '../index';
+import {SchuetzenStatistikType} from '../SchuetzenStatisticEnum';
 import {
   WETTKAMPF_TABLE_MATCH_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.siebenmatch.config';

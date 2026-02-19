@@ -21,7 +21,7 @@ import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {TranslatePipe} from '@ngx-translate/core';
-import {SchuetzenStatistikType} from '../index';
+import {SchuetzenStatistikType} from '../SchuetzenStatisticEnum';
 
 
 const MANNSCHAFT_PATH_PARAM = 'mannschaftId';

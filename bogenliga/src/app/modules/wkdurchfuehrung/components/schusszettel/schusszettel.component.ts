@@ -328,29 +328,33 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
-  // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
-    if (!this.allowedMitglieder1 || !this.initialUsed1) {
+    if (!this.allowedMitglieder1) {
       return [];
     }
-    const originallyUsed = this.initialUsed1;
+    const used = this.match1.schuetzen
+      .map(s => s[0].rueckennummer)
+      .filter(nr => nr != null);
+
+    const own = this.match1.schuetzen[schuetzeIndex][0].rueckennummer;
 
     return this.allowedMitglieder1.filter(nr =>
-      nr === originallyUsed[schuetzeIndex] ||      // eigene Nummer erlaubt
-      !originallyUsed.includes(nr)                 // alle anderen nur, wenn anfangs frei
+      nr === own || !used.includes(nr)
     );
   }
 
-  // Rueckennummer Dropdown-Auswahl
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
-    if (!this.allowedMitglieder2 || !this.initialUsed2) {
+    if (!this.allowedMitglieder2) {
       return [];
     }
-    const originallyUsed = this.initialUsed2;
+    const used = this.match2.schuetzen
+      .map(s => s[0].rueckennummer)
+      .filter(nr => nr != null);
+
+    const own = this.match2.schuetzen[schuetzeIndex][0].rueckennummer;
 
     return this.allowedMitglieder2.filter(nr =>
-      nr === originallyUsed[schuetzeIndex] ||
-      !originallyUsed.includes(nr)
+      nr === own || !used.includes(nr)
     );
   }
 
@@ -477,12 +481,10 @@ export class SchusszettelComponent implements OnInit {
       // kopieren in jede Passe, damit Datenanlage möglich --> Schüsselwert für DB
       for (let i = 0; i < 3; i++) {
         for (let j = 1; j < 5; j++) {
-          if (this.match1.schuetzen[i][j].lfdNr <= 1) {
-            this.match1.schuetzen[i][j].lfdNr = j + 1;
-          }
-          if (this.match2.schuetzen[i][j].lfdNr <= 1) {
-            this.match2.schuetzen[i][j].lfdNr = j + 1;
-          }
+
+          this.match1.schuetzen[i][j].lfdNr = j + 1;
+          this.match2.schuetzen[i][j].lfdNr = j + 1;
+
 
           this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
           this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;

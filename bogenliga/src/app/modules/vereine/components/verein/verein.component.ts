@@ -7,7 +7,7 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
-import {MANNSCHAFTEN_TABLE_CONFIG, VEREINSMANNSCHAFTENUEBERSICHT_CONFIG} from './vereinsmannschaftenuebersicht.config';
+import {MANNSCHAFTEN_TABLE_CONFIG, VEREINSMANNSCHAFTENUEBERSICHT_CONFIG} from './verein.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftTabelleDO} from '@verwaltung/types/mannschfttabelle-do.class';
 
@@ -17,10 +17,10 @@ const ID_PATH_PARAM = 'id';
 
 @Component({
   selector: 'bla-mannschaftsuebersicht',
-  templateUrl: './vereinsmannschaftenuebersicht.component.html',
-  styleUrls: ['./vereinsmannschaftenuebersicht.component.scss']
+  templateUrl: './verein.component.html',
+  styleUrls: ['./verein.component.scss']
 })
-export class VereinsmannschaftenuebersichtComponent extends CommonComponentDirective implements OnInit {
+export class VereinComponent extends CommonComponentDirective implements OnInit {
 
   constructor(
     private router: Router,
