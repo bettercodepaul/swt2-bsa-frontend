@@ -89,7 +89,7 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
 
   mannschaftenrows(): void {
     this.mannschaften.forEach((mannschaft) => {
-      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id);
+      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, mannschaft.veranstaltungName, mannschaft.ligaId);
       this.tableContent.push(test);
     });
 
@@ -99,6 +99,7 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
   }
 
   public async getSelectedRow($event): Promise<void> {
-    this.router.navigate([`vereine/${this.verein.id}/${$event.id}`]);
+    console.log($event);
+    this.router.navigate([`vereine/${this.verein.id}/${$event.id}`], { queryParams: { liga: $event.ligaId}, queryParamsHandling: 'merge'});
   }
 }
