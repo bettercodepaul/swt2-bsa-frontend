@@ -1,5 +1,6 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
+import {TableLinkTarget} from '@shared/components/tables/types/table-column-link-target-type-enum';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
   actions: {actionTypes: []},

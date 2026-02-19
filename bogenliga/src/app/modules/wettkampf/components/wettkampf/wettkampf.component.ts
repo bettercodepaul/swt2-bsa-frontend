@@ -28,6 +28,7 @@ import {DecimalPipe} from '@angular/common';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {TableLinkTarget} from '@shared/components/tables/types/table-column-link-target-type-enum';
 
 
 interface Wettkampftag {
@@ -139,7 +140,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public onMannschaftLinkClicked(event: {row, target; TableLinkTarget}) {
-/*
     let mannschaftID;
     let vereinId;
 
@@ -151,7 +151,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       vereinId = event.row.payload.opponentVereinId;
     }
     this.router.navigate(['/vereine', vereinId , mannschaftID]);
-    */
   }
 
   printStatistics() {
