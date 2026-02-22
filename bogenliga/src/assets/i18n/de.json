@@ -2055,6 +2055,7 @@
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht der Mannschaft.",
     "PLACEHOLDER": "Die Mannschaftenübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
     "WETTKAMPF_DAY": "Wettkampftag",
+    "SPORTJAHR": "Sportjahr",
     "STATUS": {
       "NOT_FOUND": "Die angegebene Mannschaft konnte nicht gefunden werden.",
       "LOADING": "Manschaftenübersicht wird geladen …",

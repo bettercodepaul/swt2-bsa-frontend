@@ -2042,6 +2042,7 @@
     "DESCRIPTION": "Here you will find a central overview a team.",
     "PLACEHOLDER": "The team overview is currently under development. Data integration will take place shortly.",
     "WETTKAMPF_DAY": "Competition day",
+    "SPORTJAHR": "Sport year",
     "STATUS": {
       "NOT_FOUND": "The specified team could not be found.",
       "LOADING": "Team overview is loading ...",
