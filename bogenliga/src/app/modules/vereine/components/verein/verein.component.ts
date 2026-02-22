@@ -89,8 +89,8 @@ export class VereinComponent extends CommonComponentDirective implements OnInit 
 
   mannschaftenrows(): void {
     this.mannschaften.forEach((mannschaft) => {
-      const test: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, mannschaft.sportjahr, mannschaft.veranstaltungName, mannschaft.ligaId);
-      this.tableContent.push(test);
+      const mannschafttabelle: MannschaftTabelleDO = new MannschaftTabelleDO(mannschaft.name, mannschaft.id, mannschaft.sportjahr, mannschaft.veranstaltungName, mannschaft.ligaId);
+      this.tableContent.push(mannschafttabelle);
     });
 
     this.rows = toTableRows(this.tableContent);
