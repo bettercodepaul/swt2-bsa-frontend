@@ -2,16 +2,18 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 
 export class MannschaftTabelleDO implements VersionedDataObject {
 
-  constructor(name: string, id: number, veranstaltungName: string, ligaId: number) {
+  constructor(name: string, id: number, sportjahr: number, veranstaltungName: string, ligaId: number) {
     this.name = name;
     this.id = id;
-    this.version = 1;
+    this.sportjahr = sportjahr;
     this.veranstaltungName = veranstaltungName;
+    this.version = 1;
     this.ligaId = ligaId;
   }
 
   id: number;
   name: string;
+  sportjahr: number;
   version: number;
   veranstaltungName: string;
   ligaId: number;

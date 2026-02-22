@@ -2088,7 +2088,7 @@
     },
     "NO_LIGA_WARNING": "Die ausgewählte Mannschaft ist keiner Liga zugeordnet."
   },
-  "VEREINSMANNSCHAFTENUEBERSICHT": {
+  "VEREIN": {
     "TITLE": "Vereinsübersicht",
     "DESCRIPTION": "Hier finden Sie eine zentrale Übersicht aller Mannschaften eines Vereins.",
     "PLACEHOLDER": "Die Vereinsübersicht befindet sich derzeit in der Entwicklung. Datenintegration erfolgt in Kürze.",
@@ -2101,7 +2101,9 @@
     },
     "TABLE": {
       "HEADERS": {
-        "MANNSCHAFTSNAME": "Mannschaftsname"
+        "MANNSCHAFTSNAME": "Mannschaftsname",
+        "SPORTJAHR": "Sportjahr",
+        "VERANSTALTUNGSNAME": "Veranstaltung"
       }
     }
   }
