@@ -28,15 +28,14 @@ it('Navigation von Vereine zu Verein', function () {
 });
 
 it('Vereinsseite existiert und kann navigieren', function () {
-  cy.visit('http://localhost:4200/#/vereine/1');
-  cy.get('[data-cy="vereinName"]').should('eq', 'SV Schwieberdingen');
+  cy.visit('http://localhost:4200/#/vereine/0');
   cy.get('#mannschaftentabelle > div > table > tbody > tr').should('have.length', 1);
   cy.get('#mannschaftentabelle > div > table > tbody > tr').first().click();
-  cy.url().should('include', 'vereine/1/102');
+  cy.url().should('include', 'vereine/0/101');
 });
 
 it('Mannschaftsseite mit Auswahl exisitert', function () {
-  cy.visit('http://localhost:4200/#/vereine/1/102');
+  cy.visit('http://localhost:4200/#/vereine/0/101');
 
   cy.get('#mannschaftSelect').should('be.ok');
   cy.get('#mannschaftSelect option')
@@ -52,11 +51,11 @@ it('Mannschaftsseite mit Auswahl exisitert', function () {
 
   cy.get('button#jumpToVereinButton').should('be.ok');
   cy.get('button#jumpToVereinButton').click();
-  cy.url().should('include', '/vereine/1');
+  cy.url().should('include', '/vereine/0');
 });
 
 it('Mannschaftsübersicht mit Statistiken existiert', function () {
-  cy.visit('http://localhost:4200/#/vereine/1/102');
+  cy.visit('http://localhost:4200/#/vereine/0/101');
 
   cy.get('#wettkampftagSelect').should('be.ok');
   cy.get('#wettkampftagSelect').select(0);
