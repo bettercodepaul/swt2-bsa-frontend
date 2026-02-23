@@ -12,7 +12,6 @@ import {TableColumnConfig} from '../types/table-column-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
-import {Router} from '@angular/router';
 import {CurrentUserService, UserPermission} from '@shared/services';
 import {ExpandComponent} from '@shared/components/expand';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
@@ -66,10 +65,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   // Returns true if actions in table should be displayed as colored buttons with text
   public hasColoredActionsWithText(): boolean {
-    if (this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText) {
-      return true;
-    }
-    return false;
+    return this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText;
   }
 
   // Gets icons for colored buttons
