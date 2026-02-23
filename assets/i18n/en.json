@@ -69,6 +69,7 @@
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Clubs",
+      "DESCRIPTION": "A summary of the results achieved by the teams from the current league at an event during a sports year.",
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Competition",
@@ -357,7 +358,7 @@
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
       "HEADING": {
-        "VERANSTALTUNG": "Selection of the event and team",
+        "VERANSTALTUNG": "Selection of the event year and day",
         "STATISTIKEN": "Statistics"
       },
       "FILTER_BUTTON":{
@@ -432,6 +433,9 @@
         },
         "LIGA_NAME": {
           "LABEL": "League:"
+        },
+        "WETTKAMPFTAG": {
+          "LABEL": "Competition day:"
         }
       },
       "TABLE": {
@@ -745,7 +749,7 @@
           "DELETE": {
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-          }
+          },
 
       "NOTIFICATION": {
         "DELETE": {
@@ -1247,7 +1251,7 @@
           "SAVE": "Save",
           "UPDATE": "Refresh",
           "DELETE": "Delete",
-          "RESET_FILTER": "Reset filter"
+          "RESET_FILTER": "Reset filter",
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Success",
@@ -1359,7 +1363,7 @@
           "SAVE_AND_LIZENZ_ERSTELLT": {
             "TITLE": "Success",
             "DESCRIPTION": "Successfully added marksman to team and created a licence."
-          }
+          },
         "DUPLICATE": {
           "TITLE": "Failed to add",
           "DESCRIPTION": "Member number already taken. Please choose a different number."
