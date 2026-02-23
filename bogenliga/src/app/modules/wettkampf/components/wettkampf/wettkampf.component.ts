@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
 import {ButtonSize, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
-import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZELGESAMT_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
@@ -19,7 +19,7 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
-import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {SessionHandling} from '@shared/event-handling';
