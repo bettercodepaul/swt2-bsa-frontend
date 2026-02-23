@@ -64,7 +64,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public areVeranstaltungenLoading = true;
   public loadingData = false;
   public isStatistikAllowed = false;
-  public currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
@@ -425,14 +424,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.mannschaften, this.currentVeranstaltung, matches, passen));
   }
 
-  public getMannschaftsID(): number {
-    if (this.currentMannschaft !== undefined) {
-      return this.currentMannschaft.id;
-    } else {
-      return -1;
-    }
-  }
-
 
   private cleanLineChart() {
     this.showLineChart = false;
@@ -458,7 +449,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public async loadStatistic() {
     this.isStatistikAllowed = true;
     this.cleanLineChart();
-    this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
     await this.loadAllErgebnisse(undefined);
     this.onSelectWettkampfTag();
   }
