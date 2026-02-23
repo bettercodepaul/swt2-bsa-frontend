@@ -62,18 +62,20 @@
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
       <div id="StatsAndGraphForPrintOut">
-        <!-- Table for all Statistiken -->
-        <div class="row print1">
-          <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em" data-cy="wettkampf-table">
-            <h3>{{'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL' | translate}}</h3>
-            <!-- Button - Gesamtstatistik Drucken -->
-            <bla-data-table id="row00"
-                            [loading]="loadingData"
-                            [config]="currentConfig"
-                            [rows]="rows[currentWettkampftag]"
-                            [linkBuilder]="buildMannschaftLink"
-                            data-cy="tableStatistik">
-            </bla-data-table>
+        <div class="row overflow-auto">
+          <!-- Table for all Statistiken -->
+          <div class="row print1">
+            <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em" data-cy="wettkampf-table">
+              <h3>{{'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL' | translate}}</h3>
+              <!-- Button - Gesamtstatistik Drucken -->
+              <bla-data-table id="row00"
+                              [loading]="loadingData"
+                              [config]="currentConfig"
+                              [rows]="rows[currentWettkampftag]"
+                              [linkBuilder]="buildMannschaftLink"
+                              data-cy="tableStatistik">
+              </bla-data-table>
+            </div>
           </div>
         </div>
       </div>
