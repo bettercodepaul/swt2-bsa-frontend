@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {isNullOrUndefined} from '@shared/functions';
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {TruncationPipe} from '../../../pipes';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {TruncationPipe} from '@shared/pipes';
 import {CommonComponentDirective} from '../../common';
 import {BaseTableSorter} from '../control/base-table-sorter.class';
 import {DefaultTableSorter} from '../control/default-table-sorter.class';
@@ -56,7 +56,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   public TableColumnType = TableColumnType;
 
   initialized = false;
-  private router: Router;
 
   protected readonly ActionButtonColors = ActionButtonColors;
 
