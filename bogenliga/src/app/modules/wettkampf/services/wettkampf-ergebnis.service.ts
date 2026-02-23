@@ -37,6 +37,14 @@ export class WettkampfErgebnisService {
 
   }
 
+  public getMannschaftVereinsID(id: number): number {
+    for (const mannschaften of this.mannschaften) {
+      if (mannschaften.id === id) {
+        return mannschaften.vereinId;
+      }
+    }
+  }
+
   public getMannschaftsname(id: number): string {
 
     for (const mannschaften of this.mannschaften) {
@@ -53,7 +61,7 @@ export class WettkampfErgebnisService {
 
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
-          if(passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
+          if (passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
             Satz += i;
           }
         }
@@ -139,12 +147,16 @@ export class WettkampfErgebnisService {
         const wettkampfErgebnis = new WettkampfErgebnis(
           this.matches[i].nr,
           this.matches[i].wettkampfId,
+          this.matches[i].mannschaftId,
+          this.getMannschaftVereinsID(this.matches[i].mannschaftId),
           this.getMannschaftsname(this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
+          this.matches[i + 1].mannschaftId,
+          this.getMannschaftVereinsID(this.matches[i + 1].mannschaftId),
           this.getMannschaftsname(this.matches[i + 1].mannschaftId),
           this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
           this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),

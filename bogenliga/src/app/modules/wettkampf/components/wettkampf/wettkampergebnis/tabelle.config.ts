@@ -1,4 +1,6 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
+import {TableLinkTarget} from '@shared/components/tables/types/table-column-link-target-type-enum';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
   actions: {actionTypes: []},
@@ -14,7 +16,9 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
       width:          20,
-      sortable: true
+      sortable: true,
+      type: TableColumnType.LINK,
+      linkTarget: TableLinkTarget.OWN
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -45,7 +49,9 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.OPPONENT',
       propertyName:   'opponentName',
       width:          20,
-      sortable: true
+      sortable: true,
+      type: TableColumnType.LINK,
+      linkTarget: TableLinkTarget.OPPONENT
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
