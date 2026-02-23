@@ -72,16 +72,9 @@
                             [loading]="loadingData"
                             [config]="currentConfig"
                             [rows]="rows[currentWettkampftag]"
-                            (onLinkClicked)="onMannschaftLinkClicked($event)"
+                            [linkBuilder]="buildMannschaftLink"
                             data-cy="tableStatistik">
             </bla-data-table>
-            <a
-              *ngIf="currentMannschaft"
-              [attr.href]="'/vereine/' + currentMannschaft.vereinId + '/' + currentMannschaft.id"
-              data-cy="mannschaft-link"
-              class="d-none"
-              aria-hidden="true"
-            >{{ currentMannschaft.name }}</a>
           </div>
         </div>
       </div>

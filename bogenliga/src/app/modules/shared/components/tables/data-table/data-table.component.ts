@@ -60,9 +60,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   protected readonly ActionButtonColors = ActionButtonColors;
 
-  public linkClicked(row: any, target: TableLinkTarget) {
-    this.onLinkClicked.emit({row, target});
-  }
+  /*
+   * ~~~~ private methods ~~~~
+   */
+  @Input() linkBuilder?: (row: any, target: TableLinkTarget) => any[];
 
   // Returns true if actions in table should be displayed as colored buttons with text
   public hasColoredActionsWithText(): boolean {
@@ -383,10 +384,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
       return column.stylesMapper(row.getText(column));
     }
   }
-
-  /*
-   * ~~~~ private methods ~~~~
-   */
 
   private isActionEventAllowed(row: TableRow, action: TableActionType) {
     return row.disabledActions.indexOf(action) === -1

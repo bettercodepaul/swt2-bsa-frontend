@@ -139,18 +139,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadStatistic();
   }
 
-  public onMannschaftLinkClicked(event: {row, target; TableLinkTarget}) {
-    let mannschaftID;
-    let vereinId;
-
-    if (event.target === TableLinkTarget.OWN) {
-      mannschaftID = event.row.payload.mannschaftId;
-      vereinId = event.row.payload.vereinId;
-    } else if (event.target === TableLinkTarget.OPPONENT) {
-      mannschaftID = event.row.payload.opponentId;
-      vereinId = event.row.payload.opponentVereinId;
+  public buildMannschaftLink = (row: any, target: TableLinkTarget) => {
+    if (target === TableLinkTarget.OWN) {
+      return ['/vereine', row.payload.vereinId, row.payload.mannschaftId];
+    } else {
+      return ['/vereine', row.payload.opponentVereinId, row.payload.opponentId];
     }
-    this.router.navigate(['/vereine', vereinId , mannschaftID]);
   }
 
   printStatistics() {
