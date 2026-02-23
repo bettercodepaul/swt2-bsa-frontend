@@ -73,12 +73,15 @@
           </span>
 
         <span *ngSwitchCase="TableColumnType.LINK">
-          <bla-actionbutton
-            [iconClass]="'th-list'"
-            (onClick)="linkClicked(row, column.linkTarget)"
-          >
-          {{ formatText(row, column) }}
-          </bla-actionbutton>
+          <a *ngIf="linkBuilder"
+             [routerLink]="linkBuilder(row, column.linkTarget)"
+             class="table-link">
+
+            <bla-actionbutton
+              [iconClass]="'th-list'">
+              {{ formatText(row, column) }}
+            </bla-actionbutton>
+          </a>
         </span>
 
         <span *ngSwitchDefault>
