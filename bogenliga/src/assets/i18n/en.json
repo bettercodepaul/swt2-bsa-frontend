@@ -433,6 +433,9 @@
         },
         "LIGA_NAME": {
           "LABEL": "League:"
+        },
+        "WETTKAMPFTAG": {
+          "LABEL": "Competition day:"
         }
       },
       "TABLE": {
