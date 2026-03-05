@@ -273,7 +273,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.buttonForward;
+    const link = '/wettkaempfe/';
     // Liga-Param sticky mitnehmen
     this.router.navigate([link], { queryParamsHandling: 'merge' });
   }
