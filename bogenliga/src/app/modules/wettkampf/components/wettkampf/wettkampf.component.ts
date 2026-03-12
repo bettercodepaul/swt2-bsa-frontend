@@ -271,18 +271,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadingData = false;
       return;
     }
-
     // Set the years based on the loaded veranstaltungen.
     this.handleSuccessLoadJahre(this.veranstaltungen);
-    if (this.currentJahr == null) {
+
+    if (this.currentJahr == null && this.jahre.length > 0) {
       this.currentJahr = this.jahre[0].sportjahr;
     }
 
     try {
       await this.selectYear(this.currentJahr);
     } catch (e) {
-      // In case of an error during selectYear, log the error and set empty values to prevent crashes in the frontend
+      // In case of an error during selectYear, log the error and clear chart to remove stale data.
       console.error('selectYear failed', e);
+      this.cleanLineChart();
     } finally {
       this.loadingData = false;
     }
@@ -345,7 +346,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   private handleSuccessLoadJahre(veranstaltungen: VeranstaltungDO[]) {
-    this.jahre = veranstaltungen;
+    this.jahre = veranstaltungen.sort((a, b) => b.sportjahr - a.sportjahr);
   }
 
   public async loadWettkaempfe(veranstaltungsId: number) {
