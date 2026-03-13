@@ -690,7 +690,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   public wettkampfErgebnisseLinking() {
     this.router.navigate(
-      ['/wettkaempfe', this.veranstaltung.id],
+      ['/wettkaempfe'],
       { queryParamsHandling: 'merge' }
     );
   }
