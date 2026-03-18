@@ -30,6 +30,7 @@ import {faHome} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import { RecentLigaService, RecentLigaEntry } from '@shared/services';
 import { slugifyLigaName } from '@shared/functions/slug-utils';
+import { buildLigaTabelleLink } from '@shared/functions/liga-route-utils';
 
 //for notification
 import {
@@ -694,6 +695,24 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       { queryParamsHandling: 'merge' }
     );
   }
+
+  public ligaHomeTabelleLinking() {
+    if (!this.selectedLigaID || !this.selectedLigaName) {
+      return;
+    }
+
+    const ligaParam = slugifyLigaName(this.selectedLigaName);
+
+    this.router.navigate(
+      ['/ligatabelle'],
+      {
+        queryParams: { liga: ligaParam },
+        queryParamsHandling: 'merge'
+      }
+    );
+  }
+
+
 
   public wettkampfButtonToLigatabelleLinking(
     ligaId: number,
