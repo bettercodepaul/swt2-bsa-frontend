@@ -135,6 +135,15 @@
             (onClick)="deselect()">
             {{ 'HOME.LIGADETAILES.BACK_TO_HOME' | translate }}
           </bla-actionbutton>
+
+          <bla-actionbutton
+            [id]="'ligaHomeTabelleButton'"
+            [color]="ActionButtonColors.PRIMARY"
+            [iconClass]="'list-ol'"
+            (onClick)="ligaHomeTabelleLinking()">
+            Zur Tabelle
+          </bla-actionbutton>
+
         </div>
       </div>
 
