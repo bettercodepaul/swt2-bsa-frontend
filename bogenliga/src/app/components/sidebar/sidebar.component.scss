@@ -255,7 +255,11 @@ div.sidebar-text-toggle.flexBox{
   color:$hero-blue;
 }
 
-
+// Highlight "Wettkämpfe" and "Ligatabelle" menu items with a light gray background
+a[data-cy="sidebar-wettkampf-button"],
+a[data-cy="sidebar-ligatabelle-button"] {
+  background-color: #F2F2F5;
+}
 // for small devices
 @media (max-width: 768px) {
   #sidebar {
