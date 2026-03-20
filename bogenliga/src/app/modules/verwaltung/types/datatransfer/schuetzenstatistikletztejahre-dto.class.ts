@@ -13,7 +13,7 @@ export class SchuetzenstatistikLetzteJahreDTO implements DataTransferObject {
   sportjahr3: number;
   sportjahr4: number;
   sportjahr5: number;
-  allejahre_schnitt: number;
+  allejahreSchnitt: number;
 
   constructor(
     id: number,
@@ -24,7 +24,7 @@ export class SchuetzenstatistikLetzteJahreDTO implements DataTransferObject {
     sportjahr3: number,
     sportjahr4: number,
     sportjahr5: number,
-    allejahre_schnitt: number
+    allejahreSchnitt: number
   ) {
     this.id = id;
     this.version = version;
@@ -34,7 +34,7 @@ export class SchuetzenstatistikLetzteJahreDTO implements DataTransferObject {
     this.sportjahr3 = sportjahr3;
     this.sportjahr4 = sportjahr4;
     this.sportjahr5 = sportjahr5;
-    this.allejahre_schnitt = allejahre_schnitt;
+    this.allejahreSchnitt = allejahreSchnitt;
   }
   static copyFrom(optional: {
       id?: number,
@@ -45,7 +45,7 @@ export class SchuetzenstatistikLetzteJahreDTO implements DataTransferObject {
       sportjahr3?: number,
       sportjahr4?: number,
       sportjahr5?: number,
-      allejahre_schnitt?: number
+      allejahreSchnitt?: number
     }
   ): SchuetzenstatistikLetzteJahreDTO {
     return new SchuetzenstatistikLetzteJahreDTO(
@@ -57,7 +57,7 @@ export class SchuetzenstatistikLetzteJahreDTO implements DataTransferObject {
       optional.sportjahr3 || null,
       optional.sportjahr4 || null,
       optional.sportjahr5 || null,
-      optional.allejahre_schnitt || null
+      optional.allejahreSchnitt || null
     );
   }
 }
