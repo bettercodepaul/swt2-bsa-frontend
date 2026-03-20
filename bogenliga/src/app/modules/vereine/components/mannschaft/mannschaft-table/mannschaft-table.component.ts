@@ -193,7 +193,7 @@ export class MannschaftTableComponent extends CommonComponentDirective implement
           },
           {
             translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHNITT_JAHRE',
-            propertyName: 'allejahre_schnitt',
+            propertyName: 'allejahreSchnitt',
             width: 40,
             sortable: true
           },
