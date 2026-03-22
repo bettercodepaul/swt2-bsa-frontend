@@ -147,7 +147,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
       });
     }
   }
-  public findAllVerAndWettByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+  public findAllVerAndWettByMannschaftId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
