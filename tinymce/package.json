@@ -1,31 +1,26 @@
 {
-  "_args": [
-    [
-      "tinymce@6.4.2",
-      "/home/runner/work/swt2-bsa-frontend/swt2-bsa-frontend/bogenliga"
-    ]
-  ],
-  "_from": "tinymce@6.4.2",
-  "_id": "tinymce@6.4.2",
+  "_from": "tinymce@^6.4.2",
+  "_id": "tinymce@6.8.6",
   "_inBundle": false,
-  "_integrity": "sha512-te+4c8PoAwTKPMBQtMQehnSZlOO9Ay5tDgaRFJKBehYb6SlX2PYZ0v3oe/cmiv5EfqdwZLkEMXk2MNOeApZZLg==",
+  "_integrity": "sha512-++XYEs8lKWvZxDCjrr8Baiw7KiikraZ5JkLMg6EdnUVNKJui0IsrAADj5MsyUeFkcEryfn2jd3p09H7REvewyg==",
   "_location": "/tinymce",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "tinymce@6.4.2",
+    "raw": "tinymce@^6.4.2",
     "name": "tinymce",
     "escapedName": "tinymce",
-    "rawSpec": "6.4.2",
+    "rawSpec": "^6.4.2",
     "saveSpec": null,
-    "fetchSpec": "6.4.2"
+    "fetchSpec": "^6.4.2"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-6.4.2.tgz",
-  "_spec": "6.4.2",
+  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-6.8.6.tgz",
+  "_shasum": "799e4f03eeb4399399dfdeb12ba17b3b91887adf",
+  "_spec": "tinymce@^6.4.2",
   "_where": "/home/runner/work/swt2-bsa-frontend/swt2-bsa-frontend/bogenliga",
   "author": {
     "name": "Ephox Corporation DBA Tiny Technologies, Inc"
@@ -33,6 +28,8 @@
   "bugs": {
     "url": "https://github.com/tinymce/tinymce/issues"
   },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "Web based JavaScript HTML WYSIWYG editor control.",
   "homepage": "https://www.tiny.cloud/",
   "keywords": [
@@ -58,5 +55,5 @@
     "directory": "modules/tinymce"
   },
   "types": "tinymce.d.ts",
-  "version": "6.4.2"
+  "version": "6.8.6"
 }
