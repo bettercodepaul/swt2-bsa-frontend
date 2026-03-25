@@ -700,9 +700,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     if (!this.selectedLigaID || !this.selectedLigaName) {
       return;
     }
-
     const ligaParam = slugifyLigaName(this.selectedLigaName);
-
     this.router.navigate(
       ['/ligatabelle'],
       {
