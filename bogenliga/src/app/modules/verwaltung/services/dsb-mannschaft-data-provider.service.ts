@@ -43,9 +43,9 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           }, (error: HttpErrorResponse) => {
 
             if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
+              reject({result: RequestResult.CONNECTION_PROBLEM, error});
             } else {
-              reject({result: RequestResult.FAILURE});
+              reject({result: RequestResult.FAILURE, error});
             }
           });
       /*
