@@ -191,6 +191,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   isSelected(itemroute: string): boolean {
-    return (this.router.url.indexOf(itemroute) >= 0);
+    const currentPath = this.getCurrentPath();
+    return currentPath === itemroute || currentPath.startsWith(`${itemroute}/`);
+  }
+
+  private getCurrentPath(): string {
+    const url = this.router.url || '';
+    return url.split('?')[0].split('#')[0];
   }
 }
