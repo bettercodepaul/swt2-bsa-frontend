@@ -13,15 +13,15 @@ import { LigaContextService } from '@shared/services/liga-context/liga-context.s
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { LigaDO } from '@verwaltung/types/liga-do.class';
-import {slugifyLigaName} from "@shared/functions/slug-utils";
+import {slugifyLigaName} from '@shared/functions/slug-utils';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import { AnalyticsService } from '@shared/services';
-import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
+import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider';
 
 
 
 const ID_PATH_PARAM = 'id';
-export var ligaID: number;
+export let ligaID: number;
 
 @Component({
   selector: 'bla-sidebar',
@@ -65,7 +65,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     // Liga-Kontext beobachten
     this.ligaSub = this.ligaContext.currentLiga$
       .pipe(distinctUntilChanged((a, b) => a?.id === b?.id))
-      .subscribe(liga => {
+      .subscribe((liga) => {
         this.currentLiga = liga ?? null;
       });
   }
@@ -96,16 +96,18 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
     this.URLRoute = this.router.url;
-    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
+    if (this.URLRoute.startsWith('/ligatabelle') || this.URLRoute.startsWith('/home') ) {
       const lastSlashIndex = this.URLRoute.lastIndexOf('/');
-      switch(lastSlashIndex){
+      switch (lastSlashIndex) {
         case 0:
-          //forget liga ID if no liga ID is part of the URL-route
+          // forget liga ID if no liga ID is part of the URL-route
           this.ligaID = undefined;
           break;
         case result.length:
-          !(this.URLRoute.substring(lastSlashIndex + 1).toString() === "ligaid") ?
-            this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1)) : undefined;
+          const currentPathParam = this.URLRoute.substring(lastSlashIndex + 1);
+          if (currentPathParam !== 'ligaid') {
+            this.ligaID = parseInt(currentPathParam, 10);
+          }
           break;
       }
 
@@ -113,7 +115,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     if (detailType === 'undefined') {
       return(route);
-    } else if (detailType === 'verein'){
+    } else if (detailType === 'verein') {
       result = result + '/' + this.currentUserService.getVerein();
     } else {
       result = result;
@@ -121,8 +123,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Für die Home-Seite wollen wir NICHT automatisch eine Liga-ID anhängen,
     // damit man immer zurück auf die echte Startseite kommt.
-    if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
-      result =  result + '/'+ this.ligaID.toString();
+    if (this.ligaID !== undefined && route.startsWith('/ligatabelle')) {
+      result =  result + '/' + this.ligaID.toString();
     }
 
     this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
