@@ -43,7 +43,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles: ["LIGALEITER"]
     },
     {
-      title: 'Mannschaftsmitglied hinzufügen',
+      title: 'Mannschaftsmitglieder verwalten',
       icon: AddManschaftsmitglied,
       route: '/verwaltung/vereine/vereinsid',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
