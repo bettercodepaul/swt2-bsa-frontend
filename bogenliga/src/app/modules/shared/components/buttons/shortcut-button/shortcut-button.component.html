@@ -4,12 +4,16 @@
     <ng-container *ngFor="let button of config.shortcutButtons">
       <div *ngIf="hasUserPermissions(button.permissions) && hasUserRole(button.roles)" class="buttonwrapper">
         <div class="Button">
-          <button *ngIf="button.title !== 'Mannschaften verwalten'"
+          <button *ngIf="button.title !== 'Mannschaften verwalten' && button.title !== 'Mannschaft anlegen'"
                   type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active" [attr.data-cy]="'shortcut-btn-' + button.title.replace(' ', '-')">
             <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
           </button>
           <button *ngIf="button.title === 'Mannschaften verwalten'"
                   type="button" class="shortcut-btn" [routerLink]="getCorrectLink()" routerLinkActive="active">
+            <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
+          </button>
+          <button *ngIf="button.title === 'Mannschaft anlegen'"
+                  type="button" class="shortcut-btn" [routerLink]="getCorrectLinkForAdding()" routerLinkActive="active">
             <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
           </button>
           <ng-container>
