@@ -44,15 +44,15 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     },
     {
       title: 'Mannschaften verwalten',
-      icon: AddManschaftsmitglied,
+      icon: DSBMitgliedAnlegen,
       route: '/verwaltung/vereine/vereinsid',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: ["SPORTLEITER"]
     },
     {
-      title: 'Vereinsmitglied anlegen',
-      icon: DSBMitgliedAnlegen,
-      route: '/verwaltung/dsbmitglieder/add',
+      title: 'Mannschaft anlegen',
+      icon: AddManschaftsmitglied,
+      route: '/verwaltung/vereinsid/add',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:["SPORTLEITER"]
     },
