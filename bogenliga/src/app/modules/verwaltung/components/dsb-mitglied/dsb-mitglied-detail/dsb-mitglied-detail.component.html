@@ -135,6 +135,16 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
+          <input type="text"
+                 class="form-control mb-2"
+                 id="dsbMitgliedVereinSuche"
+                 name="dsbMitgliedVereinSuche"
+                 [(ngModel)]="vereinSearchTerm"
+                 (ngModelChange)="onVereinSearch($event)"
+                 placeholder="{{ 'SELECTIONLIST.SEARCH_PLACEHOLDER' | translate }}"
+                 autocomplete="off"
+                 data-cy="detail-vereine-dsb-search"
+                 [readonly]="isReadOnly">
           <select class="form-control"
                   id="dsbMitgliedVerein"
                   name="dsbMitgliedVerein"
@@ -142,7 +152,7 @@
                   [(ngModel)]="currentVerein"
                   data-cy="detail-vereine-dsb"
                   [disabled]="isReadOnly">
-            <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
+            <option [ngValue]="verein" *ngFor="let verein of filteredVereine"> {{verein.name}}</option>
           </select>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.ERROR' | translate }}
