@@ -71,6 +71,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
 const NOTIFICATION_CREATE_PLATZHALTER = 'platzhalter_create';
 const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
+const NOTIFICATION_CREATE_PLATZHALTER_PERMISSION_FAILURE = 'platzhalter_create_permission_failure';
 
 
 
@@ -517,7 +518,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.saveLoading = true;
 
     const platzhalterId = 99;
-    const platzhalterNummer = "1";
+    const platzhalterNummer = '1';
 
 
     this.selectedMannschaft.vereinId = platzhalterId;
@@ -531,7 +532,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
-            console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
             const notification: Notification = {
               id:          NOTIFICATION_CREATE_PLATZHALTER,
               title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE',
@@ -555,16 +555,26 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         }
     )
         .catch((response) => {
+      let notificationId = NOTIFICATION_CREATE_PLATZHALTER_FAILURE;
+      let title = 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE';
+      let description = 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION';
+
+      if (response.error && response.error.status === 403) {
+        notificationId = NOTIFICATION_CREATE_PLATZHALTER_PERMISSION_FAILURE;
+        title = 'Keine Berechtigung';
+        description = 'Sie haben keine Berechtigung für diese Aktion. Die Änderungen wurden nicht gespeichert.';
+      }
+
       const notification: Notification = {
-        id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
-        title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE',
-        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION',
+        id:          notificationId,
+        title:       title,
+        description: description,
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.PENDING
       };
-      this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER_FAILURE)
+      this.notificationService.observeNotification(notificationId)
           .subscribe((myNotification) => {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.saveLoading = false;
