@@ -13,17 +13,3 @@
                      (onSearchClicked)="findBySearch($event)">
   <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
-
-<div class="form-group row">
-  <label class="col-sm-3 col-form-label" for="sportsYearDropdown">
-    <span>{{ 'Sportjahr'  }}</span>
-  </label>
-  <div class="col-sm-9">
-    <select id="sportsYearDropdown"
-            class="form-control">
-      <option *ngFor="let year of [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016]" [value]="year">
-        {{ year }}
-      </option>
-    </select>
-  </div>
-</div>
