@@ -86,6 +86,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // maps the MannschaftsMitgliedDO with the DSBMitgliedId
   private currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
   private members: Map<number, MannschaftsMitgliedDO> = new Map<number, MannschaftsMitgliedDO>();
+  private duplicateNotificationSubscription;
   private deleteNotification: Notification;
   private deleteSubscription;
   private dsbmitglied: DsbMitgliedDO = new DsbMitgliedDO();
@@ -137,6 +138,14 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
         }
       }
     });
+
+    this.duplicateNotificationSubscription = this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_MANNSCHAFT)
+      .subscribe((notification) => {
+        if (notification.userAction === NotificationUserAction.ACCEPTED
+          || notification.userAction === NotificationUserAction.DECLINED) {
+          this.saveLoading = false;
+        }
+      });
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -153,6 +162,9 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
 
   ngOnDestroy() {
+    if (this.duplicateNotificationSubscription != null) {
+      this.duplicateNotificationSubscription.unsubscribe();
+    }
     if (this.deleteSubscription != null) {
       this.deleteSubscription.unsubscribe();
     }
@@ -160,6 +172,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
 
   public onSave(ignore: any) {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
@@ -171,6 +184,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     }
 
   public onUpdate(ignore: any): void {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
 
     // persist
@@ -711,6 +725,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
   private showDuplicateMannschaftNotification(): void {
+    this.notificationService.discardNotification();
+
     const notification: Notification = {
       id:          NOTIFICATION_DUPLICATE_MANNSCHAFT,
       title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
