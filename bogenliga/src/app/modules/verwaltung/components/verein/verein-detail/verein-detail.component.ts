@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -56,6 +56,8 @@ const NOTIFICATION_COPY_MANNSCHAFT = 'mannschaft_detail_copy';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const NOTIFICATION_ENTITY_CONFLICT_ERROR = 'ENTITY_CONFLICT_ERROR';
+const NOTIFICATION_DATABASE_ERROR = 'DATABASE_ERROR';
 const PLATZHALTER_ID = 99;
 
 @Component({
@@ -63,7 +65,7 @@ const PLATZHALTER_ID = 99;
   templateUrl: './verein-detail.component.html',
   styleUrls:   ['./verein-detail.component.scss']
 })
-export class VereinDetailComponent extends CommonComponentDirective implements OnInit {
+export class VereinDetailComponent extends CommonComponentDirective implements OnInit, OnDestroy {
   public regionType = 'KREIS';
   public config = VEREIN_DETAIL_CONFIG;
   public config_table = VEREIN_DETAIL_TABLE_CONFIG;
@@ -80,6 +82,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
 
   private sessionHandling: SessionHandling;
+  private saveErrorNotificationSubscriptions = [];
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
@@ -103,7 +106,13 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   ngOnInit() {
     this.loading = true;
     this.notificationService.discardNotification();
+    this.registerSaveErrorReset(NOTIFICATION_ENTITY_CONFLICT_ERROR);
+    this.registerSaveErrorReset(NOTIFICATION_DATABASE_ERROR);
     this.loadRegions(this.regionType); // Request all regions from the backend
+  }
+
+  ngOnDestroy() {
+    this.saveErrorNotificationSubscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -136,6 +145,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onSave(ignore: any): void {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
 
     // persist
@@ -186,6 +196,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onUpdate(ignore: any): void {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
 
     // persist
@@ -616,6 +627,18 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
     this.loading = false;
+  }
+
+  private registerSaveErrorReset(notificationId: string): void {
+    const subscription = this.notificationService.observeNotification(notificationId)
+      .subscribe((notification) => {
+        if (notification.userAction === NotificationUserAction.ACCEPTED
+          || notification.userAction === NotificationUserAction.DECLINED) {
+          this.saveLoading = false;
+        }
+      });
+
+    this.saveErrorNotificationSubscriptions.push(subscription);
   }
 
   private loadMannschaften() {
