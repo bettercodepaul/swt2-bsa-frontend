@@ -80,6 +80,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public ligen: Array<VeranstaltungDO> = [];
   public loadingVeranstaltungen = true;
+  public mannschaften: Array<DsbMannschaftDO> = [];
   public ActionButtonColors = ActionButtonColors;
 
 
@@ -122,6 +123,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
     this.loadVeranstaltungen();
+    this.loadMannschaften(Number.parseInt(this.route.snapshot.url[1].path, 10));
 
     this.notificationService.discardNotification();
 
@@ -181,7 +183,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case
     this.saveMannschaft();
-    }
+  }
 
   public onUpdate(ignore: any): void {
     this.notificationService.discardNotification();
@@ -196,61 +198,61 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case
     this.mannschaftProvider.update(this.currentMannschaft)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
+      .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentMannschaft.id;
+          const id = this.currentMannschaft.id;
 
-            const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_MANNSCHAFT + id,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT + id)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: any) => {
-          if (this.isDuplicateMannschaftError(response)) {
-            this.showDuplicateMannschaftNotification();
-            this.saveLoading = false;
-            return;
-          }
-
-          console.log('Failed: ' + response);
           const notification: Notification = {
-            id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
-            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
-            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
-            severity:    NotificationSeverity.ERROR,
+            id:          NOTIFICATION_UPDATE_MANNSCHAFT + id,
+            title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
             origin:      NotificationOrigin.USER,
             type:        NotificationType.OK,
             userAction:  NotificationUserAction.PENDING
+          };
 
-          }
-          this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
-              .subscribe((myNotification) => {
-                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                  this.saveLoading = false;
-                }
-              });
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT + id)
+            .subscribe((myNotification) => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
+              }
+            });
 
           this.notificationService.showNotification(notification);
+        }
+      }, (response: any) => {
+        if (this.isDuplicateMannschaftError(response)) {
+          this.showDuplicateMannschaftNotification();
           this.saveLoading = false;
-        });
+          return;
+        }
+
+        console.log('Failed: ' + response);
+        const notification: Notification = {
+          id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
+          title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
+          description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+          severity:    NotificationSeverity.ERROR,
+          origin:      NotificationOrigin.USER,
+          type:        NotificationType.OK,
+          userAction:  NotificationUserAction.PENDING
+
+        }
+        this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveLoading = false;
+            }
+          });
+
+        this.notificationService.showNotification(notification);
+        this.saveLoading = false;
+      });
     // show response message
 
   }
@@ -271,20 +273,26 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   private loadById(id: number) {
     this.mannschaftProvider.findById(id)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => this.handleSuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleFailure(response));
+      .then((response: BogenligaResponse<DsbMannschaftDO>) => this.handleSuccess(response))
+      .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
   private loadVereinById(id: number) {
     this.vereinProvider.findById(id)
-        .then((response: BogenligaResponse<VereinDO>) => this.handleVereinSuccess(response))
-        .catch((response: BogenligaResponse<VereinDO>) => this.handleVereinFailure(response));
+      .then((response: BogenligaResponse<VereinDO>) => this.handleVereinSuccess(response))
+      .catch((response: BogenligaResponse<VereinDO>) => this.handleVereinFailure(response));
   }
 
   private loadVeranstaltungen() {
     this.veranstaltungProvider.findAllGeplantLaufend()
-        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungSuccess(response))
-        .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungFailure(response));
+      .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungSuccess(response))
+      .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungFailure(response));
+  }
+
+  private loadMannschaften(id: number) {
+    this.mannschaftProvider.findAllByVereinsId(id)
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleMannschaftenSuccess(response))
+      .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleMannschaftenFailure(response));
   }
 
 
@@ -373,12 +381,25 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.loading = false;
   }
 
+  private handleMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDO[]>) {
+    this.mannschaften = response.payload;
+    // Set default number for new team
+    if (this.currentMannschaft && !this.currentMannschaft.id) {
+      this.currentMannschaft.nummer = this.getNextAvailableNumber().toString();
+    }
+    this.loading = false;
+  }
+
+  private handleMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDO[]>) {
+    this.loading = false;
+  }
+
   private loadTableRows() {
     this.loading = true;
 
     this.dsbMitgliedProvider.findAllByTeamId(this.currentMannschaft.id)
-        .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+      .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
+      .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
@@ -396,22 +417,22 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // adds the member to map members(dsbMitgliedId, Mannschaftsmitglied)
   private addMember(member: DsbMitgliedDTO): void {
     this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
-        .then(
-          (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
-            console.log('payload in addMember - mannschaft-detail.component.ts:');
-            console.log(response.payload);
-            this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
-            this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
-            this.currentMannschaftsMitglied.id = response.payload.id;
-            this.currentMannschaftsMitglied.mannschaftsId = response.payload.mannschaftsId;
-            this.currentMannschaftsMitglied.version = response.payload.version;
-            this.currentMannschaftsMitglied.rueckennummer =  5;
-            /*this.mannschaftMitgliedProvider.save(this.currentMannschaftsMitglied);
-             this.members.set(response.payload.dsbMitgliedId, this.currentMannschaftsMitglied);*/
-            console.log('members:');
-            console.log(this.members);
-          })
-        .catch((response: BogenligaResponse<MannschaftsmitgliedDTO>) => console.log(response.payload));
+      .then(
+        (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
+          console.log('payload in addMember - mannschaft-detail.component.ts:');
+          console.log(response.payload);
+          this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
+          this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
+          this.currentMannschaftsMitglied.id = response.payload.id;
+          this.currentMannschaftsMitglied.mannschaftsId = response.payload.mannschaftsId;
+          this.currentMannschaftsMitglied.version = response.payload.version;
+          this.currentMannschaftsMitglied.rueckennummer =  5;
+          /*this.mannschaftMitgliedProvider.save(this.currentMannschaftsMitglied);
+           this.members.set(response.payload.dsbMitgliedId, this.currentMannschaftsMitglied);*/
+          console.log('members:');
+          console.log(this.members);
+        })
+      .catch((response: BogenligaResponse<MannschaftsmitgliedDTO>) => console.log(response.payload));
 
   }
 
@@ -493,43 +514,43 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       };
 
       const noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
-                       .subscribe((myNotification) => {
+        .subscribe((myNotification) => {
 
-                         if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                           this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
-                               .then(() => {
-                                 // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
-                                 // console.log("MemberIdTest",test);
-                                 // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
-                                 // console.log("TeamIdTest", test2);
-                                 this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
-                                     .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
+              .then(() => {
+                // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
+                // console.log("MemberIdTest",test);
+                // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
+                // console.log("TeamIdTest", test2);
+                this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
+                  .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
 
-                                       for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
+                    for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
 
-                                         // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
-                                         // not existing consistently in backend/frontend objects.
-                                         this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
-                                           mannschaftMitgliedResponse.payload[i].mannschaftsId,
-                                           mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
+                      // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
+                      // not existing consistently in backend/frontend objects.
+                      this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
+                        mannschaftMitgliedResponse.payload[i].mannschaftsId,
+                        mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
 
-                                         mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
-                                         this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
-
-
-                                       }
-                                     })
-                                     .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
-                                 this.loadTableRows();
-                               })
-                               .catch(() => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+                      mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
+                      this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
 
 
-                         } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-                           this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
-                           noti.unsubscribe();
-                         }
-                       });
+                    }
+                  })
+                  .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
+                this.loadTableRows();
+              })
+              .catch(() => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+
+
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+            noti.unsubscribe();
+          }
+        });
       this.notificationService.showNotification(notification);
     }
   }
@@ -540,21 +561,21 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
     // first gets all wettkaempfe for the current Veranstaltung
     this.wettkampfService.findByVeranstaltungId(this.currentVeranstaltung.id)
-        .then((wettkaempfeResponse: BogenligaResponse<WettkampfDTO[]>) => {
-          // then gets for each wettkampf the passe of the dsbMitglied the user wants to delete
-          // if passe exist for the dsbmitglied, then this method returns true
-          wettkaempfeResponse.payload.forEach((wettkampf) => this.passeService.findByWettkampfIdAndDsbMitgliedId(wettkampf.id, dsbMitgliedId)
-                                                                 .then((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
-                                                                   const passe = passeResponse.payload;
+      .then((wettkaempfeResponse: BogenligaResponse<WettkampfDTO[]>) => {
+        // then gets for each wettkampf the passe of the dsbMitglied the user wants to delete
+        // if passe exist for the dsbmitglied, then this method returns true
+        wettkaempfeResponse.payload.forEach((wettkampf) => this.passeService.findByWettkampfIdAndDsbMitgliedId(wettkampf.id, dsbMitgliedId)
+          .then((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
+            const passe = passeResponse.payload;
 
-                                                                   passe.forEach((pass) => {
-                                                                     resultsExist = !isNullOrUndefined(pass.ringzahl);
-                                                                   });
-                                                                 }).catch((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
-              console.log(passeResponse);
-              resultsExist = false;
-            }));
-        }).catch((wettkampfResponse: BogenligaResponse<WettkampfDTO[]>) => {
+            passe.forEach((pass) => {
+              resultsExist = !isNullOrUndefined(pass.ringzahl);
+            });
+          }).catch((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
+            console.log(passeResponse);
+            resultsExist = false;
+          }));
+      }).catch((wettkampfResponse: BogenligaResponse<WettkampfDTO[]>) => {
       console.log(wettkampfResponse);
       resultsExist = false;
     });
@@ -572,12 +593,12 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       userAction:       NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+          this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+        }
+      });
     this.notificationService.showNotification(existingresultsNotification);
   }
 
@@ -592,12 +613,12 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       userAction:       NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+          this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+        }
+      });
     this.notificationService.showNotification(deadlineNotification);
   }
 
@@ -627,12 +648,12 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentMannschaft.vereinId);
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.router.navigateByUrl('/verwaltung/vereine/' + this.currentMannschaft.vereinId);
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -650,11 +671,11 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -663,60 +684,60 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     console.log('Saving mannschaft: ', this.currentMannschaft);
 
     this.mannschaftProvider.create(this.currentMannschaft, this.currentVerein)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_MANNSCHAFT,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_MANNSCHAFT)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: any) => {
-          if (this.isDuplicateMannschaftError(response)) {
-            this.showDuplicateMannschaftNotification();
-            this.saveLoading = false;
-            return;
-          }
-
-          console.log(response.payload);
-          console.log('Failed');
+      .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
+          console.log('Saved with id: ' + response.payload.id);
           const notification: Notification = {
-            id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
-            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE" ,
-            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
-            severity:    NotificationSeverity.ERROR,
+            id:          NOTIFICATION_SAVE_MANNSCHAFT,
+            title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
             origin:      NotificationOrigin.USER,
             type:        NotificationType.OK,
             userAction:  NotificationUserAction.PENDING
+          };
 
-          }
-          this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
-              .subscribe((myNotification) => {
-                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                  this.saveLoading = false;
-                }
-              });
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_MANNSCHAFT)
+            .subscribe((myNotification) => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
+              }
+            });
 
           this.notificationService.showNotification(notification);
+        }
+      }, (response: any) => {
+        if (this.isDuplicateMannschaftError(response)) {
+          this.showDuplicateMannschaftNotification();
           this.saveLoading = false;
-        });
+          return;
+        }
+
+        console.log(response.payload);
+        console.log('Failed');
+        const notification: Notification = {
+          id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
+          title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE" ,
+          description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+          severity:    NotificationSeverity.ERROR,
+          origin:      NotificationOrigin.USER,
+          type:        NotificationType.OK,
+          userAction:  NotificationUserAction.PENDING
+
+        }
+        this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveLoading = false;
+            }
+          });
+
+        this.notificationService.showNotification(notification);
+        this.saveLoading = false;
+      });
   }
 
   private isDuplicateMannschaftError(response: any): boolean {
@@ -749,8 +770,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       .path(this.currentMannschaft.id)
       .build();
     this.downloadService.download(downloadUrl, 'lizenz.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense(true));
+      .then((response: BogenligaResponse<string>) => console.log(response))
+      .catch((response: BogenligaResponse<string>) => this.showNoLicense(true));
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
@@ -761,8 +782,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       .path('?mannschaftid=' + this.currentMannschaft.id + '&dsbmitgliedid=' + versionedDataObject.id)
       .build();
     this.downloadService.download(URL, 'rueckennummer.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => console.log(response));
+      .then((response: BogenligaResponse<string>) => console.log(response))
+      .catch((response: BogenligaResponse<string>) => console.log(response));
   }
 
 
@@ -774,8 +795,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       .path('?mannschaftid=' + this.currentMannschaft.id)
       .build();
     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense(false));
+      .then((response: BogenligaResponse<string>) => console.log(response))
+      .catch((response: BogenligaResponse<string>) => this.showNoLicense(false));
   }
 
   private showNoLicense(is_one: boolean): void {
@@ -789,11 +810,28 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       userAction:  NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_NO_LICENSE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.saveLoading = false;
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+        }
+      });
     this.notificationService.showNotification(noLicenseNotification);
+  }
+
+  private getNextAvailableNumber(): number {
+    const usedNumbers = this.mannschaften
+      .map(m => parseInt(m.nummer, 10))
+      .filter(n => !isNaN(n) && n > 0)
+      .sort((a, b) => a - b);
+
+    let next = 1;
+    for (const num of usedNumbers) {
+      if (num === next) {
+        next++;
+      } else if (num > next) {
+        break;
+      }
+    }
+    return next;
   }
 }
