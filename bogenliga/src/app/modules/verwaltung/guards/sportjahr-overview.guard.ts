@@ -15,6 +15,6 @@ export class SportjahrOverviewGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     // CAN_READ_SYSTEMDATEN required to activate Sportjahr Overview
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN]);
+      [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER]);
   }
 }
