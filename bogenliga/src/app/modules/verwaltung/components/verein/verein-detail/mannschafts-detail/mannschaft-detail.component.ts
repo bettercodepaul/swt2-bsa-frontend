@@ -196,6 +196,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
     this.currentMannschaft.benutzerId = this.currentUserService.getUserId();
     this.currentMannschaft.veranstaltungId = null;
+    // Set default number if empty
+    if (!this.currentMannschaft.nummer || this.currentMannschaft.nummer.trim() === '') {
+      this.currentMannschaft.nummer = this.getNextAvailableNumber().toString();
+    }
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case
     this.saveMannschaft();
@@ -680,6 +684,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
+    // Set default number for new team
+    if (this.currentMannschaft && !this.currentMannschaft.id) {
+      this.currentMannschaft.nummer = this.getNextAvailableNumber().toString();
+    }
   }
 
   private existsMannschaftsNummer(mannschaftsnummer: string): boolean {
@@ -811,5 +819,22 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
           }
         });
     this.notificationService.showNotification(noLicenseNotification);
+  }
+
+  private getNextAvailableNumber(): number {
+    const usedNumbers = this.mannschaften
+      .map(m => parseInt(m.nummer, 10))
+      .filter(n => !isNaN(n) && n > 0)
+      .sort((a, b) => a - b);
+
+    let next = 1;
+    for (const num of usedNumbers) {
+      if (num === next) {
+        next++;
+      } else if (num > next) {
+        break;
+      }
+    }
+    return next;
   }
 }
