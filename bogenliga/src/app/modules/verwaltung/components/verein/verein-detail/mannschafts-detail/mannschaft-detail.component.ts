@@ -31,7 +31,6 @@ import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.cl
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {environment} from '@environment';
 import {
@@ -59,7 +58,7 @@ const NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE = 'mannschaft_detail_update_failure
 const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
 const NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE = 'mannschaft_mitglied_delete_deadline_failure';
 const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitglied_delete_existing_results_failure';
-const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
+const NOTIFICATION_DUPLICATE_MANNSCHAFT = 'duplicate_mannschaft';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
 const NOTIFICATION_LIGA_NOT_LOADED = 'liga_not_loaded';
 
@@ -81,16 +80,14 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public ligen: Array<VeranstaltungDO> = [];
   public loadingVeranstaltungen = true;
-  public mannschaften: Array<DsbMannschaftDO> = [];
   public ActionButtonColors = ActionButtonColors;
 
 
   // maps the MannschaftsMitgliedDO with the DSBMitgliedId
   private currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
   private members: Map<number, MannschaftsMitgliedDO> = new Map<number, MannschaftsMitgliedDO>();
-  private duplicateMannschaftsNrNotification: Notification;
+  private duplicateNotificationSubscription;
   private deleteNotification: Notification;
-  private duplicateSubscription;
   private deleteSubscription;
   private dsbmitglied: DsbMitgliedDO = new DsbMitgliedDO();
 
@@ -106,7 +103,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
               private veranstaltungProvider: VeranstaltungDataProviderService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,
@@ -126,7 +122,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
     this.loadVeranstaltungen();
-    this.loadMannschaften(Number.parseInt(this.route.snapshot.url[1].path, 10));
 
     this.notificationService.discardNotification();
 
@@ -144,29 +139,13 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       }
     });
 
-    // This Notification shows up, if a duplicate mannschaftsnummer is detected.
-    // It gets subscribed once in ngOnInit and gets unsubscribed in ngOnDestroy
-    this.duplicateMannschaftsNrNotification = {
-      id:          NOTIFICATION_WARING_MANNSCHAFT,
-      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
-      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
-      severity:    NotificationSeverity.QUESTION,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.YES_NO,
-      userAction:  NotificationUserAction.PENDING
-    };
-
-    console.log('subscribe notification');
-    this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
-                                     .subscribe((myNotification) => {
-                                       if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                                         this.saveLoading = true;
-                                         this.saveMannschaft();
-                                       }
-                                       if (myNotification.userAction === NotificationUserAction.DECLINED) {
-                                         this.saveLoading = false;
-                                       }
-                                     });
+    this.duplicateNotificationSubscription = this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_MANNSCHAFT)
+      .subscribe((notification) => {
+        if (notification.userAction === NotificationUserAction.ACCEPTED
+          || notification.userAction === NotificationUserAction.DECLINED) {
+          this.saveLoading = false;
+        }
+      });
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -183,7 +162,9 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
 
   ngOnDestroy() {
-    this.duplicateSubscription.unsubscribe();
+    if (this.duplicateNotificationSubscription != null) {
+      this.duplicateNotificationSubscription.unsubscribe();
+    }
     if (this.deleteSubscription != null) {
       this.deleteSubscription.unsubscribe();
     }
@@ -191,6 +172,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
 
   public onSave(ignore: any) {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
@@ -206,6 +188,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     }
 
   public onUpdate(ignore: any): void {
+    this.notificationService.discardNotification();
     this.saveLoading = true;
 
     // persist
@@ -244,7 +227,13 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        }, (response: any) => {
+          if (this.isDuplicateMannschaftError(response)) {
+            this.showDuplicateMannschaftNotification();
+            this.saveLoading = false;
+            return;
+          }
+
           console.log('Failed: ' + response);
           const notification: Notification = {
             id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
@@ -709,7 +698,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.loading = false;
   }
 
-
   private saveMannschaft(): void {
     console.log('Saving mannschaft: ', this.currentMannschaft);
 
@@ -739,7 +727,13 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        }, (response: any) => {
+          if (this.isDuplicateMannschaftError(response)) {
+            this.showDuplicateMannschaftNotification();
+            this.saveLoading = false;
+            return;
+          }
+
           console.log(response.payload);
           console.log('Failed');
           const notification: Notification = {
@@ -762,6 +756,27 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
           this.notificationService.showNotification(notification);
           this.saveLoading = false;
         });
+  }
+
+  private isDuplicateMannschaftError(response: any): boolean {
+    return response?.error?.status === 409
+      || response?.error?.error?.errorCode === 'ENTITY_CONFLICT_ERROR';
+  }
+
+  private showDuplicateMannschaftNotification(): void {
+    this.notificationService.discardNotification();
+
+    const notification: Notification = {
+      id:          NOTIFICATION_DUPLICATE_MANNSCHAFT,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
   }
 
   public onDownload(versionedDataObject: VersionedDataObject): void {
