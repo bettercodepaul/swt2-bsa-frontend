@@ -20,7 +20,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.DESCRIPTION',
         icon:           'address-card',
         route:          'user',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy:         'verwaltung-user-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.TOOLTIP'
       },
@@ -29,7 +29,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'people-arrows',
         route:          'klassen',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy:         'verwaltung-klassen-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.TOOLTIP'
       },

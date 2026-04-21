@@ -10,6 +10,6 @@ export class UserOverviewGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // CAN_MODIFY_DSBMITGLIEDER or CAN_MODIFY_VEREIN_DSBMITGLIEDER required to activate User Overview
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN]);
+      [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER]);
   }
 }
