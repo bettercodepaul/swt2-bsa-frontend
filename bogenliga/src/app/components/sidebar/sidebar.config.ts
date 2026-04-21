@@ -66,13 +66,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Benutzer',
         route: '/verwaltung/benutzer',
-        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy: 'sidebar-verwaltung-benutzer-button'
       },
       {
         label: 'Klassen',
         route: '/verwaltung/klassen',
-        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy: 'sidebar-verwaltung-klassen-button'
       },
       {
@@ -193,13 +193,13 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
       {
         label: 'Benutzer',
         route: '/verwaltung/benutzer',
-        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy: 'sidebar-verwaltung-benutzer-button'
       },
       {
         label: 'Klassen',
         route: '/verwaltung/klassen',
-        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_READ_SYSTEMDATEN_SPORTLEITER],
         datacy: 'sidebar-verwaltung-klassen-button'
       },
       {
