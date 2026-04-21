@@ -1048,8 +1048,8 @@
           "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
         },
         "DUPLICATE": {
-          "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
-          "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
+          "TITLE": "Doppelte Mannschaft",
+          "DESCRIPTION": "Die Mannschaftsnummer ist in diesem Verein bereits vergeben. Bitte wählen Sie eine andere Nummer."
         },
         "SAVE_FAILURE": {
           "TITLE": "Fehler beim Aktualisieren",
@@ -1901,6 +1901,10 @@
       "DATABASE_ERROR": {
         "TITLE": "Datenbankfehler",
         "DESCRIPTION": "Ihre Anfrage wurde von der Datenbank abgewiesen."
+      },
+      "ENTITY_CONFLICT_ERROR": {
+        "TITLE": "Doppelte Eingabe",
+        "DESCRIPTION": "Ein Eintrag mit diesen Werten existiert bereits. Bitte prüfen Sie Ihre Eingaben."
       },
       "ENTITY_NOT_FOUND_ERROR": {
         "TITLE": "Nicht gefunden",
