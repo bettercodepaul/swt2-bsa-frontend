@@ -43,9 +43,9 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           }, (error: HttpErrorResponse) => {
 
             if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
+              reject({result: RequestResult.CONNECTION_PROBLEM, error});
             } else {
-              reject({result: RequestResult.FAILURE});
+              reject({result: RequestResult.FAILURE, error});
             }
           });
       /*
@@ -147,7 +147,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
       });
     }
   }
-  public findAllVerAndWettByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+  public findAllVerAndWettByMannschaftId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -251,9 +251,9 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           }, (error: HttpErrorResponse) => {
 
             if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
+              reject({result: RequestResult.CONNECTION_PROBLEM, error});
             } else {
-              reject({result: RequestResult.FAILURE});
+              reject({result: RequestResult.FAILURE, error});
             }
           });
     });

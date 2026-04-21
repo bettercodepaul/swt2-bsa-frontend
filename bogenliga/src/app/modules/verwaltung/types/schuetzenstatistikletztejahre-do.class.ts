@@ -14,7 +14,7 @@ export class SchuetzenstatistikLetzteJahreDO implements VersionedDataObject {
   sportjahr3: number;
   sportjahr4: number;
   sportjahr5: number;
-  allejahre_schnitt: number;
+  allejahreSchnitt: number;
 
   constructor(
     id?: number,
@@ -25,7 +25,7 @@ export class SchuetzenstatistikLetzteJahreDO implements VersionedDataObject {
     sportjahr3?: number,
     sportjahr4?: number,
     sportjahr5?: number,
-    allejahre_schnitt?: number
+    allejahreSchnitt?: number
   ) {
     this.id = id;
     this.version = version;
@@ -35,6 +35,6 @@ export class SchuetzenstatistikLetzteJahreDO implements VersionedDataObject {
     this.sportjahr3 = sportjahr3;
     this.sportjahr4 = sportjahr4;
     this.sportjahr5 = sportjahr5;
-    this.allejahre_schnitt = allejahre_schnitt;
+    this.allejahreSchnitt = allejahreSchnitt;
   }
 }

@@ -36,7 +36,7 @@ export const WETTKAMPF_TABLE_SCHUETZELETZTEJAHRE_CONFIG: TableConfig = {
     },
     {
       translationKey: 'Alle Jahre Schnitt',
-      propertyName: 'allejahre_schnitt',
+      propertyName: 'allejahreSchnitt',
       width: 40,
       sortable: true
     },
