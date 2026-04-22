@@ -11,13 +11,6 @@ export class MatchKontextComponent {
   /** full tablet state; may be null until loaded */
   @Input() infos: TabletSchusszettel | null = null;
 
-  /** Getter methods to safely access wettkampfInfo properties */
-  get today(): string {
-    return this.infos?.wettkampfInfo?.wettkampfDatum
-      ? new Date(this.infos.wettkampfInfo.wettkampfDatum).toLocaleDateString('de-DE')
-      : new Date().toLocaleDateString('de-DE');
-  }
-
   get wettkampfName(): string {
     return this.infos?.wettkampfInfo?.wettkampftypName || 'Unbekannt';
   }
@@ -30,22 +23,8 @@ export class MatchKontextComponent {
     return this.infos?.wettkampfInfo?.veranstaltungName || 'Unbekannt';
   }
 
-  get ort(): string {
-    const ortsname = this.infos?.wettkampfInfo?.wettkampfOrtsname || '';
-    const ortsinfo = this.infos?.wettkampfInfo?.wettkampfOrtsinfo || '';
-
-    if (ortsname && ortsinfo) {
-      return `${ortsname}, ${ortsinfo}`;
-    }
-    return ortsname || ortsinfo || 'Unbekannt';
-  }
-
   get wettkampfTag(): number | string {
     return this.infos?.wettkampfInfo?.wettkampfTag || 'Unbekannt';
-  }
-
-  get beginn(): string {
-    return this.infos?.wettkampfInfo?.wettkampfBeginn || 'Unbekannt';
   }
 
   get sportjahr(): number | string {
@@ -58,13 +37,15 @@ export class MatchKontextComponent {
     if (this.infos?.currentPasseNumber != null && this.infos.currentPasseNumber > 0) {
       return this.infos.currentPasseNumber;
     }
-    
+
+
     // Fallback calculation if backend value not available
     if (!this.infos?.satzErgebnisse || this.infos.satzErgebnisse.length === 0) {
       return 1;
     }
-    
+
     const completedPasses = this.infos.satzErgebnisse.length;
     return completedPasses + 1;
   }
+
 }
