@@ -11,7 +11,7 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
 
     cy.get('.info-item').should('contain.text', 'Liga');
     cy.get('.info-item').should('contain.text', '1');
-    cy.get('.info-item').should('contain.text', '05.05.2018');
+    cy.get('.info-item').should('contain.text', '12.12.2025');
     cy.get('.info-item').should('contain.text', '15:30');
     cy.get('.info-item').should('contain.text', 'Reutlingen');
   });
