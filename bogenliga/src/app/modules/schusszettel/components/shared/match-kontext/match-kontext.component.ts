@@ -48,4 +48,8 @@ export class MatchKontextComponent {
     return completedPasses + 1;
   }
 
+  get scheibennummer(): number | null {
+    // null means: no Scheibennummer available yet
+    return this.infos?.eigenesTeamScheibennummer != null ? this.infos.eigenesTeamScheibennummer : null;
+  }
 }
