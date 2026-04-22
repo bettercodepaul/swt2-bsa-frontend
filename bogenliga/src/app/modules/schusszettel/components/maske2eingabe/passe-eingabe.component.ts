@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
 import {SchuetzeStammdatenDTO} from '../../types/inside/schuetze-stammdaten-dto';
 import {ShooterOrderService} from '../../services/shooter-order.service';
 import {Subject} from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
-import {QueryList, ViewChildren, ElementRef} from '@angular/core';
+import {QueryList, ViewChild, ViewChildren, ElementRef} from '@angular/core';
 import {
   NotificationService,
   NotificationSeverity,
@@ -40,6 +40,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   ) {}
 
   @ViewChildren('inputField') inputFields: QueryList<ElementRef>;
+  @ViewChild('confirmButton', { read: ElementRef }) confirmButton?: ElementRef;
 
   getInputElement(field: string, i: number): ElementRef | undefined {
     const id = `${field}-${i}`;
@@ -170,7 +171,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       formArray.insert(event.currentIndex, item);
 
       // Save the new order
-      const shooterIds = this.orderedShooters.map(s => s.schuetzenId);
+      const shooterIds = this.orderedShooters.map((s) => s.schuetzenId);
       this.shooterOrderService.saveShooterOrder(
         this.infos.eigenesTeam.teamId,
         this.infos.wettkampfInfo?.wettkampfId || 0,
@@ -227,6 +228,12 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   }
 
   focusNextField(i: number, field: 'schuss1' | 'schuss2') {
+    if (field === 'schuss2' && i === this.orderedShooters.length - 1) {
+      if (this.form.valid && this.confirmButton) {
+        this.confirmButton.nativeElement.focus();
+      }
+      return;
+    }
     const nextFieldId =
       field === 'schuss1'
         ? `schuss2-${i}`
