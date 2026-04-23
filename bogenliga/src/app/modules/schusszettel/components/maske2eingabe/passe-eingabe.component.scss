@@ -177,11 +177,16 @@ form { width: 100%; max-width: 800px;}
   position: relative;
 
   .drag-icon {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     margin-right: 8px;
     color: #666;
     cursor: grab;
     user-select: none;
+    touch-action: none;
 
     &:hover {
       color: #333;
