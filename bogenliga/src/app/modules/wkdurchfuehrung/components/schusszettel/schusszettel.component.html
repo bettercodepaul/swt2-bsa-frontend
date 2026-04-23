@@ -121,6 +121,7 @@
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
                   <select
+                    [blaSchuetzeTabIndex]="1"
                     [(ngModel)]="passe.rueckennummer"
                     (ngModelChange)="onSchuetzeChangeDropdown($event, 1, i, j)"
                     [disabled]="readOnlyMode"
@@ -323,6 +324,7 @@
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
                   <select
+                    [blaSchuetzeTabIndex]="2"
                     [(ngModel)]="passe.rueckennummer"
                     (ngModelChange)="onSchuetzeChangeDropdown($event, 2, i, j)"
                     [disabled]="readOnlyMode"

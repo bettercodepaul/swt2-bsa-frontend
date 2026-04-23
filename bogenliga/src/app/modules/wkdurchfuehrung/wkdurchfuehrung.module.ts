@@ -13,6 +13,7 @@ import {
   TabletAdminComponent,
   PfeilNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,
+  SchuetzeTabIndexDirective,
 } from '../wkdurchfuehrung/components';
 
 import {
@@ -47,6 +48,7 @@ import {QRCodeModule} from 'angularx-qrcode';
     TeilnemendeManschaftenTabelleComponent,
     FullscreenComponent,
     TabletAdminPopUpComponent,
+    SchuetzeTabIndexDirective
   ],
   providers: [
     WkdurchfuehrungGuard,
