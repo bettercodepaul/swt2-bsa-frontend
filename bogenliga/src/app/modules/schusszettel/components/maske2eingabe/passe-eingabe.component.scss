@@ -21,7 +21,7 @@ $border: #999;
 
 .passe-info h2 { margin: 0; font-size: 1.5rem; }
 
-form { width: 100%; max-width: 800px; }
+form { width: 100%; max-width: 800px;}
 
 .table-wrapper { overflow-x: auto; }
 
@@ -57,9 +57,92 @@ form { width: 100%; max-width: 800px; }
   align-self: flex-end;
   font-weight: 700;
   margin-top: 1rem;
+  min-height: 44px;
   padding: .75rem 1.5rem;
 }
 
+@media (max-width: 600px) {
+  .schusszettel-container {
+    padding: 1rem;
+  }
+
+  .table-wrapper {
+    overflow-x: visible;
+  }
+
+  .treffer-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  .treffer-table thead {
+    display: none;
+  }
+
+  .treffer-table,
+  .treffer-table tbody,
+  .treffer-table tr,
+  .treffer-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .treffer-table tr {
+    border: 1px solid $border;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    background: #fff;
+  }
+
+  .treffer-table td {
+    border: 0;
+    padding: 0.35rem 0;
+    text-align: left;
+  }
+
+  .treffer-table td:first-child {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .treffer-table td:nth-child(2)::before {
+    content: "Rückennr.: ";
+    font-weight: 600;
+  }
+
+  .treffer-table td:nth-child(3)::before {
+    content: "Schuss 1: ";
+    font-weight: 600;
+  }
+
+  .treffer-table td:nth-child(4)::before {
+    content: "Schuss 2: ";
+    font-weight: 600;
+  }
+
+  .treffer-table input {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  .confirm-button {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .confirm-button:disabled,
+  .confirm-button[disabled],
+  .confirm-button.mat-mdc-button-disabled {
+    opacity: 1;
+    background-color: #afafaf;   // background Farbe wenn Disabled
+  }
+}
 .visually-hidden {
   position: absolute !important;
   height: 1px;
@@ -72,19 +155,19 @@ form { width: 100%; max-width: 800px; }
 // Drag and drop styles
 .draggable-row {
   cursor: grab;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.04);
   }
-  
+
   &.cdk-drag-preview {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   }
-  
+
   &.cdk-drag-placeholder {
     opacity: 0.4;
   }
-  
+
   &.cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
@@ -92,14 +175,14 @@ form { width: 100%; max-width: 800px; }
 
 .drag-handle {
   position: relative;
-  
+
   .drag-icon {
     display: inline-block;
     margin-right: 8px;
     color: #666;
     cursor: grab;
     user-select: none;
-    
+
     &:hover {
       color: #333;
     }
