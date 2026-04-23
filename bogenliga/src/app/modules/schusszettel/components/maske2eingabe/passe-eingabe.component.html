@@ -42,8 +42,10 @@
             <input
               #inputField
               id="schuss1-{{ i }}"
-              type="number"
+              type="text"
               inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="2"
               formControlName="schuss1"
               min="0"
               max="10"
