@@ -24,6 +24,7 @@ $gap: 0.75rem;
     /* two cards per row when space permits */
     display: grid;
     gap: $gap $gap*2;
+    width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
     margin: 0;
   }
