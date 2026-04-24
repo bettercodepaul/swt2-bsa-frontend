@@ -28,6 +28,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
+  private readonly autoFocusDelayMs = 2000;
   timeoutId: any = null;
 
   orderedShooters: SchuetzeStammdatenDTO[] = [];
@@ -117,8 +118,8 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     const groups = this.orderedShooters.map((schuetze, index) => {
       console.log(`Creating form group ${index} for shooter ${schuetze.schuetzenId}`);
       return this.fb.group({
-        schuss1: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
-        schuss2: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
+        schuss1: [null, [Validators.required, Validators.pattern(/^(10|[0-9])$/)]],
+        schuss2: [null, [Validators.required, Validators.pattern(/^(10|[0-9])$/)]],
       });
     });
 
@@ -193,8 +194,8 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       const grp = this.schuesse.at(i) as FormGroup;
       return {
         schuetzenId: s.schuetzenId,
-        schuss1: grp.value.schuss1,
-        schuss2: grp.value.schuss2,
+        schuss1: parseInt(grp.value.schuss1, 10),
+        schuss2: parseInt(grp.value.schuss2, 10),
         // No schuss3 - only 2 arrows per shooter to match backend ARROWS_PER_SHOOTER = 2
       };
     });
@@ -224,7 +225,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       } else {
         console.warn('Ungültiger Wert – kein automatischer Wechsel:', value);
       }
-    }, 700);
+    }, this.autoFocusDelayMs);
   }
 
   focusNextField(i: number, field: 'schuss1' | 'schuss2') {

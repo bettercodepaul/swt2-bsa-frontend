@@ -604,7 +604,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?wettkampfid=' + this.selectedWettkampf)
+      .path('?wettkampfid=' + this.selectedWettkampfId)
       .build();
   }
 
