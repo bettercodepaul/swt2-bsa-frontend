@@ -434,6 +434,10 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
           response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
         }
         this.vereine = response.payload;
+        if (this.vereine.length === 1 && isNullOrUndefined(this.currentVerein.id)) {
+          this.currentVerein = this.vereine[0];
+          this.vereinSearchTerm = '';
+        }
         this.applyVereinFilter();
         this.loadingVereine = false;
         this.vereineLoaded = true;
