@@ -1,0 +1,63 @@
+<div class="anzeige-manager-container">
+
+  <div class="header-section">
+    <div class="match-navigation">
+      <button
+        class="btn btn-secondary nav-button"
+        [disabled]="!hatVorherigeAnzeige()"
+        (click)="vorherigeAnzeige()"
+        title="Vorherige Anzeige">
+        &#9664;
+      </button>
+
+      <div class="match-number">
+        {{ aktuelleAnzeigeIndex + 1 }}
+      </div>
+
+      <button
+        class="btn btn-secondary nav-button"
+        [disabled]="!hatNaechsteAnzeige()"
+        (click)="naechsteAnzeige()"
+        title="Nächste Anzeige">
+        &#9654;
+      </button>
+    </div>
+
+    <button
+      class="btn btn-danger remove-button"
+      (click)="anzeigeEntfernen()"
+      title="Anzeige entfernen">
+      &#128465; Entfernen
+    </button>
+  </div>
+
+  <!-- Hauptbereich mit Anzeige-Konfiguration -->
+  <div class="anzeige-config-section" *ngIf="aktuelleAnzeige">
+    <div class="anzeige-id">
+      {{ aktuelleAnzeige.anzeigeId }}
+    </div>
+
+    <div class="anzeige-inhalt">
+      {{ aktuelleAnzeige.inhalt }}
+    </div>
+
+    <div class="dropdown-container">
+      <select
+        class="form-control inhalt-dropdown"
+        [(ngModel)]="aktuelleAnzeige.inhaltTyp">
+        <option *ngFor="let option of inhaltOptionen" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="add-button-section">
+    <button
+      class="btn btn-primary add-button"
+      (click)="anzeigeHinzufuegen()">
+      &#43; Anzeige hinzufügen
+    </button>
+  </div>
+
+</div>

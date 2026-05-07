@@ -6,7 +6,7 @@ import {SchusszettelComponent} from './components/schusszettel/schusszettel.comp
 import {TabletEingabeComponent} from './components/tableteingabe/tableteingabe.component';
 import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.component';
 import {WkdurchfuehrungGuard} from './guards/wkdurchfuehrung.guard';
-import {FullscreenComponent} from '@wkdurchfuehrung/components';
+import {AnzeigeManagerComponent, FullscreenComponent} from '@wkdurchfuehrung/components';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
 
