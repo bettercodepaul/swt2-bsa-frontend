@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 export interface AnzeigeDO {
   id: number;
   anzeigeId: string;
-  inhalt: string;
   inhaltTyp: string;
   matchNr: number;
 }
@@ -16,12 +15,11 @@ export interface AnzeigeDO {
 export class AnzeigeManagerComponent implements OnInit {
 
   public anzeigen: AnzeigeDO[] = [
-    { id: 1, anzeigeId: 'A9B2', inhalt: '(1/2)', inhaltTyp: 'Tabelle', matchNr: 1 },
-    { id: 2, anzeigeId: 'C3D4', inhalt: '(3/4)', inhaltTyp: '(1/2)', matchNr: 2 }
+    { id: 1, anzeigeId: 'A9B2', inhaltTyp: 'Tabelle', matchNr: 1 },
+    { id: 2, anzeigeId: 'C3D4', inhaltTyp: '(1/2)', matchNr: 2 }
   ];
 
   public aktuelleAnzeigeIndex = 0;
-  public inhaltOptionen = ['Tabelle', '(1/2)', '(3/4)', '(5/6)', '(7/8)'];
 
   constructor() {
   }
@@ -60,7 +58,6 @@ export class AnzeigeManagerComponent implements OnInit {
     const neueAnzeige: AnzeigeDO = {
       id: this.anzeigen.length + 1,
       anzeigeId: neueId,
-      inhalt: '(1/2)',
       inhaltTyp: 'Tabelle',
       matchNr: this.anzeigen.length + 1
     };
