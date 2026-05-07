@@ -57,8 +57,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manag
     TabletadminGuard,
   ],
   exports: [
-    SchusszettelComponent,
-    AnzeigeManagerComponent
+    SchusszettelComponent
   ]
 })
 
