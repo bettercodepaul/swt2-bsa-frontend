@@ -4,19 +4,19 @@
     <div class="match-navigation">
       <button
         class="action-btn action-btn-primary match-button"
-        [disabled]="aktuellesMatch <= 1"
-        (click)="vorherigeAnzeige()"
+        [disabled]="currentMatch <= 1"
+        (click)="previousMatch()"
         title="Vorherige Anzeige">
         &#9664;
       </button>
 
       <div class="match-number">
-        {{ aktuellesMatch }}
+        {{ currentMatch }}
       </div>
 
       <button
         class="action-btn action-btn-primary match-button"
-        (click)="naechsteAnzeige()"
+        (click)="nextMatch()"
         title="Nächste Anzeige">
         &#9654;
       </button>
@@ -24,13 +24,13 @@
   </div>
 
 
-  <div *ngIf="anzeigen.length > 0">
-    <div *ngFor="let anzeige of anzeigen">
+  <div *ngIf="displays.length > 0">
+    <div *ngFor="let display of displays">
 
       <div class="display-config-section">
         <button
           class="action-btn action-btn-danger remove-button"
-          (click)="anzeigeEntfernen(anzeige.id)"
+          (click)="removeDisplay(display.id)"
           title="Anzeige entfernen">
           <span class="action-btn-circle">-</span>
           Entfernen
@@ -40,8 +40,8 @@
           #anzeigeIdInput
           class="display-id"
           type="text"
-          [value]="anzeige.anzeigeId"
-          (input)="anzeige.anzeigeId = anzeigeIdInput.value"
+          [value]="display.physicalDisplayID"
+          (input)="display.physicalDisplayID = anzeigeIdInput.value"
           maxlength="4"
           placeholder="----">
 
@@ -49,8 +49,8 @@
           <select
             class="display-select"
             #anzeigenTabellenSelect
-            [value]="anzeige.inhaltTyp"
-            (change)="anzeige.inhaltTyp = anzeigenTabellenSelect.value">
+            [value]="display.tableType"
+            (change)="display.tableType = anzeigenTabellenSelect.value">
             <option value="tabelle">Tabelle</option>
             <option value="1/2">(1/2)</option>
             <option value="3/4">(3/4)</option>
@@ -61,14 +61,14 @@
       </div>
     </div>
 
-    <div class="add-button-section">
-      <button
-        class="action-btn action-btn-success add-button"
-        (click)="anzeigeHinzufuegen()">
-        <span class="action-btn-circle">+</span>
-        Anzeige hinzufügen
-      </button>
-    </div>
 
+  </div>
+  <div class="add-button-section">
+    <button
+      class="action-btn action-btn-success add-button"
+      (click)="addDisplay()">
+      <span class="action-btn-circle">+</span>
+      Anzeige hinzufügen
+    </button>
   </div>
 </div>

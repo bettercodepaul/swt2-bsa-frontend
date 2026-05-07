@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 
 export interface AnzeigeDO {
   id: number;
-  anzeigeId: string;
-  inhaltTyp: string;
+  physicalDisplayID: string;
+  tableType: string;
 }
 
 @Component({
@@ -14,40 +14,40 @@ export interface AnzeigeDO {
 
 export class AnzeigeManagerComponent {
 
-  public anzeigen: AnzeigeDO[] = [
-    { id: 1, anzeigeId: '', inhaltTyp: 'tabelle'},
+  public displays: AnzeigeDO[] = [
+    { id: 1, physicalDisplayID: '', tableType: 'tabelle'},
   ];
 
-  public aktuellesMatch = 1;
+  public currentMatch = 1;
 
-  public naechsteAnzeige(): void {
-      this.aktuellesMatch++;
+  public nextMatch(): void {
+      this.currentMatch++;
   }
 
-  public vorherigeAnzeige(): void {
-    if (this.aktuellesMatch > 1) {
-      this.aktuellesMatch--;
+  public previousMatch(): void {
+    if (this.currentMatch > 1) {
+      this.currentMatch--;
     }
   }
 
-  public anzeigeEntfernen(id: number): void {
+  public removeDisplay(id: number): void {
     const deleteIndex = id - 1;
-    const aktuelleAnzeige = this.anzeigen[deleteIndex];
-    const bestaetigung = confirm(
-      `Möchten Sie die Anzeige "${aktuelleAnzeige.anzeigeId}" wirklich entfernen?`
+    const currentDisplay = this.displays[deleteIndex];
+    const confirmResult = confirm(
+      `Möchtest du die Anzeige "${currentDisplay.physicalDisplayID}" wirklich entfernen?`
     );
 
-    if (bestaetigung) {
-      this.anzeigen.splice(deleteIndex, 1);
+    if (confirmResult) {
+      this.displays.splice(deleteIndex, 1);
     }
   }
 
-  public anzeigeHinzufuegen(): void {
-    const neueAnzeige: AnzeigeDO = {
-      id: this.anzeigen.length + 1,
-      anzeigeId: '',
-      inhaltTyp: 'tabelle',
+  public addDisplay(): void {
+    const newDisplay: AnzeigeDO = {
+      id: this.displays.length + 1,
+      physicalDisplayID: '',
+      tableType: 'tabelle',
     };
-    this.anzeigen.push(neueAnzeige);
+    this.displays.push(newDisplay);
   }
 }
