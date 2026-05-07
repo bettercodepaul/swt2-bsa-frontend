@@ -18,6 +18,7 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: TabletEingabeComponent},
   {path: '', pathMatch: 'full', component: TabletAdminComponent},
   {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent},
+  {path: 'anzeige-manager', pathMatch: 'full', component: AnzeigeManagerComponent},
   {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent},
   {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
