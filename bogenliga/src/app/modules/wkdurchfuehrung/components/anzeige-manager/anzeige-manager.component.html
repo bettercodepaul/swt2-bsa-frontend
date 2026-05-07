@@ -31,7 +31,7 @@
         class="btn btn-danger remove-button"
         (click)="anzeigeEntfernen(anzeige.id)"
         title="Anzeige entfernen">
-        &#128465; Entfernen
+        Entfernen
       </button>
 
       <div class="anzeige-config-section">
@@ -42,7 +42,7 @@
           [value]="anzeige.anzeigeId"
           (input)="anzeige.anzeigeId = anzeigeIdInput.value"
           maxlength="4"
-          placeholder="ID">
+          placeholder="----">
 
         <div>
           <select class="display-select">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 export interface AnzeigeDO {
   id: number;
@@ -13,7 +13,7 @@ export interface AnzeigeDO {
   styleUrls: ['./anzeige-manager.component.scss']
 })
 
-export class AnzeigeManagerComponent implements OnInit {
+export class AnzeigeManagerComponent {
 
   public anzeigen: AnzeigeDO[] = [
     { id: 1, anzeigeId: 'A9B2', inhaltTyp: 'Tabelle', matchNr: 1 },
@@ -21,12 +21,6 @@ export class AnzeigeManagerComponent implements OnInit {
   ];
 
   public aktuellesMatch = 1;
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
 
   public naechsteAnzeige(): void {
       this.aktuellesMatch++;
@@ -51,10 +45,9 @@ export class AnzeigeManagerComponent implements OnInit {
   }
 
   public anzeigeHinzufuegen(): void {
-    const neueId = `A${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
     const neueAnzeige: AnzeigeDO = {
       id: this.anzeigen.length + 1,
-      anzeigeId: neueId,
+      anzeigeId: '',
       inhaltTyp: 'Tabelle',
       matchNr: this.anzeigen.length + 1
     };
