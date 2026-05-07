@@ -40,9 +40,6 @@
       }
     }
 
-    .remove-button {
-      min-width: 120px;
-    }
   }
 
 
@@ -83,7 +80,7 @@
     }
   }
 
-  .display-select {
+  .display-table-select {
     max-width: 200px;
     height: 30px;
     margin: 0 auto;
@@ -92,10 +89,7 @@
     border-radius: 30px;
     background-color: #fcfcfc;
     color: #2a2a2a;
-    font-size: 12px;
-    font-weight: 300;
     text-align: center;
-    line-height: 30px;
 
     &:focus {
       outline: none;
