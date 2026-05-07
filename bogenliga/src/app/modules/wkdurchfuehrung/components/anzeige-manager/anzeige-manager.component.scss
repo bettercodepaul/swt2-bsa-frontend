@@ -7,40 +7,45 @@
   font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
 }
 
-.header-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #fcfcfc;
-  border: 1px solid #eaeaef;
-  border-radius: 8px;
-
-  .match-navigation {
+  .header-section {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
 
-    .match-button {
-      min-width: 40px;
-      height: 30px;
-      margin: 0;
-      padding: 0 15px;
-      position: static;
-      display: inline-flex;
+    .match-navigation {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      line-height: 1;
+      gap: 15px;
+
+      .match-button {
+        min-width: 40px;
+        height: 30px;
+        padding: 0 15px;
+        border-radius: 30px;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .match-number {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        min-width: 40px;
+        text-align: center;
+      }
     }
 
-    .match-number {
-      min-width: 40px;
-      color: #2a2a2a;
+    .remove-button {
+      min-width: 120px;
     }
   }
-}
+
 
 .remove-button {
   min-width: 120px;
@@ -50,16 +55,16 @@
 
 .display-config-section {
   background-color: #eaeaef;
-  padding: 30px;
+  padding: 0 10px 30px;
   border: 1px solid #eaeaef;
   border-radius: 12px;
   text-align: center;
   margin-bottom: 20px;
 
   .display-id {
-    width: 4ch;
-    min-width: 4ch;
-    max-width: 4ch;
+    width: 5ch;
+    min-width: 5ch;
+    max-width: 5ch;
     margin-bottom: 15px;
     padding: 10px;
     background-color: #fcfcfc;
@@ -89,7 +94,7 @@
     border-radius: 30px;
     background-color: #fcfcfc;
     color: #2a2a2a;
-    font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
+    font-family: Poppins-light, sans-serif;
     font-size: 12px;
     font-weight: 300;
     text-align: center;
