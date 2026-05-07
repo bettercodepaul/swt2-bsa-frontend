@@ -31,23 +31,19 @@
     </button>
   </div>
 
-  <!-- Hauptbereich mit Anzeige-Konfiguration -->
+
   <div class="anzeige-config-section" *ngIf="aktuelleAnzeige">
     <div class="anzeige-id">
       {{ aktuelleAnzeige.anzeigeId }}
     </div>
 
-    <div class="anzeige-inhalt">
-      {{ aktuelleAnzeige.inhalt }}
-    </div>
-
-    <div class="dropdown-container">
-      <select
-        class="form-control inhalt-dropdown"
-        [(ngModel)]="aktuelleAnzeige.inhaltTyp">
-        <option *ngFor="let option of inhaltOptionen" [value]="option">
-          {{ option }}
-        </option>
+    <div>
+      <select class="display-select">
+        <option value="tabelle">Tabelle</option>
+        <option value="1/2" selected>(1/2)</option>
+        <option value="3/4">(3/4)</option>
+        <option value="5/6">(5/6)</option>
+        <option value="7/8">(7/8)</option>
       </select>
     </div>
   </div>
