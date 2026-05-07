@@ -1,0 +1,82 @@
+.anzeige-manager-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+
+  .match-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .nav-button {
+      min-width: 40px;
+    }
+
+    .match-number {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      min-width: 40px;
+      text-align: center;
+    }
+  }
+
+  .remove-button {
+    min-width: 120px;
+  }
+}
+
+.anzeige-config-section {
+  background-color: #e8e8e8;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+
+  .anzeige-id {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: white;
+    display: inline-block;
+    border-radius: 6px;
+    min-width: 120px;
+  }
+
+  .anzeige-inhalt {
+    font-size: 28px;
+    color: #555;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: white;
+    display: inline-block;
+    border-radius: 6px;
+    min-width: 100px;
+  }
+
+  .inhalt-dropdown {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+.add-button-section {
+  text-align: center;
+  margin: 20px 0;
+
+  .add-button {
+    min-width: 200px;
+  }
+}
