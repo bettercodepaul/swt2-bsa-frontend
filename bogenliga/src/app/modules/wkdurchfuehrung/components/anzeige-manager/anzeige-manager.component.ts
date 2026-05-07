@@ -15,7 +15,7 @@ export interface AnzeigeDO {
 export class AnzeigeManagerComponent {
 
   public anzeigen: AnzeigeDO[] = [
-    { id: 1, anzeigeId: '', inhaltTyp: 'Tabelle'},
+    { id: 1, anzeigeId: '', inhaltTyp: 'tabelle'},
   ];
 
   public aktuellesMatch = 1;
@@ -46,7 +46,7 @@ export class AnzeigeManagerComponent {
     const neueAnzeige: AnzeigeDO = {
       id: this.anzeigen.length + 1,
       anzeigeId: '',
-      inhaltTyp: 'Tabelle',
+      inhaltTyp: 'tabelle',
     };
     this.anzeigen.push(neueAnzeige);
   }
