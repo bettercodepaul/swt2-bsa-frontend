@@ -52,7 +52,11 @@
     background-color: white;
     display: inline-block;
     border-radius: 6px;
-    min-width: 120px;
+    width: 5ch;
+    min-width: 5ch;
+    max-width: 5ch;
+    text-align: center;
+    box-sizing: content-box;
   }
 
   .anzeige-inhalt {

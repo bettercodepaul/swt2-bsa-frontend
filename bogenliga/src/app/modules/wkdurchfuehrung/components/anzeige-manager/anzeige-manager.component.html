@@ -35,9 +35,14 @@
       </button>
 
       <div class="anzeige-config-section">
-        <div class="anzeige-id">
-          {{ anzeige.anzeigeId }}
-        </div>
+        <input
+          #anzeigeIdInput
+          class="anzeige-id"
+          type="text"
+          [value]="anzeige.anzeigeId"
+          (input)="anzeige.anzeigeId = anzeigeIdInput.value"
+          maxlength="4"
+          placeholder="ID">
 
         <div>
           <select class="display-select">
