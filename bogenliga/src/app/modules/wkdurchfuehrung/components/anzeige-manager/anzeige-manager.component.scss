@@ -2,77 +2,104 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  background-color: #fcfcfc;
+  color: #2a2a2a;
+  font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
 }
 
 .header-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #f5f5f5;
+  background-color: #fcfcfc;
+  border: 1px solid #eaeaef;
   border-radius: 8px;
 
   .match-navigation {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
 
-    .nav-button {
+    .match-button {
       min-width: 40px;
+      height: 30px;
+      margin: 0;
+      padding: 0 15px;
+      position: static;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
     }
 
     .match-number {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
       min-width: 40px;
-      text-align: center;
+      color: #2a2a2a;
     }
-  }
-
-  .remove-button {
-    min-width: 120px;
   }
 }
 
-.anzeige-config-section {
-  background-color: #e8e8e8;
+.remove-button {
+  min-width: 120px;
+  height: 30px;
+  justify-content: center;
+}
+
+.display-config-section {
+  background-color: #eaeaef;
   padding: 30px;
+  border: 1px solid #eaeaef;
   border-radius: 12px;
   text-align: center;
   margin-bottom: 20px;
 
-  .anzeige-id {
-    font-size: 32px;
-    font-weight: bold;
-    color: #333;
+  .display-id {
+    width: 4ch;
+    min-width: 4ch;
+    max-width: 4ch;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: white;
-    display: inline-block;
+    background-color: #fcfcfc;
+    color: #2a2a2a;
+    border: 1px solid #888888;
     border-radius: 6px;
-    width: 5ch;
-    min-width: 5ch;
-    max-width: 5ch;
-    text-align: center;
+    display: inline-block;
     box-sizing: content-box;
+    font-family: Poppins-semibold, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: #487af5;
+      box-shadow: 0 0 0 2px rgba(72, 122, 245, 0.25);
+    }
   }
 
-  .anzeige-inhalt {
-    font-size: 28px;
-    color: #555;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: white;
-    display: inline-block;
-    border-radius: 6px;
-    min-width: 100px;
-  }
-
-  .inhalt-dropdown {
+  .display-select {
     max-width: 200px;
+    height: 30px;
     margin: 0 auto;
+    padding: 0 15px;
+    border: 1px solid #888888;
+    border-radius: 30px;
+    background-color: #fcfcfc;
+    color: #2a2a2a;
+    font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 30px;
+
+    &:focus {
+      outline: none;
+      border-color: #487af5;
+      box-shadow: 0 0 0 2px rgba(72, 122, 245, 0.25);
+    }
   }
 }
 
@@ -82,5 +109,7 @@
 
   .add-button {
     min-width: 200px;
+    height: 30px;
+    justify-content: center;
   }
 }

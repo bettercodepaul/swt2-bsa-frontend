@@ -3,7 +3,7 @@
   <div class="header-section">
     <div class="match-navigation">
       <button
-        class="btn btn-secondary nav-button"
+        class="action-btn action-btn-primary match-button"
         [disabled]="aktuellesMatch <= 1"
         (click)="vorherigeAnzeige()"
         title="Vorherige Anzeige">
@@ -15,7 +15,7 @@
       </div>
 
       <button
-        class="btn btn-secondary nav-button"
+        class="action-btn action-btn-primary match-button"
         (click)="naechsteAnzeige()"
         title="Nächste Anzeige">
         &#9654;
@@ -28,16 +28,17 @@
     <div *ngFor="let anzeige of anzeigen">
 
       <button
-        class="btn btn-danger remove-button"
+        class="action-btn action-btn-danger remove-button"
         (click)="anzeigeEntfernen(anzeige.id)"
         title="Anzeige entfernen">
+        <span class="action-btn-circle">&#128465;</span>
         Entfernen
       </button>
 
-      <div class="anzeige-config-section">
+      <div class="display-config-section">
         <input
           #anzeigeIdInput
-          class="anzeige-id"
+          class="display-id"
           type="text"
           [value]="anzeige.anzeigeId"
           (input)="anzeige.anzeigeId = anzeigeIdInput.value"
@@ -46,9 +47,10 @@
 
         <div>
           <select
-                  #anzeigenTabellenSelect
-                  [value]="anzeige.inhaltTyp"
-                  (change)="anzeige.inhaltTyp = anzeigenTabellenSelect.value">
+            class="display-select"
+            #anzeigenTabellenSelect
+            [value]="anzeige.inhaltTyp"
+            (change)="anzeige.inhaltTyp = anzeigenTabellenSelect.value">
             <option value="tabelle">Tabelle</option>
             <option value="1/2">(1/2)</option>
             <option value="3/4">(3/4)</option>
@@ -61,9 +63,10 @@
 
     <div class="add-button-section">
       <button
-        class="btn btn-primary add-button"
+        class="action-btn action-btn-success add-button"
         (click)="anzeigeHinzufuegen()">
-        &#43; Anzeige hinzufügen
+        <span class="action-btn-circle">&#43;</span>
+        Anzeige hinzufügen
       </button>
     </div>
 
