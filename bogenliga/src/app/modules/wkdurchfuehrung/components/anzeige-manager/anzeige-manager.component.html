@@ -27,15 +27,15 @@
   <div *ngIf="anzeigen.length > 0">
     <div *ngFor="let anzeige of anzeigen">
 
-      <button
-        class="action-btn action-btn-danger remove-button"
-        (click)="anzeigeEntfernen(anzeige.id)"
-        title="Anzeige entfernen">
-        <span class="action-btn-circle">&#128465;</span>
-        Entfernen
-      </button>
-
       <div class="display-config-section">
+        <button
+          class="action-btn action-btn-danger remove-button"
+          (click)="anzeigeEntfernen(anzeige.id)"
+          title="Anzeige entfernen">
+          <span class="action-btn-circle">-</span>
+          Entfernen
+        </button>
+
         <input
           #anzeigeIdInput
           class="display-id"
@@ -65,7 +65,7 @@
       <button
         class="action-btn action-btn-success add-button"
         (click)="anzeigeHinzufuegen()">
-        <span class="action-btn-circle">&#43;</span>
+        <span class="action-btn-circle">+</span>
         Anzeige hinzufügen
       </button>
     </div>
