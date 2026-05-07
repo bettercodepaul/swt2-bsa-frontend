@@ -12,6 +12,7 @@ export interface AnzeigeDO {
   templateUrl: './anzeige-manager.component.html',
   styleUrls: ['./anzeige-manager.component.scss']
 })
+
 export class AnzeigeManagerComponent implements OnInit {
 
   public anzeigen: AnzeigeDO[] = [
@@ -39,17 +40,15 @@ export class AnzeigeManagerComponent implements OnInit {
     }
   }
 
-  public anzeigeEntfernen(): void {
-    const aktuelleAnzeige = this.anzeigen[this.aktuelleAnzeigeIndex];
+  public anzeigeEntfernen(id: number): void {
+    const deleteIndex = id - 1;
+    const aktuelleAnzeige = this.anzeigen[deleteIndex];
     const bestaetigung = confirm(
       `Möchten Sie die Anzeige "${aktuelleAnzeige.anzeigeId}" wirklich entfernen?`
     );
 
     if (bestaetigung) {
-      this.anzeigen.splice(this.aktuelleAnzeigeIndex, 1);
-      if (this.aktuelleAnzeigeIndex >= this.anzeigen.length && this.anzeigen.length > 0) {
-        this.aktuelleAnzeigeIndex = this.anzeigen.length - 1;
-      }
+      this.anzeigen.splice(deleteIndex, 1);
     }
   }
 

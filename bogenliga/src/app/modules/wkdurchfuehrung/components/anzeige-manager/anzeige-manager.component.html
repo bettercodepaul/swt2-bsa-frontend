@@ -22,18 +22,19 @@
         &#9654;
       </button>
     </div>
-
-    <button
-      class="btn btn-danger remove-button"
-      (click)="anzeigeEntfernen()"
-      title="Anzeige entfernen">
-      &#128465; Entfernen
-    </button>
   </div>
 
 
   <div *ngIf="anzeigen.length > 0">
     <div *ngFor="let anzeige of anzeigen">
+
+      <button
+        class="btn btn-danger remove-button"
+        (click)="anzeigeEntfernen(anzeige.id)"
+        title="Anzeige entfernen">
+        &#128465; Entfernen
+      </button>
+
       <div class="anzeige-config-section">
         <div class="anzeige-id">
           {{ anzeige.anzeigeId }}
