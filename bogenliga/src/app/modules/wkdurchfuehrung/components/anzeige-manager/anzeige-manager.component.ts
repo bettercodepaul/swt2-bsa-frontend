@@ -15,13 +15,13 @@ export interface AnzeigeDO {
 export class AnzeigeManagerComponent {
 
   public displays: AnzeigeDO[] = [
-    { id: 1, physicalDisplayID: '', tableType: 'tabelle'},
+    {id: 1, physicalDisplayID: '', tableType: 'tabelle'},
   ];
 
   public currentMatch = 1;
 
   public nextMatch(): void {
-      this.currentMatch++;
+    this.currentMatch++;
   }
 
   public previousMatch(): void {
