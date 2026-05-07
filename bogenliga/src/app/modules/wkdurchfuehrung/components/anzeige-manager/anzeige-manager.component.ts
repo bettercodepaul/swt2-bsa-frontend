@@ -20,7 +20,7 @@ export class AnzeigeManagerComponent implements OnInit {
     { id: 2, anzeigeId: 'C3D4', inhaltTyp: '(1/2)', matchNr: 2 }
   ];
 
-  public aktuelleAnzeigeIndex = 0;
+  public aktuellesMatch = 1;
 
   constructor() {
   }
@@ -29,14 +29,12 @@ export class AnzeigeManagerComponent implements OnInit {
   }
 
   public naechsteAnzeige(): void {
-    if (this.aktuelleAnzeigeIndex < this.anzeigen.length - 1) {
-      this.aktuelleAnzeigeIndex++;
-    }
+      this.aktuellesMatch++;
   }
 
   public vorherigeAnzeige(): void {
-    if (this.aktuelleAnzeigeIndex > 0) {
-      this.aktuelleAnzeigeIndex--;
+    if (this.aktuellesMatch > 1) {
+      this.aktuellesMatch--;
     }
   }
 
@@ -61,17 +59,5 @@ export class AnzeigeManagerComponent implements OnInit {
       matchNr: this.anzeigen.length + 1
     };
     this.anzeigen.push(neueAnzeige);
-  }
-
-  public get aktuelleAnzeige(): AnzeigeDO {
-    return this.anzeigen[this.aktuelleAnzeigeIndex];
-  }
-
-  public hatVorherigeAnzeige(): boolean {
-    return this.aktuelleAnzeigeIndex > 0;
-  }
-
-  public hatNaechsteAnzeige(): boolean {
-    return this.aktuelleAnzeigeIndex < this.anzeigen.length - 1;
   }
 }

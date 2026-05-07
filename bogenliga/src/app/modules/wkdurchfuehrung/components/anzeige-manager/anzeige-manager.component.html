@@ -4,19 +4,18 @@
     <div class="match-navigation">
       <button
         class="btn btn-secondary nav-button"
-        [disabled]="!hatVorherigeAnzeige()"
+        [disabled]="aktuellesMatch <= 1"
         (click)="vorherigeAnzeige()"
         title="Vorherige Anzeige">
         &#9664;
       </button>
 
       <div class="match-number">
-        {{ aktuelleAnzeigeIndex + 1 }}
+        {{ aktuellesMatch }}
       </div>
 
       <button
         class="btn btn-secondary nav-button"
-        [disabled]="!hatNaechsteAnzeige()"
         (click)="naechsteAnzeige()"
         title="Nächste Anzeige">
         &#9654;
