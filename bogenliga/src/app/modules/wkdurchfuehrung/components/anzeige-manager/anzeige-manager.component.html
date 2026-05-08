@@ -1,0 +1,74 @@
+<div class="anzeige-manager-container">
+
+  <div class="header-section">
+    <div class="match-navigation">
+      <button
+        class="action-btn action-btn-primary match-button"
+        [disabled]="currentMatch <= 1"
+        (click)="previousMatch()"
+        title="Vorherige Anzeige">
+        &#9664;
+      </button>
+
+      <div class="match-number">
+        {{ currentMatch }}
+      </div>
+
+      <button
+        class="action-btn action-btn-primary match-button"
+        (click)="nextMatch()"
+        title="Nächste Anzeige">
+        &#9654;
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="displays.length > 0">
+    <div *ngFor="let display of displays">
+
+      <div class="display-config-section">
+        <button
+          class="action-btn action-btn-danger remove-button"
+          (click)="removeDisplay(display.id)"
+          title="Anzeige entfernen">
+          <span class="action-btn-circle">-</span>
+          Entfernen
+        </button>
+
+        <input
+          #anzeigeIdInput
+          class="display-id"
+          type="text"
+          [value]="display.physicalDisplayID"
+          (input)="display.physicalDisplayID = anzeigeIdInput.value"
+          maxlength="4"
+          placeholder="----">
+
+        <div>
+          <select
+            class="display-table-select"
+            #anzeigenTabellenSelect
+            [value]="display.tableType"
+            (change)="display.tableType = anzeigenTabellenSelect.value">
+            <option value="tabelle">Tabelle</option>
+            <option value="1/2">(1/2)</option>
+            <option value="3/4">(3/4)</option>
+            <option value="5/6">(5/6)</option>
+            <option value="7/8">(7/8)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="add-button-section">
+    <button
+      class="action-btn action-btn-success add-button"
+      (click)="addDisplay()">
+      <span class="action-btn-circle">+</span>
+      Anzeige hinzufügen
+    </button>
+  </div>
+</div>
