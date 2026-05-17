@@ -15,16 +15,16 @@ import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/s
 
 export const wkdurchfuehrung_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]},
-  {path: '', pathMatch: 'full', component: SchusszettelComponent},
-  {path: '', pathMatch: 'full', component: TabletEingabeComponent},
-  {path: '', pathMatch: 'full', component: TabletAdminComponent},
-  {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent},
-  {path: 'anzeige-manager', pathMatch: 'full', component: AnzeigeManagerComponent},
-  {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent},
-  {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent},
-  {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
-  {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
-  {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent},
-  {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent },
+  {path: '', pathMatch: 'full', component: SchusszettelComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: '', pathMatch: 'full', component: TabletEingabeComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: '', pathMatch: 'full', component: TabletAdminComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'anzeige-manager', pathMatch: 'full', component: AnzeigeManagerComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
 ];
 
