@@ -17,6 +17,7 @@ import {
 
 import {WkdurchfuehrungComponent} from '@wkdurchfuehrung/components';
 import {LigaResolver} from '@shared/routing/resolvers/liga.resolver';
+import {WkdurchfuehrungGuard} from '@wkdurchfuehrung/guards';
 
 export const HOME_ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,5 +38,5 @@ export const BUTTON_ROUTES: Routes = [
   {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {path: 'veranstaltung', component: VeranstaltungOverviewComponent, canActivate: [VeranstaltungOverviewGuard]},
   {path: 'veranstaltung/add', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
-  {path: 'wkdurchfuehrung', component: WkdurchfuehrungComponent}
+  {path: 'wkdurchfuehrung', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]}
 ];
