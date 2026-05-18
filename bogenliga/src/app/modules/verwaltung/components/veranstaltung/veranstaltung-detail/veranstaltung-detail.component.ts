@@ -326,11 +326,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.currentVeranstaltung.ligaId = this.currentLiga.id;
       this.currentVeranstaltung.ligaName = this.currentLiga.name;
     }
-    if (typeof this.currentUser === 'undefined') {
+    this.setCurrentLigaleiterFromSelection();
+    if (isNullOrUndefined(this.currentVeranstaltung.ligaleiterId)) {
       this.currentVeranstaltung.ligaleiterId = null;
-    } else {
-      this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
-      this.currentVeranstaltung.ligaleiterEmail = this.currentUser.email;
     }
     if (typeof this.currentWettkampftyp === 'undefined') {
       this.currentVeranstaltung.wettkampfTypId = null;
@@ -460,7 +458,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
     this.currentVeranstaltung.ligaId = this.currentLiga.id;
-    this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
+    this.setCurrentLigaleiterFromSelection();
     this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
     const id = this.currentVeranstaltung.id;
 
@@ -778,8 +776,30 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLigaleiterResponseArraySuccess(response: BogenligaResponse<UserRolleDTO[]>): void {
     this.allLigaleiter = [];
     this.allLigaleiter = response.payload;
+    this.setCurrentLigaleiterFromSelection();
 
     this.loading = false;
+  }
+
+
+  private setCurrentLigaleiterFromSelection(): void {
+    let currentLigaleiter = this.allLigaleiter.filter((ligaleiter) =>
+      ligaleiter.id === this.currentVeranstaltung.ligaleiterId)[0];
+
+    if (isNullOrUndefined(currentLigaleiter)) {
+      currentLigaleiter = this.allLigaleiter.filter((ligaleiter) =>
+        ligaleiter.email === this.currentVeranstaltung.ligaleiterEmail)[0];
+    }
+
+    if (isNullOrUndefined(currentLigaleiter) && this.id === 'add') {
+      currentLigaleiter = this.allLigaleiter.filter((ligaleiter) =>
+        ligaleiter.id === this.currentUserService.getCurrentUserID())[0];
+    }
+
+    if (!isNullOrUndefined(currentLigaleiter)) {
+      this.currentVeranstaltung.ligaleiterId = currentLigaleiter.id;
+      this.currentVeranstaltung.ligaleiterEmail = currentLigaleiter.email;
+    }
   }
 
 
