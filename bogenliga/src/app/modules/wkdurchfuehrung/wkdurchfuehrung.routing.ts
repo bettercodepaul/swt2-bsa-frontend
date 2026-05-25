@@ -9,9 +9,7 @@ import {WkdurchfuehrungGuard} from './guards/wkdurchfuehrung.guard';
 import {FullscreenComponent} from '@wkdurchfuehrung/components';
 import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
-import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
 import {SchusszettelGuard, TabletadminGuard, TableteingabeGuard} from '@wkdurchfuehrung/guards';
-
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
