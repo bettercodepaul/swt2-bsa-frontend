@@ -56,6 +56,11 @@ export class DownloadActionButtonComponent extends ActionButtonComponent impleme
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleMeldezettelFailure()));
+    } else if (this.id === 'downloadErgebnisliste') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+        .then((response) => this.handleWithoutNotification(response))
+        .catch((() => this.handleFailure(null)));
+
     } else if (this.id == 'downloadEinzelstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
