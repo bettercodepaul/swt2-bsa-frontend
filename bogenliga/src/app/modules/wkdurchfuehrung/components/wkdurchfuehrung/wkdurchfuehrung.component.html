@@ -89,6 +89,16 @@
                   [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
                 </bla-download-actionbutton>
 
+                <bla-download-actionbutton
+                  [id]="'downloadErgebnisliste'"
+                  [downloadUrl]="onButtonDownload('pdf/ergebnisliste')"
+                  [fileName]="'ergebnisliste.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="isDisabled()">
+                  Ergebnisliste
+                </bla-download-actionbutton>
+
                 <div id="setupTable"
                      style="min-width: 14rem; max-width: 14rem; white-space: nowrap;"
                      *ngIf="(!isOffline()); else onlineSetupTables">
