@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {SchuetzenSatzDTO} from '../../types/datatransfer/satz-eingabe-dto';
 import {SchuetzeStammdatenDTO} from '../../types/inside/schuetze-stammdaten-dto';
 import {ShooterOrderService} from '../../services/shooter-order.service';
 import {Subject} from 'rxjs';
 import {AppComponent} from 'src/app/app.component';
-import {QueryList, ViewChildren, ElementRef} from '@angular/core';
+import {QueryList, ViewChild, ViewChildren, ElementRef} from '@angular/core';
 import {
   NotificationService,
   NotificationSeverity,
@@ -28,6 +28,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   activeRow = -1;
   private destroy$ = new Subject<void>();
+  private readonly autoFocusDelayMs = 2000;
   timeoutId: any = null;
 
   orderedShooters: SchuetzeStammdatenDTO[] = [];
@@ -40,6 +41,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
   ) {}
 
   @ViewChildren('inputField') inputFields: QueryList<ElementRef>;
+  @ViewChild('confirmButton', { read: ElementRef }) confirmButton?: ElementRef;
 
   getInputElement(field: string, i: number): ElementRef | undefined {
     const id = `${field}-${i}`;
@@ -116,8 +118,8 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
     const groups = this.orderedShooters.map((schuetze, index) => {
       console.log(`Creating form group ${index} for shooter ${schuetze.schuetzenId}`);
       return this.fb.group({
-        schuss1: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
-        schuss2: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
+        schuss1: [null, [Validators.required, Validators.pattern(/^(10|[0-9])$/)]],
+        schuss2: [null, [Validators.required, Validators.pattern(/^(10|[0-9])$/)]],
       });
     });
 
@@ -170,7 +172,7 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       formArray.insert(event.currentIndex, item);
 
       // Save the new order
-      const shooterIds = this.orderedShooters.map(s => s.schuetzenId);
+      const shooterIds = this.orderedShooters.map((s) => s.schuetzenId);
       this.shooterOrderService.saveShooterOrder(
         this.infos.eigenesTeam.teamId,
         this.infos.wettkampfInfo?.wettkampfId || 0,
@@ -192,8 +194,8 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       const grp = this.schuesse.at(i) as FormGroup;
       return {
         schuetzenId: s.schuetzenId,
-        schuss1: grp.value.schuss1,
-        schuss2: grp.value.schuss2,
+        schuss1: parseInt(grp.value.schuss1, 10),
+        schuss2: parseInt(grp.value.schuss2, 10),
         // No schuss3 - only 2 arrows per shooter to match backend ARROWS_PER_SHOOTER = 2
       };
     });
@@ -223,10 +225,16 @@ export class PasseEingabeComponent implements OnInit, OnDestroy {
       } else {
         console.warn('Ungültiger Wert – kein automatischer Wechsel:', value);
       }
-    }, 700);
+    }, this.autoFocusDelayMs);
   }
 
   focusNextField(i: number, field: 'schuss1' | 'schuss2') {
+    if (field === 'schuss2' && i === this.orderedShooters.length - 1) {
+      if (this.form.valid && this.confirmButton) {
+        this.confirmButton.nativeElement.focus();
+      }
+      return;
+    }
     const nextFieldId =
       field === 'schuss1'
         ? `schuss2-${i}`

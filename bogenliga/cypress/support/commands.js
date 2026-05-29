@@ -75,15 +75,20 @@ Cypress.Commands.add("restoreLocalStorage", () => {
  * 3. Clicks on the fourth child element of the dropdown menu to initiate the logout process.
  */
 Cypress.Commands.add('logout', () => {
-    cy.log('log out user')
-    cy.get('.dropdown')
-      .click()
-
-    cy.get('.dropdown-menu > :nth-child(4)')
-      .click()
-    cy.wait(2000);
-  }
-);
+  cy.log('log out user')
+  // Überprüfe, ob wir eingeloggt sind (Dropdown sollte existieren)
+  cy.get('body').then(($body) => {
+    if ($body.find('.dropdown').length > 0) {
+      // Öffne das User-Dropdown
+      cy.get('.dropdown', { timeout: 10000 }).should('be.visible').click();
+      // Klicke auf den Logout-Button
+      cy.get('[data-cy="logout-button"]', { timeout: 5000 }).should('be.visible').click();
+      cy.wait(2000);
+    } else {
+      cy.log('User scheint nicht eingeloggt zu sein - kein Logout nötig');
+    }
+  });
+});
 
 
 // Cypress.Commands.add('dismissModal', ...)
@@ -257,6 +262,52 @@ Cypress.Commands.add('LoginLigaleiter', () => {
       cy.get('[data-cy=login-button]').click();
       cy.get('#loginEmail').type('TeamLigaleiter@bogenliga.de');
       cy.get('#loginPassword').type('swt2');
+      cy.get('[id=loginButton]').click();
+    }
+  })
+});
+
+Cypress.Commands.add('LoginSportleiter', () => {
+
+  cy.visit('http://localhost:4200/#/home');
+
+  // Schließe alle offenen Modals zuerst
+  cy.get('body').then($body => {
+    if ($body.find('#exampleModal').length > 0 && $body.find('#exampleModal').is(':visible')) {
+      cy.log('Modal gefunden, versuche es zu schließen');
+      // Versuche verschiedene Möglichkeiten, das Modal zu schließen
+      cy.get('#exampleModal').then($modal => {
+        // Suche nach dem OK-Button im Modal
+        if ($modal.find('#OKBtn1').length > 0) {
+          cy.get('#OKBtn1').click();
+        } else if ($modal.find('.btn-primary').length > 0) {
+          cy.get('#exampleModal .btn-primary').click();
+        } else if ($modal.find('.close').length > 0) {
+          cy.get('#exampleModal .close').click();
+        } else {
+          // Als letztes Mittel: Klicke außerhalb des Modals
+          cy.get('body').click(0, 0);
+        }
+      });
+      cy.wait(1000); // Warte, bis das Modal geschlossen ist
+    }
+  });
+
+  // Prüft, ob das "Sitzung Abgelaufen" popup getriggered wurde
+  cy.document().then((doc) => {
+    const elementContainsText = Cypress.$(doc.body).find(':contains("Sitzung Abgelaufen")').length > 0;
+
+    if (elementContainsText) {
+      cy.get('#OkBtn1').click();
+    }
+  });
+
+  // Warte auf die Seite und prüfe, ob der Login-Button vorhanden ist
+  cy.get('[id=navbar]', { timeout: 10000 }).then(($element) => {
+    if($element.find('[data-cy=login-button]').length > 0){
+      cy.get('[data-cy=login-button]').click();
+      cy.get('#loginEmail').type('HSRT-Test3@bogenliga.de');
+      cy.get('#loginPassword').type('mki4HSRT');
       cy.get('[id=loginButton]').click();
     }
   })
