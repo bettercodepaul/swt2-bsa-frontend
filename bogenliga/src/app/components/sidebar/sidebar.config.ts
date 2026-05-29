@@ -65,7 +65,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       },
       {
         label: 'Benutzer',
-        route: '/verwaltung/benutzer',
+        route: '/verwaltung/user',
         permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy: 'sidebar-verwaltung-benutzer-button'
       },
@@ -89,7 +89,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       },
       {
         label: 'Regionen',
-        route: '/verwaltung/region',
+        route: '/verwaltung/regionen',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy: 'sidebar-verwaltung-regionen-button'
       },
@@ -192,7 +192,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
       },
       {
         label: 'Benutzer',
-        route: '/verwaltung/benutzer',
+        route: '/verwaltung/user',
         permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy: 'sidebar-verwaltung-benutzer-button'
       },
@@ -216,7 +216,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
       },
       {
         label: 'Regionen',
-        route: '/verwaltung/region',
+        route: '/verwaltung/regionen',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy: 'sidebar-verwaltung-regionen-button'
       },
