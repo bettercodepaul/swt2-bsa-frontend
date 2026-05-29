@@ -43,6 +43,10 @@ export class ShortcutButton implements OnInit {
     return '/verwaltung/vereine/' + this.VereinsID;
   }
 
+  public getCorrectLinkForAdding(): String {
+    return '/verwaltung/vereine/' + this.VereinsID + '/add';
+  }
+
   ngOnInit(): void {
     if (this.currentUserService.isLoggedIn() === false) {
        this.loginDataproviderService.signInDefaultUser()

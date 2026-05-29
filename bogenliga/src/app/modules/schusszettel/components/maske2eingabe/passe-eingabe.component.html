@@ -44,6 +44,8 @@
               id="schuss1-{{ i }}"
               type="number"
               inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="2"
               formControlName="schuss1"
               min="0"
               max="10"
@@ -81,7 +83,7 @@
       </table>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="confirm-button">
+    <button #confirmButton mat-raised-button color="primary" type="submit" [disabled]="form.invalid" class="confirm-button">
       Eingabe bestätigen <span class="arrow">→</span>
     </button>
   </form>
