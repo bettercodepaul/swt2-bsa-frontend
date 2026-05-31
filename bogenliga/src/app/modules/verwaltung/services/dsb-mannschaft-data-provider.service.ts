@@ -173,13 +173,43 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
       // sign in success -> resolve promise
       // sign in failure -> reject promise with result
       return new Promise((resolve, reject) => {
-        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVereinsID/' + id +"/"+ sportjahr).build())
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVereinsID/' + id).build() + '?sportjahr=' + sportjahr)
           .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
 
           }, (error: HttpErrorResponse) => {
 
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+      });
+    }
+  }
+
+  public findAllSportjahre(): Promise<BogenligaResponse<number[]>> {
+    if (this.onOfflineService.isOffline()) {
+      return new Promise((resolve, reject) => {
+        db.mannschaftTabelle.toArray()
+          .then(data => {
+            const jahre: number[] = data
+              .map(m => m.sportjahr)
+              .filter(j => j != null)
+              .filter((j, i, arr) => arr.indexOf(j) === i)
+              .sort((a, b) => b - a);
+            resolve({result: RequestResult.SUCCESS, payload: jahre});
+          })
+          .catch(() => reject({result: RequestResult.FAILURE}));
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path('sportjahre').build())
+          .then((data: number[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: data});
+          }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
             } else {

@@ -631,8 +631,17 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   private loadMannschaftenByVereinsIdAndSportjahr() {
     this.loading = true;
     if (this.selectedSportjahr === null) {
-      this.mannschaftsDataProvider.findAllByVereinsId(this.currentVerein.id)
-        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
+      const jahreRequests = this.availableSportjahre.map(jahr =>
+        this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, jahr)
+      );
+      const warteschlangeRequest = this.mannschaftsDataProvider.findAllByWarteschlangeId();
+      Promise.all([...jahreRequests, warteschlangeRequest])
+        .then(responses => {
+          const warteschlangeResponse = responses[responses.length - 1];
+          const ohneJahr = (warteschlangeResponse.payload as any[]).filter(m => m.vereinId === this.currentVerein.id);
+          const mitJahr = responses.slice(0, -1).reduce((acc: DsbMannschaftDTO[], r) => acc.concat(r.payload as any), []);
+          this.handleLoadMannschaftenSuccess({result: RequestResult.SUCCESS, payload: [...mitJahr, ...ohneJahr]});
+        })
         .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
     } else {
       this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, this.selectedSportjahr)
@@ -641,22 +650,27 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     }
   }
 
-  private loadSportjahre (): void{
-    this.mannschaftsDataProvider.findAllByVereinsId(this.currentVerein.id)
+  private loadSportjahre(): void {
+    this.mannschaftsDataProvider.findAllSportjahre()
       .then(response => {
-        const jahre = response.payload
-          .map(m => m.sportjahr)          // alle sportjahr-Felder extrahieren
-          .filter(j => j != null)          // null-Werte raus
-          .filter((j, i, arr) => arr.indexOf(j) === i)  // Duplikate raus
-          .sort((a, b) => b - a);          // absteigend: neuestes Jahr zuerst
-
-        this.availableSportjahre = jahre;
-        this.selectedSportjahr = null;
-        this.loadMannschaftenByVereinsIdAndSportjahr();        // Tabelle laden
+        const alleJahre = response.payload;
+        return Promise.all(
+          alleJahre.map(jahr =>
+            this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, jahr)
+              .then(r => ({jahr, hatMannschaften: r.payload.length > 0}))
+              .catch(() => ({jahr, hatMannschaften: false}))
+          )
+        );
       })
-
+      .then(ergebnisse => {
+        this.availableSportjahre = ergebnisse
+          .filter(e => e.hatMannschaften)
+          .map(e => e.jahr);
+        this.selectedSportjahr = null;
+        this.loadMannschaftenByVereinsIdAndSportjahr();
+      })
       .catch(() => {
-        this.loadMannschaften(); // Fallback: Alle Mannschaften laden, wenn Sportjahre nicht ermittelt werden können
+        this.loadMannschaften();
       });
   }
 
