@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ButtonType, CommonComponentDirective, toTableRows} from '../../../../../../shared/components';
-import {BogenligaResponse} from '../../../../../../shared/data-provider';
+import {ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
+import {BogenligaResponse} from '@shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -9,8 +9,8 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '../../../../../../shared/services/notification';
-import {DsbMitgliedDO} from '../../../../../types/dsb-mitglied-do.class';
+} from '@shared/services';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {SCHUETZE_TABLE_CONFIG, SCHUETZEN_CONFIG} from './schuetzen.config';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
