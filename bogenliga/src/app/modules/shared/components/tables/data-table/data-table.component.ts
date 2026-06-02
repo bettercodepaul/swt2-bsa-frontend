@@ -47,10 +47,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
-  @Output() public onWettkampfTag1Entry = new EventEmitter<VersionedDataObject>();
-  @Output() public onWettkampfTag2Entry = new EventEmitter<VersionedDataObject>();
-  @Output() public onWettkampfTag3Entry = new EventEmitter<VersionedDataObject>();
-  @Output() public onWettkampfTag4Entry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadSchusszettelTag1Entry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadSchusszettelTag2Entry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadSchusszettelTag3Entry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadSchusszettelTag4Entry = new EventEmitter<VersionedDataObject>();
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
   @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
   @Output() public onLinkClicked = new EventEmitter<{row: any; target: TableLinkTarget}>();
@@ -86,6 +86,12 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
         return 'plus';
       case TableActionType.MAP:
         return 'map';
+      case TableActionType.DOWMLOADSCHUSZETTELTAG1:
+      case TableActionType.DOWMLOADSCHUSZETTELTAG2:
+      case TableActionType.DOWMLOADSCHUSZETTELTAG3:
+      case TableActionType.DOWMLOADSCHUSZETTELTAG4:
+        // Use same icon name as the default config (download)
+        return 'download';
       default:
         return 'file-download';
     }
@@ -443,19 +449,19 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   }
 
   private onDownloadSchuszettelTag1(affectedRowPayload: VersionedDataObject) {
-    this.onWettkampfTag1Entry.emit(affectedRowPayload);
+    this.onDownloadSchusszettelTag1Entry.emit(affectedRowPayload);
   }
 
   private onDownloadSchuszettelTag2(affectedRowPayload: VersionedDataObject) {
-    this.onWettkampfTag2Entry.emit(affectedRowPayload);
+    this.onDownloadSchusszettelTag2Entry.emit(affectedRowPayload);
   }
 
   private onDownloadSchuszettelTag3(affectedRowPayload: VersionedDataObject) {
-    this.onWettkampfTag3Entry.emit(affectedRowPayload);
+    this.onDownloadSchusszettelTag3Entry.emit(affectedRowPayload);
   }
 
   private onDownloadSchuszettelTag4(affectedRowPayload: VersionedDataObject) {
-    this.onWettkampfTag4Entry.emit(affectedRowPayload);
+    this.onDownloadSchusszettelTag4Entry.emit(affectedRowPayload);
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {

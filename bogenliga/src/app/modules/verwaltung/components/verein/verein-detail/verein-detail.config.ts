@@ -29,7 +29,6 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         width:          20,
       },
     ],
-    coloredActionsWithText: true,
     actions: {
       actionTypes: [
         TableActionType.EDIT,
