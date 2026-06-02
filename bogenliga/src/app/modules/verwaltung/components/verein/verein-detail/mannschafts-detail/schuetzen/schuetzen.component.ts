@@ -77,17 +77,17 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   private sessionHandling: SessionHandling;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
-    private dsbMitgliedProvider: DsbMitgliedDataProviderService,
-    private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
-    private vereineProvider: VereinDataProviderService,
-    private lizenzProvider: LizenzDataProviderService,
-    private regionProvider: RegionDataProviderService,
-    private wettkampfProvider: WettkampfDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private onOfflineService: OnOfflineService,
-    private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+              private dsbMitgliedProvider: DsbMitgliedDataProviderService,
+              private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
+              private vereineProvider: VereinDataProviderService,
+              private lizenzProvider: LizenzDataProviderService,
+              private regionProvider: RegionDataProviderService,
+              private wettkampfProvider: WettkampfDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private onOfflineService: OnOfflineService,
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -201,6 +201,12 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
       this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
       return;
     }
+
+    if (this.currentMannschaft.veranstaltungId === null || this.currentMannschaft.veranstaltungId === undefined) {
+      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+      return;
+    }
+
     // get Lizenzen of this member
     this.lizenzProvider.findByDsbMitgliedId(memberId)
         .then((lizenzResponse: BogenligaResponse<LizenzDO[]>) => {
@@ -289,9 +295,8 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
                     this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
                   }
                 } else {
-
-                  this.showAddedMemberNotification('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.NOWETTKAEMPFE');
-                  console.log('Keine Wettkaempfe gefunden. Bitte stelle sicher das die Liga der Mannschaft Wettkampfe beinhaltet.');
+                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+                  console.log('Keine Wettkaempfe gefunden. Mannschaftsmitglied wird ohne Lizenzpruefung gespeichert.');
                 }
 
 
