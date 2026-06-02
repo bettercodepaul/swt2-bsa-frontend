@@ -465,22 +465,72 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       });
   }
 
-  public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
-    const URL: string = new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path('pdf/lizenzen')
-      .path('?mannschaftid=' + versionedDataObject.id)
-      .build();
-    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
-  }
+   public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
+     const URL: string = new UriBuilder()
+       .fromPath(environment.backendBaseUrl)
+       .path('v1/download')
+       .path('pdf/lizenzen')
+       .path('?mannschaftid=' + versionedDataObject.id)
+       .build();
+     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
+         .then((response: BogenligaResponse<string>) => console.log(response))
+         .catch((response: BogenligaResponse<string>) => this.showNoLicense());
+   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
+   public onDownloadSchusszetteltag1(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 1, 'schusszettel_tag1.pdf');
+   }
 
-  }
+   public onDownloadSchusszetteltag2(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 2, 'schusszettel_tag2.pdf');
+   }
+
+   public onDownloadSchusszetteltag3(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 3, 'schusszettel_tag3.pdf');
+   }
+
+   public onDownloadSchusszetteltag4(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 4, 'schusszettel_tag4.pdf');
+   }
+
+   private downloadSchusszettel(mannschaftId: number, tag: number, fileName: string): void {
+     // Find the mannschaft with the given id
+     const mannschaft = this.mannschaften.find(m => m.id === mannschaftId);
+     if (!mannschaft) {
+       console.error('Mannschaft not found for id:', mannschaftId);
+       return;
+     }
+
+     // Get the wettkampf ID for the requested tag
+     const wettkampfIdKey = `wettkampfId${tag}`;
+     const wettkampfId = (mannschaft as any)[wettkampfIdKey];
+
+     if (!wettkampfId) {
+       console.error(`No wettkampf ID found for tag ${tag}`);
+       return;
+     }
+
+     // Build the download URL
+     const URL: string = new UriBuilder()
+       .fromPath(environment.backendBaseUrl)
+       .path('v1/download')
+       .path('pdf/schusszettel')
+       .path('?wettkampfid=' + wettkampfId)
+       .build();
+
+     // Download the file
+     this.downloadService.download(URL, fileName, this.aElementRef)
+         .then((response: BogenligaResponse<string>) => console.log(response))
+         .catch((response: BogenligaResponse<string>) => {
+           console.error('Failed to download schusszettel:', response);
+           // Optionally show an error notification
+         });
+   }
+
+   public onView(versionedDataObject: VersionedDataObject): void {
+     this.navigateToDetailDialog(versionedDataObject);
+
+   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
@@ -655,7 +705,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = response.payload || [];
 
-    // initialisiere die vier Wettkampf-ID Variablen auf Komponentenebene für jede Mannschaft
+    // initialize wettkampf id placeholders on each mannschaft
     this.mannschaften.forEach((mannschaft) => {
       (mannschaft as any).wettkampfId1 = null;
       (mannschaft as any).wettkampfId2 = null;
@@ -663,22 +713,24 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       (mannschaft as any).wettkampfId4 = null;
     });
 
-    // Erzeuge TableRows aus der Nutzlast
-    this.rows = toTableRows(response.payload);
+    // build table rows from the received mannschaften
+    this.rows = toTableRows(this.mannschaften);
 
-    // Verstecke die Wettkampf-Action-Buttons initial (werden später aktualisiert, sobald die Wettkämpfe geladen sind)
-    const initialHidden = [8, 9, 10, 11];
-
-    this.rows.forEach((row) => {
-      row.hiddenActions = row.hiddenActions || [];
-      initialHidden.forEach((a) => {
-        if (row.hiddenActions.indexOf(a) === -1) {
-          row.hiddenActions.push(a);
-        }
-      });
+    // Initialize all schusszettel buttons as hidden by default
+    // They will be revealed in addTableAttributes if a wettkampfId exists
+    this.rows.forEach(row => {
+      if (!row.hiddenActions) {
+        row.hiddenActions = [];
+      }
+      row.hiddenActions.push(
+        TableActionType.DOWMLOADSCHUSZETTELTAG1,
+        TableActionType.DOWMLOADSCHUSZETTELTAG2,
+        TableActionType.DOWMLOADSCHUSZETTELTAG3,
+        TableActionType.DOWMLOADSCHUSZETTELTAG4
+      );
     });
 
-    // Lade zusätzliche Attribute (Veranstaltung, Wettkämpfe) asynchron
+    // for each mannschaft fetch wettkaempfe and update row visibility for schusszettel buttons
     this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
 
     this.loading = false;
@@ -721,8 +773,33 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               (mannschaft as any).wettkampfId4 = wettkampf.id;
             }
           });
+          // find corresponding table row and update hidden actions for schusszettel buttons
+          try {
+            const row = this.rows && this.rows.find(r => r.payload && r.payload.id === mannschaft.id);
+            if (row && row.hiddenActions) {
+              // Remove schusszettel button from hidden actions if wettkampfId exists
+              if ((mannschaft as any).wettkampfId1) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG1);
+              }
+              if ((mannschaft as any).wettkampfId2) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG2);
+              }
+              if ((mannschaft as any).wettkampfId3) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG3);
+              }
+              if ((mannschaft as any).wettkampfId4) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG4);
+              }
+            }
+          } catch (e) {
+            console.error('Failed to update row hidden actions', e);
+          }
         }
       })
+      .catch(() => {
+        // if fetching wettkaempfe fails, keep all schusszettel buttons hidden for safety
+        // (they remain in hiddenActions as initialized in handleLoadMannschaftenSuccess)
+      });
   }
 
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
