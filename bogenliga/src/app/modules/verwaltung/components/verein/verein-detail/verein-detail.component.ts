@@ -43,6 +43,9 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -98,7 +101,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     private onOfflineService: OnOfflineService,
     private notificationService: NotificationService,
     private userDataProviderService: UserDataProviderService,
-    private ligaProvider: LigaDataProviderService,) {
+    private ligaProvider: LigaDataProviderService,
+    private wettkampfDataProviderService: WettkampfDataProviderService,) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -649,10 +653,34 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
-    this.mannschaften = [];
-    this.mannschaften = response.payload;
-    this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
+    this.mannschaften = response.payload || [];
+
+    // initialisiere die vier Wettkampf-ID Variablen auf Komponentenebene für jede Mannschaft
+    this.mannschaften.forEach((mannschaft) => {
+      (mannschaft as any).wettkampfId1 = null;
+      (mannschaft as any).wettkampfId2 = null;
+      (mannschaft as any).wettkampfId3 = null;
+      (mannschaft as any).wettkampfId4 = null;
+    });
+
+    // Erzeuge TableRows aus der Nutzlast
     this.rows = toTableRows(response.payload);
+
+    // Verstecke die Wettkampf-Action-Buttons initial (werden später aktualisiert, sobald die Wettkämpfe geladen sind)
+    const initialHidden = [8, 9, 10, 11];
+
+    this.rows.forEach((row) => {
+      row.hiddenActions = row.hiddenActions || [];
+      initialHidden.forEach((a) => {
+        if (row.hiddenActions.indexOf(a) === -1) {
+          row.hiddenActions.push(a);
+        }
+      });
+    });
+
+    // Lade zusätzliche Attribute (Veranstaltung, Wettkämpfe) asynchron
+    this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
+
     this.loading = false;
   }
 
@@ -673,6 +701,28 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       mannschaft.veranstaltungName = 'Not Specified';
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
+
+    this.wettkampfDataProviderService.findAllWettkaempfeByMannschaftsId(mannschaft.id)
+      .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+        if (response.payload) {
+          (mannschaft as any).wettkampfId1 = null;
+          (mannschaft as any).wettkampfId2 = null;
+          (mannschaft as any).wettkampfId3 = null;
+          (mannschaft as any).wettkampfId4 = null;
+
+          response.payload.forEach(wettkampf => {
+            if (wettkampf.wettkampfTag === 1) {
+              (mannschaft as any).wettkampfId1 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 2) {
+              (mannschaft as any).wettkampfId2 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 3) {
+              (mannschaft as any).wettkampfId3 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 4) {
+              (mannschaft as any).wettkampfId4 = wettkampf.id;
+            }
+          });
+        }
+      })
   }
 
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
