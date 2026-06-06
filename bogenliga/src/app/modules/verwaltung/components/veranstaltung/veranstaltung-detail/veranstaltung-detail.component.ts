@@ -83,7 +83,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
-  public allVeranstaltung: Array<VeranstaltungDO> = [new VeranstaltungDO()];
   public lastVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentLiga: LigaDO = new LigaDO();
@@ -99,10 +98,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
-
-  public currentAllDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
   public allDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
-  public testMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
 
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
@@ -126,9 +122,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public currentLigatabelle: Array<LigatabelleErgebnisDO>;
 
   public ActionButtonColors = ActionButtonColors;
-  currentDisziplin: any;
-  allDisziplin: any;
-
 
   private sessionHandling: SessionHandling;
 
