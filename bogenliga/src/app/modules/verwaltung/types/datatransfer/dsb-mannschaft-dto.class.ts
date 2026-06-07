@@ -11,6 +11,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
   sortierung: number;
   sportjahr: number;
   veranstaltungName: string;
+  meldeDeadline: string;
   ligaId: number;
   wettkampfTag: string;
   wettkampfOrtsname: string;
