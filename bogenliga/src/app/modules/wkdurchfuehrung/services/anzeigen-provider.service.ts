@@ -1,13 +1,8 @@
-import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
-  BogenligaResponse,
   DataProviderService,
-  RequestResult,
-  RestClient,
-  UriBuilder
+  RestClient
 } from '@shared/data-provider';
-import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
 
 
 @Injectable({
