@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
+import {BogenligaResponse} from '@shared/data-provider';
+import {isNullOrUndefined} from '@shared/functions';
+import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
+import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
 
-export interface AnzeigeDO {
-  id: number;
-  physicalDisplayID: string;
-  tableType: string;
-}
 
 @Component({
   selector: 'bla-anzeige-manager',
@@ -13,10 +12,16 @@ export interface AnzeigeDO {
 })
 
 export class AnzeigeManagerComponent {
+  /*
+  *  AnzeigenProviderService hat oben das hier:
+  *   @Injectable({
+  *     providedIn: 'root'
+  *   })
+  *  Deshalb ist es für den constructor einfach verfügbar.
+  * */
+  constructor(private anzeigenProvider: AnzeigenProviderService) {}
 
-  public displays: AnzeigeDO[] = [
-    {id: 1, physicalDisplayID: '', tableType: 'tabelle'},
-  ];
+  public displays: AnzeigenDO[] = [];
 
   public currentMatch = 1;
 
@@ -34,7 +39,7 @@ export class AnzeigeManagerComponent {
     const deleteIndex = id - 1;
     const currentDisplay = this.displays[deleteIndex];
     const confirmResult = confirm(
-      `Möchtest du die Anzeige "${currentDisplay.physicalDisplayID}" wirklich entfernen?`
+      `Möchtest du die Anzeige "${currentDisplay.physischeBildschirmId}" wirklich entfernen?`
     );
 
     if (confirmResult) {
@@ -43,11 +48,20 @@ export class AnzeigeManagerComponent {
   }
 
   public addDisplay(): void {
-    const newDisplay: AnzeigeDO = {
-      id: this.displays.length + 1,
-      physicalDisplayID: '',
-      tableType: 'tabelle',
-    };
-    this.displays.push(newDisplay);
+    this.anzeigenProvider.create(new AnzeigenDO())
+      .then((response: BogenligaResponse<number>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)) {
+          console.log('Saved with id: ' + response.payload);
+          const newDisplay: AnzeigenDO = {
+            id: response.payload,
+            physischeBildschirmId: '',
+            tableTyp: 'tabelle',
+            aktuellesMatch: this.currentMatch,
+            veranstaltungsId: null
+          };
+          this.displays.push(newDisplay);
+        }
+      });
   }
 }
