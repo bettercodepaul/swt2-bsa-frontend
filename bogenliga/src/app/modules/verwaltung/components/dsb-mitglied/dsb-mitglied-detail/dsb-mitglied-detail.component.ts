@@ -48,9 +48,9 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
   public currentVerein: VereinDO = new VereinDO();
-  // public vereine: Array<VereinDO> = [new VereinDO()];
-  public vereine: VereinDO[];
-  // public currentVerein: VereinDO;
+  public vereine: VereinDO[] = [];
+  public filteredVereine: VereinDO[] = [];
+  public vereinSearchTerm = '';
 
   public dsbMitgliedNationalitaet: string[];
   public loadingVereine = true;
@@ -373,6 +373,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
       }
     });
+    this.applyVereinFilter();
   }
 
   private handleFailure(response: BogenligaResponse<DsbMitgliedDO>) {
@@ -432,13 +433,47 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
         if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
           response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
         }
-        // this.currentVerein = response.payload[0];
         this.vereine = response.payload;
+        if (this.vereine.length === 1 && isNullOrUndefined(this.currentVerein.id)) {
+          this.currentVerein = this.vereine[0];
+          this.vereinSearchTerm = '';
+        }
+        this.applyVereinFilter();
         this.loadingVereine = false;
         this.vereineLoaded = true;
       })
       .catch((response: BogenligaResponse<VereinDTO[]>) => {
         this.vereine = response.payload;
+        this.applyVereinFilter();
       });
+  }
+
+  public onVereinSearch(searchTerm: string): void {
+    this.vereinSearchTerm = searchTerm;
+    this.applyVereinFilter();
+  }
+
+  private applyVereinFilter(): void {
+    const normalizedSearchTerm = (this.vereinSearchTerm || '').trim().toLocaleLowerCase();
+
+    if (!normalizedSearchTerm) {
+      this.filteredVereine = [...this.vereine];
+      return;
+    }
+
+    this.filteredVereine = this.vereine.filter((verein: VereinDO) => this.matchesVereinSearch(verein, normalizedSearchTerm));
+
+    if (this.currentVerein?.id && !this.filteredVereine.some((verein: VereinDO) => verein.id === this.currentVerein.id)) {
+      const selectedVerein = this.vereine.find((verein: VereinDO) => verein.id === this.currentVerein.id);
+      if (selectedVerein) {
+        this.filteredVereine = [selectedVerein, ...this.filteredVereine];
+      }
+    }
+  }
+
+  private matchesVereinSearch(verein: VereinDO, normalizedSearchTerm: string): boolean {
+    return [verein.name, verein.identifier, verein.regionName]
+      .filter((value: string) => !!value)
+      .some((value: string) => value.toLocaleLowerCase().includes(normalizedSearchTerm));
   }
 }
