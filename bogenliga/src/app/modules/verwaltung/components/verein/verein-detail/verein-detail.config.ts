@@ -24,6 +24,11 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         width:          20,
       },
       {
+        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MELDEDEADLINE',
+        propertyName:   'meldeDeadline',
+        width:          20,
+      },
+      {
         translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.SPORTJAHR',
         propertyName:   'sportjahr',
         width:          20,

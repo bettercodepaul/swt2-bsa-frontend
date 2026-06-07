@@ -662,15 +662,20 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         .then((response: BogenligaResponse<VeranstaltungDTO>) => {
           if (response.payload && response.payload.name) {
             mannschaft.veranstaltungName = response.payload.name;
+            const raw = response.payload.meldeDeadline;
+            mannschaft.meldeDeadline = raw ? new Date(raw).toLocaleDateString('de-DE') : '—';
           } else {
             mannschaft.veranstaltungName = 'Unknown';
+            mannschaft.meldeDeadline = '—';
           }
         })
         .catch(() => {
           mannschaft.veranstaltungName = '';
+          mannschaft.meldeDeadline = '—';
         });
     } else {
       mannschaft.veranstaltungName = 'Not Specified';
+      mannschaft.meldeDeadline = '—';
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
   }
