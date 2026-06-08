@@ -35,8 +35,7 @@ export class AnzeigeManagerComponent {
     }
   }
 
-  public removeDisplay(id: number): void {
-    const deleteIndex = id - 1;
+  public removeDisplay(deleteIndex: number): void {
     const currentDisplay = this.displays[deleteIndex];
     const confirmResult = confirm(
       `Möchtest du die Anzeige "${currentDisplay.physischeBildschirmId}" wirklich entfernen?`
