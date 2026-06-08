@@ -1038,6 +1038,12 @@
           "DELETE": "Delete"
         },
         "TABLE": {
+          "DROPDOWN": {
+            "SPORTJAHR": {
+              "LABEL": "Sport Year",
+              "ALL": "All"
+            }
+          },
           "HEADERS": {
             "ID": "ID",
             "MANNSCHAFTSNAME": "Name",
