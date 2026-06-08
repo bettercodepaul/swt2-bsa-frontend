@@ -5,3 +5,4 @@ export {RingzahlTabIndexDirective} from './schusszettel/tabindex.directive';
 export * from './tablet-admin/tablet-admin.component';
 export * from './tableteingabe/tableteingabe.component';
 export * from './fullscreen/fullscreen.component';
+export * from './anzeige-manager/anzeige-manager.component';

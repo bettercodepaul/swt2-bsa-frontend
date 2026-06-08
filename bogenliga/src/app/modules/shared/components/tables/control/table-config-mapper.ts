@@ -204,6 +204,27 @@ export function tableConfigWithDefaults(optional: {
 
   tableConfig.actions = tableActionConfigWithDefaults(optional.actions);
 
+  // Preserve permission arrays from the original config if provided.
+  // tableConfigWithDefaults is used to enrich the config with defaults and must not drop permission settings.
+  if ((optional as any).hasOwnProperty('editPermission')) {
+    (tableConfig as any).editPermission = (optional as any).editPermission;
+  }
+  if ((optional as any).hasOwnProperty('viewPermission')) {
+    (tableConfig as any).viewPermission = (optional as any).viewPermission;
+  }
+  if ((optional as any).hasOwnProperty('deletePermission')) {
+    (tableConfig as any).deletePermission = (optional as any).deletePermission;
+  }
+  if ((optional as any).hasOwnProperty('addPermission')) {
+    (tableConfig as any).addPermission = (optional as any).addPermission;
+  }
+  if ((optional as any).hasOwnProperty('downloadPermission')) {
+    (tableConfig as any).downloadPermission = (optional as any).downloadPermission;
+  }
+  if ((optional as any).hasOwnProperty('mapPermission')) {
+    (tableConfig as any).mapPermission = (optional as any).mapPermission;
+  }
+
   return tableConfig;
 }
 
