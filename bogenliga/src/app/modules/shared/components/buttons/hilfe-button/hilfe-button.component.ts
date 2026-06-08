@@ -11,6 +11,7 @@ export class HilfeButtonComponent implements OnInit {
   faQuestion = faQuestion;
   @Input() public id: string;
   @Input() public href: string;
+  @Input() public target = '_blank';
 
   ngOnInit(): void {
   }
