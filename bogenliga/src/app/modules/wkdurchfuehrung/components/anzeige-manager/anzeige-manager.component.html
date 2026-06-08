@@ -25,12 +25,12 @@
 
 
   <div *ngIf="displays.length > 0">
-    <div *ngFor="let display of displays">
+    <div *ngFor="let display of displays; let i = index">
 
       <div class="display-config-section">
         <button
           class="action-btn action-btn-danger remove-button"
-          (click)="removeDisplay(display.id)"
+          (click)="removeDisplay(i)"
           title="Anzeige entfernen">
           <span class="action-btn-circle">-</span>
           Entfernen
