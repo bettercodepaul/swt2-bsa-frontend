@@ -204,7 +204,7 @@
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'desktop'"
               (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
-              [disabled]="isDisabled()">
+              [disabled]="!selectedWettkampf">
               {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
             </bla-actionbutton>
 
