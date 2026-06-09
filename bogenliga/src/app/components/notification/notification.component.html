@@ -16,22 +16,21 @@
 
 
     <bla-button style="background-color: #8ac679"
-          [buttonSize]="ButtonSize.SMALL"
-          (onClick)="toggleDetails()"
-          data-toggle="collapse"
-          href="#collapseErrorMessage"
-          aria-expanded="false"
-          aria-controls="collapseErrorMessage">
-          <div *ngIf="toggleOn; else elseBlock">
-            <i class="fas fa-caret-up"></i> {{'NOTIFICATION.INFO.WENIGER'|translate}}
-          </div>
-          <ng-template #elseBlock>
-            <i class="fas fa-caret-down"></i> {{'NOTIFICATION.INFO.MEHR'|translate}}
-          </ng-template>
+                [buttonSize]="ButtonSize.SMALL"
+                (onClick)="toggleDetails()"
+                [attr.aria-expanded]="toggleOn"
+                aria-controls="collapseErrorMessage">
+      <div *ngIf="toggleOn; else elseBlock">
+        <i class="fas fa-caret-up"></i> {{'NOTIFICATION.INFO.WENIGER'|translate}}
+      </div>
+      <ng-template #elseBlock>
+        <i class="fas fa-caret-down"></i> {{'NOTIFICATION.INFO.MEHR'|translate}}
+      </ng-template>
     </bla-button>
 
 
     <div class="collapse"
+         [class.show]="toggleOn"
          id="collapseErrorMessage">
       <div class="card card-body modal-dialog-error">
         <!-- show pre formatted payload -->
