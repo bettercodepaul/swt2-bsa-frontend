@@ -42,4 +42,19 @@ export class AnzeigenProviderService extends DataProviderService {
     });
   }
 
-}
+  public update(payload: AnzeigenDO): Promise<BogenligaResponse<MatchDOExt>> {
+      const anzeigenDTO = AnzeigenMapperExt.matchToDTO(anzeigenDO);
+      return new Promise(((resolve, reject) => {
+        this.restClient.PUT(this.getUrl(), anzeigenDTO)
+            .then((data: AnzeigenDTOExt) => {
+              const updatedAnzeigenDO = AnzeigenMapperExt.matchToDO(data);
+              resolve({result: RequestResult.SUCCESS, payload: updatedMatchDO});
+            }, (error: HttpErrorResponse) => {
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      }));
+    }
