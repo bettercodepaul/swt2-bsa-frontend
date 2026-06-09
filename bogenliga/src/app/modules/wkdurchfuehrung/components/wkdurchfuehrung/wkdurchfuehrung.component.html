@@ -199,6 +199,15 @@
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
             </bla-actionbutton>
 
+            <bla-actionbutton
+              [id]="'anzeigenManager'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'desktop'"
+              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
+              [disabled]="isDisabled()">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
+            </bla-actionbutton>
+
           </div>
 
           <div id="adminOfflineResetButton"
