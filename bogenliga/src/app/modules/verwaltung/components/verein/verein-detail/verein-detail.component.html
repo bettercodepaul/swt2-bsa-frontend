@@ -202,8 +202,8 @@
           </bla-actionbutton>
 
           <bla-actionbutton (onClick)="onDelete($event)"
-                            *ngIf="entityExists()"
-                            [buttonType]="ButtonType.DANGER"
+                            *ngIf="entityExists() && currentUserService.hasPermission(UserPermission.CAN_DELETE_STAMMDATEN)"
+                            [disabled]="!currentUserService.hasPermission(UserPermission.CAN_DELETE_STAMMDATEN)"
                             [loading]="deleteLoading"
                             [color]="ActionButtonColors.DANGER"
                             [iconClass]="'minus'">
