@@ -850,7 +850,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   redirectToAnzeigenManager(wettkampfID: number): void {
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
-        ['wkdurchfuehrung/fullscreen', wettkampfID],
+        ['wkdurchfuehrung/anzeige-manager', wettkampfID],
       )
     );
     window.open(url, '_blank');
