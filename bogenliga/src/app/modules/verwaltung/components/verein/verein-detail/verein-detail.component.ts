@@ -35,7 +35,7 @@ import {environment} from '@environment';
 import {
   DownloadButtonResourceProviderService
 } from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {jsPDF} from 'jspdf';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {SessionHandling} from '@shared/event-handling';
@@ -76,9 +76,13 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public regionen: Array<RegionDO> = [new RegionDO()];
   public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
 
+  public selectedSportjahr : number = null; //Auswahl im Dropdown
+  public availableSportjahre: number [] = []; //Liste im Dropdown
+
   public deleteLoading = false;
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
+  public UserPermission = UserPermission;
 
 
   private sessionHandling: SessionHandling;
@@ -90,7 +94,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   constructor(private vereinProvider: VereinDataProviderService,
     private downloadService: DownloadButtonResourceProviderService,
     private regionProvider: RegionDataProviderService,
-    private currentUserService: CurrentUserService,
+    public currentUserService: CurrentUserService,
     private mannschaftsDataProvider: DsbMannschaftDataProviderService,
     private veranstaltungsProvider: VeranstaltungDataProviderService,
     private router: Router,
@@ -353,7 +357,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
                                     if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                                       this.mannschaftsDataProvider.deleteById(id)
-                                          .then((response) => this.loadMannschaften())
+                                          .then((response) => this.loadMannschaftenByVereinsIdAndSportjahr())
                                           .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
                                     } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
                                       this.rows = hideLoadingIndicator(this.rows, id);
@@ -388,7 +392,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
         if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
           this.mannschaftsDataProvider.copyMannschaft(id)
-            .then((response) => this.loadMannschaften())
+            .then((response) => this.loadMannschaftenByVereinsIdAndSportjahr())
             .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
         } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
           this.rows = hideLoadingIndicator(this.rows, id);
@@ -538,7 +542,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
-    this.loadMannschaften();
+    this.loadSportjahre();
     this.loading = false;
 
     this.currentRegion = this.regionen.filter((region) => region.id === this.currentVerein.regionId)[0];
@@ -646,6 +650,57 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.mannschaftsDataProvider.findAllByVereinsId(this.currentVerein.id)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
         .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+  }
+
+  private loadMannschaftenByVereinsIdAndSportjahr() {
+    this.loading = true;
+    if (this.selectedSportjahr === null) {
+      const jahreRequests = this.availableSportjahre.map(jahr =>
+        this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, jahr)
+      );
+      const warteschlangeRequest = this.mannschaftsDataProvider.findAllByWarteschlangeId();
+      Promise.all([...jahreRequests, warteschlangeRequest])
+        .then(responses => {
+          const warteschlangeResponse = responses[responses.length - 1];
+          const ohneJahr = (warteschlangeResponse.payload as any[]).filter(m => m.vereinId === this.currentVerein.id);
+          const mitJahr = responses.slice(0, -1).reduce((acc: DsbMannschaftDTO[], r) => acc.concat(r.payload as any), []);
+          this.handleLoadMannschaftenSuccess({result: RequestResult.SUCCESS, payload: [...mitJahr, ...ohneJahr]});
+        })
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+    } else {
+      this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, this.selectedSportjahr)
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+    }
+  }
+
+  private loadSportjahre(): void {
+    this.mannschaftsDataProvider.findAllSportjahre()
+      .then(response => {
+        const alleJahre = response.payload;
+        return Promise.all(
+          alleJahre.map(jahr =>
+            this.mannschaftsDataProvider.findAllByVereinsIdAndSportjahr(this.currentVerein.id, jahr)
+              .then(r => ({jahr, hatMannschaften: r.payload.length > 0}))
+              .catch(() => ({jahr, hatMannschaften: false}))
+          )
+        );
+      })
+      .then(ergebnisse => {
+        this.availableSportjahre = ergebnisse
+          .filter(e => e.hatMannschaften)
+          .map(e => e.jahr);
+        this.selectedSportjahr = null;
+        this.loadMannschaftenByVereinsIdAndSportjahr();
+      })
+      .catch(() => {
+        this.loadMannschaften();
+      });
+  }
+
+  public onSportjahrChange(year : number) : void{
+    this.selectedSportjahr = year;
+    this.loadMannschaftenByVereinsIdAndSportjahr();
   }
 
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
