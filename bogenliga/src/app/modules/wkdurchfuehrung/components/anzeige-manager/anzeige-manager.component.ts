@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
 import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provid
   styleUrls: ['./anzeige-manager.component.scss']
 })
 
-export class AnzeigeManagerComponent {
+export class AnzeigeManagerComponent implements OnInit {
   /*
   *  AnzeigenProviderService hat oben das hier:
   *   @Injectable({
@@ -19,11 +20,22 @@ export class AnzeigeManagerComponent {
   *   })
   *  Deshalb ist es für den constructor einfach verfügbar.
   * */
-  constructor(private anzeigenProvider: AnzeigenProviderService) {}
 
   public displays: AnzeigenDO[] = [];
 
   public currentMatch = 1;
+
+  public wettkampftagID: string;
+
+  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.wettkampftagID = params.get('selectedWettkampfId');
+    });
+  }
+
+
 
   public nextMatch(): void {
     this.currentMatch++;
