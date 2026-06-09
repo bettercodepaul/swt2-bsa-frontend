@@ -35,7 +35,7 @@ import {environment} from '@environment';
 import {
   DownloadButtonResourceProviderService
 } from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {jsPDF} from 'jspdf';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {SessionHandling} from '@shared/event-handling';
@@ -85,6 +85,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public deleteLoading = false;
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
+  public UserPermission = UserPermission;
 
 
   private sessionHandling: SessionHandling;
@@ -96,7 +97,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   constructor(private vereinProvider: VereinDataProviderService,
     private downloadService: DownloadButtonResourceProviderService,
     private regionProvider: RegionDataProviderService,
-    private currentUserService: CurrentUserService,
+    public currentUserService: CurrentUserService,
     private mannschaftsDataProvider: DsbMannschaftDataProviderService,
     private veranstaltungsProvider: VeranstaltungDataProviderService,
     private router: Router,
