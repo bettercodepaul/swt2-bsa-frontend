@@ -37,6 +37,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {filter, take} from 'rxjs/operators';
 
 
 const ID_PATH_PARAM = 'id';
@@ -110,6 +111,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public ActionButtonColors = ActionButtonColors;
 
   private sessionHandling: SessionHandling;
+  private loadDistinctWettkampfPromise: Promise<void> = null;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -211,7 +213,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     let currentAusrichter: UserProfileDO;
 
     this.loadWettkampf();
-    this.currentWettkampftagArray.forEach((element) => {if (element.wettkampfTag == wettkampfTagNumber) {currentWettkampfTag = element; }});
+    this.currentWettkampftagArray.forEach((element) => {if (element.wettkampfTag === wettkampfTagNumber) {currentWettkampfTag = element; }});
 
     currentWettkampfTag = this.currentWettkampftagArray[wettkampfTagNumber];
     currentAusrichter = this.currentAusrichter[wettkampfTagNumber];
@@ -236,7 +238,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public async onAddWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     await this.loadDistinctWettkampf();
-    await this.createInitWettkampfTag((this.anzahl) + 1);
+    await this.createInitWettkampfTag(this.getNextWettkampftagNumber());
     await this.loadDistinctWettkampf();
   }
 
@@ -244,7 +246,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public async onCopyWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     await this.loadDistinctWettkampf();
-    await this.copyCurrentWettkampfTag((this.anzahl) + 1);
+    await this.copyCurrentWettkampfTag(this.getNextWettkampftagNumber());
     await this.loadDistinctWettkampf();
   }
 
@@ -296,12 +298,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private wettkampftagService() {
     this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+        .pipe(
+          filter((myNotification) => myNotification.userAction === NotificationUserAction.ACCEPTED),
+          take(1)
+        )
         .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.saveLoading = false;
-            this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
-              this.currentVeranstaltung.id);
-          }
+          this.saveLoading = false;
+          this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
+            this.currentVeranstaltung.id);
         });
   }
 
@@ -436,7 +440,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       severity: NotificationSeverity.QUESTION,
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.ACCEPTED
+      userAction: NotificationUserAction.PENDING
     };
 
     if (deadlineDate < currentDate) {
@@ -455,13 +459,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification_expired);
 
     } else {
-      this.updateNumbersDelete();
       this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
+          .pipe(
+            filter((myNotification) => myNotification.userAction !== NotificationUserAction.PENDING),
+            take(1)
+          )
           .subscribe((myNotification) => {
 
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.wettkampfDataProvider.deleteById(id)
-                  .then((response) => this.handleDeleteSuccess(response))
+                  .then((response) => this.handleDeleteSuccess(response, id))
                   .catch((response) => this.handleDeleteFailure(response));
             } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
               this.deleteLoading = false;
@@ -521,9 +528,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private async handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
     this.loading = false;
-    this.loadWettkampf();
     await this.loadDistinctWettkampf();
     this.selectedWettkampf = this.selectedDTOs[0];
+    this.loadUsers();
     this.loadKampfrichter();
     this.loadLizenzen();
   }
@@ -543,7 +550,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
-  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
+  private async handleDeleteSuccess(response: BogenligaResponse<void>, deletedWettkampfId?: number): Promise<void> {
+
+    if (!isNullOrUndefined(deletedWettkampfId)) {
+      await this.updateNumbersAfterDelete(deletedWettkampfId);
+    }
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
@@ -556,11 +567,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/veranstaltung');
-            this.deleteLoading = false;
-          }
+        .pipe(
+          filter((myNotification) => myNotification.userAction === NotificationUserAction.ACCEPTED),
+          take(1)
+        )
+        .subscribe(() => {
+          this.deleteLoading = false;
         });
 
     this.notificationService.showNotification(notification);
@@ -579,10 +591,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE)
+        .pipe(
+          filter((myNotification) => myNotification.userAction === NotificationUserAction.ACCEPTED),
+          take(1)
+        )
         .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
+          this.deleteLoading = false;
         });
 
     this.notificationService.showNotification(notification);
@@ -683,65 +697,51 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   // loads all existing Wettkampftage from Backend
   private async loadDistinctWettkampf(): Promise<void> {
+    if (!isNullOrUndefined(this.loadDistinctWettkampfPromise)) {
+      return this.loadDistinctWettkampfPromise;
+    }
+
     this.loadingWettkampf = true;
-    await this.wettkampfDataProvider.findAll()
+    this.loadDistinctWettkampfPromise = this.wettkampfDataProvider.findAllByVeranstaltungId(this.currentVeranstaltung.id)
         .then((newList: BogenligaResponse<WettkampfDO[]>) => this.handleLoadDistinctWettkampfSuccess(newList))
-        .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList));
+        .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList))
+        .then(() => {
+          this.loadingWettkampf = false;
+          this.loadDistinctWettkampfPromise = null;
+        });
+
+    return this.loadDistinctWettkampfPromise;
   }
 
   // when loading was succesfull, filter Wettkampftage depending on Veranstaltung
   private async handleLoadDistinctWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): Promise<void> {
     this.selectedDTOs = [];
-    this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
+    this.selectedDTOs = response.payload
+        .filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id)
+        .sort((objectA, objectB) => {
+          const tagA = objectA.wettkampfTag || 0;
+          const tagB = objectB.wettkampfTag || 0;
+
+          if (tagA !== tagB) {
+            return tagA - tagB;
+          }
+
+          return Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum);
+        });
     this.anzahl = this.selectedDTOs.length;
-    let counter = 0;
-    //check if WettkampfDO Obeject contains all values
-    for (const element of this.selectedDTOs) {
 
-      if (element.wettkampfTag == null) {
-        counter += 1;
-      }
-      if (element.wettkampfBeginn == null) {
-        counter += 1;
-      }
-      if (element.wettkampfOrtsname == null) {
-        counter += 1;
-      }
-      if (element.wettkampfPlz == null) {
-        counter += 1;
-      }
-      if (element.wettkampfStrasse == null) {
-        counter += 1;
-      }
-      if (element.wettkampfDatum == null) {
-        counter += 1;
-      }
-      if (element.id == null) {
-        counter +=1;
-      }
+    this.currentWettkampftagArray = [new WettkampfDO()];
 
-
-    }
-    //sort selectedDTOs by date and assign the corrosponding WettkampfTag
-    for(let i = 0; i <this.selectedDTOs.length;i++) {
-      if (counter == 0 && this.selectedDTOs.length > 1) {
-
-        this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
-        this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
-        for (let index in this.selectedDTOs) {
-          this.selectedDTOs[index].wettkampfDatum = this.selectedDTOs[index].wettkampfDatum.toString();
-        }
-        await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
-      }
+    for (const wettkampf of this.selectedDTOs) {
+      this.currentWettkampftagArray[wettkampf.wettkampfTag] = wettkampf;
     }
 
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
-      this.selectedDTOs.push(new WettkampfDO());
       await this.createInitWettkampfTag(1);
-      await this.loadDistinctWettkampf();
+      this.selectedDTOs = [this.currentWettkampftagArray[1]];
+      this.anzahl = this.selectedDTOs.length;
     }
-    this.loadingWettkampf = false;
   }
 
 
@@ -753,22 +753,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   // onSelect for SelectionList in html-file, loads currently selected Wettkampftag
   public onSelect($event: WettkampfDO[]): void {
+    if (isNullOrUndefined($event) || $event.length === 0 || isNullOrUndefined($event[0])) {
+      return;
+    }
+
     console.log('selected:', $event);
     this.selectedWettkampfTag = $event[0].wettkampfTag;
     this.selectedWettkampf = $event[0];
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
-    this.loadDistinctWettkampf().then(()=> {});
+    this.loadDistinctWettkampf().then(() => {});
     this.loadKampfrichter();
   }
 
   // create an empty Wettkampftag
   public async createInitWettkampfTag(num: number): Promise<boolean> {
-    console.log(Number(this.maxWettkampftageEinstellungenDO.value));
-    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+    console.log(this.getMaxWettkampftage());
+    if (this.anzahl < this.getMaxWettkampftage()) {
       this.anzahl++;
       const temp: WettkampfDO = new WettkampfDO(
-        num,
+        null,
         this.currentVeranstaltung.id,
         '2021-01-01',
         '',
@@ -776,7 +780,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         '',
         '',
         '',
-        this.anzahl,
+        num,
         1,
         1,
         1,
@@ -801,36 +805,36 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return true;
   }
 
-  // Wenn nicht alle Felder von allen Wettkampftagen befüllt sind, gibt es einen Error
-  public async updateNumbersDelete(): Promise<boolean> {
-    // TODO Alle existierende Wettkampftage müssen komplett ausgefüllt und abgespeichert sein, Wenn ein Attribut fehlt, funktioniert die Updatefunktion nicht
-
-    this.loadWettkampf();
+  public async updateNumbersAfterDelete(deletedWettkampfId: number): Promise<boolean> {
     await this.loadDistinctWettkampf();
 
-    if (this.selectedWettkampfTag != this.currentWettkampftagArray.length) {    // Wenn letzter Wettkampftag gelöscht werden soll, muss Nummerierung nicht angepasst werden
-      for (let i = this.selectedWettkampfTag + 1; i < this.currentWettkampftagArray.length; i++) {   // Man beginnt im Array, ein Tag weiter als der aktuelle (Welcher gelöscht werden soll)
-        console.log('Wettkampftag vorher: ' + this.currentWettkampftagArray[i].wettkampfTag);
-        console.log('i = ' + i);
-        this.currentWettkampftagArray[i].wettkampfTag --;     // Wettkampftagnummer wird dekrementiert
+    const remainingWettkampftage = this.selectedDTOs
+        .filter((wettkampf) => wettkampf.id !== deletedWettkampfId)
+        .sort((objectA, objectB) => (objectA.wettkampfTag || 0) - (objectB.wettkampfTag || 0));
 
-        console.log('Wettkampftag danach: ' + this.currentWettkampftagArray[i].wettkampfTag);
+    for (let i = 0; i < remainingWettkampftage.length; i++) {
+      const nextWettkampfTag = i + 1;
+      const wettkampf = remainingWettkampftage[i];
 
-        if (this.currentWettkampftagArray[i].wettkampfTag == null) {
-          console.log('wettkampf doesnt exist');
-        } else {
-          await this.wettkampfDataProvider.update(this.currentWettkampftagArray[i]);    // Wettkampftag mit aktualisierter Wettkampftagnummer speichern
-          this.currentWettkampftagArray[i - 1] = this.currentWettkampftagArray[i];      // Position im Array verschieben
-        }
+      if (wettkampf.wettkampfTag !== nextWettkampfTag) {
+        wettkampf.wettkampfTag = nextWettkampfTag;
+        await this.wettkampfDataProvider.update(wettkampf);
       }
     }
+
     await this.loadDistinctWettkampf();
+    this.loadWettkampf();
+    if (this.selectedDTOs.length > 0) {
+      this.selectedWettkampfTag = this.selectedDTOs[0].wettkampfTag;
+      this.selectedWettkampf = this.selectedDTOs[0];
+    }
+
     return true;
   }
 
   // Creates Copy of current Wettkampftag
   public async copyCurrentWettkampfTag(num: number): Promise<boolean> {
-    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+    if (this.anzahl < this.getMaxWettkampftage()) {
       this.anzahl++;
 
       // parsing current date
@@ -864,7 +868,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       incrementedWettkampfDatum += incrementedDate.toString();
 
       const temp: WettkampfDO = new WettkampfDO(
-        num,
+        null,
         this.currentVeranstaltung.id,
         incrementedWettkampfDatum,
         this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfStrasse.toString(),
@@ -872,7 +876,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsname.toString(),
         this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsinfo.toString(),
         this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfBeginn.toString(),
-        this.anzahl,
+        num,
         1,
         1,
         1,
@@ -895,6 +899,24 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification);
     }
     return true;
+  }
+
+  private getMaxWettkampftage(): number {
+    const configuredMaxWettkampftage = Number(this.maxWettkampftageEinstellungenDO.value);
+
+    if (isNaN(configuredMaxWettkampftage) || configuredMaxWettkampftage <= 0) {
+      return 4;
+    }
+
+    return configuredMaxWettkampftage;
+  }
+
+  private getNextWettkampftagNumber(): number {
+    if (isNullOrUndefined(this.selectedDTOs) || this.selectedDTOs.length === 0) {
+      return 1;
+    }
+
+    return Math.max(...this.selectedDTOs.map((wettkampf) => wettkampf.wettkampfTag || 0)) + 1;
   }
 
   public getTranslation(key: string) {

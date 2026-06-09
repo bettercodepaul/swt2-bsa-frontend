@@ -14,14 +14,12 @@ import {fromPayloadOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligat
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {
   fromOfflineMatchPayloadArray,
-  toDTOFromOfflineMatch,
-  toDTOFromOfflineMatchArray
+  toDTOFromOfflineMatch
 } from '@verwaltung/mapper/match-offline-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {
   fromOfflinePassePayloadArray,
-  toPasseDTOClassFromOfflineArray,
   toPasseDTOFromOfflineArray
 } from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
@@ -41,8 +39,7 @@ import {throwError} from 'rxjs';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {toOfflineFromVeranstaltungDO} from '@verwaltung/mapper/veranstaltung-offline-mapper';
 import {
-  fromOfflineWettkampfPayload,
-  fromOfflineWettkampfPayloadArray
+  fromOfflineWettkampfPayload
 } from '@verwaltung/mapper/wettkampf-offline-mapper';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {fromDOtoOfflineDsbMitgliederArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
@@ -53,10 +50,10 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 import {
   OfflinetokenSync
 } from '@shared/data-provider/offlinedb/types/offline-offlinetokensync.interface';
-import {match} from 'cypress/types/minimatch';
+
 import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
 import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
-import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
+
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +79,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         this.handleLoadLigatabelleVeranstaltungSuccess(response);
         resolve();
       })
-      .catch((response: BogenligaResponse<OfflineLigatabelle[]>) => {
+      .catch(() => {
         console.log('error loading offline ligatabelle');
         reject();
       });
@@ -105,7 +102,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         this.handleLoadMatchTabelleSuccess(response.payload);
         resolve();
       })
-      .catch((response: BogenligaResponse<OfflineMatch[]>) => {
+      .catch(() => {
         console.log('error loading offline match');
         reject();
       });
@@ -203,7 +200,8 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       this.loadPasse(id)
       .then((response: BogenligaResponse<OfflinePasse[]>) => {
         const passen = response.payload.map((passe) => {
-          passe.rueckennummer = mitglieder.find((mitglied) => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
+          const mitglied = mitglieder.find((m) => m.dsbMitgliedId === passe.dsbMitgliedId);
+          passe.rueckennummer = mitglied ? mitglied.rueckennummer : null;
           return passe;
         });
         db.passeTabelle.bulkPut(passen, passen.map((passe) => passe.id)).then((value) => {
@@ -312,7 +310,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   /**
    * Calls the corresponding REST-API method and returns the result as Promise
    * Doesn't return anything but fills the OfflineDb with the data!
-   * @param id tbd
    *
    * @author Dennis Bär
    */
@@ -419,7 +416,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   }
 
   private loadVereine(): Promise<BogenligaResponse<OfflineVerein[]>> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.vereinDataProvider.findAll()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: offlineVereinFromVereinDOArray(data.payload)});
@@ -429,7 +426,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   }
 
   private loadMannschaften(): Promise<BogenligaResponse<OfflineMannschaft[]>> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.mannschaftDataProvider.findAll()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: offlineMannschaftFromDsbMannschaftDOArray(data.payload)});
@@ -450,7 +447,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       .then((data: DataTransferObject[]) => {
         // payload -> passe array
         resolve({result: RequestResult.SUCCESS, payload: fromOfflinePassePayloadArray(data)});
-      }, (error: HttpErrorResponse) => reject({
+      }, () => reject({
         result: RequestResult.FAILURE,
         payload: 'Fehler beim Laden der Pässe'
       }));
@@ -503,7 +500,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   private loadDsbMitglieder(): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.dsbMitgliedDataProvider.findAll()
         .then((data) => {
           resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)});
@@ -514,7 +511,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   private loadVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineVeranstaltung[]>> {
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         this.veranstaltungDataProvider.findById(id)
             .then((data) => {
 
@@ -546,9 +543,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   }
 
-  private handleLoadLigatabelleVeranstaltungFailure(_response: BogenligaResponse<OfflineLigatabelle[]>): void {
-    console.log('Failure');
-  }
+
 
   // noinspection JSMethodCanBeStatic
   private handleErrorResponse(error: HttpErrorResponse, reject: (reason?: any) => void): void {
@@ -593,8 +588,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
       try {
       const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
-      let matchs: OfflineMatch[] = [];
-      matchs = await db.matchTabelle.where('offlineVersion').above(1).toArray();
+      const matchs = await db.matchTabelle.where('offlineVersion').above(1).toArray();
       const mitglieder = await db.mannschaftsmitgliedTabelle.where('offlineVersion').above(1).toArray();
 
       /* Backend braucht zulange/ timed out ka
@@ -625,8 +619,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         }
 
       // Übernehmen der geänderten udn neuen Mannschaftsmitglider
-      let mannschaftsmitgliederDTO: MannschaftsmitgliedDTO[] = [];
-      mannschaftsmitgliederDTO = fromOfflineMannschaftsmitgliedToDTOArray(mitglieder);
+      const mannschaftsmitgliederDTO = fromOfflineMannschaftsmitgliedToDTOArray(mitglieder);
 
       let payload: OfflinetokenSync;
 

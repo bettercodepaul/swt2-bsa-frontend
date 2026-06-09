@@ -25,12 +25,12 @@
 
 
   <div *ngIf="displays.length > 0">
-    <div *ngFor="let display of displays">
+    <div *ngFor="let display of displays; let i = index">
 
       <div class="display-config-section">
         <button
           class="action-btn action-btn-danger remove-button"
-          (click)="removeDisplay(display.id)"
+          (click)="removeDisplay(i)"
           title="Anzeige entfernen">
           <span class="action-btn-circle">-</span>
           Entfernen
@@ -40,8 +40,8 @@
           #anzeigeIdInput
           class="display-id"
           type="text"
-          [value]="display.physicalDisplayID"
-          (input)="display.physicalDisplayID = anzeigeIdInput.value"
+          [value]="display.physischeBildschirmId"
+          (input)="display.physischeBildschirmId = anzeigeIdInput.value"
           maxlength="4"
           placeholder="----">
 
@@ -49,8 +49,8 @@
           <select
             class="display-table-select"
             #anzeigenTabellenSelect
-            [value]="display.tableType"
-            (change)="display.tableType = anzeigenTabellenSelect.value">
+            [value]="display.tableTyp"
+            (change)="display.tableTyp = anzeigenTabellenSelect.value">
             <option value="tabelle">Tabelle</option>
             <option value="1/2">(1/2)</option>
             <option value="3/4">(3/4)</option>

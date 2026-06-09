@@ -30,6 +30,7 @@ import {ChartsModule} from 'ng2-charts';
 import {MatDialogModule} from '@angular/material/dialog';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
 import {QRCodeModule} from 'angularx-qrcode';
+import {WkdurchfuehrungModule} from '@wkdurchfuehrung/wkdurchfuehrung.module';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -69,7 +70,8 @@ export function createTranslateLoader(http: HttpClient) {
     /* BOGENLIGA */
     HomeModule,
     SharedModule.forRoot(),
-    VerwaltungModule.forRoot()
+    VerwaltungModule.forRoot(),
+    WkdurchfuehrungModule.forRoot()
   ],
   exports: [TranslateModule, AppComponent],
   /* HTTP INTERCEPTORS */
