@@ -58,7 +58,7 @@ export class AnzeigeManagerComponent implements OnInit {
   }
 
   public addDisplay(): void {
-    this.anzeigenProvider.create(new AnzeigenDO())
+    this.anzeigenProvider.create(this.wettkampfId)
       .then((response: BogenligaResponse<number>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload)) {
