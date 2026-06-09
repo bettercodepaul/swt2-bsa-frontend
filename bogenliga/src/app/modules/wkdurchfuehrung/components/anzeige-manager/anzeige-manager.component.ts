@@ -25,17 +25,16 @@ export class AnzeigeManagerComponent implements OnInit {
 
   public currentMatch = 1;
 
-  public wettkampftagID: string;
+  public wettkampfId: number;
 
   constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // Holt den in der wkdurchfuehrung.routing.ts definierten Parameter aus der URL
     this.route.paramMap.subscribe((params) => {
-      this.wettkampftagID = params.get('selectedWettkampfId');
+      this.wettkampfId = parseInt(params.get('selectedWettkampfId'), 10);
     });
   }
-
-
 
   public nextMatch(): void {
     this.currentMatch++;
@@ -69,7 +68,7 @@ export class AnzeigeManagerComponent implements OnInit {
             physischeBildschirmId: '',
             tableTyp: 'tabelle',
             aktuellesMatch: this.currentMatch,
-            veranstaltungsId: null
+            wettkampfId: this.wettkampfId,
           };
           this.displays.push(newDisplay);
         }
