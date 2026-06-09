@@ -6,7 +6,7 @@ import {
   RequestResult,
   RestClient,
   UriBuilder, VersionedDataTransferObject
-} from '../../shared/data-provider';
+} from '@shared/data-provider';
 import { db } from '@shared/data-provider/offlinedb/offlinedb';
 import {MatchMapperExt} from '../mapper/match-mapper-ext';
 import {MatchDOExt} from '../types/match-do-ext.class';
@@ -14,10 +14,8 @@ import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {fromPayloadArray} from '../mapper/match-mapper-ext';
 import {OnOfflineService} from '@shared/services';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
-import {toDTOFromOfflineMatch, toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
-import {LigatabelleErgebnisDO} from '../../ligatabelle/types/ligatabelle-ergebnis-do.class';
-import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
+import {toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
+
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +158,11 @@ export class MatchProviderService extends DataProviderService {
       return new Promise((resolve, reject) => {
         db.matchTabelle.get(matchId)
           .then((data: OfflineMatch) => {
-            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.matchId, data.matchIdGegner), Math.max(data.matchId, data.matchIdGegner)]});
+            if (data && data.matchId && data.matchIdGegner) {
+              resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.matchId, data.matchIdGegner), Math.max(data.matchId, data.matchIdGegner)]});
+            } else {
+              resolve({result: RequestResult.SUCCESS, payload: []});
+            }
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -183,21 +185,29 @@ export class MatchProviderService extends DataProviderService {
 
   public async pairToFollow(matchId: number): Promise<BogenligaResponse<Array<number>>> {
     if (this.onOfflineService.isOffline()) {
-      let currentPair: number[];
+      let currentPair: number[] = [];
       await this.pair(matchId)
                 .then((data) => currentPair = data.payload)
                 .catch((error) => console.error(error));
+      if (!currentPair || currentPair.length < 2) {
+        return {result: RequestResult.SUCCESS, payload: []};
+      }
       let nextMatchId = 0;
       await db.matchTabelle.get(currentPair[1])
         .then((data) => {
-          if (data.naechsteMatchId <= matchId) {
-            nextMatchId = data.naechsteNaechsteMatchNrMatchId;
-          } else {
-            nextMatchId = data.naechsteMatchId;
+          if (data) {
+            if (data.naechsteMatchId <= matchId) {
+              nextMatchId = data.naechsteNaechsteMatchNrMatchId;
+            } else {
+              nextMatchId = data.naechsteMatchId;
+            }
           }
         });
 
-      return this.pair(nextMatchId);
+      if (nextMatchId && nextMatchId > 0) {
+        return this.pair(nextMatchId);
+      }
+      return {result: RequestResult.SUCCESS, payload: []};
     } else {
       return new Promise(((resolve, reject) => {
         this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pairToFollow').build())
