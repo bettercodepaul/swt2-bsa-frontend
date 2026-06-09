@@ -63,4 +63,8 @@ export class AnzeigeManagerComponent {
         }
       });
   }
+
+  public updateDisplay(updateIndex: number); void {
+
+    }
 }
