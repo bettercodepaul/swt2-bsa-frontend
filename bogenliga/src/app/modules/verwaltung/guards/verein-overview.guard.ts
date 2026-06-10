@@ -11,6 +11,6 @@ export class VereinOverviewGuard implements CanActivate {
     // CAN_MODIFY_STAMMDATEN or CAN_CREATE_MANNSCHAFT required to activate Verein Overview
     // added "CAN_READ_DEFAULT" for opening Vereinsseite for every permission
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_DEFAULT, UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]);
+      [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]);
   }
 }
