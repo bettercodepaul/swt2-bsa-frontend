@@ -4,7 +4,7 @@ import {CommonComponentDirective} from '@shared/components';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {MANNSCHAFT_CONFIG, MANNSCHAFTEN_TABLE_CONFIG} from './mannschaft.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
@@ -48,7 +48,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
     super();
   }
   public verein: VereinDTO | null = null;
-  public mannschaft: DsbMannschaftDTO = new DsbMannschaftDTO();
+  public mannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public rows: TableRow[] | null = null;
   public loadingTable: boolean;
   public config = MANNSCHAFT_CONFIG;
@@ -87,7 +87,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
   loadMannschaftData(): void {
     this.loading = true;
     this.mannschaftDataProvider.findById(this.mannschaftId)
-      .then((response: BogenligaResponse<DsbMannschaftDTO>) => {
+      .then((response: BogenligaResponse<DsbMannschaftDO>) => {
         this.mannschaft = response.payload!;
         if (this.vereinId !== this.mannschaft.vereinId) {
           this.showMannschaftNotFoundNotification();
@@ -96,7 +96,7 @@ export class MannschaftComponent extends CommonComponentDirective implements OnI
         this.loading = false;
         this.loadWettkampf();
       })
-      .catch((response: BogenligaResponse<DsbMannschaftDTO>) => {
+      .catch((response: BogenligaResponse<DsbMannschaftDO>) => {
         console.error(response);
         this.loading = false;
         this.showMannschaftNotFoundNotification();
