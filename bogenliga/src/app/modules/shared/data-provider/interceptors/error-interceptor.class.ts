@@ -1,6 +1,6 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {ErrorHandlingService} from '../../services/error-handling';
 import {Router} from '@angular/router';
@@ -24,11 +24,16 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
 
                .pipe(
-                 // add retries
-                 retry(MAX_RETRIES),
+                 // add retries - avoid retrying login requests
+                 retry(request.url.includes('v1/user/signin') ? 0 : MAX_RETRIES),
                  // add error handling
                  catchError(
                    (error: any, caught: Observable<HttpEvent<any>>) => {
+
+                     // Bypass global error handling for login to let LoginComponent handle the UI natively
+                     if (request.url.includes('v1/user/signin')) {
+                       return throwError(error);
+                     }
 
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
                      // if it is a connection error, it could be a masked error indicated by an expired session token
