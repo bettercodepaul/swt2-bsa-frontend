@@ -58,7 +58,7 @@ export class AnzeigeManagerComponent implements OnInit {
   }
 
   public addDisplay(): void {
-    this.anzeigenProvider.create(this.wettkampfId)
+    this.anzeigenProvider.create(this.wettkampfId) // Backend API wird im anzeigenProvider aufgerufen
       .then((response: BogenligaResponse<number>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload)) {
