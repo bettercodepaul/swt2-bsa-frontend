@@ -48,4 +48,9 @@ export class MatchKontextComponent {
     return completedPasses + 1;
   }
 
+  /** Get the match number for the own team */
+  getEigenesTeamMatchNr(): number | undefined {
+    return this.infos?.eigenesTeamMatchNr;
+  }
+
 }
