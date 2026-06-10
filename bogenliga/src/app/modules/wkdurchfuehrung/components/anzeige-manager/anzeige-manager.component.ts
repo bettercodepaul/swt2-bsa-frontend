@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
 import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provid
   styleUrls: ['./anzeige-manager.component.scss']
 })
 
-export class AnzeigeManagerComponent {
+export class AnzeigeManagerComponent implements OnInit {
   /*
   *  AnzeigenProviderService hat oben das hier:
   *   @Injectable({
@@ -19,11 +20,21 @@ export class AnzeigeManagerComponent {
   *   })
   *  Deshalb ist es für den constructor einfach verfügbar.
   * */
-  constructor(private anzeigenProvider: AnzeigenProviderService) {}
 
   public displays: AnzeigenDO[] = [];
 
   public currentMatch = 1;
+
+  public wettkampfId: number;
+
+  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Holt den in der wkdurchfuehrung.routing.ts definierten Parameter aus der URL
+    this.route.paramMap.subscribe((params) => {
+      this.wettkampfId = parseInt(params.get('selectedWettkampfId'), 10);
+    });
+  }
 
   public nextMatch(): void {
     this.currentMatch++;
@@ -47,7 +58,7 @@ export class AnzeigeManagerComponent {
   }
 
   public addDisplay(): void {
-    this.anzeigenProvider.create(new AnzeigenDO())
+    this.anzeigenProvider.create(this.wettkampfId) // Backend API wird im anzeigenProvider aufgerufen
       .then((response: BogenligaResponse<number>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload)) {
@@ -57,10 +68,25 @@ export class AnzeigeManagerComponent {
             physischeBildschirmId: '',
             tableTyp: 'tabelle',
             aktuellesMatch: this.currentMatch,
-            veranstaltungsId: null
+            wettkampfId: this.wettkampfId,
           };
           this.displays.push(newDisplay);
         }
       });
+  }
+
+  public updateDisplay(): void {
+    this.displays.forEach((display) => {
+      if (display.aktuellesMatch !== this.currentMatch) {
+        display.aktuellesMatch = this.currentMatch;
+      }
+      this.anzeigenProvider.update(display)
+        .then((response: BogenligaResponse<AnzeigenDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)) {
+            console.log('Successfully updated ' + response.payload.id);
+          }
+        });
+    });
   }
 }
