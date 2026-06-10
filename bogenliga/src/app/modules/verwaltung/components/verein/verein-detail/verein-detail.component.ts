@@ -47,7 +47,6 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
-
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
 const NOTIFICATION_DELETE_VEREIN_SUCCESS = 'verein_detail_delete_success';
@@ -117,6 +116,30 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.registerSaveErrorReset(NOTIFICATION_ENTITY_CONFLICT_ERROR);
     this.registerSaveErrorReset(NOTIFICATION_DATABASE_ERROR);
     this.loadRegions(this.regionType); // Request all regions from the backend
+
+    // Check user roles and hide the copy/add action for Sportleiter
+    try {
+      const currentUserId = this.currentUserService.getCurrentUserID();
+      this.userDataProviderService.findUserRoleById(currentUserId)
+        .then((roleresponse) => {
+          if (roleresponse && roleresponse.payload) {
+            const isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
+            if (isSportleiter) {
+              // create a deep copy of the table config and remove the ADD action so the button is hidden
+              this.config_table = JSON.parse(JSON.stringify(this.config_table));
+              if (this.config_table.actions && Array.isArray(this.config_table.actions.actionTypes)) {
+                this.config_table.actions.actionTypes = this.config_table.actions.actionTypes
+                  .filter((action) => action !== TableActionType.ADD);
+              }
+            }
+          }
+        })
+        .catch(() => {
+          // ignore errors here, do not block loading
+        });
+    } catch (e) {
+      // ignore
+    }
   }
 
   ngOnDestroy() {
