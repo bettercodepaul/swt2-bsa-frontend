@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabletComponent} from './components/tablet/tablet.component';
 import {SchusszettelTabletAdminComponent} from '@schusszettel/components/setup/schusszettel-tablet-admin.component';
+import {KampfrichterAnsichtComponent} from '@schusszettel/components/kampfrichter-ansicht/kampfrichter-ansicht.component';
 
 /**
  * Routing for the Schusszettel feature module.
@@ -18,6 +19,12 @@ const routes: Routes = [
    * Example: /schusszettel/tablet-setup/:wettkampfId
    */
   { path: 'tablet-setup/:wettkampfId', component: SchusszettelTabletAdminComponent },
+
+  /**
+   * Kampfrichter view: accessed via QR code from Wettkampfdurchführung
+   * Example: /schusszettel/kampfrichter?wettkampfid=...&token=...
+   */
+  { path: 'kampfrichter', component: KampfrichterAnsichtComponent },
 
   /**
    * Default within this module redirects to tablet entry with an error (since no parameters)

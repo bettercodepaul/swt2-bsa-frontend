@@ -42,6 +42,7 @@ import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {KampfrichterAnsichtService} from '@schusszettel/services/kampfrichter-ansicht.service';
 
 @Component({
   selector: 'bla-wkdurchfuehrung',
@@ -102,6 +103,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   private sessionHandling: SessionHandling;
 
+  public kampfrichterQrUrl: string | null = null;
+  public kampfrichterQrLoading = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -116,7 +119,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
               private dialog: MatDialog,
-              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService
+              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService,
+              private kampfrichterAnsichtService: KampfrichterAnsichtService
 
   ) {
     super();
@@ -865,5 +869,32 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       'tablet-setup',
       this.selectedWettkampfId
     ]);
+  }
+
+  public openKampfrichterQr(): void {
+    if (!this.selectedWettkampfId) {
+      return;
+    }
+    this.kampfrichterQrLoading = true;
+    this.kampfrichterQrUrl = null;
+    this.kampfrichterAnsichtService.getOrCreateToken(this.selectedWettkampfId)
+      .subscribe({
+        next: (resp) => {
+          const params = new URLSearchParams({
+            wettkampfid: this.selectedWettkampfId.toString(),
+            token: resp.token
+          }).toString();
+          this.kampfrichterQrUrl = `${location.origin}/#/schusszettel/kampfrichter?${params}`;
+          this.kampfrichterQrLoading = false;
+        },
+        error: () => {
+          this.kampfrichterQrLoading = false;
+          alert('Fehler beim Laden des Kampfrichter-Tokens.');
+        }
+      });
+  }
+
+  public closeKampfrichterQr(): void {
+    this.kampfrichterQrUrl = null;
   }
 }
