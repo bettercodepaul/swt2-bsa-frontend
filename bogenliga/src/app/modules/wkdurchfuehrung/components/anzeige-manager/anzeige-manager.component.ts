@@ -64,13 +64,18 @@ export class AnzeigeManagerComponent {
       });
   }
 
-  public updateDisplay(updateIndex: number): void {
-    this.anzeigenProvider.update(this.displays[updateIndex])
-      .then((response: BogenligaResponse<AnzeigenDO>) => {
-        if (!isNullOrUndefined(response)
-          && !isNullOrUndefined(response.payload)) {
-          console.log('Successfully updated ' + response.payload.id);
-        }
-      });
-    }
+  public updateDisplay(): void {
+    this.displays.forEach((display) => {
+      if (display.aktuellesMatch !== this.currentMatch) {
+        display.aktuellesMatch = this.currentMatch;
+      }
+      this.anzeigenProvider.update(display)
+        .then((response: BogenligaResponse<AnzeigenDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)) {
+            console.log('Successfully updated ' + response.payload.id);
+          }
+        });
+    });
+  }
 }
