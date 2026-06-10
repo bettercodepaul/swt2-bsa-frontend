@@ -1,0 +1,44 @@
+<div class="kampfrichter-container">
+  <h2>Kampfrichter-Ansicht</h2>
+
+  <div *ngIf="loading" class="loading-hint">Lade Matches...</div>
+  <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+
+  <div *ngIf="!loading && !errorMsg">
+    <p *ngIf="matches.length === 0">Keine Matches gefunden.</p>
+
+    <div *ngFor="let match of matches" class="match-card">
+      <div class="match-header">
+        <span class="scheibe">Scheibe {{ match.matchScheibennummer }}</span>
+        <span class="mannschaft">{{ match.mannschaftName }}</span>
+        <span class="begegnung">Begegnung {{ match.begegnung }}</span>
+        <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">&#x2713; gespeichert</span>
+      </div>
+
+      <div class="strafpunkte-grid">
+        <label>
+          Satz 1
+          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz1">
+        </label>
+        <label>
+          Satz 2
+          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz2">
+        </label>
+        <label>
+          Satz 3
+          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz3">
+        </label>
+        <label>
+          Satz 4
+          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz4">
+        </label>
+        <label>
+          Satz 5
+          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz5">
+        </label>
+      </div>
+
+      <button class="save-btn" (click)="saveStrafpunkte(match)">Speichern</button>
+    </div>
+  </div>
+</div>

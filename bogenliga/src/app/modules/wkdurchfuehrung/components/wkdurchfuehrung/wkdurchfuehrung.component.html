@@ -133,6 +133,16 @@
                   </bla-actionbutton>
                 </ng-template>
 
+                <bla-actionbutton
+                  id="kampfrichterQrCode"
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'qrcode'"
+                  [disabled]="!selectedWettkampfId || isOffline()"
+                  (click)="openKampfrichterQr()">
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.KAMPFRICHTER_QR' | translate }}
+                </bla-actionbutton>
+
               </div> <!-- This closes the flex container div -->
             </bla-col-layout>
           </bla-expand>
@@ -252,3 +262,23 @@
     </div>
   </div>
 </bla-common-dialog>
+
+<!-- Kampfrichter QR-Code Modal -->
+<bla-modal-dialog
+  [visible]="kampfrichterQrUrl !== null"
+  (onClose)="closeKampfrichterQr()">
+  <h5 class="modal-dialog-header">Kampfrichter QR-Code</h5>
+  <div class="modal-dialog-content">
+    <p>Diesen QR-Code mit dem Kampfrichter-Tablet scannen.</p>
+    <div *ngIf="kampfrichterQrLoading">Lade Token...</div>
+    <qrcode
+      *ngIf="kampfrichterQrUrl"
+      [qrdata]="kampfrichterQrUrl"
+      [width]="256"
+      [errorCorrectionLevel]="'M'">
+    </qrcode>
+    <div *ngIf="kampfrichterQrUrl" style="margin-top: 0.5rem; word-break: break-all;">
+      <code>{{ kampfrichterQrUrl }}</code>
+    </div>
+  </div>
+</bla-modal-dialog>
