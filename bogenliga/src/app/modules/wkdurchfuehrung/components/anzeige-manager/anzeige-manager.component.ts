@@ -74,4 +74,19 @@ export class AnzeigeManagerComponent implements OnInit {
         }
       });
   }
+
+  public updateDisplay(): void {
+    this.displays.forEach((display) => {
+      if (display.aktuellesMatch !== this.currentMatch) {
+        display.aktuellesMatch = this.currentMatch;
+      }
+      this.anzeigenProvider.update(display)
+        .then((response: BogenligaResponse<AnzeigenDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)) {
+            console.log('Successfully updated ' + response.payload.id);
+          }
+        });
+    });
+  }
 }
