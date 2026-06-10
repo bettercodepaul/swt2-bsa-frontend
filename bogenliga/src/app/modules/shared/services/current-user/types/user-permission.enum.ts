@@ -96,6 +96,5 @@ export enum UserPermission {
   CAN_MODIFY_STAMMDATEN_LIGALEITER,
 
   //Spezielles Recht für den Ligaleiter der untersten Region, der eine neue Liga als unterste Liga anlegen darf und diese bearbeiten kann
-  CAN_CREATE_MY_LIGA,
-  CAN_READ_SYSTEMDATEN_SPORTLEITER
+  CAN_CREATE_MY_LIGA
 }
