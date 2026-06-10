@@ -64,85 +64,157 @@ form { width: 100%; max-width: 800px;}
 @media (max-width: 600px) {
   .schusszettel-container {
     padding: 1rem;
-  }
-
-  .table-wrapper {
-    overflow-x: visible;
+    gap: 1rem;
   }
 
   .treffer-table {
-    border-collapse: separate;
-    border-spacing: 0;
     width: 100%;
+    border-collapse: collapse;
   }
 
   .treffer-table thead {
     display: none;
   }
 
-  .treffer-table,
-  .treffer-table tbody,
-  .treffer-table tr,
-  .treffer-table td {
+  .treffer-table tbody {
     display: block;
-    width: 100%;
   }
 
   .treffer-table tr {
-    border: 1px solid $border;
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "name rueck"
+      "schuss1 schuss2";
+
+    gap: 1.5rem 1rem;
+
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+
     background: #fff;
+    border: 1px solid $border;
+    border-radius: 0.75rem;
+
+    align-items: start;
   }
 
   .treffer-table td {
     border: 0;
-    padding: 0.35rem 0;
-    text-align: left;
+    padding: 0;
+    font-size: 0.95rem;
+    line-height: 1.2;
   }
 
+  /* Name links oben */
   .treffer-table td:first-child {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    grid-area: name;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    &::before {
+      display: none;
+      content: none;
+    }
   }
 
-  .treffer-table td:nth-child(2)::before {
-    content: "Rückennr.: ";
-    font-weight: 600;
+  /* Rückennummer rechts oben */
+  .treffer-table td:nth-child(2) {
+    grid-area: rueck;
+
+    justify-self: end;
+    text-align: right;
+
+    font-size: 1rem;
+    font-weight: 500;
+
+    &::before {
+      display: none;
+      content: none;
+    }
   }
 
-  .treffer-table td:nth-child(3)::before {
-    content: "Schuss 1: ";
-    font-weight: 600;
-  }
+  /* Schuss 1 */
+  .treffer-table td:nth-child(3) {
+    grid-area: schuss1;
 
-  .treffer-table td:nth-child(4)::before {
-    content: "Schuss 2: ";
-    font-weight: 600;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
 
-  .treffer-table input {
     width: 100%;
-    min-height: 44px;
-    font-size: 16px;
-    box-sizing: border-box;
+    text-align: center;
+
+    &::before {
+      content: "Schuss 1";
+
+      display: block;
+      width: 100%;
+
+      margin-bottom: 0.75rem;
+
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  /* Schuss 2 */
+  .treffer-table td:nth-child(4) {
+    grid-area: schuss2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+
+    width: 100%;
+    text-align: center;
+
+    &::before {
+      content: "Schuss 2";
+
+      display: block;
+      width: 100%;
+
+      margin-bottom: 0.75rem;
+
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+    }
+  }
+
+  .treffer-table input,
+  .treffer-table select {
+    width: 96px;
+    height: 72px;
+
+    margin: 0 auto;
+    padding: 0.75rem;
+
+    border: 1px solid #d5d5d5;
+    border-radius: 18px;
+
+    background: #fff;
+
+    text-align: center;
+    font-size: 1rem;
   }
 
   .confirm-button {
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .confirm-button:disabled,
-  .confirm-button[disabled],
-  .confirm-button.mat-mdc-button-disabled {
-    opacity: 1;
-    background-color: #afafaf;   // background Farbe wenn Disabled
+    margin-top: 1.5rem;
   }
 }
+
 .visually-hidden {
   position: absolute !important;
   height: 1px;

@@ -846,6 +846,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     window.open(url, '_blank');
   }
 
+  // Navigiert den User zu dem Anzeigen-Manager
+  redirectToAnzeigenManager(wettkampfID: number): void {
+    const url = '#' + this.router.serializeUrl(
+      this.router.createUrlTree(
+        ['wkdurchfuehrung/anzeige-manager', wettkampfID],
+      )
+    );
+    window.open(url, '_blank');
+  }
+
+
   // Navigiert den User zur Schusszettel-Admin-Seite
   public openSchusszettelAdmin(): void {
     if (!this.selectedWettkampfId) {

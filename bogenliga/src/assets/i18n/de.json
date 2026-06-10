@@ -233,7 +233,8 @@
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
       "OFFLINE_TOKEN": "Offlinetoken löschen",
-      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus",
+      "ANZEIGEN_MANAGER": "Anzeigen bearbeiten"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
