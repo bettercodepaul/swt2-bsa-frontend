@@ -64,7 +64,13 @@ export class AnzeigeManagerComponent {
       });
   }
 
-  public updateDisplay(updateIndex: number); void {
-
+  public updateDisplay(updateIndex: number): void {
+    this.anzeigenProvider.update(this.displays[updateIndex])
+      .then((response: BogenligaResponse<AnzeigenDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)) {
+          console.log('Successfully updated ' + response.payload.id);
+        }
+      });
     }
 }
