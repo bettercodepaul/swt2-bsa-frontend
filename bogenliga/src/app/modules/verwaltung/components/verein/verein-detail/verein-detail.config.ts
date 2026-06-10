@@ -28,6 +28,11 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         propertyName:   'sportjahr',
         width:          20,
       },
+      {
+        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MELDEDEADLINE',
+        propertyName:   'meldeDeadline',
+        width:          20,
+      },
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER, TableActionType.ADD],
