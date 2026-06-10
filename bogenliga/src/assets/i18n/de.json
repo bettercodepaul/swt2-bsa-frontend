@@ -233,7 +233,8 @@
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
       "OFFLINE_TOKEN": "Offlinetoken löschen",
-      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus",
+      "ANZEIGEN_MANAGER": "Anzeigen bearbeiten"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -1952,7 +1953,11 @@
       "DOWNLOAD": "Download",
       "DOWNLOADLIZENZEN": "Lizenzen downloaden",
       "DOWNLOADRUECKENNUMMER": "Rückennummer downloaden",
-      "VIEW": "Auswählen"
+      "VIEW": "Auswählen",
+      "DOWMLOADSCHUSZETTELTAG1": "Schusszettel Tag 1 downloaden",
+      "DOWMLOADSCHUSZETTELTAG2": "Schusszettel Tag 2 downloaden",
+      "DOWMLOADSCHUSZETTELTAG3": "Schusszettel Tag 3 downloaden",
+      "DOWMLOADSCHUSZETTELTAG4": "Schusszettel Tag 4 downloaden"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
