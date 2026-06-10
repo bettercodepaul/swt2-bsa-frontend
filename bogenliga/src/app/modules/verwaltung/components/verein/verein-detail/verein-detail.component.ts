@@ -744,12 +744,20 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           } else {
             mannschaft.veranstaltungName = 'Unknown';
           }
+          if (response.payload && response.payload.meldeDeadline) {
+            const parts = response.payload.meldeDeadline.split('-');
+            mannschaft.meldeDeadline = `${parts[2]}.${parts[1]}.${parts[0]}`;
+          } else {
+            mannschaft.meldeDeadline = '-';
+          }
         })
         .catch(() => {
           mannschaft.veranstaltungName = '';
+          mannschaft.meldeDeadline = '-';
         });
     } else {
       mannschaft.veranstaltungName = 'Not Specified';
+      mannschaft.meldeDeadline = '-';
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
   }

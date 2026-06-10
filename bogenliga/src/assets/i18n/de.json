@@ -1033,7 +1033,8 @@
           "ID": "ID",
           "MANNSCHAFTSNAME": "Name",
           "SPORTJAHR": "Sportjahr",
-          "LIGA": "Liga"
+          "LIGA": "Liga",
+          "MELDEDEADLINE": "Meldedeadline"
         }
       },
       "NOTIFICATION": {
