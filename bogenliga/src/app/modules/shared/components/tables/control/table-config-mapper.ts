@@ -43,6 +43,22 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
       active: 'download',
       inactive: 'download'
     },
+    dowmloadschuszetteltag1: {
+      active: 'download',
+      inactive: 'download'
+    },
+    dowmloadschuszetteltag2: {
+      active: 'download',
+      inactive: 'download'
+    },
+    dowmloadschuszetteltag3: {
+      active: 'download',
+      inactive: 'download'
+    },
+    dowmloadschuszetteltag4: {
+      active: 'download',
+      inactive: 'download'
+    },
     map: {
       active: 'map-marked',
       inactive: 'map-marked'
@@ -61,6 +77,11 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER',
     map:         'TABLE.ACTIONS.MAP',
     downloadlizenzen: 'TABLE.ACTIONS.DOWNLOADLIZENZEN'
+      ,
+      dowmloadschuszetteltag1: 'TABLE.ACTION_TEXT.DOWMLOADSCHUSZETTELTAG1',
+      dowmloadschuszetteltag2: 'TABLE.ACTION_TEXT.DOWMLOADSCHUSZETTELTAG2',
+      dowmloadschuszetteltag3: 'TABLE.ACTION_TEXT.DOWMLOADSCHUSZETTELTAG3',
+      dowmloadschuszetteltag4: 'TABLE.ACTION_TEXT.DOWMLOADSCHUSZETTELTAG4'
 
   }
 };
