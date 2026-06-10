@@ -1066,6 +1066,10 @@
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         },
+        "DOWNLOAD_BEFORE_DEADLINE": {
+          "TITLE": "Download nicht verfügbar",
+          "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
+        },
         "UPDATE": {
           "FAILURE": {
             "FULL": {
