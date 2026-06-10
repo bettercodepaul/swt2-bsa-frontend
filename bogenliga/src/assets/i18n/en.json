@@ -1076,6 +1076,10 @@
           "SAVE_FAILURE": {
             "TITLE": "Error while saving",
             "DESCRIPTION": "Sports director has no authority over this club or this target region."
+          },
+          "DOWNLOAD_BEFORE_DEADLINE": {
+            "TITLE": "Download not available",
+            "DESCRIPTION": "The download is only available after the registration deadline has passed."
           }
         },
         "NOTIFICATION_PLATZHALTER": {
