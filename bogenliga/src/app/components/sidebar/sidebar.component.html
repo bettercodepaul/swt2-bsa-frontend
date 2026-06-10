@@ -40,7 +40,7 @@
                     [class.inactive]="isActive"
                     type="button"
                     data-toggle="collapse"
-                    attr.data-target="#collapsibleNavbar{{ item.label }}">
+                    [attr.data-target]="'#collapsibleNavbar' + item.label.replace('.', '-')">
               <fa-icon class="navbar-toggler-icon" [icon]="faCaretDown" size="lg"></fa-icon>
             </button>
           </div>
@@ -49,7 +49,7 @@
           <div *ngIf="existSubitems(item.subitems) && isActive == false"
                class="nav-subitems collapse navbar-collapse"
                [class.inactive]="isActive"
-               id="collapsibleNavbar{{ item.label }}">
+               [id]="'collapsibleNavbar' + item.label.replace('.', '-')">
             <ul class="navbar-nav">
               <ng-container *ngFor="let subitem of item.subitems">
                 <ng-container *ngIf="hasUserPermissions(subitem.permissons)">
