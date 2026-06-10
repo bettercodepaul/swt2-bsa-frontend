@@ -21,6 +21,7 @@ export enum TabletSchusszettelStatus {
 /**
  * Enthält die vollständige Antwortstruktur für den digitalen Schusszettel auf dem Tablet.
  */
+
 export interface TabletSchusszettelDTO {
   status: TabletSchusszettelStatus;
   eigenesTeam: TeamInfoDTO;

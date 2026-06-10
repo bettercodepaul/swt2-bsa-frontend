@@ -21,4 +21,5 @@ export interface TabletSchusszettel {
   eigenesTeamMatchId?: number;       // Match ID for own team
   gegnerischesTeamMatchId?: number;  // Match ID for enemy team
   eigenesTeamMatchNr?: number;       // Match number for own team (1, 2, 3, etc.)
+
 }

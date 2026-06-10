@@ -140,6 +140,7 @@ export class TabletSchusszettelMapper {
       eigenesTeamMatchNr: dto.eigenesTeamMatchNr         // Own team match number (1, 2, 3, etc.)
     };
 
+    
     console.log('[Mapper] Mapped schuetzeStammDaten output:', result.schuetzeStammDaten);
     console.log('[Mapper] Mapped verfuegbareSchuetzen output:', result.verfuegbareSchuetzen);
     console.log('[Mapper] Mapped wettkampfInfo output:', result.wettkampfInfo);

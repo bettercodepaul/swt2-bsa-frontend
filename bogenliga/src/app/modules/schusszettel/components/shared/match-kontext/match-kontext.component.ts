@@ -31,6 +31,7 @@ export class MatchKontextComponent {
     return this.infos?.wettkampfInfo?.veranstaltungSportjahr || 'Unbekannt';
   }
 
+
   /** Get current passe number using backend-provided value with fallback */
   getCurrentPasse(): number {
     // Use backend-provided currentPasseNumber if available
