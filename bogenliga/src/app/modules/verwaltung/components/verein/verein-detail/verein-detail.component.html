@@ -224,6 +224,27 @@
           <span> Neu</span>
         </bla-actionbutton>
       </div>
+
+
+      <!-- Dropdown for Sports Year -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label" for="sportsYearDropdown">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.TABLE.DROPDOWN.SPORTJAHR.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <select id="sportsYearDropdown"
+                  class="form-control"
+                  name="sportsYearDropdown"
+                  [ngModel]="selectedSportjahr"
+                  (ngModelChange)="onSportjahrChange($event)">
+            <option [ngValue]="null">{{ 'MANAGEMENT.VEREIN_DETAIL.TABLE.DROPDOWN.SPORTJAHR.ALL' | translate }}</option>
+            <option *ngFor="let year of availableSportjahre" [ngValue]="year">
+              {{ year }}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <bla-data-table (onDeleteEntry)="onDeleteMannschaft($event)"
                       (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"
                       (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
