@@ -145,6 +145,39 @@
   letter-spacing: 0.5px;
 }
 
+.schuetzen-section {
+  margin-bottom: 1rem;
+}
+
+.schuetzen-list {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.schuetze-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f0f4ff;
+  border: 1px solid #c5d5f5;
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.rueckennummer {
+  font-weight: 700;
+  color: #1a3a8f;
+}
+
+.schuetze-name {
+  color: #333;
+}
+
 .strafpunkte-section {
   position: relative;
 }

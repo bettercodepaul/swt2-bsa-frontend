@@ -38,6 +38,16 @@
       <!-- Ausgeklappter Inhalt -->
       <div *ngIf="isExpanded(match.matchId)" class="match-body">
 
+        <div *ngIf="match.schuetzen && match.schuetzen.length > 0" class="schuetzen-section">
+          <h4 class="section-title">Gemeldete Schützen</h4>
+          <ul class="schuetzen-list">
+            <li *ngFor="let s of match.schuetzen" class="schuetze-item">
+              <span class="rueckennummer">#{{ s.rueckennummer }}</span>
+              <span class="schuetze-name">{{ s.vorname }} {{ s.nachname }}</span>
+            </li>
+          </ul>
+        </div>
+
         <div class="strafpunkte-section">
           <h4 class="section-title">Strafpunkte</h4>
           <div class="strafpunkte-grid">
