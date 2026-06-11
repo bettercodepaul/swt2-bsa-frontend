@@ -268,7 +268,7 @@
   [visible]="kampfrichterQrUrl !== null"
   (onClose)="closeKampfrichterQr()">
   <h5 class="modal-dialog-header">Kampfrichter QR-Code</h5>
-  <div class="modal-dialog-content">
+  <div class="modal-dialog-content" style="display: flex; flex-direction: column; align-items: center;">
     <p>Diesen QR-Code mit dem Kampfrichter-Tablet scannen.</p>
     <div *ngIf="kampfrichterQrLoading">Lade Token...</div>
     <qrcode
@@ -277,8 +277,11 @@
       [width]="256"
       [errorCorrectionLevel]="'M'">
     </qrcode>
-    <div *ngIf="kampfrichterQrUrl" style="margin-top: 0.5rem; word-break: break-all;">
-      <code>{{ kampfrichterQrUrl }}</code>
+    <div *ngIf="kampfrichterQrUrl" style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+      <code style="flex: 1; word-break: break-all;">{{ kampfrichterQrUrl }}</code>
+      <button mat-button color="primary" (click)="copyToClipboard(kampfrichterQrUrl!)">
+        Kopieren
+      </button>
     </div>
   </div>
 </bla-modal-dialog>

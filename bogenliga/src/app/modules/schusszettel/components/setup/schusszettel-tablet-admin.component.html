@@ -78,6 +78,27 @@
     </tbody>
   </table>
 
+  <!-- Kampfrichter-QR-Code-Bereich -->
+  <div *ngIf="kampfrichterQrUrl" class="kampfrichter-qr-section">
+    <h3>Kampfrichter-Zugang</h3>
+    <p class="kampfrichter-hint">
+      Kampfrichter scannen diesen QR-Code von diesem Bildschirm, um die Übersicht zu öffnen.
+    </p>
+    <div class="kampfrichter-qr-wrapper">
+      <qrcode
+        [qrdata]="kampfrichterQrUrl"
+        [width]="200"
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+      <div class="qr-link-container">
+        <code class="qr-link-text">{{ kampfrichterQrUrl }}</code>
+        <button mat-button color="primary" (click)="copyToClipboard(kampfrichterQrUrl!)">
+          Kopieren
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal für QR‑Code Darstellung -->
   <bla-modal-dialog
     [visible]="selectedQrUrl !== null"

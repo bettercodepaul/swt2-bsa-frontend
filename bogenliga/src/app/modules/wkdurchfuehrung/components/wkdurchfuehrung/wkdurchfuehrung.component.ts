@@ -897,4 +897,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public closeKampfrichterQr(): void {
     this.kampfrichterQrUrl = null;
   }
+
+  public copyToClipboard(text: string): void {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
 }

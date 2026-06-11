@@ -1,44 +1,66 @@
 <div class="kampfrichter-container">
-  <h2>Kampfrichter-Ansicht</h2>
 
-  <div *ngIf="loading" class="loading-hint">Lade Matches...</div>
+  <div class="page-header">
+    <h2>Kampfrichter-Übersicht</h2>
+    <span *ngIf="lastUpdated" class="last-updated">
+      Aktualisiert: {{ lastUpdated | date:'HH:mm:ss' }}
+    </span>
+  </div>
+
+  <div *ngIf="loading" class="loading-hint">Lade Matches…</div>
   <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
 
   <div *ngIf="!loading && !errorMsg">
-    <p *ngIf="matches.length === 0">Keine Matches gefunden.</p>
+    <p *ngIf="matches.length === 0" class="empty-hint">Keine Matches gefunden.</p>
 
-    <div *ngFor="let match of matches" class="match-card">
-      <div class="match-header">
-        <span class="scheibe">Scheibe {{ match.matchScheibennummer }}</span>
-        <span class="mannschaft">{{ match.mannschaftName }}</span>
-        <span class="begegnung">Begegnung {{ match.begegnung }}</span>
-        <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">&#x2713; gespeichert</span>
+    <div *ngFor="let match of matchesByScheibe()" class="match-card"
+         [class.meldung-fehlt]="isMeldungFehlt(match)">
+
+      <!-- Match-Header (klickbar zum Ein-/Ausklappen) -->
+      <div class="match-header" (click)="toggleExpanded(match.matchId)">
+        <div class="match-meta">
+          <span class="scheibe-badge">Scheibe {{ match.matchScheibennummer }}</span>
+          <span class="match-nr">Match {{ match.nr }}</span>
+          <span class="mannschaft">{{ match.mannschaftName }}</span>
+          <span class="begegnung-label">Begegnung {{ match.begegnung }}</span>
+        </div>
+        <div class="match-status-area">
+          <span *ngIf="isMeldungFehlt(match)" class="status-badge fehlt">
+            ⚠ Meldung fehlt
+          </span>
+          <span *ngIf="!isMeldungFehlt(match)" class="status-badge ok">
+            ✓ Gemeldet
+          </span>
+          <span class="collapse-icon">{{ isExpanded(match.matchId) ? '▲' : '▼' }}</span>
+        </div>
       </div>
 
-      <div class="strafpunkte-grid">
-        <label>
-          Satz 1
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz1">
-        </label>
-        <label>
-          Satz 2
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz2">
-        </label>
-        <label>
-          Satz 3
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz3">
-        </label>
-        <label>
-          Satz 4
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz4">
-        </label>
-        <label>
-          Satz 5
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz5">
-        </label>
-      </div>
+      <!-- Ausgeklappter Inhalt -->
+      <div *ngIf="isExpanded(match.matchId)" class="match-body">
 
-      <button class="save-btn" (click)="saveStrafpunkte(match)">Speichern</button>
+        <div class="strafpunkte-section">
+          <h4 class="section-title">Strafpunkte</h4>
+          <div class="strafpunkte-grid">
+            <label *ngFor="let satz of [1,2,3,4,5]">
+              <span class="satz-label">Satz {{ satz }}</span>
+              <input
+                type="number"
+                min="0"
+                max="99"
+                inputmode="numeric"
+                [ngModel]="getSatz(match, satz)"
+                (ngModelChange)="setSatz(match, satz, $event)"
+                (blur)="saveStrafpunkteOnBlur(match)"
+                [disabled]="isMeldungFehlt(match)"
+                class="strafpunkt-input"
+              >
+            </label>
+          </div>
+          <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">✓ gespeichert</span>
+        </div>
+
+      </div>
     </div>
   </div>
+
 </div>
