@@ -1,6 +1,6 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
-  <div (mouseover)="onMouseOver($event)">
+  <div (mouseover)="onMouseOver()">
     <form #dsbMitgliedForm="ngForm"
           class="horizontal-form half-page"
           id="veranstaltungForm">
@@ -209,12 +209,10 @@
                   id="ligaleiter"
                   name="ligaleiter"
                   #ligaleiter="ngModel"
-                  [(ngModel)]="currentUser"
+                  [(ngModel)]="currentVeranstaltung.ligaleiterId"
                   data-cy="veranstaltung-detail-ligaleiter-email"
-                  required
-                  placeholder="">
-            <option [ngValue]="ligaleiter"
-                    [selected]="ligaleiter.email == currentUser.email"
+                  required>
+            <option [ngValue]="ligaleiter.id"
                     *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}
             </option>
           </select>
@@ -249,7 +247,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let team of unassignedTeams; let i = index">
+            <tr *ngFor="let team of unassignedTeams">
               <td>{{ team.name }}</td>
               <td>
                 <bla-actionbutton

@@ -1,6 +1,6 @@
 <bla-common-dialog [config]="config">
 
-  <div (mouseover)="onMouseOver($event)">
+  <div (mouseover)="onMouseOver()">
     <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
                       target="_blank"></bla-hilfe-button>
 
@@ -87,6 +87,16 @@
                   [color]="ActionButtonColors.PRIMARY"
                   [iconClass]="'file-download'"
                   [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+                </bla-download-actionbutton>
+
+                <bla-download-actionbutton
+                  [id]="'downloadErgebnisliste'"
+                  [downloadUrl]="onButtonDownload('pdf/ergebnisliste')"
+                  [fileName]="'ergebnisliste.pdf'"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'file-download'"
+                  [disabled]="false">
+                  Ergebnisliste herunterladen (PDF)
                 </bla-download-actionbutton>
 
                 <div id="setupTable"
@@ -197,6 +207,15 @@
               [disabled]="isDisabled()"
               data-cy="vollbildAnsichtButton">
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
+            </bla-actionbutton>
+
+            <bla-actionbutton
+              [id]="'anzeigenManager'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'desktop'"
+              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
+              [disabled]="!selectedWettkampfId">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
             </bla-actionbutton>
 
           </div>

@@ -31,6 +31,7 @@ export class MatchKontextComponent {
     return this.infos?.wettkampfInfo?.veranstaltungSportjahr || 'Unbekannt';
   }
 
+
   /** Get current passe number using backend-provided value with fallback */
   getCurrentPasse(): number {
     // Use backend-provided currentPasseNumber if available
@@ -46,6 +47,11 @@ export class MatchKontextComponent {
 
     const completedPasses = this.infos.satzErgebnisse.length;
     return completedPasses + 1;
+  }
+
+  /** Get the match number for the own team */
+  getEigenesTeamMatchNr(): number | undefined {
+    return this.infos?.eigenesTeamMatchNr;
   }
 
 }

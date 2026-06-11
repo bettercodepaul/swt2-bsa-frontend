@@ -21,6 +21,7 @@ export enum TabletSchusszettelStatus {
 /**
  * Enthält die vollständige Antwortstruktur für den digitalen Schusszettel auf dem Tablet.
  */
+
 export interface TabletSchusszettelDTO {
   status: TabletSchusszettelStatus;
   eigenesTeam: TeamInfoDTO;
@@ -34,5 +35,6 @@ export interface TabletSchusszettelDTO {
   currentPasseNumber?: number;       // Backend-provided current passe number
   eigenesTeamMatchId?: number;       // Match ID for own team
   gegnerischesTeamMatchId?: number;  // Match ID for enemy team
+  eigenesTeamMatchNr?: number;       // Match number for own team (1, 2, 3, etc.)
 }
 

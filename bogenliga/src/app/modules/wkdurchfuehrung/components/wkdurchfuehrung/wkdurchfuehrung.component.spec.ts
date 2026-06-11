@@ -1,3 +1,4 @@
+import {MatDialogModule} from '@angular/material/dialog';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HttpClientModule} from '@angular/common/http';
@@ -10,6 +11,7 @@ import {APP_REDUCERS} from '@shared/redux-store';
 import {SharedModule} from '@shared/shared.module';
 import {WkdurchfuehrungComponent} from './wkdurchfuehrung.component';
 import {LigatabelleComponent} from 'src/app/modules/ligatabelle/components/ligatabelle/ligatabelle.component';
+
 
 describe('WkdurchfuehrungComponent', () => {
   let component: WkdurchfuehrungComponent;
@@ -24,7 +26,8 @@ describe('WkdurchfuehrungComponent', () => {
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         HttpClientModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule
       ]
     })
       .compileComponents();
@@ -38,5 +41,15 @@ describe('WkdurchfuehrungComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render Ergebnisliste download button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const button = compiled.querySelector('#downloadErgebnisliste');
+
+    if (!button) {
+      throw new Error('Ergebnisliste download button was not rendered');
+    }
   });
 });
