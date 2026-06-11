@@ -884,6 +884,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             mannschaft.meldeDeadline = `${parts[2]}.${parts[1]}.${parts[0]}`;
           } else {
             mannschaft.meldeDeadline = '-';
+
+          // Set sportjahr from veranstaltung
+          if (response.payload && response.payload.sportjahr) {
+            mannschaft.sportjahr = response.payload.sportjahr;
+
           }
         })
         .catch(() => {
