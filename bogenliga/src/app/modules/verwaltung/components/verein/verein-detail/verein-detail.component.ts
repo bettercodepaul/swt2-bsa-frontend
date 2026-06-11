@@ -498,28 +498,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       });
   }
 
-  public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
-    if (this.isDownloadBlocked(versionedDataObject.id)) {
-      this.showBeforeDeadlineNotification();
-      return;
-    }
-    const URL: string = new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path('pdf/lizenzen')
-      .path('?mannschaftid=' + versionedDataObject.id)
-      .build();
-    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
-  }
-
-  public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
-
-  }
    public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
-     const URL: string = new UriBuilder()
+     if (this.isDownloadBlocked(versionedDataObject.id)) {
+       this.showBeforeDeadlineNotification();
+       return;
+     }
+    const URL: string = new UriBuilder()
        .fromPath(environment.backendBaseUrl)
        .path('v1/download')
        .path('pdf/lizenzen')
@@ -529,6 +513,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
          .then((response: BogenligaResponse<string>) => console.log(response))
          .catch((response: BogenligaResponse<string>) => this.showNoLicense());
    }
+
 
    public onDownloadSchusszetteltag1(versionedDataObject: VersionedDataObject): void {
      this.downloadSchusszettel(versionedDataObject.id, 1, 'schusszettel_tag1.pdf');
@@ -584,8 +569,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
      this.navigateToDetailDialog(versionedDataObject);
 
    }
-
-  public onEdit(versionedDataObject: VersionedDataObject): void {
+    public onEdit(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
   }
 
@@ -884,6 +868,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             mannschaft.meldeDeadline = `${parts[2]}.${parts[1]}.${parts[0]}`;
           } else {
             mannschaft.meldeDeadline = '-';
+          }
+          // Set sportjahr from veranstaltung
+          if (response.payload && response.payload.sportjahr) {
+            mannschaft.sportjahr = response.payload.sportjahr;
           }
         })
         .catch(() => {
