@@ -29,7 +29,6 @@ import {onMapService} from '@shared/functions/onMap-service';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
-import {WettkampfComponent} from '@wettkampf/components';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
@@ -42,7 +41,6 @@ import {
 } from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {KampfrichterAnsichtService} from '@schusszettel/services/kampfrichter-ansicht.service';
 
@@ -95,7 +93,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public selectedWettkampftagURL: number;
 
 
-  private wettkampfComponent: WettkampfComponent;
   public loadingYears = true;
   public availableYears: SportjahrVeranstaltungDO[];
   public selItemId: number;
@@ -129,7 +126,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
               private dialog: MatDialog,
-              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService,
               private kampfrichterAnsichtService: KampfrichterAnsichtService
 
   ) {
@@ -221,7 +217,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
-  public onMouseOver(event: any) {
+  public onMouseOver() {
     const isExpired = this.sessionHandling.checkSessionExpired();
     if (isExpired) {
       window.location.reload();
@@ -308,14 +304,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
             await this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
-            await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
-            await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
-            await this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+            if (this.wettkampfListe && this.wettkampfListe.length > 0) {
+              for (const wk of this.wettkampfListe) {
+                await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(wk.id);
+                await this.wettkampfOfflineSyncService.loadPasseOffline(wk.id);
+                await this.wettkampfOfflineSyncService.loadMatchOffline(wk.id);
+                await this.wettkampfOfflineSyncService.loadWettkampfOffline(wk.id);
+              }
+            } else {
+              await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+              await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+              await this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+              await this.wettkampfOfflineSyncService.loadWettkampfOffline(this.selectedWettkampfId);
+            }
             await this.wettkampfOfflineSyncService.loadVeranstaltungOffline(this.selectedVeranstaltungId);
             await this.wettkampfOfflineSyncService.loadDsbMitgliedOffline();
             await this.wettkampfOfflineSyncService.loadVereineOffline();
             await this.wettkampfOfflineSyncService.loadManschaftenOffline();
-            await this.wettkampfOfflineSyncService.loadWettkampfOffline(this.selectedWettkampfId);
 
 
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
@@ -734,7 +739,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // Zeigt die generierten Matches an
           this.showMatches();
         })
-        .catch((error) => {
+        .catch(() => {
           // Behandelt den Fehler, wenn die Generierung der Matches fehlschlägt
           this.handleFailureGenerateMatchesMissingMitglied();
         });
@@ -747,17 +752,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       id: 'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
       title: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
       description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.DESCRIPTION',
-      severity: NotificationSeverity.INFO,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.ACCEPTED
-    });
-  }
-  private handleFailureGenerateMatches(): void {
-    this.notificationService.showNotification({
-      id: 'NOTIFICATION_GENERIERE_MATCHES',
-      title: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES.NOTIFICATION.TITLE',
-      description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES.NOTIFICATION.DESCRIPTION',
       severity: NotificationSeverity.INFO,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -832,10 +826,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingMatch = false;
   }
   // Gruppiere die Matches basierend auf der Nummer (nr)
-  groupMatches(matches: MatchDOExt[]) {
+  groupMatches(matchesList: MatchDOExt[]) {
     const groupedMatchesMap = new Map<number, MatchDOExt[]>();
     // Iteriert über die Matches und füge sie der entsprechenden Gruppe in der Map hinzu
-    for (const match of matches) {
+    for (const match of matchesList) {
       if (groupedMatchesMap.has(match.matchNr)) {
         groupedMatchesMap.get(match.matchNr)?.push(match);
       } else {
@@ -843,9 +837,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
     }
     // Konvertiert die Map-Einträge in das groupedMatches-Array
-    this.groupedMatches = Array.from(groupedMatchesMap.entries()).map(([matchNr, matches]) => ({
+    this.groupedMatches = Array.from(groupedMatchesMap.entries()).map(([matchNr, matchList]) => ({
       groupName: `Match ${matchNr}`,
-      matches: toTableRows(matches) // Konvertiere die Matches zu TableRow[]
+      matches: toTableRows(matchList) // Konvertiere die Matches zu TableRow[]
     }));
   }
 
@@ -941,9 +935,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingYears = false;
   }
   addDSBMitglied(): void {
-    const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent
-    );
-
+    this.dialog.open(DsbMitgliedDetailPopUpComponent);
   }
 
   // Navigiert den User, in einem neuem Tab, zur Live-Tabelle
@@ -956,6 +948,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     );
     window.open(url, '_blank');
   }
+
+  // Navigiert den User zu dem Anzeigen-Manager
+  redirectToAnzeigenManager(wettkampfID: number): void {
+    const url = '#' + this.router.serializeUrl(
+      this.router.createUrlTree(
+        ['wkdurchfuehrung/anzeige-manager', wettkampfID],
+      )
+    );
+    window.open(url, '_blank');
+  }
+
 
   // Navigiert den User zur Schusszettel-Admin-Seite
   public openSchusszettelAdmin(): void {

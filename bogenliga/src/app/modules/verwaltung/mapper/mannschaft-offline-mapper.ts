@@ -71,6 +71,7 @@ export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVe
     sportjahr:         m.sportjahr,
     veranstaltungId:   m.veranstaltungId,
     veranstaltungName: '',
+    meldeDeadline:     '',
     vereinId:          m.vereinId,
     version:           m.version
   };

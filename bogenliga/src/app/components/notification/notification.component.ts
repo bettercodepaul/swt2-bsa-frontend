@@ -33,6 +33,10 @@ export class NotificationComponent implements OnInit {
     this.notificationService.observeNotifications().subscribe((state: NotificationState) => {
       this.showDialog = state.showNotification;
       this.notification = isNullOrUndefined(state.notification) ? new Notification() : state.notification;
+
+      if (this.showDialog) {
+        this.toggleOn = false;
+      }
     });
   }
 
@@ -85,6 +89,7 @@ export class NotificationComponent implements OnInit {
    * @param $event of {@code ModalDialogResult}
    */
   public modalDialogResult($event: ModalDialogResult): void {
+    this.toggleOn = false;
 
     if ($event === ModalDialogResult.OK || $event === ModalDialogResult.YES) {
       this.notificationService.updateNotification(NotificationUserAction.ACCEPTED);

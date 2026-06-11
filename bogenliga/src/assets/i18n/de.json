@@ -234,7 +234,8 @@
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
       "OFFLINE_TOKEN": "Offlinetoken löschen",
-      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus",
+      "ANZEIGEN_MANAGER": "Anzeigen bearbeiten"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -1039,7 +1040,8 @@
           "ID": "ID",
           "MANNSCHAFTSNAME": "Name",
           "SPORTJAHR": "Sportjahr",
-          "LIGA": "Liga"
+          "LIGA": "Liga",
+          "MELDEDEADLINE": "Meldedeadline"
         }
       },
       "NOTIFICATION": {
@@ -1070,6 +1072,10 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        },
+        "DOWNLOAD_BEFORE_DEADLINE": {
+          "TITLE": "Download nicht verfügbar",
+          "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
         },
         "UPDATE": {
           "FAILURE": {
@@ -1953,7 +1959,11 @@
       "DOWNLOAD": "Download",
       "DOWNLOADLIZENZEN": "Lizenzen downloaden",
       "DOWNLOADRUECKENNUMMER": "Rückennummer downloaden",
-      "VIEW": "Auswählen"
+      "VIEW": "Auswählen",
+      "DOWMLOADSCHUSZETTELTAG1": "Schusszettel Tag 1 downloaden",
+      "DOWMLOADSCHUSZETTELTAG2": "Schusszettel Tag 2 downloaden",
+      "DOWMLOADSCHUSZETTELTAG3": "Schusszettel Tag 3 downloaden",
+      "DOWMLOADSCHUSZETTELTAG4": "Schusszettel Tag 4 downloaden"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

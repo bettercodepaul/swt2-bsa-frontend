@@ -1053,7 +1053,8 @@
             "ID": "ID",
             "MANNSCHAFTSNAME": "Name",
             "SPORTJAHR": "Year",
-            "LIGA": "League"
+            "LIGA": "League",
+            "MELDEDEADLINE": "Registration deadline"
           }
         },
         "NOTIFICATION": {
@@ -1080,6 +1081,10 @@
           "SAVE_FAILURE": {
             "TITLE": "Error while saving",
             "DESCRIPTION": "Sports director has no authority over this club or this target region."
+          },
+          "DOWNLOAD_BEFORE_DEADLINE": {
+            "TITLE": "Download not available",
+            "DESCRIPTION": "The download is only available after the registration deadline has passed."
           }
         },
         "NOTIFICATION_PLATZHALTER": {
@@ -1942,7 +1947,11 @@
         "DOWNLOAD": "Download",
         "DOWNLOADLIZENZEN": "Download licenses",
         "DOWNLOADRUECKENNUMMER": "Download back number",
-        "VIEW": "Select"
+        "VIEW": "Select",
+        "DOWMLOADSCHUSZETTELTAG1": "Download shot sheet day 1",
+        "DOWMLOADSCHUSZETTELTAG2": "Download shot sheet day 2",
+        "DOWMLOADSCHUSZETTELTAG3": "Download shot sheet day 3",
+        "DOWMLOADSCHUSZETTELTAG4": "Download shot sheet day 4"
       },
       "NO_ENTRIES_FOUND": "No entries found",
       "LOADING": "Loading entries",
