@@ -362,36 +362,56 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
-
     this.notificationService.discardNotification();
 
     const id = versionedDataObject.id;
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_MANNSCHAFT + id,
+      title: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
     };
 
-    const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
-                                  .subscribe((myNotification) => {
+    const notificationEvent = this.notificationService
+      .observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+      .subscribe((myNotification) => {
 
-                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                                      this.mannschaftsDataProvider.deleteById(id)
-                                          .then((response) => this.loadMannschaftenByVereinsIdAndSportjahr())
-                                          .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-                                    } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-                                      this.rows = hideLoadingIndicator(this.rows, id);
-                                      notificationEvent.unsubscribe();
-                                    }
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.mannschaftsDataProvider.deleteById(id)
+            .then(() => this.loadMannschaftenByVereinsIdAndSportjahr())
+            .catch((response) => {
+              this.rows = hideLoadingIndicator(this.rows, id);
+              this.showDeleteErrorNotification(
+                response?.message || 'Mannschaft konnte nicht gelöscht werden.'
+              );
+            });
 
-                                  });
+          notificationEvent.unsubscribe();
+        } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+          this.rows = hideLoadingIndicator(this.rows, id);
+          notificationEvent.unsubscribe();
+        }
+      });
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private showDeleteErrorNotification(message: string): void {
+    const notification: Notification = {
+      id: 'delete_mannschaft_error',
+      title: 'Löschen nicht möglich',
+      description: message || 'Die Mannschaft konnte nicht gelöscht werden.',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
 
     this.notificationService.showNotification(notification);
   }

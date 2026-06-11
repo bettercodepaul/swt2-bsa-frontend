@@ -1912,6 +1912,10 @@
         "TITLE": "Doppelte Eingabe",
         "DESCRIPTION": "Ein Eintrag mit diesen Werten existiert bereits. Bitte prüfen Sie Ihre Eingaben."
       },
+      "MANNSCHAFT_DELETE_AFTER_MELDEDEADLINE": {
+        "TITLE": "Löschen nicht möglich",
+        "DESCRIPTION": "Mannschaft kann nach Erreichen der Meldedeadline nicht mehr gelöscht werden."
+      },
       "ENTITY_NOT_FOUND_ERROR": {
         "TITLE": "Nicht gefunden",
         "DESCRIPTION": "Die angeforderte Resource wurde nicht gefunden."
