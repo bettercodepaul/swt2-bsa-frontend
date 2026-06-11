@@ -833,10 +833,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         });
     } else {
       mannschaft.veranstaltungName = 'Not Specified';
-      // Wenn keine Veranstaltung zugewiesen: aktuelles Jahr als Erstellungsjahr setzen
-      if (!mannschaft.sportjahr) {
-        mannschaft.sportjahr = new Date().getFullYear();
-      }
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
 
