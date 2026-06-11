@@ -3,6 +3,13 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from 'src/environments/environment';
 
+export interface SchuetzeDO {
+  schuetzenId: number;
+  rueckennummer: number;
+  vorname: string;
+  nachname: string;
+}
+
 export interface KampfrichterMatchDO {
   matchId: number;
   nr: number;
@@ -16,6 +23,7 @@ export interface KampfrichterMatchDO {
   strafPunkteSatz4: number;
   strafPunkteSatz5: number;
   sessionStatus: string;
+  schuetzen?: SchuetzeDO[];
 }
 
 @Injectable({providedIn: 'root'})
