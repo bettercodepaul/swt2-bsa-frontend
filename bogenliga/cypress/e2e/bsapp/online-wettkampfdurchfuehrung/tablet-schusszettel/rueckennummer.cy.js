@@ -1,74 +1,84 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  resetDemoWettkampf,
+  waehleErstenFreienSchuetzen,
+} from '../../../../support/tabletNavigation';
 
-describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
+/**
+ * Schuetzenmeldung auf dem Tablet (Maske 1):
+ * QR-Link aus dem Admin-Modal oeffnen, drei Schuetzen ueber die
+ * Dropdown-Menues melden und die Sicherheitsabfrage durchlaufen.
+ */
+describe('Tablet - Schuetzenmeldung', () => {
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
   });
-  it('öffnet QR-Code-Link aus Status SCHUETZENMELDUNG', () => {
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessions');
-    cy.reload();
-    cy.wait('@ladeSessions').then((interception) => {
-      const sessions = interception.response.body.tabletSessionSingDTOs;
-      const session = sessions.find(s => s.status === 'SCHUETZENMELDUNG');
 
+  it('meldet drei Schuetzen ueber den QR-Code-Link', () => {
+    geheZuTabletSetup().then((sessions) => {
+      const session = sessions.find((s) => s.status === 'SCHUETZENMELDUNG');
       expect(session, 'Mindestens eine SCHUETZENMELDUNG-Session vorhanden').to.exist;
 
-      // Tabelle nach passender Zeile durchsuchen
-      cy.get('.session-table tbody tr').each(($row) => {
-        const $cells = $row.find('td');
-        const teamCellText = $cells.eq(0).text().trim();
-        const statusCellText = $cells.eq(1).text().trim();
-
-        if (statusCellText === 'SCHUETZENMELDUNG' && teamCellText === session.teamName) {
-          cy.wrap($row).within(() => {
-            cy.get('button').first().click();
-          });
-        }
-      });
-
-      cy.get('bla-modal-dialog').should('be.visible');
-      // Link extrahieren
+      // QR-Modal der Session oeffnen und Link auslesen
+      cy.contains('.session-table tbody td', session.teamName)
+        .parents('tr')
+        .within(() => {
+          cy.get('button').first().click();
+        });
       cy.get('.qr-link-text')
         .should('be.visible')
         .invoke('text')
         .then((linkText) => {
-          cy.log('Gefundener Link:', linkText);
-
-          // Simuliere das Öffnen in neuem Tab
           cy.visit(linkText.trim());
-          cy.get('button.weiter-button').click();
-          // Wähle exakt 3 unterschiedliche Schützen
-          cy.get('.schuetze-item').then(($items) => {
-            const usedNames = new Set();
-            const uniqueItems = [];
-
-            $items.each((i, el) => {
-              const name = el.innerText.trim();
-              if (!usedNames.has(name) && uniqueItems.length < 3) {
-                usedNames.add(name);
-                uniqueItems.push(el);
-              }
-            });
-
-            expect(uniqueItems.length).to.eq(3, 'Genau 3 unterschiedliche Schützen gefunden');
-
-            // Weise die Schützen den Slots zu (synchron & kontrolliert)
-            uniqueItems.forEach((el, index) => {
-              const name = el.innerText.trim();
-              const rueckennummer = name.split('–')[0].trim();
-              cy.log(`Slot ${index + 1}: ${name}`);
-
-              cy.get('.slot-container input').eq(index).click();    // Slot aktivieren
-              cy.wrap(el).click();                                  // Schütze zuweisen
-
-              // Wertprüfung
-              cy.get('.slot-container input').eq(index)
-                .should('have.value', rueckennummer);
-            });
-
-          // Abschließen
-          cy.get('button.confirm-button').should('not.be.disabled').click();
         });
+
+      // Zustands-Uebersicht (Maske 4) -> Weiter zur Registrierung
+      cy.get('button.weiter-button', { timeout: 20000 }).click();
+
+      // Drei Dropdowns, Demo-Teams haben genau 3 waehlbare Schuetzen
+      cy.get('select.shooter-menu').should('have.length', 3);
+      cy.get('select.shooter-menu').eq(0)
+        .find('option:not([disabled])')
+        .should('have.length', 3);
+
+      // Ohne vollstaendige Auswahl ist "Melden" gesperrt
+      cy.get('button.confirm-button').should('be.disabled');
+
+      // Menue 1: ersten Schuetzen waehlen -> in Menue 2 muss er gesperrt sein
+      cy.get('select.shooter-menu').eq(0)
+        .find('option:not([disabled])')
+        .first()
+        .invoke('text')
+        .then((schuetze1Text) => {
+          waehleErstenFreienSchuetzen(0);
+          cy.get('select.shooter-menu').eq(1)
+            .contains('option', schuetze1Text.trim())
+            .should('be.disabled');
+        });
+
+      // Restliche Menues befuellen
+      waehleErstenFreienSchuetzen(1);
+      waehleErstenFreienSchuetzen(2);
+
+      // Melden -> Sicherheitsabfrage: erst abbrechen, dann bestaetigen
+      cy.get('button.confirm-button').should('not.be.disabled').click();
+      cy.get('.confirm-box').should('be.visible');
+      cy.get('button.confirm-no').click();
+      cy.get('.confirm-box').should('not.exist');
+
+      cy.intercept('POST', '**/tablet-schusszettel*').as('meldung');
+      cy.get('button.confirm-button').click();
+      cy.get('button.confirm-yes').click();
+      cy.wait('@meldung').its('response.statusCode').should('be.within', 200, 299);
+
+      // Nach der Meldung laedt das Tablet neu -> Status SATZEINGABE
+      cy.get('button.weiter-button', { timeout: 20000 }).should('be.visible');
+
+      geheZuTabletSetup().then((neueSessions) => {
+        const aktualisiert = neueSessions.find((s) => s.teamId === session.teamId);
+        expect(aktualisiert.status, 'Session nach Meldung').to.eq('SATZEINGABE');
       });
     });
   });

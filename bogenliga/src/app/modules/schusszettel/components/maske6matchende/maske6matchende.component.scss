@@ -314,17 +314,16 @@ $border: #dee2e6;
   }
 
   @media (max-width: 1024px) {
+    /* Fix: Anzeige der Schusszettel (Tabelle) Mobile
+       (vorher als .embedded-schusszettel-section verschachtelt → tote Regel) */
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
     .schusszettel-container {
       transform: none;
+      transform-origin: top left;
       zoom: 0.8;
-    }
-    /* Fix: Anzeige der Schusszettel (Tabelle) Mobile */
-    .embedded-schusszettel-section {
-      display: block !important;
-      overflow-x: auto;
-    }
-    .embedded-schusszettel-section .schusszettel-container {
-      transform-origin: top left !important;
     }
   }
 
@@ -335,18 +334,49 @@ $border: #dee2e6;
     }
   }
 
+  // Handy: kein Zoom-Trick – das responsive Karten-Layout der
+  // Schusszettel-Komponente übernimmt; hier nur fixe Größen neutralisieren
   @media (max-width: 768px) {
-    .schusszettel-container {
-      transform: none;
-      zoom: 0.6;
-    }
-  }
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 
-  @media (max-width: 480px) {
     .schusszettel-container {
       transform: none;
-      zoom: 0.5;
+      zoom: 1;
+      width: 100%;
       padding: 10px;
+
+      ::ng-deep {
+        .schusszettel-container {
+          min-width: 0;
+          padding: 5px;
+        }
+
+        // neutralisiert die fixen 55px-Inputs aus dem Basis-Block
+        input {
+          height: 44px !important;
+          width: 44px !important;
+          min-height: 44px !important;
+          min-width: 44px !important;
+          max-height: 44px !important;
+          max-width: 44px !important;
+          font-size: 18px !important;
+        }
+
+        .schuetze-select {
+          height: 44px;
+          width: 44px;
+          font-size: 18px;
+        }
+
+        // neutralisiert margin/padding aus dem Basis-Block,
+        // damit das Karten-Grid der Kind-Komponente greift
+        tr, th, td {
+          margin: 0;
+          padding: 2px;
+        }
+      }
     }
   }
 }

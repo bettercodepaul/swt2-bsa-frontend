@@ -231,6 +231,13 @@
 
         <bla-expand headerText="{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }}">
           <bla-col-layout>
+            <p *ngIf="liveAktualisiert && !isOffline()"
+               id="liveHinweis"
+               style="margin-left: 5px; color: #555;">
+              <span style="color: #c00;">&#9679;</span>
+              Live &ndash; Ergebnisse werden alle {{ liveIntervallSekunden }} Sekunden aktualisiert
+              (Stand: {{ liveAktualisiert | date:'HH:mm:ss' }})
+            </p>
             <div class="row"
                  style="margin-left: 5px">
               <section class="overview-dialog-content">

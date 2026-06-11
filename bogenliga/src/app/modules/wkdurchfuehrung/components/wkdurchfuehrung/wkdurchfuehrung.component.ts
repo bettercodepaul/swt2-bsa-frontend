@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {interval, Subscription} from 'rxjs';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {MATCH_TABLE_CONFIG, WETTKAMPF_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG} from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
@@ -26,6 +27,7 @@ import {MatchDTOExt} from '../../types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {onMapService} from '@shared/functions/onMap-service';
 import {MatchDO} from '@verwaltung/types/match-do.class';
+import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {WettkampfComponent} from '@wettkampf/components';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
@@ -50,7 +52,7 @@ import {KampfrichterAnsichtService} from '@schusszettel/services/kampfrichter-an
   styleUrls: ['./wkdurchfuehrung.component.scss']
 })
 
-export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
+export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit, OnDestroy {
 
   public div1Visible = false;
   public div2Visible = true;
@@ -105,6 +107,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   public kampfrichterQrUrl: string | null = null;
   public kampfrichterQrLoading = false;
+
+  // Live-Aktualisierung der Match-Tabelle: Passen werden nach jeder gespeicherten
+  // Passe vom Tablet in die DB geschrieben und hier periodisch nachgeladen
+  public readonly liveIntervallSekunden = 15;
+  public liveAktualisiert: Date = null;
+  private liveRefreshSubscription: Subscription = null;
+  private liveRefreshLaeuft = false;
+  private passen: PasseDoClass[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -585,8 +595,99 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             }
           }
           this.handleFindMatchSuccess(response);
+          this.loadPassen();
+          this.startLiveRefresh();
         })
         .catch(() => this.handleFindMatchFailure());
+  }
+
+  // Laedt alle Passen des Wettkampfs nach und aktualisiert die Satz-Spalten der Match-Tabelle
+  private loadPassen(): void {
+    if (!this.selectedWettkampfId) {
+      return;
+    }
+    this.passeDataProviderService.findByWettkampfId(this.selectedWettkampfId)
+        .then((response) => {
+          this.passen = response.payload || [];
+          this.applySatzergebnisse();
+        })
+        .catch(() => {
+          this.passen = [];
+        });
+  }
+
+  // Schreibt die Satzsummen aus den Passen in die Match-Zeilen und baut die Tabelle neu auf
+  private applySatzergebnisse(): void {
+    for (const match of this.tableContentMatch) {
+      const summen = this.getSatzSummen(match.id);
+      match.satz1 = summen[0];
+      match.satz2 = summen[1];
+      match.satz3 = summen[2];
+      match.satz4 = summen[3];
+      match.satz5 = summen[4];
+    }
+    this.matchRows = toTableRows(this.tableContentMatch);
+    this.groupMatches(this.tableContentMatch);
+    this.liveAktualisiert = new Date();
+  }
+
+  // Summiert je Satz 1-5 die Ringzahlen aller Passen eines Matches; '' solange der Satz nicht geschossen ist
+  private getSatzSummen(matchId: number): Array<number | string> {
+    const summen: Array<number | string> = [];
+    for (let satzNr = 1; satzNr <= 5; satzNr++) {
+      const satzPassen = this.passen.filter((p) => p.matchId === matchId && p.lfdNr === satzNr);
+      if (satzPassen.length === 0) {
+        summen.push('');
+        continue;
+      }
+      let summe = 0;
+      for (const passe of satzPassen) {
+        for (const ringzahl of passe.ringzahl || []) {
+          if (ringzahl != null) {
+            summe += ringzahl;
+          }
+        }
+      }
+      summen.push(summe);
+    }
+    return summen;
+  }
+
+  // Startet die periodische Live-Aktualisierung der Match-Tabelle (einmalig)
+  private startLiveRefresh(): void {
+    if (this.liveRefreshSubscription) {
+      return;
+    }
+    this.liveRefreshSubscription = interval(this.liveIntervallSekunden * 1000).subscribe(() => {
+      const matchTabelleSichtbar = !this.div2Visible;
+      if (!matchTabelleSichtbar || this.isOffline() || !this.selectedWettkampfId
+        || document.hidden || this.liveRefreshLaeuft) {
+        return;
+      }
+      this.refreshLive();
+    });
+  }
+
+  // Holt Matches und Passen erneut, ohne die Button-Logik von showMatches() auszufuehren
+  private refreshLive(): void {
+    this.liveRefreshLaeuft = true;
+    Promise.all([
+      this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId),
+      this.passeDataProviderService.findByWettkampfId(this.selectedWettkampfId)
+    ]).then(([matchResponse, passenResponse]) => {
+      this.passen = passenResponse.payload || [];
+      this.handleFindMatchSuccess(matchResponse);
+      this.liveRefreshLaeuft = false;
+    }).catch(() => {
+      this.liveRefreshLaeuft = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.liveRefreshSubscription) {
+      this.liveRefreshSubscription.unsubscribe();
+      this.liveRefreshSubscription = null;
+    }
   }
 
   /**
@@ -769,11 +870,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       tableContentRow.version = match.version;
       return tableContentRow;
     });
-    // Konvertiert die MatchDOExt-Objekte zu TableRow-Objekten mit der toTableRows() Funktion
-    this.matchRows = toTableRows(this.tableContentMatch); // Verwende die toTableRows() Funktion
     this.loadingMatch = false;
-    // Gruppiert die Matches
-    this.groupMatches(this.tableContentMatch);
+    // Befuellt die Satz-Spalten aus den geladenen Passen und baut Zeilen + Gruppierung auf
+    this.applySatzergebnisse();
   }
 
 

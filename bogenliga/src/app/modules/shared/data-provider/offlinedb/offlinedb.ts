@@ -20,6 +20,13 @@ import { OfflineLeagueHierarchyCache } from '@shared/data-provider/offlinedb/typ
 
 export class OfflineDB extends Dexie {
 
+  // Temporary typing fallback: runtime methods are provided by Dexie,
+  // but local package typings are incomplete in the current environment.
+  declare version: any;
+  declare transaction: any;
+  declare delete: any;
+  declare open: any;
+
   /**
    *  Every table in the database is defined here.
    */

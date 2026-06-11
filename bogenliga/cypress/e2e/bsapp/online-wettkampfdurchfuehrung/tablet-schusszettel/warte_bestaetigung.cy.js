@@ -1,152 +1,82 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  fuehrePasseDurch,
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  registriereTeam,
+  resetDemoWettkampf,
+  tabletUrl,
+} from '../../../../support/tabletNavigation';
 
-describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessions');
-    cy.reload();
-  });
+/**
+ * Warte-Maske (Maske 3):
+ * Nach der eigenen Satzeingabe wartet ein Team auf den Gegner.
+ * Der Refresh-Button fragt den Status neu ab; sobald der Gegner
+ * seine Passe eingegeben hat, geht es in die naechste Satzeingabe.
+ */
+describe('Tablet - Warten auf den Gegner', () => {
+  let teamA;
+  let teamB;
 
-  it('öffnet eine WARTE-Session', () => {
-    cy.wait('@ladeSessions').then((interception) => {
-      const sessions = interception.response.body.tabletSessionSingDTOs;
-      const session = sessions.find(s => s.status === 'WARTE');
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
 
-      expect(session, 'Mindestens eine WARTE-Session vorhanden').to.exist;
+    // Eine Begegnung herauspicken: Team A und seinen Gegner Team B
+    geheZuTabletSetup().then((sessions) => {
+      teamA = sessions.find((s) => s.naechsterGegnerName);
+      expect(teamA, 'Session mit Gegner vorhanden').to.exist;
+      teamB = sessions.find((s) => s.teamName === teamA.naechsterGegnerName);
+      expect(teamB, `Gegner-Session "${teamA.naechsterGegnerName}" vorhanden`).to.exist;
 
-      cy.get('.session-table tbody tr').each(($row) => {
-        const $cells = $row.find('td');
-        const teamCellText = $cells.eq(0).text().trim();
-        const statusCellText = $cells.eq(1).text().trim();
-
-        if (statusCellText === 'WARTE' && teamCellText === session.teamName) {
-          cy.wrap($row).within(() => {
-            cy.get('button').first().click();
-          });
-        }
-      });
-
-      cy.get('bla-modal-dialog').should('be.visible');
-      cy.get('.qr-link-text')
-        .should('be.visible')
-        .invoke('text')
-        .then((linkText) => {
-          cy.visit(linkText.trim());
-
-          cy.contains('button', 'Refresh Status')
-            .should('be.visible')
-            .and('not.be.disabled')
-            .click();
-        });
+      // Beide Teams melden ihre Schuetzen -> beide in SATZEINGABE
+      registriereTeam(teamA);
+      registriereTeam(teamB);
     });
   });
 
-  function öffneQrCodeDesGegnersDerWarteSession(folgeAktion) {
-    cy.wait('@ladeSessions').then((interception) => {
-      const sessions = interception.response.body.tabletSessionSingDTOs;
-      const warteSession = sessions.find(s => s.status === 'WARTE');
-      expect(warteSession).to.exist;
-
-      cy.get('.session-table tbody tr').then((rows) => {
-        let gegnerName = null;
-
-        // 1. Finde den Gegnernamen aus der WARTE-Zeile
-        Cypress._.some(rows, (row) => {
-          const $cells = Cypress.$(row).find('td');
-          const status = $cells.eq(1).text().trim();
-          const team = $cells.eq(0).text().trim();
-          if (status === 'WARTE' && team === warteSession.teamName) {
-            gegnerName = $cells.eq(4).text().trim();
-            return true; // break
-          }
-          return false;
-        });
-
-        expect(gegnerName, 'Gegnername gefunden').to.exist;
-
-        // 2. QR-Code-Button in der Gegnerzeile klicken
-        Cypress._.some(rows, (row) => {
-          const $cells = Cypress.$(row).find('td');
-          const team = $cells.eq(0).text().trim();
-          if (team === gegnerName) {
-            cy.wrap(row).within(() => {
-              cy.get('button').first().click();
-            });
-
-            cy.get('bla-modal-dialog').should('be.visible');
-            cy.get('.qr-link-text')
-              .should('be.visible')
-              .invoke('text')
-              .then((linkText) => {
-                cy.visit(linkText.trim());
-                folgeAktion(warteSession.teamName);
-              });
-            return true;
-          }
-          return false;
-        });
-      });
+  it('zeigt nach der Satzeingabe die Warte-Maske mit Refresh-Button', () => {
+    cy.then(() => {
+      // Team A gibt Passe 1 ein, Team B noch nicht -> A wartet
+      fuehrePasseDurch(teamA, [[10, 9], [9, 9], [10, 8]]);
     });
-  }
 
-  it('öffnet Gegner-QR-Link und führt Schützenmeldung aus', () => {
-    öffneQrCodeDesGegnersDerWarteSession(() => {
-      cy.get('button.weiter-button').click();
-      cy.get('.schuetze-item').then(($items) => {
-        const used = new Set();
-        const uniqueItems = [];
+    cy.get('.warte-container', { timeout: 20000 }).should('be.visible');
+    cy.get('.warte-container').should('contain.text', 'Satzeingabe erhalten');
 
-        $items.each((_, el) => {
-          const name = el.innerText.trim();
-          if (!used.has(name) && uniqueItems.length < 3) {
-            used.add(name);
-            uniqueItems.push(el);
-          }
-        });
-
-        uniqueItems.forEach((el, i) => {
-          const name = el.innerText.trim();
-          const nr = name.split('–')[0].trim();
-          cy.get('.slot-container input').eq(i).click();
-          cy.wrap(el).click();
-          cy.get('.slot-container input').eq(i).should('have.value', nr);
-        });
-
-        cy.get('button.confirm-button').should('not.be.disabled').click();
-      });
-    });
+    // Refresh-Button: Gegner ist noch nicht fertig -> es bleibt bei WARTE
+    cy.intercept('GET', '**/tablet-schusszettel*').as('refresh');
+    cy.get('button.refresh-button')
+      .should('be.visible')
+      .and('contain.text', 'Nochmal nachfragen')
+      .click();
+    cy.wait('@refresh');
+    cy.get('.warte-container').should('be.visible');
   });
 
-  it('öffnet Gegner-QR-Link und führt Satzeingabe aus', () => {
-    öffneQrCodeDesGegnersDerWarteSession((teamName) => {
-      cy.get('button.weiter-button').click();
-      cy.get('table.treffer-table tbody tr').eq(0).within(() => {
-        cy.get('input[id^="schuss1"]').clear().type('10');
-        cy.get('input[id^="schuss2"]').clear().type('9');
-      });
+  it('geht nach der Gegner-Eingabe weiter zur naechsten Passe', () => {
+    cy.then(() => {
+      // Team B zieht nach: meldet ist schon erledigt, gibt Passe 1 ein
+      fuehrePasseDurch(teamB, [[7, 8], [8, 8], [9, 7]]);
+    });
 
-      cy.get('table.treffer-table tbody tr').eq(1).within(() => {
-        cy.get('input[id^="schuss1"]').clear().type('8');
-        cy.get('input[id^="schuss2"]').clear().type('9');
-      });
+    // Team B hat schwaecher geschossen und kommt direkt in Passe 2
+    cy.get('button.weiter-button', { timeout: 20000 }).click();
+    cy.get('.passe-info h2', { timeout: 20000 }).should('contain.text', 'Passe 2');
 
-      cy.get('table.treffer-table tbody tr').eq(2).within(() => {
-        cy.get('input[id^="schuss1"]').clear().type('7');
-        cy.get('input[id^="schuss2"]').clear().type('8');
-      });
+    // Team A laedt neu: der Server schaltet die Session beim naechsten
+    // Abruf automatisch von WARTE auf SATZEINGABE (Passe 2) um
+    cy.then(() => {
+      cy.visit(tabletUrl(teamA));
+    });
+    cy.get('button.weiter-button', { timeout: 20000 }).click();
+    cy.get('.passe-info h2', { timeout: 20000 }).should('contain.text', 'Passe 2');
 
-      cy.get('button.confirm-button').should('not.be.disabled').click();
-
-      cy.visit('#/schusszettel/tablet-setup/2000');
-      // Statuswechsel prüfen
-      cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessionsCheck');
-      cy.reload();
-      cy.wait('@ladeSessionsCheck').then((interception) => {
-        const sessions = interception.response.body.tabletSessionSingDTOs;
-        const updated = sessions.find(s => s.teamName === teamName);
-        expect(updated).to.exist;
-        expect(updated.status).to.eq('SATZEINGABE');
-      });
+    // Admin-Sicht: beide Teams wieder in SATZEINGABE
+    geheZuTabletSetup().then((sessions) => {
+      const a = sessions.find((s) => s.teamId === teamA.teamId);
+      const b = sessions.find((s) => s.teamId === teamB.teamId);
+      expect(a.status, 'Team A').to.eq('SATZEINGABE');
+      expect(b.status, 'Team B').to.eq('SATZEINGABE');
     });
   });
 });
