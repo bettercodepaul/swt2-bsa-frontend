@@ -681,6 +681,9 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
   private saveMannschaft(): void {
+    if (!this.currentMannschaft.sportjahr) {
+      this.currentMannschaft.sportjahr = new Date().getFullYear();
+    }
     console.log('Saving mannschaft: ', this.currentMannschaft);
 
     this.mannschaftProvider.create(this.currentMannschaft, this.currentVerein)
@@ -821,10 +824,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private getNextAvailableNumber(): number {
     // Bestimme das Sportjahr: entweder vom currentMannschaft oder das aktuelle Jahr
     const year = this.currentMannschaft.sportjahr || new Date().getFullYear();
-
     // Filtere nur Mannschaften des gleichen Sportjahres
-    const mannschaftenDesJahres = this.mannschaften.filter(m => m.sportjahr === year);
-
+    const mannschaftenDesJahres = this.mannschaften.filter(m => m.sportjahr == year);
     // Extrahiere und sortiere die Mannschaftsnummern
     const usedNumbers = mannschaftenDesJahres
       .map(m => parseInt(m.nummer, 10))
