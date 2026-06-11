@@ -206,7 +206,8 @@
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Go offline",
       "ONLINE_GEHEN": "Go online",
-      "OFFLINE_TOKEN": "Delete offline token"
+      "OFFLINE_TOKEN": "Delete offline token",
+      "KAMPFRICHTER_QR": "Referee QR code"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -304,7 +305,12 @@
         "GEGNER": "Opponent",
         "BEGEGNUNG": "Encounter",
         "MATCHPUNKTE": "Match-points",
-        "SATZPUNKTE": "Set-points"
+        "SATZPUNKTE": "Set-points",
+        "SATZ1": "Set 1",
+        "SATZ2": "Set 2",
+        "SATZ3": "Set 3",
+        "SATZ4": "Set 4",
+        "SATZ5": "Set 5"
       }
     }
   },

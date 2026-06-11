@@ -26,6 +26,11 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# cypress artifacts
+/cypress/videos
+/cypress/screenshots
+/cypress/downloads
+
 # misc
 /.sass-cache
 /connect.lock

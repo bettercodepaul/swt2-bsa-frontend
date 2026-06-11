@@ -27,12 +27,7 @@ export class TabletSchusszettelMapper {
     // Map status with fallback
     let mappedStatus: TabletSchusszettelStatus;
     try {
-      // Handle backend sending WETTKAMPF_ENDE vs frontend expecting WETTKAMPF_BEENDET
-      if (dto.status === 'WETTKAMPF_ENDE' as any) {
-        mappedStatus = TabletSchusszettelStatus.WETTKAMPF_BEENDET;
-      } else {
-        mappedStatus = dto.status as TabletSchusszettelStatus;
-      }
+      mappedStatus = dto.status as TabletSchusszettelStatus;
     } catch (e) {
       console.warn('[Mapper] Invalid status, defaulting to NOT_ALLOWED:', dto.status);
       mappedStatus = TabletSchusszettelStatus.NOT_ALLOWED;

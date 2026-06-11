@@ -25,6 +25,7 @@ import {SchusszettelRoutingModule} from '@schusszettel/schusszettel.routing.modu
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {WkdurchfuehrungModule} from '../wkdurchfuehrung/wkdurchfuehrung.module';
 import {TabletStatusleisteComponent} from './components/shared/tablet-statusleiste/tablet-statusleiste.component';
+import {KampfrichterAnsichtComponent} from './components/kampfrichter-ansicht/kampfrichter-ansicht.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {TabletStatusleisteComponent} from './components/shared/tablet-statusleis
     Maske4ZustandComponent,
     Maske6MatchendeComponent,
     MatchKontextComponent,
+    KampfrichterAnsichtComponent,
   ],
   imports: [
     CommonModule,

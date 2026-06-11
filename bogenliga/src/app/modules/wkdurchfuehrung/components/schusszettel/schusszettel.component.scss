@@ -206,3 +206,169 @@ input {
   font-size: 30px;
   box-sizing: border-box;
 }
+
+/* Handy-Ansicht: Karten pro Schütze statt breiter 12-Spalten-Tabelle */
+@media (max-width: 768px) {
+  .schusszettel-container {
+    min-width: 0;
+    padding: 10px;
+  }
+
+  /* Bootstrap-Spalten untereinander stapeln */
+  .row > .col-2,
+  .row > .col-6,
+  .row > .col-10 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .match-section h2 { font-size: 20px; }
+  .match-section h3 { font-size: 15px; }
+
+  .row-header {
+    text-align: left;
+    font-weight: 600;
+  }
+
+  input,
+  .schuetze-select {
+    height: 44px;
+    width: 44px;
+    font-size: 18px;
+  }
+
+  /* Kopf-Tabelle (Satzpunkte / Summe / Match) kompakt, passt ohne Scrollen */
+  .score-table {
+    th,
+    td {
+      padding: 2px;
+      font-size: 11px;
+    }
+
+    td {
+      height: auto;
+      width: auto;
+      font-size: 14px !important;
+    }
+
+    input {
+      height: 40px;
+      width: 100%;
+      max-width: 44px;
+      font-size: 16px;
+    }
+  }
+
+  .fehlerpunkte-wrapper {
+    display: block;
+
+    .score-table {
+      width: auto;
+
+      th {
+        padding: 4px 12px;
+        font-size: 12px;
+      }
+
+      input {
+        width: 56px;
+        max-width: 56px;
+      }
+    }
+  }
+
+  /* Pfeilwerte: eine Karte pro Schütze */
+  .arrow-table {
+    display: block;
+
+    thead { display: none; }
+    tbody { display: block; }
+
+    tr {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 8px;
+      margin-bottom: 12px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    td {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: auto;
+      width: auto;
+      padding: 0;
+      border: 0;
+      font-size: 16px !important;
+    }
+
+    td.split { border-left: 0; }
+
+    td::before {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+    }
+
+    td input { margin: 0 auto; }
+
+    /* Schützen-Zeilen: Label über jedem Feld */
+    tr:not(.total-row) {
+      td:first-child {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: center;
+
+        &::before { content: 'Schütze'; }
+      }
+
+      @for $s from 1 through 5 {
+        td:nth-child(#{2 * $s})::before { content: '#{$s}. Satz · Pfeil 1'; }
+        td:nth-child(#{2 * $s + 1})::before { content: '#{$s}. Satz · Pfeil 2'; }
+      }
+
+      td:last-child {
+        grid-column: 1 / -1;
+
+        &::before { content: 'Summe Schütze'; }
+      }
+    }
+
+    /* Satz-Summen-Zeile als eigene Karte */
+    tr.total-row {
+      &::before {
+        content: 'Satz-Summen';
+        grid-column: 1 / -1;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      td:first-child { display: none; }
+
+      td {
+        /* versteckt den Inline-Text "Summe", Label kommt per ::before */
+        font-size: 0 !important;
+
+        input { font-size: 16px; }
+      }
+
+      @for $s from 1 through 5 {
+        td:nth-child(#{$s + 1})::before { content: '#{$s}. Satz'; }
+      }
+    }
+  }
+
+  /* Navigations-Buttons (Standalone-Modus) umbrechen lassen */
+  #buttonContainer {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .popup { width: 90%; }
+}

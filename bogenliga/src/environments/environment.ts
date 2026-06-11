@@ -6,7 +6,7 @@ export const environment = {
   production:     false,
   showLabel: true,
   label: 'TEST',
-  backendBaseUrl: 'http://localhost:9000',
+  backendBaseUrl: `http://${location.hostname}:9000`,
   analytics: {
     enabled: false, // default off in dev
     provider: 'console'
