@@ -52,7 +52,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                          error.error = {};
                        }
                        error.error.errorCode = 'NO_SESSION_ERROR';
-                       error.error.errorMessage = 'Your Session Token is expired pleas login again';
+                       error.error.errorMessage = 'Your Session Token is expired please login again';
                        error.status = 401;
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
