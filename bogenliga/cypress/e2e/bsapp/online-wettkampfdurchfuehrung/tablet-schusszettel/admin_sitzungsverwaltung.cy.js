@@ -64,7 +64,9 @@ describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
       // Modal mit QR-Code und Link oeffnet sich
       cy.contains('h5', 'QR-Code').should('be.visible');
       cy.get('qrcode').should('exist');
-      cy.get('.qr-link-text')
+      // Nur den Link im Modal lesen - die Setup-Seite zeigt darunter
+      // auch den Kampfrichter-Link mit derselben Klasse .qr-link-text.
+      cy.get('.modal-dialog-content .qr-link-text')
         .should('be.visible')
         .invoke('text')
         .then((linkText) => {

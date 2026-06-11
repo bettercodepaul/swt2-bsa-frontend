@@ -27,7 +27,9 @@ describe('Tablet - Schuetzenmeldung', () => {
         .within(() => {
           cy.get('button').first().click();
         });
-      cy.get('.qr-link-text')
+      // Nur den Link im Modal lesen - die Setup-Seite zeigt darunter
+      // auch den Kampfrichter-Link mit derselben Klasse .qr-link-text.
+      cy.get('.modal-dialog-content .qr-link-text')
         .should('be.visible')
         .invoke('text')
         .then((linkText) => {

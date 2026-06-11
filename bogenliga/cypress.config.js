@@ -1,4 +1,10 @@
 const { defineConfig } = require("cypress");
+const fs = require("fs");
+
+// psql fuer den Testdaten-Reset: Windows-Standardpfad, sonst psql aus dem
+// PATH (Mac/Linux/abweichende Installation). Per CYPRESS_PSQL_PATH uebersteuerbar.
+const WINDOWS_PSQL = "C:\\Program Files\\PostgreSQL\\16\\bin\\psql.exe";
+const psqlPath = fs.existsSync(WINDOWS_PSQL) ? WINDOWS_PSQL : "psql";
 
 module.exports = defineConfig({
   e2e: {
@@ -17,7 +23,7 @@ module.exports = defineConfig({
       BACKEND_URL: "http://localhost:9000",
       // Lokale Postgres-Instanz fuer den Testdaten-Reset der
       // Tablet-Schusszettel-Demo (Wettkampf 3001, V39-Migration).
-      PSQL_PATH: "C:\\Program Files\\PostgreSQL\\16\\bin\\psql.exe",
+      PSQL_PATH: psqlPath,
       DB_HOST: "localhost",
       DB_PORT: 5432,
       DB_NAME: "swt2",
