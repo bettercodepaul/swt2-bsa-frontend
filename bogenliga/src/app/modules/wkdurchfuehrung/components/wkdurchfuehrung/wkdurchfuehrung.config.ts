@@ -65,6 +65,31 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
       width:          20,
     },
     {
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZ1',
+      propertyName:   'satz1',
+      width:          4,
+    },
+    {
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZ2',
+      propertyName:   'satz2',
+      width:          4,
+    },
+    {
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZ3',
+      propertyName:   'satz3',
+      width:          4,
+    },
+    {
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZ4',
+      propertyName:   'satz4',
+      width:          4,
+    },
+    {
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZ5',
+      propertyName:   'satz5',
+      width:          4,
+    },
+    {
       translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       type:            5,

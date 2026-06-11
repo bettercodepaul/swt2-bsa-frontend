@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {SchusszettelService} from '@schusszettel/services/schusszettel.service';
+import {KampfrichterAnsichtService} from '@schusszettel/services/kampfrichter-ansicht.service';
 import {TabletSessionSingDO} from '@schusszettel/types/tablet-session-sing-do.class';
-import {WettkampfInfoDTO} from '@schusszettel/types/inside/wettkampf-info-dto'; // Add this import
+import {WettkampfInfoDTO} from '@schusszettel/types/inside/wettkampf-info-dto';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {faQrcode, faTrash} from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +28,10 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
   /** URL for displaying QR code in the modal */
   public selectedQrUrl: string | null = null;
 
+  /** Kampfrichter token and QR URL */
+  public kampfrichterToken: string | null = null;
+  public kampfrichterQrUrl: string | null = null;
+
   /** Flags for tracking UI state */
   public loading = false;
   public errorMsg: string | null = null;
@@ -40,6 +45,7 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private schussService: SchusszettelService,
+    private kampfrichterService: KampfrichterAnsichtService,
     private route: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
@@ -75,22 +81,18 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
     console.log('[SchusszettelAdmin] loadSessions for:', this.wettkampfId);
     this.errorMsg = null;
     this.loading = true;
-    this.cd.markForCheck(); // ensure spinner appears immediately
+    this.cd.markForCheck();
 
     this.schussService.getSessions(this.wettkampfId)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (sessions) => {
             this.teams = sessions;
-
-            // Extract wettkampfInfo from the first team session (all teams share the same wettkampf info)
             if (sessions.length > 0 && sessions[0].wettkampfInfo) {
               this.wettkampfInfo = sessions[0].wettkampfInfo;
-              console.log('[SchusszettelAdmin] Extracted wettkampfInfo:', this.wettkampfInfo);
             }
-
             this.loading = false;
-            this.cd.markForCheck(); // update view after data arrival
+            this.cd.markForCheck();
           },
           error: (err) => {
             console.error('[SchusszettelAdmin] loadSessions error:', err);
@@ -100,9 +102,28 @@ export class SchusszettelTabletAdminComponent implements OnInit, OnDestroy {
               this.errorMsg = 'Fehler beim Laden der Sessions.';
             }
             this.loading = false;
-            this.cd.markForCheck(); // update view on error
+            this.cd.markForCheck();
           }
         });
+
+    this.kampfrichterService.getOrCreateToken(this.wettkampfId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (resp) => {
+            this.kampfrichterToken = resp.token;
+            this.kampfrichterQrUrl = this.buildKampfrichterUrl(resp.token);
+            this.cd.markForCheck();
+          },
+          error: (err) => console.warn('[SchusszettelAdmin] kampfrichter token error:', err)
+        });
+  }
+
+  public buildKampfrichterUrl(token: string): string {
+    const params = new URLSearchParams({
+      token,
+      wettkampfid: this.wettkampfId.toString()
+    }).toString();
+    return `${location.origin}/#/schusszettel/kampfrichter?${params}`;
   }
 
   /**

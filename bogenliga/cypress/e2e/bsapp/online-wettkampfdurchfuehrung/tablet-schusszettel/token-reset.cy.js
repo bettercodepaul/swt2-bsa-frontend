@@ -1,32 +1,58 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  resetDemoWettkampf,
+} from '../../../../support/tabletNavigation';
 
-describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
+/**
+ * Prueft das Zuruecksetzen des Tablet-Tokens ueber den Papierkorb-Button.
+ * Laut Backend-Vertrag wird dabei nur der Token erneuert,
+ * der Status der Session bleibt erhalten.
+ */
+describe('Admin - Token-Reset', () => {
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
   });
-  it('setzt Token zurück und zeigt neuen Wert an', () => {
-    cy.get('.session-table', {timeout: 10000}).should('exist');
-    cy.get('.session-table tbody tr').should('have.length.at.least', 1);
 
-    let originalToken = '';
-    cy.get('.session-table tbody tr').first()
-      .find('td')
-      .eq(2)
-      .invoke('text')
-      .then((originalToken) => {
-        originalToken = originalToken.trim();
-      });
-    // Reset-Button klicken
-    cy.get('.session-table tbody tr').first()
-      .find('button').eq(1).click();
+  it('setzt den Token zurueck und behaelt den Status bei', () => {
+    geheZuTabletSetup().then((sessions) => {
+      const session = sessions[0];
 
-    // Warten, bis der Token sich ändert
-    cy.get('.session-table tbody tr').first()
-      .find('td')
-      .eq(2)
-      .should(($td) => {
-        const newToken = $td.text().trim();
-        expect(newToken).to.not.equal(originalToken);
+      // Erfolgsmeldung kommt als window.alert - Inhalt pruefen
+      const alerts = [];
+      cy.on('window:alert', (text) => alerts.push(text));
+
+      cy.contains('.session-table tbody td', session.teamName)
+        .parents('tr')
+        .within(() => {
+          // Token-Spalte (Index 2) merken und Reset-Button (zweiter Button) klicken
+          cy.get('td').eq(2).invoke('text').as('alterToken');
+          cy.get('button').eq(1).click();
+        });
+
+      // Tabelle laedt neu: Token muss sich geaendert haben, Status nicht
+      cy.get('@alterToken').then((alterToken) => {
+        cy.contains('.session-table tbody td', session.teamName)
+          .parents('tr')
+          .find('td')
+          .eq(2)
+          .should(($td) => {
+            const neuerToken = $td.text().trim();
+            expect(neuerToken, 'Neuer Token gesetzt').to.not.be.empty;
+            expect(neuerToken).to.not.equal(alterToken.trim());
+          });
       });
+
+      cy.contains('.session-table tbody td', session.teamName)
+        .parents('tr')
+        .find('td')
+        .eq(1)
+        .should('contain.text', session.status);
+
+      cy.then(() => {
+        expect(alerts.join(' '), 'Erfolgs-Alert angezeigt').to.include('zurückgesetzt');
+      });
+    });
   });
 });

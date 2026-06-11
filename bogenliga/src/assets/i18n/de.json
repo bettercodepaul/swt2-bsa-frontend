@@ -228,6 +228,7 @@
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
       "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
+      "KAMPFRICHTER_QR": "Kampfrichter QR-Code",
 
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
@@ -336,7 +337,12 @@
         "GEGNER": "Gegner",
         "BEGEGNUNG": "Begegnung",
         "MATCHPUNKTE": "Matchpunkte",
-        "SATZPUNKTE": "Satzpunkte"
+        "SATZPUNKTE": "Satzpunkte",
+        "SATZ1": "Satz 1",
+        "SATZ2": "Satz 2",
+        "SATZ3": "Satz 3",
+        "SATZ4": "Satz 4",
+        "SATZ5": "Satz 5"
       }
     }
   },
