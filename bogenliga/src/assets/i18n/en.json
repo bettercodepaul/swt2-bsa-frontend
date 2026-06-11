@@ -1912,7 +1912,11 @@
         "LIGA_NOT_FOUND_ERROR": {
           "TITLE": "League Not Found Error",
           "DESCRIPTION": "The requested league was not found."
-        }
+        },
+        "MANNSCHAFT_DELETE_AFTER_MELDEDEADLINE": {
+          "TITLE": "Deletion not possible",
+          "DESCRIPTION": "The team can no longer be deleted after the registration deadline has been reached."
+        },
       }
     },
     "BREADCRUMB": {
