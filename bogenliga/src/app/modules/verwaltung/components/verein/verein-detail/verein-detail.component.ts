@@ -58,6 +58,7 @@ const NOTIFICATION_COPY_MANNSCHAFT = 'mannschaft_detail_copy';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE = 'download_before_deadline';
 const NOTIFICATION_ENTITY_CONFLICT_ERROR = 'ENTITY_CONFLICT_ERROR';
 const NOTIFICATION_DATABASE_ERROR = 'DATABASE_ERROR';
 const PLATZHALTER_ID = 99;
@@ -85,6 +86,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
   public UserPermission = UserPermission;
+  private isSportleiter = false;
 
 
   private sessionHandling: SessionHandling;
@@ -123,8 +125,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       this.userDataProviderService.findUserRoleById(currentUserId)
         .then((roleresponse) => {
           if (roleresponse && roleresponse.payload) {
-            const isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
-            if (isSportleiter) {
+            this.isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
+            if (this.isSportleiter) {
               // create a deep copy of the table config and remove the ADD action so the button is hidden
               this.config_table = JSON.parse(JSON.stringify(this.config_table));
               if (this.config_table.actions && Array.isArray(this.config_table.actions.actionTypes)) {
@@ -432,6 +434,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    if (this.isDownloadBlocked(versionedDataObject.id)) {
+      this.showBeforeDeadlineNotification();
+      return;
+    }
     if (!this.onOfflineService.isOffline()) {
       const URL: string = new UriBuilder()
         .fromPath(environment.backendBaseUrl)
@@ -493,7 +499,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
    public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
-     const URL: string = new UriBuilder()
+     if (this.isDownloadBlocked(versionedDataObject.id)) {
+       this.showBeforeDeadlineNotification();
+       return;
+     }
+    const URL: string = new UriBuilder()
        .fromPath(environment.backendBaseUrl)
        .path('v1/download')
        .path('pdf/lizenzen')
@@ -503,6 +513,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
          .then((response: BogenligaResponse<string>) => console.log(response))
          .catch((response: BogenligaResponse<string>) => this.showNoLicense());
    }
+
 
    public onDownloadSchusszetteltag1(versionedDataObject: VersionedDataObject): void {
      this.downloadSchusszettel(versionedDataObject.id, 1, 'schusszettel_tag1.pdf');
@@ -558,8 +569,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
      this.navigateToDetailDialog(versionedDataObject);
 
    }
-
-  public onEdit(versionedDataObject: VersionedDataObject): void {
+    public onEdit(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
   }
 
@@ -693,6 +703,36 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.notificationService.showNotification(noLicenseNotification);
   }
 
+  private isDownloadBlocked(mannschaftId: number): boolean {
+    if (!this.isSportleiter) {
+      return false;
+    }
+    const mannschaft = this.mannschaften.find(m => m.id === mannschaftId);
+    if (!mannschaft || !mannschaft.meldeDeadline || mannschaft.meldeDeadline === '-') {
+      return false;
+    }
+    const parts = mannschaft.meldeDeadline.split('.');
+    const deadline = new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today <= deadline;
+  }
+
+  private showBeforeDeadlineNotification(): void {
+    const notification: Notification = {
+      id:          NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE)
+        .subscribe((myNotification) => {});
+    this.notificationService.showNotification(notification);
+  }
+
   private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
@@ -823,6 +863,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           } else {
             mannschaft.veranstaltungName = 'Unknown';
           }
+          if (response.payload && response.payload.meldeDeadline) {
+            const parts = response.payload.meldeDeadline.split('-');
+            mannschaft.meldeDeadline = `${parts[2]}.${parts[1]}.${parts[0]}`;
+          } else {
+            mannschaft.meldeDeadline = '-';
+          }
           // Set sportjahr from veranstaltung
           if (response.payload && response.payload.sportjahr) {
             mannschaft.sportjahr = response.payload.sportjahr;
@@ -830,9 +876,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         })
         .catch(() => {
           mannschaft.veranstaltungName = '';
+          mannschaft.meldeDeadline = '-';
         });
     } else {
       mannschaft.veranstaltungName = 'Not Specified';
+      mannschaft.meldeDeadline = '-';
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
 
