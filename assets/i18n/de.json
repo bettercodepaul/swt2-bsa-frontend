@@ -1034,7 +1034,8 @@
           "ID": "ID",
           "MANNSCHAFTSNAME": "Name",
           "SPORTJAHR": "Sportjahr",
-          "LIGA": "Liga"
+          "LIGA": "Liga",
+          "MELDEDEADLINE": "Meldedeadline"
         }
       },
       "NOTIFICATION": {
@@ -1065,6 +1066,10 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        },
+        "DOWNLOAD_BEFORE_DEADLINE": {
+          "TITLE": "Download nicht verfügbar",
+          "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
         },
         "UPDATE": {
           "FAILURE": {
