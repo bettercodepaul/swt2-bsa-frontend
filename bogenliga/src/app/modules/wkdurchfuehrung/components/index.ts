@@ -6,3 +6,4 @@ export * from './tablet-admin/tablet-admin.component';
 export * from './tableteingabe/tableteingabe.component';
 export * from './fullscreen/fullscreen.component';
 export * from './anzeige-manager/anzeige-manager.component';
+export * from './anzeige-physische_ID/anzeige_physische_ID.component';
