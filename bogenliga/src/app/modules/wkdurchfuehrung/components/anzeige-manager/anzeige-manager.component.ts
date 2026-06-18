@@ -3,7 +3,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
 import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class AnzeigeManagerComponent implements OnInit {
 
   public wettkampfId: number;
 
-  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
+  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     // Holt den in der wkdurchfuehrung.routing.ts definierten Parameter aus der URL
@@ -35,9 +35,6 @@ export class AnzeigeManagerComponent implements OnInit {
       this.wettkampfId = parseInt(params.get('selectedWettkampfId'), 10);
     });
   }
-
-
-
 
   public nextMatch(): void {
     this.currentMatch++;
@@ -93,8 +90,9 @@ export class AnzeigeManagerComponent implements OnInit {
     });
   }
 
-  public async showGeneratedID(): Promise<void> {
-    const response = await this.anzeigenProvider.getNewPhysischeBildschirmID();
-    this.generatedId = '' + response.payload;
+  public navigateToScreen(): void {
+    this.router.navigate(['/wkdurchfuehrung/anzeige-physische-id', this.wettkampfId]);
   }
+
+
 }
