@@ -65,13 +65,6 @@
 
   </div>
   <button
-    class="action-btn action-btn-success id-button"
-    (click)="showGeneratedID()"
-    title="ID generieren">
-    <span class="action-btn-circle">+</span>
-    ID generieren
-  </button>
-  <button
     class="action-btn action-btn-success update-button"
     (click)="updateDisplay()"
     title="Anzeige Übernehmen">
@@ -87,33 +80,4 @@
     </button>
   </div>
 
-  <!-- Dunkles Overlay wie bei Fehlermeldung Popups-->
-  <div class="id-popup" *ngIf="IdGeneratePopup" [ngStyle]="{'left.px': popupPosition.x, 'top.px': popupPosition.y}">
-
-    <!-- Header (Titelleiste zum Verschieben) -->
-    <div class="id-popup-header" (mousedown)="startDrag($event)">
-      <div class="id-popup-title">
-        Generierte ID
-      </div>
-      <button class="id-popup-close"
-              (click)="closeGeneratedIdPopup()">
-                ✕
-      </button>
-    </div>
-
-    <!-- Body (Inhalt) -->
-    <div class="id-popup-body">
-      <div class="id-display">{{ generatedId || 'XXXX' }}</div>
-    </div>
-
-    <!-- Footer mit Button rechts -->
-    <div class="id-popup-footer">
-      <button class="action-btn action-btn-primary copy-button"
-              (click)="copyGeneratedId()">
-              <span class="action-btn-circle">+</span>
-              Kopieren
-      </button>
-    </div>
-
-  </div>
 </div>
