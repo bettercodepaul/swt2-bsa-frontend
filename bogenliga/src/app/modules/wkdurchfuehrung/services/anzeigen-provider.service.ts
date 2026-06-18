@@ -59,9 +59,9 @@ export class AnzeigenProviderService extends DataProviderService {
 
   public getNewPhysischeBildschirmID(): Promise<BogenligaResponse<string>> {
     return new Promise(((resolve, reject) => {
-      this.restClient.GET(this.getUrl())
-        .then((data: string) => {
-          resolve({result: RequestResult.SUCCESS, payload: data});
+      this.restClient.GET(this.getUrl() + '/getNewPhysischeBildschirmID')
+        .then((data: any) => {
+          resolve({result: RequestResult.SUCCESS, payload: data.id});
         }, (error: HttpErrorResponse) => {
           if (error.status === 0) {
             reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -71,4 +71,4 @@ export class AnzeigenProviderService extends DataProviderService {
         });
     }));
   }
-  }
+}

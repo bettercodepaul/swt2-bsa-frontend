@@ -29,7 +29,7 @@ export class AnzeigeManagerComponent implements OnInit, OnDestroy {
 
   // Für das Fenster der generierten ID
   public IdGeneratePopup = false;
-  public generatedId = this.anzeigenProvider.getNewPhysischeBildschirmID();
+  public generatedId = '';
   public popupPosition = {x: 120, y: 120};
 
   private isDragging = false;
@@ -130,6 +130,7 @@ export class AnzeigeManagerComponent implements OnInit, OnDestroy {
   }
 
   public showGeneratedID(): void {
+    this.generatedId = '' + this.anzeigenProvider.getNewPhysischeBildschirmID();
     this.IdGeneratePopup = true;
     this.popupPosition = {x: 120, y: 120};
   }
@@ -163,7 +164,6 @@ export class AnzeigeManagerComponent implements OnInit, OnDestroy {
       });
     } else {
       const ta = document.createElement('textarea');
-      ta.value = this.generatedId;
       document.body.appendChild(ta);
       ta.select();
       try {
