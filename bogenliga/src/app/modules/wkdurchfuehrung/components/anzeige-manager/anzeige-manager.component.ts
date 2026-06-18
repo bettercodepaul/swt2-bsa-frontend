@@ -29,7 +29,7 @@ export class AnzeigeManagerComponent implements OnInit, OnDestroy {
 
   // Für das Fenster der generierten ID
   public IdGeneratePopup = false;
-  public generatedId = 'test';
+  public generatedId = this.anzeigenProvider.getNewPhysischeBildschirmID();
   public popupPosition = {x: 120, y: 120};
 
   private isDragging = false;
