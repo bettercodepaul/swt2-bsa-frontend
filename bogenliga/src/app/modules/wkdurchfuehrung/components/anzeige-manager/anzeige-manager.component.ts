@@ -89,4 +89,6 @@ export class AnzeigeManagerComponent implements OnInit {
         });
     });
   }
+
+  public showGeneratedID(): void{}
 }
