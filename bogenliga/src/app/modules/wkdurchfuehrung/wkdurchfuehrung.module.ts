@@ -13,6 +13,7 @@ import {
   TabletAdminComponent,
   PfeilNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,
+  AnzeigePhysischeIDComponent,
 } from '../wkdurchfuehrung/components';
 
 import {
@@ -51,6 +52,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manag
     FullscreenComponent,
     TabletAdminPopUpComponent,
     AnzeigeManagerComponent,
+    AnzeigePhysischeIDComponent,
   ],
   providers: [
     WkdurchfuehrungGuard,

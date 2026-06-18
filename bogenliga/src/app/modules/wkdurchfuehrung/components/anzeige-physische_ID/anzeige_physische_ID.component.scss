@@ -1,0 +1,51 @@
+.screen-registration {
+  min-height: 100vh;
+  background-color: #fff;
+  color: #000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.title {
+  color: #005fcc;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+
+.code-box {
+  border: 6px solid #005fcc;
+  border-radius: 20px;
+  width: min(700px, 90vw);
+  min-height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.code {
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #000;
+}
+
+.hint {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
