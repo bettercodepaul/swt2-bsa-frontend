@@ -190,15 +190,18 @@
   margin-bottom: 12px;
   font-family: monospace;
 }
-
-.id-popup-actions {
+.id-popup-footer {
+  padding: 12px 18px;
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  justify-content: flex-end;
+  border-top: 1px solid #eee;
+  background: #f9f9f9;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
 
   .copy-button {
     min-width: 120px;
     height: 30px;
     justify-content: center;
   }
-}
