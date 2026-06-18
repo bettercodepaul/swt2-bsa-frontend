@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
 
 @Component({
@@ -8,26 +8,36 @@ import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provid
 })
 export class AnzeigePhysischeIDComponent implements OnInit {
   physischeBildschirmID = '';
+  isFullscreen = true;
 
   constructor(private anzeigenProvider: AnzeigenProviderService) {}
 
   ngOnInit(): void {
     this.showGeneratedID();
+    this.activateFullscreen();
   }
 
   public async showGeneratedID(): Promise<void> {
-    try {
       const response = await this.anzeigenProvider.getNewPhysischeBildschirmID();
-      if (response && response.payload) {
-        this.physischeBildschirmID = '' + response.payload;
-        console.log('Physische Bildschirm ID geladen:', this.physischeBildschirmID);
-      } else {
-        console.error('Keine ID in der Response erhalten');
-        this.physischeBildschirmID = 'Fehler: Keine ID';
-      }
-    } catch (error) {
-      console.error('Fehler beim Abrufen der Physische Bildschirm ID:', error);
-      this.physischeBildschirmID = 'Fehler beim Laden';
+      this.physischeBildschirmID = '' + response.payload;
+  }
+
+  private activateFullscreen(): void {
+    const element = document.documentElement;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen().catch((err) => {
+        console.warn('Vollbild-Anfrage fehlgeschlagen:', err);
+      });
     }
   }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      this.isFullscreen = false;
+    }
+  }
+
 }
