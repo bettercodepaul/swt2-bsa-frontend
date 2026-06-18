@@ -129,8 +129,9 @@ export class AnzeigeManagerComponent implements OnInit, OnDestroy {
     });
   }
 
-  public showGeneratedID(): void {
-    this.generatedId = '' + this.anzeigenProvider.getNewPhysischeBildschirmID();
+  public async showGeneratedID(): Promise<void> {
+    const response = await this.anzeigenProvider.getNewPhysischeBildschirmID();
+    this.generatedId = '' + response.payload;
     this.IdGeneratePopup = true;
     this.popupPosition = {x: 120, y: 120};
   }
