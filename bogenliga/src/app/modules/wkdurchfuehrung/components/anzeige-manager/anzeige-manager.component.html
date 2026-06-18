@@ -86,4 +86,27 @@
       Anzeige hinzufügen
     </button>
   </div>
+
+  <!-- Overlay (dunkler Hintergrund) -->
+  <div class="id-popup-overlay" *ngIf="IdGeneratePopup"></div>
+
+  <!-- Popup Fenster (draggable) -->
+  <div class="id-popup" *ngIf="IdGeneratePopup" [ngStyle]="{'left.px': popupPosition.x, 'top.px': popupPosition.y}">
+
+    <!-- Header (Titelleiste zum Verschieben) -->
+    <div class="id-popup-header" (mousedown)="startDrag($event)">
+      <div class="id-popup-title">Generierte ID</div>
+      <button class="id-popup-close" (click)="closeGeneratedIdPopup()">✕</button>
+    </div>
+
+    <!-- Body (Inhalt) -->
+    <div class="id-popup-body">
+      <div class="id-display">{{ generatedId || 'XXXX' }}</div>
+
+      <div class="id-popup-actions">
+        <button class="action-btn action-btn-primary copy-button" (click)="copyGeneratedId()">Kopieren</button>
+      </div>
+    </div>
+
+  </div>
 </div>
