@@ -12,8 +12,8 @@ export class AnzeigePhysischeIDComponent implements OnInit {
 
   constructor(private anzeigenProvider: AnzeigenProviderService) {}
 
-  ngOnInit(): void {
-    this.showGeneratedID();
+  async ngOnInit(): Promise<void> {
+    await this.showGeneratedID();
     this.activateFullscreen();
   }
 
