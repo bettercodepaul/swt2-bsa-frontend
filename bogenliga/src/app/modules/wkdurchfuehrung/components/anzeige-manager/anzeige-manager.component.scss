@@ -54,12 +54,6 @@
   justify-content: center;
 }
 
-.id-button {
-  min-width: 120px;
-  height: 30px;
-  justify-content: center;
-}
-
 .display-config-section {
   background-color: #eaeaef;
   padding: 0 10px 30px;
@@ -121,87 +115,3 @@
   }
 }
 
-/* Styles für das Fenster mit der generierten ID */
-.id-popup-overlay {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 2000;
-}
-
-.id-popup {
-  position: fixed;
-  width: 320px;
-  height: auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  z-index: 2100;
-  user-select: none;
-}
-
-.id-popup-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  cursor: move;
-  border-bottom: 1px solid #eee;
-  background: #f7f7f8;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.id-popup-title {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.id-popup-close {
-  border: none;
-  background: transparent;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 0;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background: #eee;
-    border-radius: 4px;
-  }
-}
-
-.id-popup-body {
-  padding: 18px;
-  text-align: center;
-}
-
-.id-display {
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  font-family: monospace;
-}
-.id-popup-footer {
-  padding: 12px 18px;
-  display: flex;
-  justify-content: flex-end;
-  border-top: 1px solid #eee;
-  background: #f9f9f9;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
-
-  .copy-button {
-    min-width: 120px;
-    height: 30px;
-    justify-content: center;
-  }
