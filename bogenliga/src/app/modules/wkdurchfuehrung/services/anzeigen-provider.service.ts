@@ -56,4 +56,19 @@ export class AnzeigenProviderService extends DataProviderService {
             });
       }));
     }
+
+  public getNewPhysischeBildschirmID(): Promise<BogenligaResponse<string>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.GET(this.getUrl())
+        .then((data: string) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    }));
+  }
   }
