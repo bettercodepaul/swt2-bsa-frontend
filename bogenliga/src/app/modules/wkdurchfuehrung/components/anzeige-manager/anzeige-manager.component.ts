@@ -56,7 +56,7 @@ export class AnzeigeManagerComponent implements OnInit {
       this.anzeigenProvider.delete(currentDisplay.id)
         .then(() => {
           this.displays.splice(deleteIndex, 1);
-          console.log('deleted id ' + currentDisplay.id);
+          console.log('deleted anzeige with id ' + currentDisplay.id);
         })
         .catch((error) => {
           console.error('Fehler beim Löschen:', error);
