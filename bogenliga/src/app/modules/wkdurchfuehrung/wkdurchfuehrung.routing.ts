@@ -20,7 +20,7 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: TabletAdminComponent, canActivate: [TabletadminGuard]},
   {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'anzeige-manager/:selectedWettkampfId', pathMatch: 'full', component: AnzeigeManagerComponent, canActivate: [WkdurchfuehrungGuard]},
-  {path: 'anzeige-physische-id', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'bildschirm-registrierung', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent, canActivate: [WkdurchfuehrungGuard]},
