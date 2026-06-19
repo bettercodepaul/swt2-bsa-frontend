@@ -51,9 +51,16 @@ export class AnzeigeManagerComponent implements OnInit {
     const confirmResult = confirm(
       `Möchtest du die Anzeige "${currentDisplay.physischeBildschirmId}" wirklich entfernen?`
     );
-
     if (confirmResult) {
-      this.displays.splice(deleteIndex, 1);
+      this.anzeigenProvider.delete(currentDisplay.id)
+        .then(() => {
+          this.displays.splice(deleteIndex, 1);
+          console.log('deleted anzeige with id ' + currentDisplay.id);
+        })
+        .catch((error) => {
+          console.error('Fehler beim Löschen:', error);
+          alert('Die Anzeige konnte nicht gelöscht werden. Bitte versuche es erneut.');
+        });
     }
   }
 
