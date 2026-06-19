@@ -27,7 +27,8 @@ export class AnzeigeManagerComponent implements OnInit {
 
   public wettkampfId: number;
 
-  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
+  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     // Holt den in der wkdurchfuehrung.routing.ts definierten Parameter aus der URL
@@ -51,9 +52,16 @@ export class AnzeigeManagerComponent implements OnInit {
     const confirmResult = confirm(
       `Möchtest du die Anzeige "${currentDisplay.physischeBildschirmId}" wirklich entfernen?`
     );
-
     if (confirmResult) {
-      this.displays.splice(deleteIndex, 1);
+      this.anzeigenProvider.delete(currentDisplay.id)
+        .then(() => {
+          this.displays.splice(deleteIndex, 1);
+          console.log('deleted id ' + currentDisplay.id);
+        })
+        .catch((error) => {
+          console.error('Fehler beim Löschen:', error);
+          alert('Die Anzeige konnte nicht gelöscht werden. Bitte versuche es erneut.');
+        });
     }
   }
 
