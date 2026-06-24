@@ -87,4 +87,19 @@ export class AnzeigenProviderService extends DataProviderService {
     });
     return promise;
   }
+
+  public getByWettkampfId(wettkampfId: number): Promise<BogenligaResponse<AnzeigenDO[]>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET(this.getUrl() + '/byWettkampfId/' + wettkampfId)
+        .then((data: any) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
 }
