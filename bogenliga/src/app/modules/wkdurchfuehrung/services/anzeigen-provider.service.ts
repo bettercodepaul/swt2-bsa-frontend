@@ -90,7 +90,7 @@ export class AnzeigenProviderService extends DataProviderService {
 
   public getByWettkampfId(wettkampfId: number): Promise<BogenligaResponse<AnzeigenDO[]>> {
     return new Promise((resolve, reject) => {
-      this.restClient.GET(this.getUrl() + '/getByWettkampfId/' + wettkampfId)
+      this.restClient.GET(this.getUrl() + '/byWettkampfId/' + wettkampfId)
         .then((data: any) => {
           resolve({result: RequestResult.SUCCESS, payload: data});
         }, (error: HttpErrorResponse) => {
