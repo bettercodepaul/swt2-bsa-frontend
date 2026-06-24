@@ -34,6 +34,11 @@ export class AnzeigeManagerComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.wettkampfId = parseInt(params.get('selectedWettkampfId'), 10);
     });
+    this.loadDisplays();
+  }
+
+  public async loadDisplays(): Promise<void> {
+    this.displays = (await this.anzeigenProvider.getByWettkampfId(this.wettkampfId)).payload;
   }
 
   public nextMatch(): void {
