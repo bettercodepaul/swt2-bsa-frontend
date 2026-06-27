@@ -253,6 +253,7 @@
                 <bla-actionbutton
                   [iconClass]="'plus'"
                   [loading]="saveLoading"
+                  [disabled]="checkVeranstaltungPhase()"
                   [color]="ActionButtonColors.SUCCESS"
                   (onClick)="assignTeamToEvent(team)">
                   {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.HINZUFUEGEN' | translate }}
@@ -292,7 +293,7 @@
 
           <bla-actionbutton *ngIf="!mannschaftExists()"
                             [id]="'veranstaltungMannschaftSaveButton'"
-                            [disabled]="!this.checkMannschaftsTableEmpty()"
+                            [disabled]="!this.checkMannschaftsTableEmpty() || checkVeranstaltungPhase()"
                             [loading]="saveLoading"
                             [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
@@ -334,7 +335,7 @@
           </bla-actionbutton>
           <bla-actionbutton *ngIf="entityExists()"
                             [id]="'platzhalterCreateButton'"
-                            [disabled]="!dsbMitgliedForm.valid"
+                            [disabled]="!dsbMitgliedForm.valid || checkVeranstaltungPhase()"
                             [loading]="saveLoading"
                             [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"

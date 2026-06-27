@@ -178,7 +178,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         } else {
           this.loadById(params[ID_PATH_PARAM]);
           this.showTable = true;
-          this.loadMannschaftsTable();
+          // loadMannschaftsTable() wird in handleSuccess (nach dem Laden der
+          // Veranstaltung) aufgerufen, damit die Phase 'Laufend' bekannt ist und
+          // die Aktions-Icons der Tabelle korrekt ausgeblendet werden koennen.
         }
       }
     });
@@ -222,6 +224,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   assignTeamToEvent(team: any): void {
+    // Bei laufender Veranstaltung duerfen keine Mannschaften hinzugefuegt werden.
+    if (this.checkVeranstaltungPhase()) {
+      return;
+    }
     this.saveLoading = true;
     this.unassignedTeams = this.unassignedTeams.filter((t) => t !== team);
 
@@ -387,6 +393,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   // Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
+    // Bei laufender Veranstaltung duerfen keine Mannschaften hinzugefuegt werden.
+    if (this.checkVeranstaltungPhase()) {
+      return;
+    }
     this.saveLoading = true;
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
       .then((res) => {
@@ -502,6 +512,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   public onCreatePlatzhalter(ignore: any): void {
+    // Bei laufender Veranstaltung duerfen keine Mannschaften (auch keine Platzhalter) hinzugefuegt werden.
+    if (this.checkVeranstaltungPhase()) {
+      return;
+    }
     this.saveLoading = true;
 
     const platzhalterId = 99;
@@ -674,6 +688,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadUsers();
     this.loadLigaleiter();
     this.loadLiga();
+    // Tabelle erst jetzt laden: die Phase ('Laufend') der Veranstaltung ist gesetzt,
+    // sodass bei laufender Veranstaltung die Edit-/Delete-Aktionen ausgeblendet werden.
+    if (this.showTable) {
+      this.loadMannschaftsTable();
+    }
   }
 
 
@@ -821,6 +840,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleLoadMannschaftsTableSuccess(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
+    // Bei laufender Veranstaltung duerfen teilnehmende Mannschaften nicht mehr
+    // bearbeitet (Tabellenplatz) oder geloescht werden -> Aktionsspalte (Edit/Delete)
+    // komplett entfernen (leeres actionTypes blendet die ganze Spalte aus).
+    this.tableConfig = this.checkVeranstaltungPhase()
+      ? { ...VERANSTALTUNG_DETAIL_TABLE_Config, actions: { ...VERANSTALTUNG_DETAIL_TABLE_Config.actions, actionTypes: [] } }
+      : VERANSTALTUNG_DETAIL_TABLE_Config;
     this.loadLigaTabelleExists();
   }
 
@@ -828,6 +853,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   // mit dem Delete wird nur die Zuordnung der Mannschaft zur Veransatltung entfernt
   // die Mannschaft selbst bleibt erhalten und kann anderen Veranstaltungen zugewiesen werden.
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
+    // Bei laufender Veranstaltung duerfen keine Mannschaften geloescht werden.
+    if (this.checkVeranstaltungPhase()) {
+      return;
+    }
 
     this.notificationService.discardNotification();
 
@@ -855,6 +884,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   public onTableEditSave() {
+    // Bei laufender Veranstaltung darf der Tabellenplatz nicht geaendert werden.
+    if (this.checkVeranstaltungPhase()) {
+      this.showPopup = false;
+      return;
+    }
     const maSortierung = new MannschaftSortierungDO(
       this.selectedMannschaft.id, this.selectedMannschaft.sortierung);
     this.maSortierungService.update(maSortierung)
