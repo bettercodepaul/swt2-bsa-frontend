@@ -225,7 +225,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   assignTeamToEvent(team: any): void {
     // Bei laufender Veranstaltung duerfen keine Mannschaften hinzugefuegt werden.
-    if (this.checkVeranstaltungPhase()) {
+    if (this.isVeranstaltungLaufend()) {
       return;
     }
     this.saveLoading = true;
@@ -394,7 +394,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   // Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
     // Bei laufender Veranstaltung duerfen keine Mannschaften hinzugefuegt werden.
-    if (this.checkVeranstaltungPhase()) {
+    if (this.isVeranstaltungLaufend()) {
       return;
     }
     this.saveLoading = true;
@@ -513,7 +513,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public onCreatePlatzhalter(ignore: any): void {
     // Bei laufender Veranstaltung duerfen keine Mannschaften (auch keine Platzhalter) hinzugefuegt werden.
-    if (this.checkVeranstaltungPhase()) {
+    if (this.isVeranstaltungLaufend()) {
       return;
     }
     this.saveLoading = true;
@@ -752,15 +752,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   /**
-   * Checks if current Veranstaltung is on Phase 'Laufend'
-   * If not button which uses checkVeranstaltungPhase will be greyed out
+   * Liefert true, wenn die aktuelle Veranstaltung in der Phase 'Laufend' ist.
+   * Wird genutzt, um in dieser Phase das Hinzufuegen/Editieren/Loeschen
+   * teilnehmender Mannschaften zu sperren (Buttons deaktivieren / Aktionsspalte ausblenden).
    */
-  public checkVeranstaltungPhase() {
-    let laufend = false;
-    if (this.currentVeranstaltung.phase === 'Laufend') {
-      laufend = true;
-    }
-    return laufend;
+  public isVeranstaltungLaufend(): boolean {
+    return this.currentVeranstaltung.phase === 'Laufend';
   }
 
 
@@ -843,7 +840,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // Bei laufender Veranstaltung duerfen teilnehmende Mannschaften nicht mehr
     // bearbeitet (Tabellenplatz) oder geloescht werden -> Aktionsspalte (Edit/Delete)
     // komplett entfernen (leeres actionTypes blendet die ganze Spalte aus).
-    this.tableConfig = this.checkVeranstaltungPhase()
+    this.tableConfig = this.isVeranstaltungLaufend()
       ? { ...VERANSTALTUNG_DETAIL_TABLE_Config, actions: { ...VERANSTALTUNG_DETAIL_TABLE_Config.actions, actionTypes: [] } }
       : VERANSTALTUNG_DETAIL_TABLE_Config;
     this.loadLigaTabelleExists();
@@ -854,7 +851,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   // die Mannschaft selbst bleibt erhalten und kann anderen Veranstaltungen zugewiesen werden.
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
     // Bei laufender Veranstaltung duerfen keine Mannschaften geloescht werden.
-    if (this.checkVeranstaltungPhase()) {
+    if (this.isVeranstaltungLaufend()) {
       return;
     }
 
@@ -885,7 +882,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public onTableEditSave() {
     // Bei laufender Veranstaltung darf der Tabellenplatz nicht geaendert werden.
-    if (this.checkVeranstaltungPhase()) {
+    if (this.isVeranstaltungLaufend()) {
       this.showPopup = false;
       return;
     }
