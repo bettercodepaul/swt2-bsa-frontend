@@ -67,6 +67,24 @@
         </bla-actionbutton>
 
       </div>
+      <div class="modal-footer modal-dialog-discard-cancel"
+           *ngSwitchCase="ModalDialogOption.DISCARD_CANCEL">
+
+        <bla-actionbutton [color]="ActionButtonColors.SECONDARY"
+                          [iconClass]="'undo'"
+                          [margin]="'0 18% 0 0'"
+                          (onClick)="closeDialog(ModalDialogResult.CANCEL)">
+          {{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}
+        </bla-actionbutton>
+
+        <bla-actionbutton [color]="ActionButtonColors.PRIMARY"
+                          [iconClass]="'trash'"
+                          [margin]="'0 0 0 18%'"
+                          (onClick)="closeDialog(ModalDialogResult.YES)">
+          {{ 'NOTIFICATION.BUTTON.DISCARD' | translate }}
+        </bla-actionbutton>
+
+      </div>
 
 
     </div>
