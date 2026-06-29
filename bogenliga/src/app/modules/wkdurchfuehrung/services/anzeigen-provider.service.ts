@@ -102,4 +102,19 @@ export class AnzeigenProviderService extends DataProviderService {
         });
     });
   }
+
+  public findAll(): Promise<BogenligaResponse<AnzeigenDO[]>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET(this.getUrl())
+        .then((data: any) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
 }
