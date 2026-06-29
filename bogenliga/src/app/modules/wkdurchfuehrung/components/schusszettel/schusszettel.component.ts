@@ -583,7 +583,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
@@ -626,7 +626,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
@@ -670,7 +670,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
