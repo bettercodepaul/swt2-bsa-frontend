@@ -11,7 +11,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components';
 import {AnzeigePhysischeIDComponent} from '@wkdurchfuehrung/components';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 import {SchusszettelGuard, TabletadminGuard, TableteingabeGuard} from '@wkdurchfuehrung/guards';
-import {TabelleErgebnisLetzteMatchComponent} from './components/tabelle-ergebnis-letzte_match/tabelle-ergebnis-letzte-match.component';
+import {TabelleErgebnisLetzteMatchComponent} from '@wkdurchfuehrung/components/tabelle-ergebnis-letzte-match/tabelle-ergebnis-letzte-match.component';
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
