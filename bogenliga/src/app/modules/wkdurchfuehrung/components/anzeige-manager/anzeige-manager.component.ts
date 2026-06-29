@@ -3,7 +3,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
 import {AnzeigenProviderService} from '@wkdurchfuehrung/services/anzeigen-provider.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -26,15 +26,25 @@ export class AnzeigeManagerComponent implements OnInit {
   public currentMatch = 1;
 
   public wettkampfId: number;
+  public veranstaltungId: number;
+  public wettkampftag = 1;
 
-  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private anzeigenProvider: AnzeigenProviderService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     // Holt den in der wkdurchfuehrung.routing.ts definierten Parameter aus der URL
     this.route.paramMap.subscribe((params) => {
       this.wettkampfId = parseInt(params.get('selectedWettkampfId'), 10);
+      this.veranstaltungId = parseInt(params.get('veranstaltungId'), 10);
+      const wettkampftagParam = parseInt(params.get('wettkampftag'), 10);
+      if (!isNaN(wettkampftagParam)) {
+        this.wettkampftag = wettkampftagParam;
+      }
+
+      if (!isNaN(this.wettkampfId)) {
+        this.loadDisplays();
+      }
     });
-    this.loadDisplays();
   }
 
   public async loadDisplays(): Promise<void> {
@@ -101,10 +111,5 @@ export class AnzeigeManagerComponent implements OnInit {
         });
     });
   }
-
-  public navigateToScreen(): void {
-    this.router.navigate(['/wkdurchfuehrung/anzeige-physische-id', this.wettkampfId]);
-  }
-
 
 }

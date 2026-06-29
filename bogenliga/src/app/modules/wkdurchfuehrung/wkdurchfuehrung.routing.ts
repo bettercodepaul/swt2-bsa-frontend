@@ -19,7 +19,9 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: TabletEingabeComponent, canActivate: [TableteingabeGuard]},
   {path: '', pathMatch: 'full', component: TabletAdminComponent, canActivate: [TabletadminGuard]},
   {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'anzeige-manager/:selectedWettkampfId/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: AnzeigeManagerComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'anzeige-manager/:selectedWettkampfId', pathMatch: 'full', component: AnzeigeManagerComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'bildschirm-registrierung/:wettkampfId/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'bildschirm-registrierung', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]},
@@ -28,4 +30,3 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
 ];
-
