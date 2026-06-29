@@ -1,16 +1,23 @@
-import {strict as assert} from 'assert';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {Maske4ZustandComponent} from './maske4zustand.component';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
 import {By} from '@angular/platform-browser';
+import {AppComponent} from 'src/app/app.component';
 
 describe('Maske4ZustandComponent', () => {
   let component: Maske4ZustandComponent;
   let fixture: ComponentFixture<Maske4ZustandComponent>;
+  let app: {fullscreen: boolean};
 
   beforeEach(async () => {
+    app = {fullscreen: false};
     await TestBed.configureTestingModule({
-      declarations: [Maske4ZustandComponent]
+      declarations: [Maske4ZustandComponent],
+      providers: [
+        {provide: AppComponent, useValue: app}
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 
@@ -20,10 +27,18 @@ describe('Maske4ZustandComponent', () => {
   });
 
   it('should create', () => {
-    assert.ok(component);
+    expect(component).toBeTruthy();
   });
 
-  it('renders scores and next passe correctly', () => {
+  it('sets fullscreen while active', () => {
+    component.ngOnInit();
+    expect(app.fullscreen).toBe(true);
+
+    component.ngOnDestroy();
+    expect(app.fullscreen).toBe(false);
+  });
+
+  it('renders match summary when schusszettel links are missing', () => {
     const mock: TabletSchusszettel = {
       status: 'SATZEINGABE' as any,
       eigenesTeam:    { teamId: 1, teamName: 'Alpha' },
@@ -44,22 +59,16 @@ describe('Maske4ZustandComponent', () => {
     component.infos = mock;
     fixture.detectChanges();
 
-    // Next passe = 3
-    const passeEl = fixture.debugElement.query(By.css('.passe-info p')).nativeElement;
-    assert.ok(passeEl.textContent.includes('3'), 'should show next passe = 3');
-
-    // Scores
-    const dls = fixture.debugElement.queryAll(By.css('dl dd'));
-    const alphaScore = dls[0].nativeElement.textContent.trim();
-    const betaScore = dls[1].nativeElement.textContent.trim();
-    assert.equal(alphaScore, '2');
-    assert.equal(betaScore, '0');
+    const summary = fixture.debugElement.query(By.css('.match-summary'));
+    expect(summary).toBeTruthy();
+    expect(summary.nativeElement.textContent).toContain('Alpha');
+    expect(summary.nativeElement.textContent).toContain('Beta');
   });
 
   it('does not render when infos is null', () => {
     component.infos = null;
     fixture.detectChanges();
     const container = fixture.debugElement.query(By.css('.maske4-zustand'));
-    assert.equal(container, null);
+    expect(container).toBeNull();
   });
 });

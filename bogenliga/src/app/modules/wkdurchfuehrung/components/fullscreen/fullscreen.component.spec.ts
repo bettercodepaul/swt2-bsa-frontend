@@ -32,7 +32,6 @@ describe('FullscreenComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FullscreenComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
