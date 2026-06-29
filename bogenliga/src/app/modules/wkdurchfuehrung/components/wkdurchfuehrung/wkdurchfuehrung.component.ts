@@ -54,6 +54,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   public div1Visible = false;
   public div2Visible = true;
+  public wettkampfTitleText = '';
   public ActionButtonColors = ActionButtonColors;
   public config = WKDURCHFUEHRUNG_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -549,7 +550,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
       const wettkampfDO = $event as WettkampfDO;
       // Setzt den Titel für den ausgewählten Wettkampf im HTML-Dokument
-      document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
+      this.wettkampfTitleText = this.currentVeranstaltungName +
         ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
       // Aktualisiert die Variable für den ausgewählten Wettkampftag
       this.selectedWettkampftag = wettkampfDO.wettkampfTag + '. Wettkampftag';

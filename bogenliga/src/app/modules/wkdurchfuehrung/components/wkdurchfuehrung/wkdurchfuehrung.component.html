@@ -1,6 +1,6 @@
 <bla-common-dialog [config]="config">
 
-  <div (mouseover)="onMouseOver()">
+  <div (mouseover)="onMouseOver()" (focus)="onMouseOver()" tabindex="-1">
     <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
                       target="_blank"></bla-hilfe-button>
 
@@ -103,6 +103,7 @@
                      style="min-width: 14rem; max-width: 14rem; white-space: nowrap;"
                      *ngIf="(!isOffline()); else onlineSetupTables">
                   <bla-actionbutton (click)="onButtonTabletClick()"
+                                    (keyup.enter)="onButtonTabletClick()"
                                     [color]="ActionButtonColors.PRIMARY"
                                     [iconClass]="'table'"
                                     [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SPOTTER' | translate }}
@@ -113,6 +114,7 @@
                              id="onlineSetupTables">
                   <div>
                     <bla-actionbutton (click)="onButtonTabletClick()"
+                                      (keyup.enter)="onButtonTabletClick()"
                                       [color]="ActionButtonColors.PRIMARY"
                                       [iconClass]="'table'"
                                       [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
@@ -128,6 +130,7 @@
                     [iconClass]="'table'"
                     [disabled]="isDisabled()"
                     (click)="openSchusszettelAdmin()"
+                    (keyup.enter)="openSchusszettelAdmin()"
                   >
                     {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
                   </bla-actionbutton>
@@ -149,7 +152,8 @@
                   [color]="ActionButtonColors.PRIMARY"
                   [iconClass]="'qrcode'"
                   [disabled]="!selectedWettkampfId || isOffline()"
-                  (click)="openKampfrichterQr()">
+                  (click)="openKampfrichterQr()"
+                  (keyup.enter)="openKampfrichterQr()">
                   {{ 'WKDURCHFUEHRUNG.BUTTON.KAMPFRICHTER_QR' | translate }}
                 </bla-actionbutton>
 
@@ -172,6 +176,7 @@
             <div id="offlineButton"
                  *ngIf="(!isOffline()); else backOnline ">
               <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                                (keyup.enter)="onButtonGoOfflineClick()"
                                 [color]="ActionButtonColors.DANGER"
                                 [iconClass]="'power-off'"
                                 [disabled]="isDisabled()"
@@ -183,6 +188,7 @@
                          id="onlineButton">
               <div>
                 <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                                  (keyup.enter)="onButtonGoOfflineClick()"
                                   [color]="ActionButtonColors.SUCCESS"
                                   [iconClass]="'cloud'"
                                   [disabled]="isDisabled()">Online gehen
@@ -213,7 +219,7 @@
               [id]="'anzeigenManager'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'desktop'"
-              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
+              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId, this.selectedVeranstaltungId, this.selectedWettkampftagURL)"
               [disabled]="!selectedWettkampfId">
               {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
             </bla-actionbutton>
@@ -223,6 +229,7 @@
           <div id="adminOfflineResetButton"
                *ngIf="(isAdmin())">
             <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
+                              (keyup.enter)="resetWettkampfToken(this.selectedWettkampfId)"
                               [color]="ActionButtonColors.DANGER"
                               [iconClass]="'trash'"
                               [disabled]="isDisabled()">Offlinetoken löschen
@@ -240,7 +247,7 @@
         [hidden]="div2Visible">
 
         <bla-col-layout>
-          <h2 id="WettkampfTitle"></h2>
+          <h2 id="WettkampfTitle">{{ wettkampfTitleText }}</h2>
         </bla-col-layout>
 
         <bla-expand headerText="Teilnehmende Mannschaften">
