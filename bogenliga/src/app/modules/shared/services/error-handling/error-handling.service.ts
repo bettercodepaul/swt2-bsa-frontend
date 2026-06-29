@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from '@shared/functions';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {
   Notification,
   NotificationOrigin,
@@ -51,7 +51,12 @@ export class ErrorHandlingService {
       this.handleUnexpectedError(statusCode, errorDto);
     }
 
-    return new Observable<any>((subscriber) => subscriber.complete());
+    // Den Fehler nach dem Anzeigen der Notification weiterreichen, damit die
+    // aufrufenden Promises (data-provider/Komponenten) korrekt rejecten.
+    // Vorher wurde ein leeres, fehlerfreies Observable zurueckgegeben -> der
+    // Fehler wurde verschluckt und z.B. ein DELETE bei fehlender Berechtigung
+    // (403) lief faelschlich in den Success-Handler (Erfolgsmeldung trotz 403).
+    return throwError(httpError);
   }
 
   // create notification
