@@ -122,6 +122,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public currentLigatabelle: Array<LigatabelleErgebnisDO>;
 
   public ActionButtonColors = ActionButtonColors;
+  currentDisziplin: any;
+  allDisziplin: any;
 
   private sessionHandling: SessionHandling;
 

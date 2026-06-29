@@ -64,6 +64,7 @@ export class SchusszettelComponent implements OnInit {
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
+  hasNextMatch = true;
   allowedMitglieder1: number[] = [];
   allowedMitglieder2: number[] = [];
   private initialUsed1: number[] = [];
@@ -261,6 +262,14 @@ export class SchusszettelComponent implements OnInit {
             this.match2.satzpunkte = 0;
             this.match2.matchpunkte = 0;
           }
+
+          this.matchProvider.pairToFollow(this.match2.id)
+            .then((nextData) => {
+              this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
+            })
+            .catch(() => {
+              this.hasNextMatch = false;
+            });
 
         })
         .catch((error) => {
@@ -574,7 +583,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
@@ -617,7 +626,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
@@ -661,7 +670,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity: NotificationSeverity.QUESTION,
         origin: NotificationOrigin.USER,
-        type: NotificationType.YES_NO,
+        type: NotificationType.DISCARD_CANCEL,
         userAction: NotificationUserAction.PENDING
       };
 
