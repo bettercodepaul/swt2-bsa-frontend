@@ -1861,7 +1861,8 @@
         "OK": "OK",
         "CANCEL": "Cancel",
         "YES": "Yes",
-        "NO": "No"
+        "NO": "No",
+        "DISCARD": "Discard"
       },
       "INFO": {
         "MEHR": "Show more information",
