@@ -87,6 +87,7 @@
 
         <div class="offset-2 col-sm-8 justify-content-between flex-container">
           <button
+            *ngIf="hasNextMatch"
             (click)="nextMatch()"
             class="btn btn-primary mr-3 my-5"
           >

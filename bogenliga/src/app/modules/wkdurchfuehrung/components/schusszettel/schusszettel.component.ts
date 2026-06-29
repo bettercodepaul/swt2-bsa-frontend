@@ -64,6 +64,7 @@ export class SchusszettelComponent implements OnInit {
   wettkampf: WettkampfDO;
   veranstaltung: VeranstaltungDO;
   isSaved = false;
+  hasNextMatch = true;
   allowedMitglieder1: number[] = [];
   allowedMitglieder2: number[] = [];
   private initialUsed1: number[] = [];
@@ -261,6 +262,14 @@ export class SchusszettelComponent implements OnInit {
             this.match2.satzpunkte = 0;
             this.match2.matchpunkte = 0;
           }
+
+          this.matchProvider.pairToFollow(this.match2.id)
+            .then((nextData) => {
+              this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
+            })
+            .catch(() => {
+              this.hasNextMatch = false;
+            });
 
         })
         .catch((error) => {

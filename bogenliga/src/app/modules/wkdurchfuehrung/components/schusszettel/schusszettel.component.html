@@ -437,7 +437,7 @@
         [disabled]="!isSaved"
       >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.DRUCKEN' | translate }}
       </bla-download-actionbutton>
-      <bla-actionbutton (onClick)="next()" [iconClass]="'long-arrow-alt-right'"
+      <bla-actionbutton (onClick)="next()" [iconClass]="'long-arrow-alt-right'" [visible]="hasNextMatch"
       >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}
       </bla-actionbutton>
       <!--        style="width: 100px; height: 40px; margin-left: 20px; margin-top: 3px" --->
