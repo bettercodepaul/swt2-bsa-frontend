@@ -950,10 +950,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Navigiert den User zu dem Anzeigen-Manager
-  redirectToAnzeigenManager(wettkampfID: number): void {
+  redirectToAnzeigenManager(wettkampfID: number, veranstaltungId: number, wettkampftag: number): void {
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
-        ['wkdurchfuehrung/anzeige-manager', wettkampfID],
+        ['wkdurchfuehrung/anzeige-manager', wettkampfID, veranstaltungId, wettkampftag],
       )
     );
     window.open(url, '_blank');
