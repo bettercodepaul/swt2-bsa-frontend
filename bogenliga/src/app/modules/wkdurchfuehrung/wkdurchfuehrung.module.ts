@@ -30,6 +30,7 @@ import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-
 import {QRCodeModule} from 'angularx-qrcode';
 import {MatButtonModule} from '@angular/material/button';
 import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manager/anzeige-manager.component';
+import {TabelleErgebnisLetzteMatchComponent} from './components/tabelle-ergebnis-letzte_match/tabelle-ergebnis-letzte-match.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manag
     TabletAdminPopUpComponent,
     AnzeigeManagerComponent,
     AnzeigePhysischeIDComponent,
+    TabelleErgebnisLetzteMatchComponent,
   ],
   providers: [
     WkdurchfuehrungGuard,

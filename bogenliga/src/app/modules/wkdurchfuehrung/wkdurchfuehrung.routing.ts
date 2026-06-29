@@ -11,6 +11,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components';
 import {AnzeigePhysischeIDComponent} from '@wkdurchfuehrung/components';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 import {SchusszettelGuard, TabletadminGuard, TableteingabeGuard} from '@wkdurchfuehrung/guards';
+import {TabelleErgebnisLetzteMatchComponent} from './components/tabelle-ergebnis-letzte_match/tabelle-ergebnis-letzte-match.component';
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
@@ -24,6 +25,7 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: 'bildschirm-registrierung/:wettkampfId/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'bildschirm-registrierung', pathMatch: 'full', component: AnzeigePhysischeIDComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'letzte-match-fullscreen', pathMatch: 'full', component: TabelleErgebnisLetzteMatchComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: ':veranstaltungId/:wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent, canActivate: [WkdurchfuehrungGuard]},
