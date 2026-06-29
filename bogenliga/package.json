@@ -9,6 +9,7 @@
     "build:dev": "ng build --configuration=dev",
     "build:prod": "ng build --prod",
     "test": "ng test",
+    "postinstall": "node scripts/patch-webpack-dev-middleware.js",
     "lint": "tslint \"src/**/*.ts\"",
     "lintfix": "tslint --fix \"src/**/*.ts\"",
     "e2e": "ng e2e",
@@ -79,5 +80,8 @@
     "ts-node": "7.0.0",
     "tslint": "~6.1.0",
     "typescript": "3.9.6"
+  },
+  "overrides": {
+    "webpack-dev-middleware": "3.7.3"
   }
 }

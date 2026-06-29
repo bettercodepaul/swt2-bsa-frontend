@@ -76,6 +76,7 @@ export class TabletEingabeComponent implements OnInit {
   tabletAdminRoute: string;
   schuetzen: Array<SchuetzeErgebnisse>;
   submittedSchuetzenNr: boolean;
+  hasNextMatch = true;
 
   /**
    * Simple method returning an array containing numbers from 1 ... NUM_SCHUETZEN
@@ -119,6 +120,18 @@ export class TabletEingabeComponent implements OnInit {
               this.tabletSession.matchID = (this.currentMatch && this.currentMatch.id) ? this.currentMatch.id : this.tabletSession.matchID;
               this.updateTabletSession();
               this.dumpStorageData();
+
+              if (this.currentMatch && this.currentMatch.id) {
+                this.matchService.pairToFollow(this.currentMatch.id)
+                  .then((nextData) => {
+                    this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
+                  })
+                  .catch(() => {
+                    this.hasNextMatch = false;
+                  });
+              } else {
+                this.hasNextMatch = false;
+              }
             }, (error) => {
               console.error(error);
             });
