@@ -4,6 +4,12 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {KampfrichterAnsichtService, KampfrichterMatchDO} from '@schusszettel/services/kampfrichter-ansicht.service';
 
+export interface MatchGroup {
+  begegnung: number;
+  scheiben: KampfrichterMatchDO[];
+  expanded: boolean;
+}
+
 @Component({
   selector: 'bla-kampfrichter-ansicht',
   templateUrl: './kampfrichter-ansicht.component.html',
@@ -13,7 +19,8 @@ export class KampfrichterAnsichtComponent implements OnInit, OnDestroy {
 
   wettkampfId!: number;
   token!: string;
-  matches: KampfrichterMatchDO[] = [];
+  matchGroups: MatchGroup[] = [];
+  expandedScheiben = new Set<number>();
   loading = false;
   errorMsg: string | null = null;
   savedMatchIds = new Set<number>();
@@ -46,16 +53,47 @@ export class KampfrichterAnsichtComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          this.matches = data;
+          this.matchGroups = this.buildGroups(data);
           this.loading = false;
         },
         error: (err) => {
-          this.errorMsg = err.status === 403
-            ? 'Ungültiger Zugangstoken.'
-            : 'Fehler beim Laden der Matches.';
+          if (err.status === 401 || err.status === 403) {
+            this.errorMsg = 'Kein Zugriff. Bitte öffne den Link über den QR-Code des Wettkampfes.';
+          } else {
+            this.errorMsg = 'Fehler beim Laden der Matches.';
+          }
           this.loading = false;
         }
       });
+  }
+
+  private buildGroups(matches: KampfrichterMatchDO[]): MatchGroup[] {
+    const map = new Map<number, KampfrichterMatchDO[]>();
+    for (const m of matches) {
+      if (!map.has(m.begegnung)) {
+        map.set(m.begegnung, []);
+      }
+      map.get(m.begegnung)!.push(m);
+    }
+    return Array.from(map.entries())
+      .sort((a, b) => a[0] - b[0])
+      .map(([begegnung, scheiben]) => ({begegnung, scheiben, expanded: false}));
+  }
+
+  toggleMatch(group: MatchGroup): void {
+    group.expanded = !group.expanded;
+  }
+
+  toggleScheibe(matchId: number): void {
+    if (this.expandedScheiben.has(matchId)) {
+      this.expandedScheiben.delete(matchId);
+    } else {
+      this.expandedScheiben.add(matchId);
+    }
+  }
+
+  isScheibeExpanded(matchId: number): boolean {
+    return this.expandedScheiben.has(matchId);
   }
 
   saveStrafpunkte(match: KampfrichterMatchDO): void {

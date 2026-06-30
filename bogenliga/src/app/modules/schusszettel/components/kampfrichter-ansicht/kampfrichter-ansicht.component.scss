@@ -13,24 +13,109 @@
   font-weight: bold;
 }
 
-.match-card {
-  border: 1px solid #ddd;
+// ── Level 1: Match-Gruppe ──────────────────────────────────────────────────
+
+.match-group {
+  border: 1px solid #ccc;
   border-radius: 6px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background: #fafafa;
-}
-
-.match-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   margin-bottom: 0.75rem;
-  font-weight: bold;
+  overflow: hidden;
 }
 
-.saved-hint {
-  color: #27ae60;
+.match-group-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #2980b9;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: #2471a3;
+  }
+
+  .chevron {
+    font-size: 0.75rem;
+    min-width: 1rem;
+  }
+
+  .match-title {
+    flex: 1;
+  }
+
+  .scheiben-count {
+    font-size: 0.8rem;
+    font-weight: normal;
+    opacity: 0.85;
+  }
+}
+
+// ── Level 2: Scheibe innerhalb eines Matches ───────────────────────────────
+
+.scheiben-list {
+  background: #f9f9f9;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.scheibe-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.scheibe-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+
+  &:hover {
+    background: #eaf2fb;
+  }
+
+  .chevron {
+    font-size: 0.7rem;
+    min-width: 1rem;
+    color: #555;
+  }
+
+  .scheibe-label {
+    color: #555;
+    font-size: 0.9rem;
+  }
+
+  .mannschaft-name {
+    flex: 1;
+  }
+
+  .session-status {
+    font-size: 0.78rem;
+    color: #7f8c8d;
+    font-style: italic;
+  }
+
+  .saved-hint {
+    color: #27ae60;
+    font-weight: bold;
+  }
+}
+
+// ── Strafpunkte-Inhalt ──────────────────────────────────────────────────────
+
+.strafpunkte-content {
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid #eee;
 }
 
 .strafpunkte-grid {
