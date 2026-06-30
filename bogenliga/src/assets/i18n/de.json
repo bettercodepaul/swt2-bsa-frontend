@@ -894,7 +894,7 @@
           "REGIONID": "Region ID",
           "REGIONNAME": "Region Name",
           "UEBERGEORDNETID": "Liga Uebergeordnet ID",
-          "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
+          "UEBERGEORDNETNAME": "Übergeordnete Liga",
           "VERANTWORTLICHID": "Liga Verantwortlich ID",
           "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
         }
