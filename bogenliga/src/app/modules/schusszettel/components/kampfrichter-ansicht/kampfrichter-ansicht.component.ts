@@ -123,7 +123,7 @@ export class KampfrichterAnsichtComponent implements OnInit, OnDestroy {
       .sort((a, b) => a[0] - b[0])
       .map(([begegnung, scheiben]) => ({
         begegnung,
-        scheiben: scheiben.sort((a, b) => a.matchScheibennummer - b.matchScheibennummer),
+        scheiben: scheiben.sort((a, b) => a.nr !== b.nr ? a.nr - b.nr : a.matchScheibennummer - b.matchScheibennummer),
         expanded: this.matchGroups.find(g => g.begegnung === begegnung)?.expanded ?? false
       }));
   }
