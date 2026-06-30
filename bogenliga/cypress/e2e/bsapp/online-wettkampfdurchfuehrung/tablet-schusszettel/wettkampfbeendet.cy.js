@@ -1,56 +1,52 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  resetDemoWettkampf,
+  sqlAusfuehren,
+  tabletUrl,
+} from '../../../../support/tabletNavigation';
 
-describe('Wettkampf beendet Maske', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessions');
-    cy.reload();
+/**
+ * Wettkampf-beendet-Maske (finaler Zustand WETTKAMPF_ENDE).
+ * Ein komplettes Turnier (7 Matches) waere im E2E-Test zu lang,
+ * deshalb wird der finale Status fuer ein Team direkt in der DB gesetzt.
+ */
+describe('Tablet - Wettkampf beendet', () => {
+  let session;
+
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
+
+    // Sessions anlegen lassen und ein Team in den Endzustand versetzen
+    geheZuTabletSetup().then((sessions) => {
+      session = sessions[0];
+      sqlAusfuehren(
+        `UPDATE schusszettel_tablet_session SET status='WETTKAMPF_ENDE' ` +
+        `WHERE wettkampf_id=3001 AND team_id=${session.teamId};`
+      );
+    });
   });
 
-  it('zeigt Ergebnis-Tabelle und Start Again Button', () => {
-    cy.wait('@ladeSessions').then((interception) => {
-      const sessions = interception.response.body.tabletSessionSingDTOs;
-      const session = sessions.find(s => s.status === 'WETTKAMPF_ENDE');
+  it('zeigt die Wettkampf-beendet-Maske an', () => {
+    cy.then(() => {
+      cy.visit(tabletUrl(session));
+    });
 
-      expect(session, 'Mindestens eine WETTKAMPF_ENDE-Session vorhanden').to.exist;
+    // Zustands-Uebersicht wegklicken
+    cy.get('button.weiter-button', { timeout: 20000 }).click();
 
-      cy.get('.session-table tbody tr').each(($row) => {
-        const $cells = $row.find('td');
-        const teamCellText = $cells.eq(0).text().trim();
-        const statusCellText = $cells.eq(1).text().trim();
+    // Finale Maske mit Abschluss-Hinweis
+    cy.get('.wettkampfbeendet-container').should('be.visible');
+    cy.get('.wettkampfbeendet-container h2')
+      .should('contain.text', 'Der Wettkampftag ist beendet');
+    cy.get('.wettkampfbeendet-container')
+      .should('contain.text', 'keine weiteren Matches');
 
-        if (statusCellText === 'WETTKAMPF_ENDE' && teamCellText === session.teamName) {
-          cy.wrap($row).within(() => {
-            cy.get('button').first().click();
-          });
-        }
-      });
-
-      cy.get('bla-modal-dialog').should('be.visible');
-      cy.get('.qr-link-text')
-        .should('be.visible')
-        .invoke('text')
-        .then((linkText) => {
-          cy.visit(linkText.trim());
-
-          // Tabelle prüfen
-          cy.get('.result-table').within(() => {
-            cy.get('thead').should('exist');
-            cy.get('tbody tr').should('have.length.at.least', 1); // mindestens ein Team
-            cy.get('tbody tr').first().within(() => {
-              cy.get('td').eq(0).should('not.be.empty'); // Teamname
-              cy.get('td').eq(1).should('not.be.empty'); // Matchpunkte
-            });
-          });
-
-
-          cy.url().then((urlVorher) => {
-            cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('neuLaden');
-            cy.contains('button', 'Start Again').click();
-            cy.url().should('eq', urlVorher); // Seite ist gleich geblieben
-          });
-
-        });
+    // Admin-Tabelle zeigt den finalen Status
+    geheZuTabletSetup().then((sessions) => {
+      const aktualisiert = sessions.find((s) => s.teamId === session.teamId);
+      expect(aktualisiert.status, 'Finaler Status').to.eq('WETTKAMPF_ENDE');
     });
   });
 });

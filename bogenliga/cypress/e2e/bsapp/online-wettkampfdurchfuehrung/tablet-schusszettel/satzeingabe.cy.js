@@ -1,84 +1,84 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  oeffneTabletMitWeiter,
+  registriereTeam,
+  resetDemoWettkampf,
+} from '../../../../support/tabletNavigation';
 
-describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
+/**
+ * Digitale Treffer-Eingabe (Maske 2):
+ * Validierung der Schusswerte (0-10), Auto-Fokus-Sprung und das
+ * Absenden einer kompletten Passe inklusive Statuswechsel nach WARTE.
+ */
+describe('Tablet - Satzeingabe', () => {
+  let session;
+
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
+
+    // Vorbedingung selbst herstellen: ein Team in den Status SATZEINGABE bringen
+    geheZuTabletSetup().then((sessions) => {
+      session = sessions.find((s) => s.status === 'SCHUETZENMELDUNG');
+      expect(session, 'Frische SCHUETZENMELDUNG-Session vorhanden').to.exist;
+      registriereTeam(session);
+    });
   });
 
-  it('öffnet QR-Code-Link aus Status Satzeingabe', () => {
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessions');
-    cy.reload();
+  it('validiert die Schusswerte und sendet die Passe ab', () => {
+    cy.then(() => {
+      oeffneTabletMitWeiter(session);
 
-    cy.wait('@ladeSessions').then((interception) => {
-      const sessions = interception.response.body.tabletSessionSingDTOs;
-      const session = sessions.find(s => s.status === 'SATZEINGABE');
+      // Treffer-Tabelle mit 3 Schuetzen und Passe-Anzeige
+      cy.get('table.treffer-table tbody tr').should('have.length', 3);
+      cy.get('.passe-info h2').should('contain.text', 'Passe 1');
 
-      expect(session, 'Mindestens eine SATZEINGABE-Session vorhanden').to.exist;
-
-      cy.get('.session-table tbody tr').each(($row) => {
-        const $cells = $row.find('td');
-        const teamCellText = $cells.eq(0).text().trim();
-        const statusCellText = $cells.eq(1).text().trim();
-
-        if (statusCellText === 'SATZEINGABE' && teamCellText === session.teamName) {
-          cy.wrap($row).within(() => {
-            cy.get('button').first().click();
-          });
-        }
-      });
-
-      cy.get('bla-modal-dialog').should('be.visible');
-
-      cy.get('.qr-link-text')
+      // Ungueltiger Wert > 10 -> Fehlermeldung, Bestaetigen gesperrt
+      cy.get('#schuss1-0').type('11').blur();
+      cy.get('table.treffer-table tbody tr').eq(0)
+        .find('.error')
         .should('be.visible')
-        .invoke('text')
-        .then((linkText) => {
-          cy.visit(linkText.trim());
-          cy.get('button.weiter-button').click();
-          cy.get('table.treffer-table tbody tr').should('have.length.at.least', 2);
+        .and('contain.text', '0–10');
+      cy.get('button.confirm-button').should('be.disabled');
 
-          // Erste Zeile prüfen
-          cy.get('table.treffer-table tbody tr').eq(0).within(() => {
-            cy.get('input[id^="schuss1"]').as('schuss1');
-            cy.get('input[id^="schuss2"]').as('schuss2');
+      // Ungueltiger Wert < 0 -> Fehlermeldung
+      cy.get('#schuss2-0').type('-1').blur();
+      cy.get('table.treffer-table tbody tr').eq(0)
+        .find('.error')
+        .should('have.length', 2);
 
-            cy.get('@schuss1')
-              .type('{selectall}11')
-              .should('have.value', '11')
-              .blur();
-              cy.get('.error').should('exist').and('contain', '0–10');
+      // Gueltige Werte -> Fehler verschwinden
+      cy.get('#schuss1-0').clear().type('10').blur();
+      cy.get('#schuss2-0').clear().type('9').blur();
+      cy.get('table.treffer-table tbody tr').eq(0)
+        .find('.error')
+        .should('not.exist');
 
+      // Auto-Fokus: nach gueltiger Eingabe springt der Fokus
+      // (2 Sekunden Verzoegerung) ins naechste Feld
+      cy.get('#schuss1-1').clear().type('8');
+      cy.focused({ timeout: 6000 }).should('have.id', 'schuss2-1');
 
-            cy.get('@schuss2')
-              .type('{selectall}-1')
-              .should('have.value', '-1')
-              .blur();
-              cy.get('.error').should('contain', '0–10');
+      // Restliche Felder fuellen
+      cy.get('#schuss2-1').clear().type('9');
+      cy.get('#schuss1-2').clear().type('7');
+      cy.get('#schuss2-2').clear().type('8');
 
-            cy.get('@schuss1').clear().type('10')
-              .then(() => {
-                cy.focused().should('have.attr', 'id').and('include', 'schuss2');
+      // Passe absenden
+      cy.intercept('POST', '**/tablet-schusszettel*').as('satz');
+      cy.get('button.confirm-button').should('not.be.disabled').click();
+      cy.wait('@satz').its('response.statusCode').should('be.within', 200, 299);
 
-              });
-            cy.get('@schuss2').clear().type('9');
+      // Gegner hat noch nichts eingegeben -> Team landet in der Warte-Maske
+      cy.get('.warte-container', { timeout: 20000 }).should('be.visible');
+      cy.get('.warte-container').should('contain.text', 'Satzeingabe erhalten');
 
-          });
-
-          // Zweite Zeile korrekt befüllen
-          cy.get('table.treffer-table tbody tr').eq(1).within(() => {
-            cy.get('input[id^="schuss1"]').clear().type('8');
-            cy.get('input[id^="schuss2"]').clear().type('9');
-          });
-
-          // Dritter Zeile korrekt befüllen
-          cy.get('table.treffer-table tbody tr').eq(2).within(() => {
-            cy.get('input[id^="schuss1"]').clear().type('7');
-            cy.get('input[id^="schuss2"]').clear().type('8');
-          });
-
-
-          cy.get('button.confirm-button').should('not.be.disabled').click();
-        });
+      // Admin-Tabelle zeigt den Status WARTE
+      geheZuTabletSetup().then((sessions) => {
+        const aktualisiert = sessions.find((s) => s.teamId === session.teamId);
+        expect(aktualisiert.status, 'Session nach Satzeingabe').to.eq('WARTE');
+      });
     });
   });
 });

@@ -19,6 +19,13 @@ export class MatchDOExt implements DataObject {
   satzpunkte: number;
   fehlerpunkte: Array<number>;
 
+  // Satzsummen (Ringzahlen) je Satz 1-5 fuer die Live-Anzeige; leer solange der Satz nicht geschossen ist
+  satz1: number | string;
+  satz2: number | string;
+  satz3: number | string;
+  satz4: number | string;
+  satz5: number | string;
+
   schuetzen: Array<Array<PasseDO>>;
 
   constructor(id?: number,

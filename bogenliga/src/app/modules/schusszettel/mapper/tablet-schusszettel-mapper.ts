@@ -27,12 +27,7 @@ export class TabletSchusszettelMapper {
     // Map status with fallback
     let mappedStatus: TabletSchusszettelStatus;
     try {
-      // Handle backend sending WETTKAMPF_ENDE vs frontend expecting WETTKAMPF_BEENDET
-      if (dto.status === 'WETTKAMPF_ENDE' as any) {
-        mappedStatus = TabletSchusszettelStatus.WETTKAMPF_BEENDET;
-      } else {
-        mappedStatus = dto.status as TabletSchusszettelStatus;
-      }
+      mappedStatus = dto.status as TabletSchusszettelStatus;
     } catch (e) {
       console.warn('[Mapper] Invalid status, defaulting to NOT_ALLOWED:', dto.status);
       mappedStatus = TabletSchusszettelStatus.NOT_ALLOWED;
@@ -136,8 +131,10 @@ export class TabletSchusszettelMapper {
       wettkampfInfo,  // Add wettkampfInfo to the result
       currentPasseNumber: dto.currentPasseNumber,        // Backend-provided passe number
       eigenesTeamMatchId: dto.eigenesTeamMatchId,        // Own team match ID
-      gegnerischesTeamMatchId: dto.gegnerischesTeamMatchId  // Enemy team match ID
+      gegnerischesTeamMatchId: dto.gegnerischesTeamMatchId,  // Enemy team match ID
+      eigenesTeamMatchNr: dto.eigenesTeamMatchNr         // Own team match number (1, 2, 3, etc.)
     };
+
 
     console.log('[Mapper] Mapped schuetzeStammDaten output:', result.schuetzeStammDaten);
     console.log('[Mapper] Mapped verfuegbareSchuetzen output:', result.verfuegbareSchuetzen);

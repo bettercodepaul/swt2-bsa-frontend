@@ -149,6 +149,33 @@
     }
   }
 
+  // Kampfrichter QR-Code section
+  .kampfrichter-qr-section {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+
+    h3 {
+      margin: 0 0 0.5rem;
+      color: #1565c0;
+    }
+
+    .kampfrichter-hint {
+      margin: 0 0 1rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    .kampfrichter-qr-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+
   // QR link container below the QR code in modal
   .qr-link-container {
     display: flex;
@@ -196,7 +223,7 @@
     .loading-container {
       min-height: 50vh;
       margin: 5vh 0;
-      
+
       .loading-text {
         font-size: 0.9rem;
         padding: 0 1.5rem;

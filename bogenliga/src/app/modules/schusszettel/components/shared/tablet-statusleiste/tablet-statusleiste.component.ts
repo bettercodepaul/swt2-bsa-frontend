@@ -65,9 +65,15 @@ export class TabletStatusleisteComponent {
 
 
   private get currentStepKey(): StepKey | null {
-    if (this.status === 'SCHUETZENMELDUNG') return 'SCHUETZENMELDUNG';
-    if (this.status === 'SATZEINGABE') return 'SATZEINGABE';
-    if (this.status === 'WARTE') return 'WARTE';
+    if (this.status === 'SCHUETZENMELDUNG') {
+      return 'SCHUETZENMELDUNG';
+    }
+    if (this.status === 'SATZEINGABE') {
+      return 'SATZEINGABE';
+    }
+    if (this.status === 'WARTE') {
+      return 'WARTE';
+    }
     return null;
   }
 
@@ -85,7 +91,9 @@ export class TabletStatusleisteComponent {
 
   get activeIndex(): number {
     const key = this.activeStepKey;
-    if (!key) return -1;
+    if (!key) {
+      return -1;
+    }
     return this.steps.findIndex((s) => s.key === key);
   }
 

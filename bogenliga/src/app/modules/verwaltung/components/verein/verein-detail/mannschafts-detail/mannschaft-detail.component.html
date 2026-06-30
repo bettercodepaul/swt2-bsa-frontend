@@ -156,13 +156,12 @@
           routerLink="add">
           <span> Neu</span>
         </bla-actionbutton>
-        <bla-download-actionbutton
+        <bla-actionbutton
           (click)="onDownloadLizenzen()"
           [color]="ActionButtonColors.SUCCESS"
           [iconClass]="'file-download'">
           <span> Alle Lizenzen drucken</span>
-          <router-outlet name="onDownloadLizenzen"></router-outlet>
-        </bla-download-actionbutton>
+        </bla-actionbutton>
       </div>
       <bla-data-table (onDeleteEntry)="onDeleteMitglied($event)"
                       (onDownloadEntry)="onDownload($event)"

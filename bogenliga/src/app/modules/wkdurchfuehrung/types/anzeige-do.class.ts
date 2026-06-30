@@ -5,6 +5,6 @@ export class AnzeigenDO implements DataObject {
   id: number;
   physischeBildschirmId: string;
   tableTyp: string;
-  veranstaltungsId: number;
+  wettkampfId: number;
   aktuellesMatch: number;
 }

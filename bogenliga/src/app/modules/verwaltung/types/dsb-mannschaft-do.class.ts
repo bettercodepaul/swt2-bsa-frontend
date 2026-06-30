@@ -9,6 +9,7 @@ export class DsbMannschaftDO implements VersionedDataObject {
   benutzerId: number;
   veranstaltungId: number;
   veranstaltungName: string;
+  meldeDeadline: string;
   name: string;
   sortierung: number;
   sportjahr: number;

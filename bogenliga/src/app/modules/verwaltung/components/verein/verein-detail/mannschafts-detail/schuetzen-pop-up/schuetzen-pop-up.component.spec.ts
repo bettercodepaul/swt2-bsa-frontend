@@ -16,7 +16,6 @@ describe('SchuetzenPopUpComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SchuetzenPopUpComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

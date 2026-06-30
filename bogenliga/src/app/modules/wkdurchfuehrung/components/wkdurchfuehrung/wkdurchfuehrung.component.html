@@ -8,6 +8,7 @@
     <div class="layout-elements">
       <!--DIV 1 MIT VERANSTALTUNGEN UND  BUTTONS -->
       <div
+        data-cy="wkdurchfuehrung-veranstaltung-ansicht"
         [hidden]="div1Visible">
         <!--TABELLEN mit Wettkampftag-->
         <bla-row-layout>
@@ -95,8 +96,8 @@
                   [fileName]="'ergebnisliste.pdf'"
                   [color]="ActionButtonColors.PRIMARY"
                   [iconClass]="'file-download'"
-                  [disabled]="false">
-                  Ergebnisliste herunterladen (PDF)
+                  [disabled]="isDisabled()">
+                  Ergebnisliste herunterladen
                 </bla-download-actionbutton>
 
                 <div id="setupTable"
@@ -142,6 +143,16 @@
                     {{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP_SCHUSSZETTEL' | translate }}
                   </bla-actionbutton>
                 </ng-template>
+
+                <bla-actionbutton
+                  id="kampfrichterQrCode"
+                  style="width: 35rem;"
+                  [color]="ActionButtonColors.PRIMARY"
+                  [iconClass]="'qrcode'"
+                  [disabled]="!selectedWettkampfId || isOffline()"
+                  (click)="openKampfrichterQr()">
+                  {{ 'WKDURCHFUEHRUNG.BUTTON.KAMPFRICHTER_QR' | translate }}
+                </bla-actionbutton>
 
               </div> <!-- This closes the flex container div -->
             </bla-col-layout>
@@ -199,6 +210,15 @@
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
             </bla-actionbutton>
 
+            <bla-actionbutton
+              [id]="'anzeigenManager'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'desktop'"
+              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
+              [disabled]="!selectedWettkampfId">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
+            </bla-actionbutton>
+
           </div>
 
           <div id="adminOfflineResetButton"
@@ -218,6 +238,7 @@
 
       <!--DIV 2 MIT DEN ANDEREN TABELLEN UND ANSICHTEN NACH GENERIERUNG MATCHES  -->
       <div
+        data-cy="wkdurchfuehrung-match-ansicht"
         [hidden]="div2Visible">
 
         <bla-col-layout>
@@ -231,6 +252,13 @@
 
         <bla-expand headerText="{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }}">
           <bla-col-layout>
+            <p *ngIf="liveAktualisiert && !isOffline()"
+               id="liveHinweis"
+               style="margin-left: 5px; color: #555;">
+              <span style="color: #c00;">&#9679;</span>
+              Live &ndash; Ergebnisse werden alle {{ liveIntervallSekunden }} Sekunden aktualisiert
+              (Stand: {{ liveAktualisiert | date:'HH:mm:ss' }})
+            </p>
             <div class="row"
                  style="margin-left: 5px">
               <section class="overview-dialog-content">
@@ -253,6 +281,7 @@
           [id]="'zurück'"
           [color]="ActionButtonColors.PRIMARY"
           [iconClass]="'arrow-left'"
+          data-cy="wkdurchfuehrung-zurueck-button"
           (onClick)="goBack()">
           {{ 'WKDURCHFUEHRUNG.BUTTON.ZURUECK' | translate }}
         </bla-actionbutton>
@@ -262,3 +291,26 @@
     </div>
   </div>
 </bla-common-dialog>
+
+<!-- Kampfrichter QR-Code Modal -->
+<bla-modal-dialog
+  [visible]="kampfrichterQrUrl !== null"
+  (onClose)="closeKampfrichterQr()">
+  <h5 class="modal-dialog-header">Kampfrichter QR-Code</h5>
+  <div class="modal-dialog-content" style="display: flex; flex-direction: column; align-items: center;">
+    <p>Diesen QR-Code mit dem Kampfrichter-Tablet scannen.</p>
+    <div *ngIf="kampfrichterQrLoading">Lade Token...</div>
+    <qrcode
+      *ngIf="kampfrichterQrUrl"
+      [qrdata]="kampfrichterQrUrl"
+      [width]="256"
+      [errorCorrectionLevel]="'M'">
+    </qrcode>
+    <div *ngIf="kampfrichterQrUrl" style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+      <code style="flex: 1; word-break: break-all;">{{ kampfrichterQrUrl }}</code>
+      <button mat-button color="primary" (click)="copyToClipboard(kampfrichterQrUrl!)">
+        Kopieren
+      </button>
+    </div>
+  </div>
+</bla-modal-dialog>

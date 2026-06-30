@@ -1,32 +1,53 @@
-import {geheZuTabletSetup} from "../../../../support/tabletNavigation";
+import {
+  geheZuTabletSetup,
+  loginAlsAdmin,
+  registriereTeam,
+  resetDemoWettkampf,
+} from '../../../../support/tabletNavigation';
 
-describe('Admin - Tablet-Schusszettel-Verwaltung', () => {
-  beforeEach(() => {
-    geheZuTabletSetup();
+/**
+ * Prueft, dass die Status-Spalte der Sitzungstabelle exakt das anzeigt,
+ * was das Backend liefert - auch nach einem Statuswechsel.
+ */
+describe('Admin - Statusanzeige der Tablet-Sessions', () => {
+  before(() => {
+    resetDemoWettkampf();
+    loginAlsAdmin();
   });
-  it('zeigt Status korrekt gemäß Backend an', () => {
-    cy.intercept('GET', '**/tablet-schusszettel/sessions*').as('ladeSessions');
-    cy.reload();
 
-    cy.wait('@ladeSessions').then((interception) => {
-      const body = interception.response.body;
-      const sessions = body.tabletSessionSingDTOs;
-
-      sessions.slice(0, 3).forEach(({teamName, status}) => {
+  it('zeigt fuer jede Zeile den Status aus dem Backend an', () => {
+    geheZuTabletSetup().then((sessions) => {
+      sessions.forEach(({ teamName, status }) => {
         cy.contains('.session-table tbody td', teamName)
-          .should('exist')
           .parents('tr')
-          .within(() => {
-            cy.get('td').eq(1)
-              .should('exist')
-              .then(($td) => {
-                const trimmed = $td.text().trim();
-                cy.log(`Status im DOM: "${trimmed}"`);
-                cy.log(`Backend erwartet: "${status}"`);
-                expect(trimmed).to.equal(status);
-              });
+          .find('td')
+          .eq(1)
+          .invoke('text')
+          .then((domStatus) => {
+            expect(domStatus.trim(), `Status von ${teamName}`).to.equal(status);
           });
       });
+    });
+  });
+
+  it('zeigt einen Statuswechsel nach der Schuetzenmeldung an', () => {
+    geheZuTabletSetup().then((sessions) => {
+      const session = sessions.find((s) => s.status === 'SCHUETZENMELDUNG');
+      expect(session, 'Eine SCHUETZENMELDUNG-Session vorhanden').to.exist;
+
+      registriereTeam(session);
+
+      // Zurueck zur Admin-Seite: Status muss jetzt SATZEINGABE sein
+      geheZuTabletSetup().then((neueSessions) => {
+        const aktualisiert = neueSessions.find((s) => s.teamId === session.teamId);
+        expect(aktualisiert.status).to.eq('SATZEINGABE');
+      });
+
+      cy.contains('.session-table tbody td', session.teamName)
+        .parents('tr')
+        .find('td')
+        .eq(1)
+        .should('contain.text', 'SATZEINGABE');
     });
   });
 });

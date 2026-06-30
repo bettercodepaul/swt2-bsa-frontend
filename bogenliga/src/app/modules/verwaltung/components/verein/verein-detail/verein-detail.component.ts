@@ -44,6 +44,8 @@ import {UserDataProviderService} from '@verwaltung/services/user-data-provider.s
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -56,6 +58,7 @@ const NOTIFICATION_COPY_MANNSCHAFT = 'mannschaft_detail_copy';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE = 'download_before_deadline';
 const NOTIFICATION_ENTITY_CONFLICT_ERROR = 'ENTITY_CONFLICT_ERROR';
 const NOTIFICATION_DATABASE_ERROR = 'DATABASE_ERROR';
 const PLATZHALTER_ID = 99;
@@ -83,6 +86,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
   public UserPermission = UserPermission;
+  private isSportleiter = false;
 
 
   private sessionHandling: SessionHandling;
@@ -102,7 +106,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     private onOfflineService: OnOfflineService,
     private notificationService: NotificationService,
     private userDataProviderService: UserDataProviderService,
-    private ligaProvider: LigaDataProviderService,) {
+    private ligaProvider: LigaDataProviderService,
+    private wettkampfDataProviderService: WettkampfDataProviderService,) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -120,8 +125,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       this.userDataProviderService.findUserRoleById(currentUserId)
         .then((roleresponse) => {
           if (roleresponse && roleresponse.payload) {
-            const isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
-            if (isSportleiter) {
+            this.isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
+            if (this.isSportleiter) {
               // create a deep copy of the table config and remove the ADD action so the button is hidden
               this.config_table = JSON.parse(JSON.stringify(this.config_table));
               if (this.config_table.actions && Array.isArray(this.config_table.actions.actionTypes)) {
@@ -429,6 +434,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    if (this.isDownloadBlocked(versionedDataObject.id)) {
+      this.showBeforeDeadlineNotification();
+      return;
+    }
     if (!this.onOfflineService.isOffline()) {
       const URL: string = new UriBuilder()
         .fromPath(environment.backendBaseUrl)
@@ -489,24 +498,78 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       });
   }
 
-  public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
+   public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
+     if (this.isDownloadBlocked(versionedDataObject.id)) {
+       this.showBeforeDeadlineNotification();
+       return;
+     }
     const URL: string = new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path('pdf/lizenzen')
-      .path('?mannschaftid=' + versionedDataObject.id)
-      .build();
-    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
-  }
+       .fromPath(environment.backendBaseUrl)
+       .path('v1/download')
+       .path('pdf/lizenzen')
+       .path('?mannschaftid=' + versionedDataObject.id)
+       .build();
+     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
+         .then((response: BogenligaResponse<string>) => console.log(response))
+         .catch((response: BogenligaResponse<string>) => this.showNoLicense());
+   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
 
-  }
+   public onDownloadSchusszetteltag1(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 1, 'schusszettel_tag1.pdf');
+   }
 
-  public onEdit(versionedDataObject: VersionedDataObject): void {
+   public onDownloadSchusszetteltag2(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 2, 'schusszettel_tag2.pdf');
+   }
+
+   public onDownloadSchusszetteltag3(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 3, 'schusszettel_tag3.pdf');
+   }
+
+   public onDownloadSchusszetteltag4(versionedDataObject: VersionedDataObject): void {
+     this.downloadSchusszettel(versionedDataObject.id, 4, 'schusszettel_tag4.pdf');
+   }
+
+   private downloadSchusszettel(mannschaftId: number, tag: number, fileName: string): void {
+     // Find the mannschaft with the given id
+     const mannschaft = this.mannschaften.find(m => m.id === mannschaftId);
+     if (!mannschaft) {
+       console.error('Mannschaft not found for id:', mannschaftId);
+       return;
+     }
+
+     // Get the wettkampf ID for the requested tag
+     const wettkampfIdKey = `wettkampfId${tag}`;
+     const wettkampfId = (mannschaft as any)[wettkampfIdKey];
+
+     if (!wettkampfId) {
+       console.error(`No wettkampf ID found for tag ${tag}`);
+       return;
+     }
+
+     // Build the download URL
+     const URL: string = new UriBuilder()
+       .fromPath(environment.backendBaseUrl)
+       .path('v1/download')
+       .path('pdf/schusszettel')
+       .path('?wettkampfid=' + wettkampfId)
+       .build();
+
+     // Download the file
+     this.downloadService.download(URL, fileName, this.aElementRef)
+         .then((response: BogenligaResponse<string>) => console.log(response))
+         .catch((response: BogenligaResponse<string>) => {
+           console.error('Failed to download schusszettel:', response);
+           // Optionally show an error notification
+         });
+   }
+
+   public onView(versionedDataObject: VersionedDataObject): void {
+     this.navigateToDetailDialog(versionedDataObject);
+
+   }
+    public onEdit(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
   }
 
@@ -640,6 +703,36 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.notificationService.showNotification(noLicenseNotification);
   }
 
+  private isDownloadBlocked(mannschaftId: number): boolean {
+    if (!this.isSportleiter) {
+      return false;
+    }
+    const mannschaft = this.mannschaften.find(m => m.id === mannschaftId);
+    if (!mannschaft || !mannschaft.meldeDeadline || mannschaft.meldeDeadline === '-') {
+      return false;
+    }
+    const parts = mannschaft.meldeDeadline.split('.');
+    const deadline = new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today <= deadline;
+  }
+
+  private showBeforeDeadlineNotification(): void {
+    const notification: Notification = {
+      id:          NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE)
+        .subscribe((myNotification) => {});
+    this.notificationService.showNotification(notification);
+  }
+
   private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
@@ -728,10 +821,36 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
-    this.mannschaften = [];
-    this.mannschaften = response.payload;
+    this.mannschaften = response.payload || [];
+
+    // initialize wettkampf id placeholders on each mannschaft
+    this.mannschaften.forEach((mannschaft) => {
+      (mannschaft as any).wettkampfId1 = null;
+      (mannschaft as any).wettkampfId2 = null;
+      (mannschaft as any).wettkampfId3 = null;
+      (mannschaft as any).wettkampfId4 = null;
+    });
+
+    // build table rows from the received mannschaften
+    this.rows = toTableRows(this.mannschaften);
+
+    // Initialize all schusszettel buttons as hidden by default
+    // They will be revealed in addTableAttributes if a wettkampfId exists
+    this.rows.forEach(row => {
+      if (!row.hiddenActions) {
+        row.hiddenActions = [];
+      }
+      row.hiddenActions.push(
+        TableActionType.DOWMLOADSCHUSZETTELTAG1,
+        TableActionType.DOWMLOADSCHUSZETTELTAG2,
+        TableActionType.DOWMLOADSCHUSZETTELTAG3,
+        TableActionType.DOWMLOADSCHUSZETTELTAG4
+      );
+    });
+
+    // for each mannschaft fetch wettkaempfe and update row visibility for schusszettel buttons
     this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
-    this.rows = toTableRows(response.payload);
+
     this.loading = false;
   }
 
@@ -744,14 +863,73 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           } else {
             mannschaft.veranstaltungName = 'Unknown';
           }
+          if (response.payload && response.payload.meldeDeadline) {
+            const parts = response.payload.meldeDeadline.split('-');
+            mannschaft.meldeDeadline = `${parts[2]}.${parts[1]}.${parts[0]}`;
+          } else {
+            mannschaft.meldeDeadline = '-';
+          }
+          // Set sportjahr from veranstaltung
+          if (response.payload && response.payload.sportjahr) {
+            mannschaft.sportjahr = response.payload.sportjahr;
+          }
         })
         .catch(() => {
           mannschaft.veranstaltungName = '';
+          mannschaft.meldeDeadline = '-';
         });
     } else {
       mannschaft.veranstaltungName = 'Not Specified';
+      mannschaft.meldeDeadline = '-';
     }
     mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
+
+    this.wettkampfDataProviderService.findAllWettkaempfeByMannschaftsId(mannschaft.id)
+      .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+        if (response.payload) {
+          (mannschaft as any).wettkampfId1 = null;
+          (mannschaft as any).wettkampfId2 = null;
+          (mannschaft as any).wettkampfId3 = null;
+          (mannschaft as any).wettkampfId4 = null;
+
+          response.payload.forEach(wettkampf => {
+            if (wettkampf.wettkampfTag === 1) {
+              (mannschaft as any).wettkampfId1 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 2) {
+              (mannschaft as any).wettkampfId2 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 3) {
+              (mannschaft as any).wettkampfId3 = wettkampf.id;
+            } else if (wettkampf.wettkampfTag === 4) {
+              (mannschaft as any).wettkampfId4 = wettkampf.id;
+            }
+          });
+          // find corresponding table row and update hidden actions for schusszettel buttons
+          try {
+            const row = this.rows && this.rows.find(r => r.payload && r.payload.id === mannschaft.id);
+            if (row && row.hiddenActions) {
+              // Remove schusszettel button from hidden actions if wettkampfId exists
+              if ((mannschaft as any).wettkampfId1) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG1);
+              }
+              if ((mannschaft as any).wettkampfId2) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG2);
+              }
+              if ((mannschaft as any).wettkampfId3) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG3);
+              }
+              if ((mannschaft as any).wettkampfId4) {
+                row.hiddenActions = row.hiddenActions.filter(action => action !== TableActionType.DOWMLOADSCHUSZETTELTAG4);
+              }
+            }
+          } catch (e) {
+            console.error('Failed to update row hidden actions', e);
+          }
+        }
+      })
+      .catch(() => {
+        // if fetching wettkaempfe fails, keep all schusszettel buttons hidden for safety
+        // (they remain in hiddenActions as initialized in handleLoadMannschaftenSuccess)
+      });
   }
 
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
