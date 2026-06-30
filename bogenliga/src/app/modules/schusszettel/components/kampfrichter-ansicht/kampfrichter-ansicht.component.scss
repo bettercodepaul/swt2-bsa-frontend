@@ -43,7 +43,7 @@
 // ── Level 1: Match / Begegnung ─────────────────────────────────────────────
 
 .match-group {
-  border: 1px solid #ccc;
+  border: 1px solid #EAEAEF;
   border-radius: 8px;
   margin-bottom: 0.75rem;
   overflow: hidden;
@@ -55,42 +55,33 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1rem;
-  background: #1a1a2e;
-  color: #fff;
-  font-weight: bold;
+  background: #EAEAEF;
+  color: #2A2A2A;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
+  border-left: 4px solid #487AF5;
 
   &:hover {
-    background: #16213e;
+    background: #d8d8e0;
   }
 
   .chevron {
     font-size: 0.75rem;
     min-width: 1rem;
+    color: #487AF5;
   }
 
   .match-title {
     flex: 1;
     font-size: 1rem;
+    color: #2A2A2A;
   }
 
   .scheiben-count {
     font-size: 0.8rem;
     font-weight: normal;
-    opacity: 0.75;
-  }
-
-  .group-status {
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
-
-    &.fehlt {
-      background: rgba(231,76,60,0.25);
-      color: #ff8a80;
-    }
+    color: #888888;
   }
 }
 
@@ -137,7 +128,7 @@
   }
 
   .scheibe-badge {
-    background: #1a1a2e;
+    background: #487AF5;
     color: #fff;
     border-radius: 4px;
     padding: 2px 8px;
