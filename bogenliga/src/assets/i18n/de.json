@@ -1689,8 +1689,8 @@
         "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen",
-          "LEFTCAPTION": "ausgewählt",
-          "RIGHTCAPTION": "abgewählt"
+          "LEFTCAPTION": "abgewählt",
+          "RIGHTCAPTION": "ausgewählt"
         },
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
