@@ -1534,6 +1534,14 @@
               "TITLE": "Kopieren",
               "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
             },
+            "ADD_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich hinzugefügt."
+            },
+            "COPY_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich kopiert."
+            },
             "DELETE_SUCCESS": {
               "TITLE": "Erfolgreich",
               "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
