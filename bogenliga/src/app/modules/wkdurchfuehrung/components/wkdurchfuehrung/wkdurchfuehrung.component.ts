@@ -139,7 +139,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   groupedMatches: { groupName: string; matches: TableRow[] }[] = [];
 
   goBack(): void {
-    window.history.back();
+    // Der Wechsel zur Match-Ansicht ist nur ein Umschalten der divs (siehe onSelect/ngOnInit),
+    // es wird kein Browser-History-Eintrag erzeugt. window.history.back() würde daher die App
+    // verlassen statt zur Veranstaltungsauswahl zurückzukehren. Deshalb hier die div-Sichtbarkeit
+    // wieder zurücksetzen.
+    this.div1Visible = false; // Veranstaltungsauswahl wieder einblenden
+    this.div2Visible = true;  // Match-Ansicht ausblenden
   }
 
   openSecondView() {
