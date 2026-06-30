@@ -15,6 +15,7 @@ export interface KampfrichterMatchDO {
   strafPunkteSatz3: number;
   strafPunkteSatz4: number;
   strafPunkteSatz5: number;
+  sessionStatus?: string;
 }
 
 @Injectable({providedIn: 'root'})

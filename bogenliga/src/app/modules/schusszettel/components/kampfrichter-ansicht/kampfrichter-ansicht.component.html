@@ -5,40 +5,42 @@
   <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
 
   <div *ngIf="!loading && !errorMsg">
-    <p *ngIf="matches.length === 0">Keine Matches gefunden.</p>
+    <p *ngIf="matchGroups.length === 0">Keine Matches gefunden.</p>
 
-    <div *ngFor="let match of matches" class="match-card">
-      <div class="match-header">
-        <span class="scheibe">Scheibe {{ match.matchScheibennummer }}</span>
-        <span class="mannschaft">{{ match.mannschaftName }}</span>
-        <span class="begegnung">Begegnung {{ match.begegnung }}</span>
-        <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">&#x2713; gespeichert</span>
+    <div *ngFor="let group of matchGroups" class="match-group">
+
+      <div class="match-group-header" (click)="toggleMatch(group)">
+        <span class="chevron">{{ group.expanded ? '▼' : '▶' }}</span>
+        <span class="match-title">Match {{ group.begegnung }}</span>
+        <span class="scheiben-count">{{ group.scheiben.length }} Scheibe(n)</span>
       </div>
 
-      <div class="strafpunkte-grid">
-        <label>
-          Satz 1
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz1">
-        </label>
-        <label>
-          Satz 2
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz2">
-        </label>
-        <label>
-          Satz 3
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz3">
-        </label>
-        <label>
-          Satz 4
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz4">
-        </label>
-        <label>
-          Satz 5
-          <input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz5">
-        </label>
+      <div *ngIf="group.expanded" class="scheiben-list">
+
+        <div *ngFor="let match of group.scheiben" class="scheibe-card">
+
+          <div class="scheibe-header" (click)="toggleScheibe(match.matchId)">
+            <span class="chevron">{{ isScheibeExpanded(match.matchId) ? '▼' : '▶' }}</span>
+            <span class="scheibe-label">Scheibe {{ match.matchScheibennummer }}</span>
+            <span class="mannschaft-name">{{ match.mannschaftName }}</span>
+            <span *ngIf="match.sessionStatus" class="session-status">{{ match.sessionStatus }}</span>
+            <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">&#x2713; gespeichert</span>
+          </div>
+
+          <div *ngIf="isScheibeExpanded(match.matchId)" class="strafpunkte-content">
+            <div class="strafpunkte-grid">
+              <label>Satz 1<input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz1"></label>
+              <label>Satz 2<input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz2"></label>
+              <label>Satz 3<input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz3"></label>
+              <label>Satz 4<input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz4"></label>
+              <label>Satz 5<input type="number" min="0" max="99" [(ngModel)]="match.strafPunkteSatz5"></label>
+            </div>
+            <button class="save-btn" (click)="saveStrafpunkte(match)">Speichern</button>
+          </div>
+
+        </div>
       </div>
 
-      <button class="save-btn" (click)="saveStrafpunkte(match)">Speichern</button>
     </div>
   </div>
 </div>
