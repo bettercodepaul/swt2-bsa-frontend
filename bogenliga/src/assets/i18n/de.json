@@ -1909,6 +1909,10 @@
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
       },
+      "VERANSTALTUNG_MAX_CAPACITY_ERROR": {
+        "TITLE": "Veranstaltung ausgebucht",
+        "DESCRIPTION": "Die Veranstaltung hat ihre maximale Kapazität erreicht. Es kann keine weitere Mannschaft hinzugefügt werden."
+      },
       "INVALID_SIGN_IN_CREDENTIALS": {
         "TITLE": "Anmeldung nicht erfolgreich",
         "DESCRIPTION": "Bitte prüfen sie E-Mail-Adresse und Passwort"
