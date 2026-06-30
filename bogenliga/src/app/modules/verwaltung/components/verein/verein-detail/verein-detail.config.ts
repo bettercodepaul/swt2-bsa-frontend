@@ -28,10 +28,25 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         propertyName:   'sportjahr',
         width:          20,
       },
+      {
+        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MELDEDEADLINE',
+        propertyName:   'meldeDeadline',
+        width:          20,
+      },
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER, TableActionType.ADD],
-      width:       6
+      actionTypes: [
+        TableActionType.EDIT,
+        TableActionType.DELETE,
+        TableActionType.DOWNLOADLIZENZEN,
+        TableActionType.DOWNLOADRUECKENNUMMER,
+        TableActionType.ADD,
+        TableActionType.DOWMLOADSCHUSZETTELTAG1,
+        TableActionType.DOWMLOADSCHUSZETTELTAG2,
+        TableActionType.DOWMLOADSCHUSZETTELTAG3,
+        TableActionType.DOWMLOADSCHUSZETTELTAG4
+      ],
+      width:       15
     },
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
     editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER],

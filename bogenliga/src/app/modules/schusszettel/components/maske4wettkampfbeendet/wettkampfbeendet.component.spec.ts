@@ -1,19 +1,21 @@
-import {strict as assert} from 'assert';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {WettkampfbeendetComponent} from './wettkampfbeendet.component';
 import {TabletSchusszettel} from '../../models/tablet-schusszettel.model';
-import {MatButtonModule} from '@angular/material/button';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AppComponent} from 'src/app/app.component';
 
 describe('WettkampfbeendetComponent', () => {
   let component: WettkampfbeendetComponent;
   let fixture: ComponentFixture<WettkampfbeendetComponent>;
+  let app: {fullscreen: boolean};
 
   beforeEach(async () => {
+    app = {fullscreen: false};
     await TestBed.configureTestingModule({
-      imports: [MatButtonModule, NoopAnimationsModule],
-      declarations: [WettkampfbeendetComponent]
+      declarations: [WettkampfbeendetComponent],
+      providers: [
+        {provide: AppComponent, useValue: app}
+      ]
     }).compileComponents();
   });
 
@@ -23,10 +25,18 @@ describe('WettkampfbeendetComponent', () => {
   });
 
   it('should create', () => {
-    assert.ok(component);
+    expect(component).toBeTruthy();
   });
 
-  it('renders final match points table when infos is set', () => {
+  it('sets fullscreen while active', () => {
+    component.ngOnInit();
+    expect(app.fullscreen).toBe(true);
+
+    component.ngOnDestroy();
+    expect(app.fullscreen).toBe(false);
+  });
+
+  it('renders finished message when infos is set', () => {
     const mock: TabletSchusszettel = {
       status: 'WETTKAMPF_BEENDET' as any,
       eigenesTeam:    { teamId: 1, teamName: 'Team A' },
@@ -43,31 +53,15 @@ describe('WettkampfbeendetComponent', () => {
     component.infos = mock;
     fixture.detectChanges();
 
-    const rows = fixture.debugElement.queryAll(By.css('tbody tr'));
-    assert.equal(rows.length, 2, 'should render two rows');
-
-    const firstRowCells = rows[0].queryAll(By.css('td'));
-    assert.equal(firstRowCells[0].nativeElement.textContent.trim(), 'Team A');
-    assert.equal(firstRowCells[1].nativeElement.textContent.trim(), '6');
+    const container = fixture.debugElement.query(By.css('.wettkampfbeendet-container'));
+    expect(container).toBeTruthy();
+    expect(container.nativeElement.textContent).toContain('Der Wettkampftag ist beendet');
   });
 
-  it('does not render anything when infos is null', () => {
+  it('still renders finished message when infos is null', () => {
     component.infos = null;
     fixture.detectChanges();
     const container = fixture.debugElement.query(By.css('.wettkampfbeendet-container'));
-    assert.equal(container, null);
-  });
-
-  it('reloads when button clicked', () => {
-    component.infos = {} as any;
-    fixture.detectChanges();
-
-    let clicked = false;
-    // override reload to track
-    component.reload = () => (clicked = true);
-
-    const btn = fixture.debugElement.query(By.css('button')).nativeElement;
-    btn.click();
-    assert.ok(clicked, 'reload() should have been called');
+    expect(container).toBeTruthy();
   });
 });

@@ -39,7 +39,7 @@
       "TITLE": "Home",
       "WELCOME": "Willkommen",
       "WETTKAEMPFE": {
-        "NAECHSTE": "Unsere nächsten Wettkämpfe",
+        "NAECHSTE": "Wettkämpfe des aktiven Sportjahrs",
         "VERGANGENE": "Unsere vergangenen Wettkämpfe"
       },
       "WETTKAMPFTAG": "Wettkampftag:",
@@ -228,12 +228,14 @@
       "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP_SPOTTER": "Setup Tablets Spotter",
       "TABLE_SETUP_SCHUSSZETTEL": "Setup Tablet Schusszettel",
+      "KAMPFRICHTER_QR": "Kampfrichter QR-Code",
 
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
       "OFFLINE_TOKEN": "Offlinetoken löschen",
-      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus",
+      "ANZEIGEN_MANAGER": "Anzeigen bearbeiten"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -335,7 +337,12 @@
         "GEGNER": "Gegner",
         "BEGEGNUNG": "Begegnung",
         "MATCHPUNKTE": "Matchpunkte",
-        "SATZPUNKTE": "Satzpunkte"
+        "SATZPUNKTE": "Satzpunkte",
+        "SATZ1": "Satz 1",
+        "SATZ2": "Satz 2",
+        "SATZ3": "Satz 3",
+        "SATZ4": "Satz 4",
+        "SATZ5": "Satz 5"
       }
     }
   },
@@ -1033,7 +1040,8 @@
           "ID": "ID",
           "MANNSCHAFTSNAME": "Name",
           "SPORTJAHR": "Sportjahr",
-          "LIGA": "Liga"
+          "LIGA": "Liga",
+          "MELDEDEADLINE": "Meldedeadline"
         }
       },
       "NOTIFICATION": {
@@ -1064,6 +1072,10 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        },
+        "DOWNLOAD_BEFORE_DEADLINE": {
+          "TITLE": "Download nicht verfügbar",
+          "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
         },
         "UPDATE": {
           "FAILURE": {
@@ -1853,7 +1865,8 @@
       "OK": "OK",
       "CANCEL": "Abbrechen",
       "YES": "Ja",
-      "NO": "Nein"
+      "NO": "Nein",
+      "DISCARD": "Verwerfen"
     },
     "INFO": {
       "MEHR": "Mehr Informationen anzeigen",
@@ -1947,7 +1960,11 @@
       "DOWNLOAD": "Download",
       "DOWNLOADLIZENZEN": "Lizenzen downloaden",
       "DOWNLOADRUECKENNUMMER": "Rückennummer downloaden",
-      "VIEW": "Auswählen"
+      "VIEW": "Auswählen",
+      "DOWMLOADSCHUSZETTELTAG1": "Schusszettel Tag 1 downloaden",
+      "DOWMLOADSCHUSZETTELTAG2": "Schusszettel Tag 2 downloaden",
+      "DOWMLOADSCHUSZETTELTAG3": "Schusszettel Tag 3 downloaden",
+      "DOWMLOADSCHUSZETTELTAG4": "Schusszettel Tag 4 downloaden"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

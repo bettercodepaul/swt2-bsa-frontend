@@ -13,6 +13,7 @@ import {
   TabletAdminComponent,
   PfeilNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,
+  AnzeigePhysischeIDComponent,
 } from '../wkdurchfuehrung/components';
 
 import {
@@ -27,6 +28,7 @@ import {
 import {FullscreenComponent} from './components/fullscreen/fullscreen.component';
 import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 import {QRCodeModule} from 'angularx-qrcode';
+import {MatButtonModule} from '@angular/material/button';
 import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manager/anzeige-manager.component';
 
 @NgModule({
@@ -35,7 +37,8 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manag
     RouterModule.forChild(wkdurchfuehrung_ROUTES),
     SharedModule.forChild(),
     FormsModule,
-    QRCodeModule
+    QRCodeModule,
+    MatButtonModule
   ],
   declarations: [
     WkdurchfuehrungComponent,
@@ -49,6 +52,7 @@ import {AnzeigeManagerComponent} from '@wkdurchfuehrung/components/anzeige-manag
     FullscreenComponent,
     TabletAdminPopUpComponent,
     AnzeigeManagerComponent,
+    AnzeigePhysischeIDComponent,
   ],
   providers: [
     WkdurchfuehrungGuard,

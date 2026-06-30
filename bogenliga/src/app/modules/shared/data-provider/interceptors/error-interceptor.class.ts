@@ -1,11 +1,11 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {ErrorHandlingService} from '../../services/error-handling';
 import {Router} from '@angular/router';
 import {CurrentUserService} from '@shared/services';
-import {isNullOrUndefined} from "@shared/functions";
+import {isNullOrUndefined} from '@shared/functions';
 
 const MAX_RETRIES = 2;
 
@@ -24,30 +24,35 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
 
                .pipe(
-                 // add retries
-                 retry(MAX_RETRIES),
+                 // add retries - avoid retrying login requests
+                 retry(request.url.includes('v1/user/signin') ? 0 : MAX_RETRIES),
                  // add error handling
                  catchError(
                    (error: any, caught: Observable<HttpEvent<any>>) => {
+
+                     // Bypass global error handling for login to let LoginComponent handle the UI natively
+                     if (request.url.includes('v1/user/signin')) {
+                       return throwError(error);
+                     }
 
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
                      // if it is a connection error, it could be a masked error indicated by an expired session token
                      // this is very likely, so the user should be routed to the login-site again and
                      // of course for the system itself the currentUser should be logged out
 
-                     //The backend is not able to send custom messages due to security aspects in the spring filter configurations
-                     //Therefore is a special handling needed to provide the user with the correct error message
-                     //for an expired jwt token
+                     // The backend is not able to send custom messages due to security aspects in the spring filter configurations
+                     // Therefore is a special handling needed to provide the user with the correct error message
+                     // for an expired jwt token
 
-                     //TODO Locally the backend returns 0 as status code and on the DEV-Environment it returns 401
-                     //TODO More research is needed to why the server return different status codes
+                     // TODO Locally the backend returns 0 as status code and on the DEV-Environment it returns 401
+                     // TODO More research is needed to why the server return different status codes
                      if (error.status === 0 || error.status === 401) {
                        console.log('Exipred Token', error);
                        if (isNullOrUndefined(error.error)) {
                          error.error = {};
                        }
                        error.error.errorCode = 'NO_SESSION_ERROR';
-                       error.error.errorMessage = 'Your Session Token is expired pleas login again';
+                       error.error.errorMessage = 'Your Session Token is expired please login again';
                        error.status = 401;
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
