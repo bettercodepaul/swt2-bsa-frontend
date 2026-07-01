@@ -112,39 +112,38 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   private loadTableRows() {
     this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => {
-          this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
-            if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0) {
-              this.handleLoadTableRowsSuccess(response);
-            } else {
-              let filtered = response.payload.filter(ligadto => {
-                if (ligadto.ligaVerantwortlichMail === this.currentUserService.getEmail()){
-                  return true;}
-                else {
-                  return false;
-                }
-              })
-              this.handleLoadTableRows(filtered);
-            }
-          });
-        })
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.renderLigenForCurrentUser(response.payload))
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   public findBySearch($event: string) {
     this.ligaDataProvider.findBySearch($event)
-        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.renderLigenForCurrentUser(response.payload))
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+
+  /**
+   * Rendert die Ligen und wendet dabei die Sichtbarkeits-Beschränkung an:
+   * Nicht-Admins (z.B. Ligaleiter) sehen ausschließlich die Ligen, für die sie verantwortlich sind.
+   * Diese Beschränkung greift für die normale Übersicht UND für die Suche, damit das Suchfeld
+   * die Berechtigungen nicht umgehen kann (BSAPP-2191).
+   */
+  private renderLigenForCurrentUser(ligen: LigaDTO[]): void {
+    this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID())
+        .then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+          const isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0;
+          if (isAdmin) {
+            this.handleLoadTableRows(ligen);
+          } else {
+            const filtered = ligen.filter(ligadto => ligadto.ligaVerantwortlichMail === this.currentUserService.getEmail());
+            this.handleLoadTableRows(filtered);
+          }
+        })
+        .catch(() => this.handleLoadTableRowsFailure(null));
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<LigaDTO[]>): void {
     this.rows = [];
-    this.loading = false;
-  }
-
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<LigaDTO[]>): void {
-    this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
     this.loading = false;
   }
 
