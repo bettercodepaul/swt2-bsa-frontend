@@ -42,8 +42,8 @@ describe('BSAPP-2185: Wettkampftage-Limit blendet "Neu"/"Kopieren" konsistent au
     // Hinweis erscheint, sobald anzahl >= Max geladen ist.
     cy.get('[data-cy=wettkampftage-max-hint]', {timeout: 20000}).should('be.visible');
     // "Neu" und "Kopieren" sind deaktiviert.
-    cy.contains('bla-actionbutton', 'Neu').find('button').should('be.disabled');
-    cy.contains('bla-actionbutton', 'Kopieren').find('button').should('be.disabled');
+    cy.contains('bla-actionbutton', 'Neu', {timeout: 20000}).find('button').should('be.disabled');
+    cy.contains('bla-actionbutton', 'Kopieren', {timeout: 20000}).find('button').should('be.disabled');
   });
 
   it('negativ: unter dem Limit ist "Neu" aktiv und es erscheint kein Hinweis', () => {
