@@ -18,13 +18,14 @@ it('Login erfolgreich', function() {
 
 
 it('Anzeige Verwaltung', function() {
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.url().should('include', '#/verwaltung')
+  // Sportleiter hat keinen Zugriff auf die Verwaltung: Button darf nicht vorhanden sein
+  cy.get('[data-cy=sidebar-verwaltung-button]').should('not.exist')
 });
 
 it('Anzeige DSBMitglieder', function() {
   cy.wait(1000)
-  cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
+  // Sportleiter navigiert über den Shortcut-Button "Vereinsmitglieder verwalten"
+  cy.get('[data-cy="shortcut-btn-Vereinsmitglieder-verwalten"]', { timeout: 15000 }).should('exist').and('be.visible').click()
   cy.url().should('include', '#/verwaltung/dsbmitglieder')
 });
 
