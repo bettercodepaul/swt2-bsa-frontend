@@ -43,6 +43,7 @@ import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {KampfrichterAnsichtService} from '@schusszettel/services/kampfrichter-ansicht.service';
+import {WkdurchfuehrungContextService} from '@wkdurchfuehrung/services/wkdurchfuehrung-context.service';
 
 @Component({
   selector: 'bla-wkdurchfuehrung',
@@ -127,7 +128,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
               private dialog: MatDialog,
-              private kampfrichterAnsichtService: KampfrichterAnsichtService
+              private kampfrichterAnsichtService: KampfrichterAnsichtService,
+              private wkContextService: WkdurchfuehrungContextService
 
   ) {
     super();
@@ -513,6 +515,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       // Weise die ID der ersten ausgewählten Veranstaltung zu
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
+      this.wkContextService.setContext(this.selectedVeranstaltungId, this.selectedWettkampfId, this.selectedWettkampftagURL);
     }
     // Holt den Namen der aktuellen Veranstaltung über die ID
     this.veranstaltungsDataProvider.findById(this.selectedVeranstaltungId)
@@ -555,6 +558,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       // Aktualisiert die Variable für den ausgewählten Wettkampftag
       this.selectedWettkampftag = wettkampfDO.wettkampfTag + '. Wettkampftag';
       this.selectedWettkampftagURL = wettkampfDO.wettkampfTag;
+      this.wkContextService.setContext(this.selectedVeranstaltungId, this.selectedWettkampfId, this.selectedWettkampftagURL);
       // Setzt die Sichtbarkeit der Tabelle auf true
       this.visible = true;
       // Leert den Inhalt der Tabelle
@@ -950,11 +954,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     window.open(url, '_blank');
   }
 
-  // Navigiert den User zu dem Anzeigen-Manager
-  redirectToAnzeigenManager(wettkampfID: number, veranstaltungId: number, wettkampftag: number): void {
+  /// Navigiert den User zu dem Anzeigen-Manager
+  redirectToAnzeigenManager(wettkampfID: number): void {
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
-        ['wkdurchfuehrung/anzeige-manager', wettkampfID, veranstaltungId, wettkampftag],
+        ['wkdurchfuehrung/anzeige-manager', wettkampfID],
       )
     );
     window.open(url, '_blank');

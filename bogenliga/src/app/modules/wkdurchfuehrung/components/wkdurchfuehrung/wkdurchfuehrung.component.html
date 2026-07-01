@@ -219,7 +219,7 @@
               [id]="'anzeigenManager'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'desktop'"
-              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId, this.selectedVeranstaltungId, this.selectedWettkampftagURL)"
+              (onClick)="redirectToAnzeigenManager(this.selectedWettkampfId)"
               [disabled]="!selectedWettkampfId">
               {{ 'WKDURCHFUEHRUNG.BUTTON.ANZEIGEN_MANAGER' | translate }}
             </bla-actionbutton>

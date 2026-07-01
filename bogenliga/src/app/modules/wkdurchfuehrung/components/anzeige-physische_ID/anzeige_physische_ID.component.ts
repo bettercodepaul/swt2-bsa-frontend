@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription, interval} from 'rxjs';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
+import {WkdurchfuehrungContextService} from '@wkdurchfuehrung/services/wkdurchfuehrung-context.service';
 
 @Component({
   selector: 'bla-screen-registration',
@@ -22,7 +23,8 @@ export class AnzeigePhysischeIDComponent implements OnInit, OnDestroy {
     private anzeigenProvider: AnzeigenProviderService,
     private route: ActivatedRoute,
     private router: Router,
-    private wettkampfDataProvider: WettkampfDataProviderService
+    private wettkampfDataProvider: WettkampfDataProviderService,
+    private wkContextService: WkdurchfuehrungContextService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -54,19 +56,37 @@ export class AnzeigePhysischeIDComponent implements OnInit, OnDestroy {
   }
 
   private loadRouteParams(): void {
-    const wettkampfIdParam = parseInt(this.route.snapshot.paramMap.get('wettkampfId'), 10);
-    if (!isNaN(wettkampfIdParam)) {
-      this.wettkampfId = wettkampfIdParam;
+    // versucht sich die IDs vom Service zu holen
+    const contextVeranstaltungId = this.wkContextService.getVeranstaltungId();
+    const contextWettkampfId = this.wkContextService.getWettkampfId();
+    const contextWettkampftag = this.wkContextService.getWettkampftag();
+
+    // Fall back wenn der Service die IDs nicht hat
+    if (!isNaN(contextWettkampfId)) {
+      this.wettkampfId = contextWettkampfId;
+    } else {
+      const wettkampfIdParam = parseInt(this.route.snapshot.paramMap.get('wettkampfId'), 10);
+      if (!isNaN(wettkampfIdParam)) {
+        this.wettkampfId = wettkampfIdParam;
+      }
     }
 
-    const veranstaltungIdParam = parseInt(this.route.snapshot.paramMap.get('veranstaltungId'), 10);
-    if (!isNaN(veranstaltungIdParam)) {
-      this.veranstaltungId = veranstaltungIdParam;
+    if (!isNaN(contextVeranstaltungId)) {
+      this.veranstaltungId = contextVeranstaltungId;
+    } else {
+      const veranstaltungIdParam = parseInt(this.route.snapshot.paramMap.get('veranstaltungId'), 10);
+      if (!isNaN(veranstaltungIdParam)) {
+        this.veranstaltungId = veranstaltungIdParam;
+      }
     }
 
-    const wettkampftagParam = parseInt(this.route.snapshot.paramMap.get('wettkampftag'), 10);
-    if (!isNaN(wettkampftagParam)) {
-      this.wettkampftag = wettkampftagParam;
+    if (!isNaN(contextWettkampftag)) {
+      this.wettkampftag = contextWettkampftag;
+    } else {
+      const wettkampftagParam = parseInt(this.route.snapshot.paramMap.get('wettkampftag'), 10);
+      if (!isNaN(wettkampftagParam)) {
+        this.wettkampftag = wettkampftagParam;
+      }
     }
   }
 
@@ -84,10 +104,6 @@ export class AnzeigePhysischeIDComponent implements OnInit, OnDestroy {
 
     if (this.registrationSubscription) {
       this.registrationSubscription.unsubscribe();
-    }
-
-    if (isNaN(this.veranstaltungId) || isNaN(this.wettkampftag)) {
-      await this.resolveRoutingContextFromWettkampf(display.wettkampfId);
     }
 
     if (isNaN(this.veranstaltungId)) {
@@ -108,25 +124,6 @@ export class AnzeigePhysischeIDComponent implements OnInit, OnDestroy {
       : await this.anzeigenProvider.findAll();
 
     return response.payload?.find((display) => this.normalizeId(display.physischeBildschirmId) === normalizedCurrentId);
-  }
-
-  private async resolveRoutingContextFromWettkampf(wettkampfId: number): Promise<void> {
-    if (isNaN(wettkampfId)) {
-      return;
-    }
-
-    const response = await this.wettkampfDataProvider.findById(wettkampfId);
-    if (!response?.payload) {
-      return;
-    }
-
-    if (isNaN(this.veranstaltungId)) {
-      this.veranstaltungId = response.payload.wettkampfVeranstaltungsId;
-    }
-
-    if (isNaN(this.wettkampftag)) {
-      this.wettkampftag = response.payload.wettkampfTag;
-    }
   }
 
   private normalizeId(value: string): string {

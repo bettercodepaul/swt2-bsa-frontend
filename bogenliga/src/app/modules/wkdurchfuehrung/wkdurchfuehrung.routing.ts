@@ -28,5 +28,5 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent, canActivate: [WkdurchfuehrungGuard]},
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent, canActivate: [WkdurchfuehrungGuard]},
-  {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent, canActivate: [WkdurchfuehrungGuard]},
+  {path: 'fullscreen/:veranstaltungId/:wettkampftag', pathMatch: 'full', component: FullscreenComponent},
 ];
