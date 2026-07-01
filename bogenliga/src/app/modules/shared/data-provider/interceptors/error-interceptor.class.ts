@@ -35,6 +35,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                        return throwError(error);
                      }
 
+                     // Bypass global error handling for "Mannschaften aus Vorjahr kopieren": die Komponente
+                     // zeigt eigene, verständliche Meldungen (kein Vorjahr vorhanden / Kopieren fehlgeschlagen)
+                     // statt der generischen "Ihre Anfrage wurde vom Server abgewiesen"-Meldung. (BSAPP-2158)
+                     if (request.url.includes('findLastVeranstaltungBy') || request.url.includes('byLastVeranstaltungsID')) {
+                       return throwError(error);
+                     }
+
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
                      // if it is a connection error, it could be a masked error indicated by an expired session token
                      // this is very likely, so the user should be routed to the login-site again and
