@@ -1581,12 +1581,16 @@
           "DESCRIPTION": "Es existiert in diesem Sportjahr bereits eine Veranstaltung für die von Ihnen angegebenen Liga. Bitte überprüfen Sie Ihre Eingabe."
         },
         "COPYMANNSCHAFT_FAILURE": {
-          "TITLE": "Kopieren fehlgeschlagen",
-          "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
+          "TITLE": "Kopieren nicht möglich",
+          "DESCRIPTION": "Es existiert keine Veranstaltung aus dem Vorjahr (gleiche Liga und Wettkampftyp), aus der Mannschaften kopiert werden können."
         },
         "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
           "TITLE": "Kopieren fehlgeschlagen",
           "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften."
+        },
+        "COPYMANNSCHAFT_FAILURE_GENERAL": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Die Mannschaften konnten nicht aus dem Vorjahr kopiert werden. Bitte versuchen Sie es erneut oder wenden Sie sich an einen Administrator."
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",

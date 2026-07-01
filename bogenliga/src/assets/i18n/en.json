@@ -1520,12 +1520,16 @@
                 "DESCRIPTION": "Successfully initialized league table"
               },
               "COPYMANNSCHAFT_FAILURE": {
-                "TITLE": "Copy failed",
-                "DESCRIPTION": "No Event from last year"
+                "TITLE": "Copy not possible",
+                "DESCRIPTION": "There is no event from the previous year (same league and competition type) from which teams could be copied."
               },
               "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
                 "TITLE": "Copy failed",
                 "DESCRIPTION": "Event from last year has a different amount of Teams"
+              },
+              "COPYMANNSCHAFT_FAILURE_GENERAL": {
+                "TITLE": "Copy failed",
+                "DESCRIPTION": "The teams could not be copied from the previous year. Please try again or contact an administrator."
               },
               "FAILURE": {
                 "TITLE": "Error while initializing",
