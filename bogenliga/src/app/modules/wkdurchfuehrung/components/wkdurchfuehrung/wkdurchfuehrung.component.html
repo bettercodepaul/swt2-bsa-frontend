@@ -124,7 +124,6 @@
                 <ng-container *ngIf="!isOffline(); else offlineSchusszettelSetup">
                   <bla-actionbutton
                     id="setupTabletSchusszettel"
-                    style="width: 35rem;"
                     [color]="ActionButtonColors.PRIMARY"
                     [iconClass]="'table'"
                     [disabled]="isDisabled()"
@@ -136,7 +135,6 @@
 
                 <ng-template #offlineSchusszettelSetup>
                   <bla-actionbutton
-                    style="width: 35rem;"
                     [color]="ActionButtonColors.PRIMARY"
                     [iconClass]="'table'"
                     [disabled]="true">
@@ -146,7 +144,6 @@
 
                 <bla-actionbutton
                   id="kampfrichterQrCode"
-                  style="width: 35rem;"
                   [color]="ActionButtonColors.PRIMARY"
                   [iconClass]="'qrcode'"
                   [disabled]="!selectedWettkampfId || isOffline()"
