@@ -50,8 +50,22 @@ it('Neue Vereins-Mannschaft anlegen', function () {
 })
 
 it('Vereins-Mannschaft bearbeiten', function () {
-  // Sportleiter hat keinen Zugriff auf die Verwaltung: Button darf nicht vorhanden sein
-  cy.get('[data-cy=sidebar-verwaltung-button]').should('not.exist')
+  cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  cy.url().should('include', '#/verwaltung')
+  cy.get('[data-cy=verwaltung-vereine-button]').click()
+  cy.url().should('include', '#/verwaltung/vereine')
+  cy.wait(1000)
+  cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+  cy.wait(500)
+  cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+  cy.wait(9000)
+  cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
+  cy.wait(9000)
+  cy.get('[data-cy=vereine-mannschaft-detail-update-button]').click()
+  cy.wait(9000)
+  cy.get('#OKBtn1').click()
+  cy.wait(5000)
+  cy.contains('76')
 })
 
 
