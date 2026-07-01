@@ -1479,6 +1479,7 @@
           "FORM": {
             "LABEL": "Wettkampftag",
             "REMINDSAVE": "Bitte speichern Sie zuerst Ihre Änderungen.",
+            "MAXREACHED": "Maximale Anzahl an Wettkampftagen erreicht",
             "DATUM": {
               "LABEL": "Datum",
               "PLACEHOLDER": "Datum",
