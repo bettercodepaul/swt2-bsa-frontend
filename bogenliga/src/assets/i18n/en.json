@@ -1086,6 +1086,10 @@
           "DOWNLOAD_BEFORE_DEADLINE": {
             "TITLE": "Download not available",
             "DESCRIPTION": "The download is only available after the registration deadline has passed."
+          },
+          "EMPTY_MANNSCHAFT": {
+            "TITLE": "Download not possible",
+            "DESCRIPTION": "The team has no members. Therefore, bib numbers and licences cannot be downloaded."
           }
         },
         "NOTIFICATION_PLATZHALTER": {
