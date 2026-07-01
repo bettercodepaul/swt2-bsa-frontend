@@ -8,6 +8,7 @@ import {
   UriBuilder
 } from '@shared/data-provider';
 import {AnzeigenDO} from '@wkdurchfuehrung/types/anzeige-do.class';
+import {AnzeigenMatchDO} from '@wkdurchfuehrung/types/datatransfer/anzeigen-match-do.class';
 
 
 @Injectable({
@@ -91,6 +92,20 @@ export class AnzeigenProviderService extends DataProviderService {
   public getByWettkampfId(wettkampfId: number): Promise<BogenligaResponse<AnzeigenDO[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET(this.getUrl() + '/byWettkampfId/' + wettkampfId)
+        .then((data: any) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+  public findAnzeigenMatchByPhysischeBildschirmId(physischeBildschirmId: string): Promise<BogenligaResponse<AnzeigenMatchDO>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET(this.getUrl() + '/AnzeigenMatch/' + physischeBildschirmId)
         .then((data: any) => {
           resolve({result: RequestResult.SUCCESS, payload: data});
         }, (error: HttpErrorResponse) => {
