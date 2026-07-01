@@ -18,20 +18,20 @@ export class AnzeigePhysischeIDComponent implements OnInit, OnDestroy {
     await this.showGeneratedID();
     this.activateFullscreen();
     this.pollingSubscription = interval(30000).subscribe(() => {
-      // findAnzeigenMatchByPhysischeBildschirmId(physischeBildschirmID);
+      this.anzeigenProvider.findAnzeigenMatchByPhysischeBildschirmId(this.physischeBildschirmID);
+      // TODO: Output wird zur Zeit noch nicht verarbeitet. Tabelle existiert nicht.
     });
   }
 
   async ngOnDestroy() {
-    // Verhindert Memory Leaks, falls die Komponente jemals zerstört wird
     if (this.pollingSubscription) {
       this.pollingSubscription.unsubscribe();
     }
   }
 
   public async showGeneratedID(): Promise<void> {
-      const response = await this.anzeigenProvider.getNewPhysischeBildschirmID();
-      this.physischeBildschirmID = '' + response.payload;
+    const response = await this.anzeigenProvider.getNewPhysischeBildschirmID();
+    this.physischeBildschirmID = '' + response.payload;
   }
 
   private activateFullscreen(): void {
