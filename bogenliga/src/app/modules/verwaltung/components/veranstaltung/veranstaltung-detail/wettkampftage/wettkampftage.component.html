@@ -269,14 +269,6 @@
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY.TITLE' | translate }}
           </bla-actionbutton>
 
-          <!-- HINWEIS: MAXIMALE ANZAHL WETTKAMPFTAGE ERREICHT (BSAPP-2185) -->
-          <p *ngIf="entityExists() && isMaxWettkampftageReached()"
-             data-cy="wettkampftage-max-hint"
-             class="wettkampftage-max-hint">
-            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.MAXREACHED' | translate }}
-            ({{ getMaxWettkampftageCount() }})
-          </p>
-
           <!-- SPEICHERN -->
           <bla-actionbutton (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();"
                             [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
@@ -290,6 +282,14 @@
 
 
         </div>
+
+        <!-- HINWEIS: MAXIMALE ANZAHL WETTKAMPFTAGE ERREICHT (BSAPP-2185) -->
+        <p *ngIf="entityExists() && isMaxWettkampftageReached()"
+           data-cy="wettkampftage-max-hint"
+           class="wettkampftage-max-hint">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.MAXREACHED' | translate }}
+          ({{ getMaxWettkampftageCount() }})
+        </p>
 
 
         <div class="form-group row">
