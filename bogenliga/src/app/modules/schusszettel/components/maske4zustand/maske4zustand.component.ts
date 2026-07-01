@@ -12,6 +12,11 @@ export class Maske4ZustandComponent implements OnInit, OnDestroy {
   /** full tablet state; wait for it via *ngIf */
   @Input() infos: TabletSchusszettel | null = null;
 
+  /** tablet session credentials, passed through to the embedded read-only schusszettel view */
+  @Input() token?: string;
+  @Input() wettkampfId?: number;
+  @Input() teamId?: number;
+
   /** fires when "Weiter" is clicked */
   @Output() weiter = new EventEmitter<void>();
 

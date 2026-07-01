@@ -29,7 +29,11 @@ export class SchusszettelProviderService extends DataProviderService {
     super();
   }
 
-  public findMatches(match1Id: string, match2Id: string): Promise<BogenligaResponse<Array<MatchDOExt>>> {
+  public findMatches(match1Id: string, match2Id: string, tabletSession?: {
+    token: string;
+    wettkampfid: number;
+    teamid: number;
+  }): Promise<BogenligaResponse<Array<MatchDOExt>>> {
     if (this.onOfflineService.isOffline()) {
       let passen = [];
       // holt Passen für beide matches aus der offlinedb um dann daraus Matchobjekte mit passen darin zu machen
@@ -45,8 +49,17 @@ export class SchusszettelProviderService extends DataProviderService {
           .catch((err) => console.error(err));
       });
     } else {
+      // anonymous QR-tablet flow: use the token-gated read-only endpoint instead
+      // of the permission-protected staff endpoint
+      const url = tabletSession
+        ? new UriBuilder().fromPath(this.getUrl()).path('tablet').path(match1Id).path(match2Id).build()
+          + `?token=${encodeURIComponent(tabletSession.token)}`
+          + `&wettkampfid=${tabletSession.wettkampfid}`
+          + `&teamid=${tabletSession.teamid}`
+        : new UriBuilder().fromPath(this.getUrl()).path(match1Id).path(match2Id).build();
+
       return new Promise((resolve, reject) => {
-        this.restClient.GET<Array<MatchDTOExt>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id).path(match2Id).build())
+        this.restClient.GET<Array<MatchDTOExt>>(url)
           .then((data: Array<MatchDTOExt>) => {
             console.log('data in MatchDTO', data);
             const matches = [MatchMapperExt.matchToDO(data[0]), MatchMapperExt.matchToDO(data[1])];

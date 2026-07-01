@@ -47,7 +47,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                      // TODO Locally the backend returns 0 as status code and on the DEV-Environment it returns 401
                      // TODO More research is needed to why the server return different status codes
                      if (error.status === 0 || error.status === 401) {
-                       if (request.url.includes('kampfrichter-session')) {
+                       if (request.url.includes('kampfrichter-session') || request.url.includes('tablet-schusszettel') || request.url.includes('match/schusszettel/tablet')) {
                          throw error;
                        }
                        console.log('Exipred Token', error);

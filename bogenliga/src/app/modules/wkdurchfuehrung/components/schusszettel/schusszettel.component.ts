@@ -46,6 +46,12 @@ export class SchusszettelComponent implements OnInit {
   @Input() embeddedMode = false;
   @Input() readOnlyMode = false;
 
+  // Tablet session credentials: when set, matches are fetched via the anonymous,
+  // token-gated tablet endpoint instead of the permission-protected staff endpoint
+  @Input() tabletToken?: string;
+  @Input() tabletWettkampfId?: number;
+  @Input() tabletTeamId?: number;
+
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
@@ -146,14 +152,22 @@ export class SchusszettelComponent implements OnInit {
       }
 
 
-      this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
+      this.schusszettelService.findMatches(match1id.toString(), match2id.toString(),
+        this.tabletToken ? {
+          token: this.tabletToken,
+          wettkampfid: this.tabletWettkampfId,
+          teamid: this.tabletTeamId
+        } : undefined)
         .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
-          // Rückennummern laden
-          this.loadAllowedRueckennummern(this.match1, 1);
-          this.loadAllowedRueckennummern(this.match2, 2);
+          // Rückennummern laden (nur im Bearbeitungsmodus noetig - der Endpoint
+          // erfordert eine Berechtigung, die anonyme Tablet-Betrachter nicht haben)
+          if (!this.readOnlyMode) {
+            this.loadAllowedRueckennummern(this.match1, 1);
+            this.loadAllowedRueckennummern(this.match2, 2);
+          }
 
           console.log(this.match1, this.match2);
           if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
@@ -263,13 +277,18 @@ export class SchusszettelComponent implements OnInit {
             this.match2.matchpunkte = 0;
           }
 
-          this.matchProvider.pairToFollow(this.match2.id)
-            .then((nextData) => {
-              this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
-            })
-            .catch(() => {
-              this.hasNextMatch = false;
-            });
+          // "Naechstes Match"-Navigation gibt es nur im Standalone-Bearbeitungsmodus (siehe Template);
+          // im eingebetteten Tablet-Modus ist der Button ohnehin ausgeblendet und der
+          // permission-geschuetzte Aufruf dafuer unnoetig.
+          if (!this.embeddedMode) {
+            this.matchProvider.pairToFollow(this.match2.id)
+              .then((nextData) => {
+                this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
+              })
+              .catch(() => {
+                this.hasNextMatch = false;
+              });
+          }
 
         })
         .catch((error) => {
@@ -338,6 +357,14 @@ export class SchusszettelComponent implements OnInit {
 
 
   getAvailableRueckennummernMatch1(schuetzeIndex: number): number[] {
+    const own = this.match1.schuetzen[schuetzeIndex][0].rueckennummer;
+
+    // Read-only viewers (z.B. anonyme Tablet-Scanner) laden die Team-Mitgliederliste
+    // nicht (erfordert Berechtigung) - es reicht, die bereits zugewiesene Nummer zu zeigen.
+    if (this.readOnlyMode) {
+      return own != null ? [own] : [];
+    }
+
     if (!this.allowedMitglieder1) {
       return [];
     }
@@ -345,22 +372,24 @@ export class SchusszettelComponent implements OnInit {
       .map(s => s[0].rueckennummer)
       .filter(nr => nr != null);
 
-    const own = this.match1.schuetzen[schuetzeIndex][0].rueckennummer;
-
     return this.allowedMitglieder1.filter(nr =>
       nr === own || !used.includes(nr)
     );
   }
 
   getAvailableRueckennummernMatch2(schuetzeIndex: number): number[] {
+    const own = this.match2.schuetzen[schuetzeIndex][0].rueckennummer;
+
+    if (this.readOnlyMode) {
+      return own != null ? [own] : [];
+    }
+
     if (!this.allowedMitglieder2) {
       return [];
     }
     const used = this.match2.schuetzen
       .map(s => s[0].rueckennummer)
       .filter(nr => nr != null);
-
-    const own = this.match2.schuetzen[schuetzeIndex][0].rueckennummer;
 
     return this.allowedMitglieder2.filter(nr =>
       nr === own || !used.includes(nr)
