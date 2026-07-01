@@ -35,6 +35,13 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+
+    if (payload.vereinsId == undefined){
+      return new Promise((resolve, reject) => {
+        reject({result: RequestResult.FAILURE});
+      });
+    }
+
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
           .then((data: VersionedDataTransferObject) => {

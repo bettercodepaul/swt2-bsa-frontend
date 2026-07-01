@@ -30,6 +30,7 @@ const NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE = 'dsb_mitglied_detail_delete_fai
 const NOTIFICATION_SAVE_DSB_MITGLIED = 'dsb_mitglied_detail_save';
 const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
 const NOTIFICATION_DUPLICATE_DSB_MITGLIED = 'dsb_mitglied_detail_duplicate';
+const NOTIFICATION_SAVE_FAILURE_DSB_MITGLIED = 'dsb_mitglied_detail_save_failure';
 
 @Component({
   selector: 'bla-dsb-mitglied-detail',
@@ -63,6 +64,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   public deleteLoading = false;
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
+  public isSportleiter = false;
 
 
   private sessionHandling: SessionHandling;
@@ -85,6 +87,11 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   async ngOnInit() {
     this.loading = true;
     await this.loadVereine();
+    // Determine if current user is a Sportleiter (limited to own club)
+    this.isSportleiter =
+      this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN)
+      && this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VEREIN)
+      && !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN);
     this.notificationService.discardNotification();
 
 
@@ -122,6 +129,22 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
           this.deleteLoading = false;
           this.saveLoading = false;
           this.currentMitgliedNat = 'Germany';
+
+          // Wenn ein angemeldeter Benutzer einem Verein zugeordnet ist, diesen vorauswählen
+          try {
+            const myVereinId = this.currentUserService.getVerein();
+            if (!isNullOrUndefined(myVereinId) && Array.isArray(this.vereine) && this.vereine.length > 0) {
+              // Vergleiche robust gegen unterschiedliche Typen (string vs number)
+              const matched = this.vereine.find((v: any) => String(v.id) === String(myVereinId));
+              if (matched) {
+                this.currentVerein = matched as VereinDO;
+                this.vereinSearchTerm = '';
+              }
+            }
+          } catch (e) {
+            // defensiv: falls currentUserService.getVerein() nicht verfügbar ist, nichts tun
+            console.warn('Could not preselect verein for add:', e);
+          }
         } else {
           this.loadById(params[ID_PATH_PARAM]);
         }
@@ -136,6 +159,21 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       this.deleteLoading = false;
       this.saveLoading = false;
       this.currentMitgliedNat = 'Germany';
+
+      // Falls als Popup geöffnet und der Benutzer einem Verein angehört, diesen vorauswählen
+      try {
+        const myVereinId = this.currentUserService.getVerein();
+        if (!isNullOrUndefined(myVereinId) && Array.isArray(this.vereine) && this.vereine.length > 0) {
+          // Vergleiche robust gegen unterschiedliche Typen (string vs number)
+          const matched = this.vereine.find((v: any) => String(v.id) === String(myVereinId));
+          if (matched) {
+            this.currentVerein = matched as VereinDO;
+            this.vereinSearchTerm = '';
+          }
+        }
+      } catch (e) {
+        console.warn('Could not preselect verein for popup:', e);
+      }
     }
 
   }
@@ -213,6 +251,23 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
           };
 
           this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+            .subscribe((myNotification) => {
+            });
+
+          this.notificationService.showNotification(notification);
+        }
+        else {
+          const notification: Notification = {
+            id: NOTIFICATION_SAVE_FAILURE_DSB_MITGLIED,
+            title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE_FAILURE.TITLE',
+            description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.PENDING
+          };
+
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_FAILURE_DSB_MITGLIED)
             .subscribe((myNotification) => {
             });
 
