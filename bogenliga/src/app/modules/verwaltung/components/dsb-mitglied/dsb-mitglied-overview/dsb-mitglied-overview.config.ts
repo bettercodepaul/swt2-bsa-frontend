@@ -38,5 +38,5 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
     deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER],
     viewPermission : [UserPermission.CAN_READ_DSBMITGLIEDER]
   },
-  createPermission : [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
+  createPermission : [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
 };

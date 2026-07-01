@@ -1369,6 +1369,10 @@
             "TITLE": "Error",
             "DESCRIPTION": "Marksman already in team. Please add a different marksman."
           },
+          "SAVE_FAILURE": {
+            "TITLE": "Error while saving",
+            "DESCRIPTION": "Insufficient permissions. If you are a sports leader, please check if you have permission over the selected club."
+          },
           "OVERUSED": {
             "TITLE": "Error",
             "DESCRIPTION": "Can not add marksman to this team, because he already is part of to many teams."

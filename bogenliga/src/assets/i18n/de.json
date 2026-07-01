@@ -1364,7 +1364,11 @@
         },
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
-          "DESCRIPTION": "Die Mitgliedsnummer ist bereits vergeben. Bitte wählen sie eine andere Mitgliedsnummer."
+          "DESCRIPTION": "Die Mitgliedsnummer ist bereits vergeben. Bitte wählen Sie eine andere Mitgliedsnummer."
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehler beim Speichern",
+          "DESCRIPTION": "Keine ausreichenden Berechtigungen. Wenn Sie ein Sportleiter sind, überprüfen Sie bitte, ob Sie die Berechtigung über den ausgewählten Verein haben."
         }
       }
     },
