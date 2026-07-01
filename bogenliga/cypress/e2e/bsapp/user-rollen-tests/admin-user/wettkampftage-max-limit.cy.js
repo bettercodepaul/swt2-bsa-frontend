@@ -48,7 +48,7 @@ describe('BSAPP-2185: Wettkampftage-Limit blendet "Neu"/"Kopieren" konsistent au
 
   it('negativ: unter dem Limit ist "Neu" aktiv und es erscheint kein Hinweis', () => {
     openWettkampftage(VERANSTALTUNG_UNDER_LIMIT);
-    cy.wait(3000); // Daten laden lassen
+    cy.get('[data-cy=wettkampftage-datum]', {timeout: 20000}).invoke('val').should('match', /^\d{4}-\d{2}-\d{2}$/);
 
     // Unter dem Limit: kein Hinweis, "Neu" ist aktiv.
     cy.get('[data-cy=wettkampftage-max-hint]').should('not.exist');
