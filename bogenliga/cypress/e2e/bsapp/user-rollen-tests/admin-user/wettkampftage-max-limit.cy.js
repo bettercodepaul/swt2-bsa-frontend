@@ -25,6 +25,7 @@ function openWettkampftage(id) {
   // cy.reload() erzwingt einen echten vollständigen Reload mit frischer Komponente.
   cy.reload();
   cy.get('bla-wettkampftage', {timeout: 20000}).should('exist');
+  cy.get('[data-cy=wettkampftage-datum]', {timeout: 20000}).invoke('val').should('match', /^\d{4}-\d{2}-\d{2}$/);
 }
 
 describe('BSAPP-2185: Wettkampftage-Limit blendet "Neu"/"Kopieren" konsistent aus', () => {
