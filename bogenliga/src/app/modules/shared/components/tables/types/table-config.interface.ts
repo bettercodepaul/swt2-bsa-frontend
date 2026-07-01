@@ -13,6 +13,7 @@ export interface TableConfig {
   viewPermission?: UserPermission[];
   deletePermission?: UserPermission[];
   addPermission?: UserPermission[];
+  copyPermission?: UserPermission[];
   downloadPermission?: UserPermission[];
   mapPermission?: UserPermission[];
   coloredActionsWithText?: boolean; // In case actions should be displayed colored and with text
