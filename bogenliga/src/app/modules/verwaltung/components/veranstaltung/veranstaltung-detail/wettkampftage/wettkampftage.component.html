@@ -252,7 +252,7 @@
           <!-- NEU: WETTKAMPFTAG HINZUFÜGEN -->
           <bla-actionbutton (onClick)="onAddWettkampfTag($event)"
                             *ngIf="entityExists()"
-                            [disabled]="wettkampftageForm.dirty"
+                            [disabled]="wettkampftageForm.dirty || isMaxWettkampftageReached()"
                             [loading]="saveLoading"
                             [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'">
@@ -261,13 +261,21 @@
 
           <!-- WETTKAMPFTAG KOPIEREN -->
           <bla-actionbutton *ngIf="entityExists()"
-                            [disabled]="wettkampftageForm.dirty"
+                            [disabled]="wettkampftageForm.dirty || isMaxWettkampftageReached()"
                             [loading]="saveLoading"
                             [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'copy'"
                             (onClick)="onCopyWettkampfTag($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY.TITLE' | translate }}
           </bla-actionbutton>
+
+          <!-- HINWEIS: MAXIMALE ANZAHL WETTKAMPFTAGE ERREICHT (BSAPP-2185) -->
+          <p *ngIf="entityExists() && isMaxWettkampftageReached()"
+             data-cy="wettkampftage-max-hint"
+             class="wettkampftage-max-hint">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.MAXREACHED' | translate }}
+            ({{ getMaxWettkampftageCount() }})
+          </p>
 
           <!-- SPEICHERN -->
           <bla-actionbutton (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();"

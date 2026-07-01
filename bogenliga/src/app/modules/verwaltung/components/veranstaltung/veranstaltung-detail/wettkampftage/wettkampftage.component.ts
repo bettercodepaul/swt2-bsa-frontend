@@ -911,6 +911,21 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return configuredMaxWettkampftage;
   }
 
+  /** Für das Template: konfigurierte Maximalanzahl an Wettkampftagen (BSAPP-2185). */
+  public getMaxWettkampftageCount(): number {
+    return this.getMaxWettkampftage();
+  }
+
+  /**
+   * True, wenn die maximale Anzahl an Wettkampftagen erreicht ist. Steuert im Template das
+   * Deaktivieren von "Neu"/"Kopieren" und den Hinweistext, damit für den Nutzer klar ist,
+   * dass das Limit greift (statt eines vermeintlichen Bugs). Nutzt dieselbe Zählgröße wie die
+   * Anlege-Prüfung in createInitWettkampfTag/copyCurrentWettkampfTag. (BSAPP-2185)
+   */
+  public isMaxWettkampftageReached(): boolean {
+    return this.anzahl >= this.getMaxWettkampftage();
+  }
+
   private getNextWettkampftagNumber(): number {
     if (isNullOrUndefined(this.selectedDTOs) || this.selectedDTOs.length === 0) {
       return 1;
