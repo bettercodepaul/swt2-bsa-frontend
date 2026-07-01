@@ -40,7 +40,7 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         TableActionType.DELETE,
         TableActionType.DOWNLOADLIZENZEN,
         TableActionType.DOWNLOADRUECKENNUMMER,
-        TableActionType.ADD,
+        TableActionType.COPY,
         TableActionType.DOWMLOADSCHUSZETTELTAG1,
         TableActionType.DOWMLOADSCHUSZETTELTAG2,
         TableActionType.DOWMLOADSCHUSZETTELTAG3,
@@ -50,6 +50,6 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
     },
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
     editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER],
-    addPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER]
+    copyPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER]
 
 };
