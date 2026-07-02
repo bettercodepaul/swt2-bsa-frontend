@@ -38,8 +38,8 @@ export class TabletStatusleisteComponent {
     if (this.status === 'SCHUETZENMELDUNG') {
       return [
         ...base,
-        { key: 'SCHUETZENMELDUNG', label: 'Schützenmeldung' },
-        { key: 'SATZEINGABE', label: 'Passeeingabe' },
+        { key: 'SCHUETZENMELDUNG', label: 'Schützen\u00admeldung' },
+        { key: 'SATZEINGABE', label: 'Passe\u00adeingabe' },
         { key: 'WARTE', label: 'Warten' },
       ];
     }
