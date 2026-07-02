@@ -5,7 +5,7 @@
 
 .timeline__track {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -37,7 +37,7 @@
   flex: 1;
   height: 2px;
   background: #cbd5e1;
-  margin: 0 10px;
+  margin: 6px 10px 0 10px;
 }
 
 /* aktiver Schritt */
@@ -65,4 +65,25 @@
   text-align: center;
   font-size: 13px;
   color: #475569;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+  .timeline {
+    margin: 10px auto;
+    padding: 0 10px;
+  }
+  .timeline__step {
+    min-width: 60px;
+  }
+  .timeline__step .label {
+    font-size: 11px;
+    white-space: normal;
+    max-width: 70px;
+    line-height: 1.2;
+  }
+  .line {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
