@@ -231,3 +231,80 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .admin-container {
+    .session-table {
+      display: block;
+      border: none;
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: block;
+      }
+
+      tr {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: none !important;
+        padding: 0 !important;
+        width: 100%;
+
+        &:not(:first-child):not(:last-child)::before {
+          font-weight: 600;
+          color: #6c757d;
+          font-size: 0.875rem;
+        }
+
+        &:first-child {
+          font-size: 1.1rem;
+          font-weight: bold;
+          color: #1565c0;
+          border-bottom: 1px solid #f1f3f5 !important;
+          padding-bottom: 0.5rem !important;
+          margin-bottom: 0.25rem;
+          justify-content: flex-start;
+        }
+
+        &:nth-child(2)::before {
+          content: "Status:";
+        }
+
+        &:nth-child(3)::before {
+          content: "Token:";
+        }
+
+        &:nth-child(4)::before {
+          content: "Aktuelle Passe:";
+        }
+
+        &:nth-child(5)::before {
+          content: "Gegner:";
+        }
+
+        &:last-child {
+          justify-content: flex-end;
+          border-top: 1px solid #f1f3f5 !important;
+          padding-top: 0.75rem !important;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+}
