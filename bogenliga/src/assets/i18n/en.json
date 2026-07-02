@@ -1239,6 +1239,10 @@
             "TITLE": "Error while downloading",
             "DESCRIPTION": "Could not download licence, because there is none available for this marksman."
           },
+          "DOWNLOAD_BEFORE_DEADLINE": {
+            "TITLE": "Download not available",
+            "DESCRIPTION": "The download is only available after the registration deadline has passed."
+          },
           "UPDATE": {
             "FAILURE": {
               "FULL": {
