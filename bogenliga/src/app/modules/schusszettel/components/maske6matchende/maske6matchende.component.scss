@@ -338,8 +338,8 @@ $border: #dee2e6;
   // Schusszettel-Komponente übernimmt; hier nur fixe Größen neutralisieren
   @media (max-width: 768px) {
     display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    touch-action: pan-y;
 
     .schusszettel-container {
       transform: none;
@@ -351,6 +351,8 @@ $border: #dee2e6;
         .schusszettel-container {
           min-width: 0;
           padding: 5px;
+          overflow-x: hidden;
+          touch-action: pan-y;
         }
 
         // neutralisiert die fixen 55px-Inputs aus dem Basis-Block

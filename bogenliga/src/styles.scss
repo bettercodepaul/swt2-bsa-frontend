@@ -71,6 +71,8 @@ $secondary-dark: #ff833a; // hover Links, Logo
 html,
 body {
   height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   position: relative;
   background-color: $primary-white;
   font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;

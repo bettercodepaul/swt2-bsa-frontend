@@ -10,6 +10,7 @@ import {AppComponent} from 'src/app/app.component';
 export class Maske6MatchendeComponent implements OnInit, OnDestroy {
   /** full tablet state; wait for it via *ngIf */
   @Input() infos: TabletSchusszettel | null = null;
+  @Input() token?: string;
 
   /** fires when "Weiter" is clicked */
   @Output() weiter = new EventEmitter<void>();
