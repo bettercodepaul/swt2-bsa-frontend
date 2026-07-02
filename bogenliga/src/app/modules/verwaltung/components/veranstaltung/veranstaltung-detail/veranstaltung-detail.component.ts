@@ -62,6 +62,7 @@ const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF = 'veranstaltung_detail_copy_failure_sizediff';
+const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_GENERAL = 'veranstaltung_detail_copy_failure_general';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
 const NOTIFICATION_CREATE_PLATZHALTER = 'platzhalter_create';
 const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
@@ -431,6 +432,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             , () => {
               console.log('Failed');
               this.saveLoading = false;
+              // Verständliche Meldung statt der generischen Server-Fehlermeldung. (BSAPP-2158)
+              this.showCopyMannschaftGeneralFailureNotification();
             });
       }
       )
@@ -453,6 +456,30 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           });
         this.notificationService.showNotification(notification);
       });
+  }
+
+  /**
+   * Zeigt eine verständliche Meldung, wenn das Kopieren der Mannschaften aus dem Vorjahr
+   * fehlschlägt (z.B. Server-/Berechtigungsfehler). Ersetzt die generische
+   * "Ihre Anfrage wurde vom Server abgewiesen"-Meldung. (BSAPP-2158)
+   */
+  private showCopyMannschaftGeneralFailureNotification(): void {
+    const notification: Notification = {
+      id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_GENERAL,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_GENERAL.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_GENERAL.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_GENERAL)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+        }
+      });
+    this.notificationService.showNotification(notification);
   }
 
 
