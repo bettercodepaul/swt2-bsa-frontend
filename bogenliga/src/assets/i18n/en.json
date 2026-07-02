@@ -1086,6 +1086,10 @@
           "DOWNLOAD_BEFORE_DEADLINE": {
             "TITLE": "Download not available",
             "DESCRIPTION": "The download is only available after the registration deadline has passed."
+          },
+          "EMPTY_MANNSCHAFT": {
+            "TITLE": "Download not possible",
+            "DESCRIPTION": "The team has no members. Therefore, bib numbers and licences cannot be downloaded."
           }
         },
         "NOTIFICATION_PLATZHALTER": {
@@ -1586,6 +1590,7 @@
             "FORM": {
               "LABEL": "Competition day",
               "REMINDSAVE": "Please save your changes first.",
+              "MAXREACHED": "Maximum number of competition days reached",
               "DATUM": {
                 "LABEL": "date",
                 "PLACEHOLDER": "date",
@@ -1618,6 +1623,14 @@
               "ADD": {
                 "TITLE": "new",
                 "DESCRIPTION": "Do you want to add another competition day?"
+              },
+              "ADD_SUCCESS": {
+                "TITLE": "Success",
+                "DESCRIPTION": "The competition day was successfully added."
+              },
+              "COPY_SUCCESS": {
+                "TITLE": "Success",
+                "DESCRIPTION": "The competition day was successfully copied."
               },
               "DELETE_SUCCESS": {
                 "TITLE": "success",
@@ -1943,6 +1956,7 @@
         "EDIT": "Edit",
         "DELETE": "Delete",
         "ADD": "Add",
+        "COPY": "Copy",
         "DOWNLOAD": "Download licence"
       },
       "ACTION_TEXT": {

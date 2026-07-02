@@ -30,8 +30,8 @@ it('Editieren eines Vereins', function () {
     .parent('tr')
     .find('[data-cy="TABLE.ACTIONS.EDIT"]')
     .click();
-
   cy.wait(1000)
+
   cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
   cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest.com')
   cy.get('[data-cy=vereine-update-button]').click()

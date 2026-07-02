@@ -42,6 +42,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onViewEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDeleteEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onAddEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onCopyEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onRowEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
@@ -84,6 +85,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
         return 'trash';
       case TableActionType.ADD:
         return 'plus';
+      case TableActionType.COPY:
+        return 'copy';
       case TableActionType.MAP:
         return 'map';
       case TableActionType.DOWMLOADSCHUSZETTELTAG1:
@@ -318,6 +321,9 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
         case TableActionType.ADD:
           this.onAdd(row.payload);
           break;
+        case TableActionType.COPY:
+          this.onCopy(row.payload);
+          break;
         case TableActionType.DOWNLOAD:
           this.onDownload(row.payload);
           break;
@@ -424,6 +430,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     this.onAddEntry.emit(affectedRowPayload);
   }
 
+  private onCopy(affectedRowPayload: VersionedDataObject) {
+    this.onCopyEntry.emit(affectedRowPayload);
+  }
+
   private onRowClicked(affectedRowPayload: VersionedDataObject) {
     this.onRowEntry.emit(affectedRowPayload);
   }
@@ -486,6 +496,9 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
         break;
       case TableActionType.ADD:
         neededPermissions = this.config.addPermission;
+        break;
+      case TableActionType.COPY:
+        neededPermissions = this.config.copyPermission || this.config.addPermission;
         break;
       case TableActionType.DOWNLOAD:
         neededPermissions = this.config.downloadPermission;

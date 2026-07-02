@@ -26,6 +26,9 @@
           <bla-schusszettel
             [match1Id]="infos?.eigenesTeamMatchId"
             [match2Id]="infos?.gegnerischesTeamMatchId"
+            [token]="token"
+            [wettkampfId]="infos?.wettkampfInfo?.wettkampfId"
+            [teamId]="infos?.eigenesTeam?.teamId"
             [embeddedMode]="true"
             [readOnlyMode]="true">
           </bla-schusszettel>

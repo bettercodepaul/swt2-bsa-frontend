@@ -29,6 +29,10 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
       active:   'plus',
       inactive: 'plus'
     },
+    copy: {
+      active:   'copy',
+      inactive: 'copy'
+    },
     download: {
       active: 'download',
       inactive: 'download'
@@ -72,6 +76,7 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     delete:      'TABLE.ACTIONS.DELETE',
     view:        'TABLE.ACTIONS.VIEW',
     add:         'TABLE.ACTIONS.ADD',
+    copy:        'TABLE.ACTIONS.COPY',
 
     download: 'TABLE.ACTIONS.DOWNLOAD',
     downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER',
@@ -238,6 +243,9 @@ export function tableConfigWithDefaults(optional: {
   }
   if ((optional as any).hasOwnProperty('addPermission')) {
     (tableConfig as any).addPermission = (optional as any).addPermission;
+  }
+  if ((optional as any).hasOwnProperty('copyPermission')) {
+    (tableConfig as any).copyPermission = (optional as any).copyPermission;
   }
   if ((optional as any).hasOwnProperty('downloadPermission')) {
     (tableConfig as any).downloadPermission = (optional as any).downloadPermission;

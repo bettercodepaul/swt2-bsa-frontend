@@ -11,62 +11,65 @@
   <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
 
   <div *ngIf="!loading && !errorMsg">
-    <p *ngIf="matches.length === 0" class="empty-hint">Keine Matches gefunden.</p>
+    <p *ngIf="matchGroups.length === 0" class="empty-hint">Keine Matches gefunden.</p>
 
-    <div *ngFor="let match of matchesByScheibe()" class="match-card"
-         [class.meldung-fehlt]="isMeldungFehlt(match)">
+    <!-- Level 1: Match / Begegnung -->
+    <div *ngFor="let group of matchGroups" class="match-group">
 
-      <!-- Match-Header (klickbar zum Ein-/Ausklappen) -->
-      <div class="match-header" (click)="toggleExpanded(match.matchId)">
-        <div class="match-meta">
-          <span class="scheibe-badge">Scheibe {{ match.matchScheibennummer }}</span>
-          <span class="match-nr">Match {{ match.nr }}</span>
-          <span class="mannschaft">{{ match.mannschaftName }}</span>
-          <span class="begegnung-label">Begegnung {{ match.begegnung }}</span>
-        </div>
-        <div class="match-status-area">
-          <span *ngIf="isMeldungFehlt(match)" class="status-badge fehlt">
-            ⚠ Meldung fehlt
-          </span>
-          <span *ngIf="!isMeldungFehlt(match)" class="status-badge ok">
-            ✓ Gemeldet
-          </span>
-          <span class="collapse-icon">{{ isExpanded(match.matchId) ? '▲' : '▼' }}</span>
-        </div>
+      <div class="match-group-header" (click)="toggleMatch(group)">
+        <span class="chevron">{{ group.expanded ? '▼' : '▶' }}</span>
+        <span class="match-title">Match {{ group.begegnung }}</span>
+        <span class="scheiben-count">{{ group.scheiben.length }} Scheibe(n)</span>
       </div>
 
-      <!-- Ausgeklappter Inhalt -->
-      <div *ngIf="isExpanded(match.matchId)" class="match-body">
+      <div *ngIf="group.expanded" class="scheiben-list">
 
-        <div *ngIf="match.schuetzen && match.schuetzen.length > 0" class="schuetzen-section">
-          <h4 class="section-title">Gemeldete Schützen</h4>
-          <ul class="schuetzen-list">
-            <li *ngFor="let s of match.schuetzen" class="schuetze-item">
-              <span class="rueckennummer">#{{ s.rueckennummer }}</span>
-              <span class="schuetze-name">{{ s.vorname }} {{ s.nachname }}</span>
-            </li>
-          </ul>
-        </div>
+        <!-- Level 2: Scheibe -->
+        <div *ngFor="let match of group.scheiben" class="scheibe-card"
+             [class.meldung-fehlt]="isMeldungFehlt(match)">
 
-        <div class="strafpunkte-section">
-          <h4 class="section-title">Strafpunkte</h4>
-          <div class="strafpunkte-grid">
-            <label *ngFor="let satz of [1,2,3,4,5]">
-              <span class="satz-label">Satz {{ satz }}</span>
-              <input
-                type="number"
-                min="0"
-                max="99"
-                inputmode="numeric"
-                [ngModel]="getSatz(match, satz)"
-                (ngModelChange)="setSatz(match, satz, $event)"
-                (blur)="saveStrafpunkteOnBlur(match)"
-                [disabled]="isMeldungFehlt(match)"
-                class="strafpunkt-input"
-              >
-            </label>
+          <div class="scheibe-header" (click)="toggleScheibe(match.matchId)">
+            <span class="chevron">{{ isScheibeExpanded(match.matchId) ? '▼' : '▶' }}</span>
+            <span class="scheibe-badge">Scheibe {{ match.matchScheibennummer }}</span>
+            <span class="mannschaft">{{ match.mannschaftName }}</span>
+            <span *ngIf="isMeldungFehlt(match)" class="status-badge fehlt">⚠ Meldung fehlt</span>
+            <span *ngIf="!isMeldungFehlt(match)" class="status-badge ok">✓ Gemeldet</span>
+            <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">✓ gespeichert</span>
           </div>
-          <span *ngIf="savedMatchIds.has(match.matchId)" class="saved-hint">✓ gespeichert</span>
+
+          <div *ngIf="isScheibeExpanded(match.matchId)" class="scheibe-body">
+
+            <div *ngIf="match.schuetzen && match.schuetzen.length > 0" class="schuetzen-section">
+              <h4 class="section-title">Gemeldete Schützen</h4>
+              <ul class="schuetzen-list">
+                <li *ngFor="let s of match.schuetzen" class="schuetze-item">
+                  <span class="rueckennummer">#{{ s.rueckennummer }}</span>
+                  <span class="schuetze-name">{{ s.vorname }} {{ s.nachname }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="strafpunkte-section">
+              <h4 class="section-title">Strafpunkte</h4>
+              <div class="strafpunkte-grid">
+                <label *ngFor="let satz of [1,2,3,4,5]">
+                  <span class="satz-label">Satz {{ satz }}</span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="99"
+                    inputmode="numeric"
+                    [ngModel]="getSatz(match, satz)"
+                    (ngModelChange)="setSatz(match, satz, $event)"
+                    (blur)="saveStrafpunkteOnBlur(match)"
+                    [disabled]="isMeldungFehlt(match)"
+                    class="strafpunkt-input"
+                  >
+                </label>
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
