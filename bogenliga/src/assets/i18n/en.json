@@ -1620,6 +1620,14 @@
                 "TITLE": "new",
                 "DESCRIPTION": "Do you want to add another competition day?"
               },
+              "ADD_SUCCESS": {
+                "TITLE": "Success",
+                "DESCRIPTION": "The competition day was successfully added."
+              },
+              "COPY_SUCCESS": {
+                "TITLE": "Success",
+                "DESCRIPTION": "The competition day was successfully copied."
+              },
               "DELETE_SUCCESS": {
                 "TITLE": "success",
                 "DESCRIPTION": "the competition day has been successfully deleted."
