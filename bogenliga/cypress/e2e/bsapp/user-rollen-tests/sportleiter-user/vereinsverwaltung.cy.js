@@ -13,24 +13,37 @@ it('Anzeige Vereine', function () {
   cy.url().should('include', '#/vereine')
 })
 
-
-it('Anzeige Verwaltung Vereinsliste', function () {
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.url().should('include', '#/verwaltung')
-  cy.get('[data-cy=verwaltung-vereine-button]').click()
-  cy.url().should('include', '#/verwaltung/vereine')
+it('Verwaltung Vereinsliste nicht sichtbar - Breadcrumb Test', function () {
+  // Home besuchen und Shortcutbutton "Mannschaften verwalten" klicken
+  cy.visit('http://localhost:4200/#/home');
   cy.wait(1000)
-  cy.get('table').find('tr').its('length').should('be.greaterThan', 0)
+  cy.get('[data-cy="shortcut-btn-Mannschaften-verwalten"]', { timeout: 15000 }).should('exist').and('be.visible').click()
+  cy.wait(1000)
+
+  // Versuchen, über Breadcrumb auf "Vereine - Übersicht" zu klicken
+  // Das sollte entweder nicht existieren oder nicht funktionieren
+  cy.get('[data-cy="breadcrumb-vereine-uebersicht"]').should('not.exist')
 })
 
-
-it('Editieren eines Vereins', function () {
-
-  cy.contains('td', '32WT525401')
-    .parent('tr')
-    .find('[data-cy="TABLE.ACTIONS.EDIT"]')
-    .click();
+it('Verwaltung Vereinsliste nicht sichtbar - URL Manipulation Test', function () {
+  // Versuchen, direkt auf die Verwaltungsvereinsliste zuzugreifen
+  cy.visit('http://localhost:4200/#/home');
   cy.wait(1000)
+  cy.visit('http://localhost:4200/#/verwaltung/vereine/', { failOnStatusCode: false })
+  cy.wait(1000)
+
+  // Es sollte entweder auf eine Fehlerseite oder zurück zur Home redirected werden
+  cy.url().should('not.include', '#/verwaltung/vereine')
+})
+
+it('Editieren seines Vereins', function () {
+
+  cy.visit('http://localhost:4200/#/home');
+  cy.wait(1000)
+
+  cy.get('[data-cy="shortcut-btn-Mannschaften-verwalten"]', { timeout: 15000 }).should('exist').and('be.visible').click()
+  cy.wait(1000)
+
 
   cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
   cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest.com')
@@ -90,7 +103,6 @@ it('Vereins-Mannschaft bearbeiten', function () {
   cy.wait(5000)
   cy.contains('76')
 })
-
 
 it('Vereins-Mannschaft löschen', function () {
   cy.get('[data-cy=sidebar-verwaltung-button]').click()
