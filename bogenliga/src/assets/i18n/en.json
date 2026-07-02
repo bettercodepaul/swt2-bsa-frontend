@@ -1081,7 +1081,7 @@
           },
           "SAVE_FAILURE": {
             "TITLE": "Error while saving",
-            "DESCRIPTION": "Sports director has no authority over this club or this target region."
+            "DESCRIPTION": "The sports director does not have permission to edit the club name, club number, and region."
           },
           "DOWNLOAD_BEFORE_DEADLINE": {
             "TITLE": "Download not available",

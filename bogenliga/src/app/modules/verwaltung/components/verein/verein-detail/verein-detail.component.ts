@@ -232,8 +232,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.notificationService.discardNotification();
     this.saveLoading = true;
 
-    // persist
-    this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // Region nur überschreiben, wenn wirklich eine Region gesetzt ist
+    if (this.currentRegion && this.currentRegion.id !== undefined && this.currentRegion.id !== null) {
+      this.currentVerein.regionId = this.currentRegion.id;
+    }
+
     // check if website has http:// in it. If not then add it
     if (this.currentVerein.website !== '') {
       if (this.currentVerein.website.search('http://')) {
