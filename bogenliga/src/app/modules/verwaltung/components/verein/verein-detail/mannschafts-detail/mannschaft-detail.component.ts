@@ -224,6 +224,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
             });
 
           this.notificationService.showNotification(notification);
+        } else {
+          // Antwort ohne gueltige Payload (z. B. leere/unerwartete Server-Antwort):
+          // Ladezustand des Buttons beenden, damit er wieder klickbar ist.
+          this.saveLoading = false;
         }
       }, (response: any) => {
         if (this.isDuplicateMannschaftError(response)) {
@@ -711,6 +715,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
             });
 
           this.notificationService.showNotification(notification);
+        } else {
+          // Antwort ohne gueltige Payload (z. B. leere/unerwartete Server-Antwort):
+          // Ladezustand des Buttons beenden, damit er wieder klickbar ist.
+          this.saveLoading = false;
         }
       }, (response: any) => {
         if (this.isDuplicateMannschaftError(response)) {
