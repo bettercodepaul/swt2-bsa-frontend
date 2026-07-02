@@ -1244,6 +1244,10 @@
         "LIGA_NOT_LOADED": {
           "TITLE": "Fehler beim Löschen",
           "DESCRIPTION": "Bitte warten Sie, bis die Ligen vollständig geladen sind."
+        },
+        "DOWNLOAD_BEFORE_DEADLINE": {
+          "TITLE": "Download nicht verfügbar",
+          "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
         }
       }
     },

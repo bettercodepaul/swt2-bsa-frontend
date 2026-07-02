@@ -61,6 +61,7 @@ const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitgli
 const NOTIFICATION_DUPLICATE_MANNSCHAFT = 'duplicate_mannschaft';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
 const NOTIFICATION_LIGA_NOT_LOADED = 'liga_not_loaded';
+const NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE = 'mannschaft_download_before_deadline';
 
 @Component({
   selector:    'bla-mannschaft-detail',
@@ -773,6 +774,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
   public onDownload(versionedDataObject: VersionedDataObject): void {
+    if (this.isDownloadBlocked()) {
+      this.showBeforeDeadlineNotification();
+      return;
+    }
     const downloadUrl = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
@@ -786,6 +791,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    if (this.isDownloadBlocked()) {
+      this.showBeforeDeadlineNotification();
+      return;
+    }
     const URL: string = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
@@ -799,6 +808,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
 
   public onDownloadLizenzen(): void {
+    if (this.isDownloadBlocked()) {
+      this.showBeforeDeadlineNotification();
+      return;
+    }
     const URL: string = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
@@ -808,6 +821,38 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
       .then((response: BogenligaResponse<string>) => console.log(response))
       .catch((response: BogenligaResponse<string>) => this.showNoLicense(false));
+  }
+
+  private isDownloadBlocked(): boolean {
+    if (!this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VEREIN)) {
+      return false;
+    }
+    if (!this.currentVeranstaltung || !this.currentVeranstaltung.meldeDeadline) {
+      return false;
+    }
+    const parts = this.currentVeranstaltung.meldeDeadline.split('-');
+    if (parts.length !== 3) {
+      return false;
+    }
+    const deadline = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today <= deadline;
+  }
+
+  private showBeforeDeadlineNotification(): void {
+    const notification: Notification = {
+      id:          NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE,
+      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.TITLE',
+      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DOWNLOAD_BEFORE_DEADLINE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE)
+        .subscribe((myNotification) => {});
+    this.notificationService.showNotification(notification);
   }
 
   private showNoLicense(is_one: boolean): void {
