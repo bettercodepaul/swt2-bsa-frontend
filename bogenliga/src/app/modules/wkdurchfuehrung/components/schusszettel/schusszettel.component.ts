@@ -43,6 +43,9 @@ export class SchusszettelComponent implements OnInit {
   // Input properties for embedding in tablet zustand component
   @Input() match1Id?: number;
   @Input() match2Id?: number;
+  @Input() token?: string;
+  @Input() wettkampfId?: number;
+  @Input() teamId?: number;
   @Input() embeddedMode = false;
   @Input() readOnlyMode = false;
 
@@ -146,14 +149,16 @@ export class SchusszettelComponent implements OnInit {
       }
 
 
-      this.schusszettelService.findMatches(match1id.toString(), match2id.toString())
+      this.schusszettelService.findMatches(match1id.toString(), match2id.toString(), this.token, this.wettkampfId, this.teamId)
         .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
-          // Rückennummern laden
-          this.loadAllowedRueckennummern(this.match1, 1);
-          this.loadAllowedRueckennummern(this.match2, 2);
+          // Rückennummern laden (nur wenn nicht im Read-Only-Modus)
+          if (!this.readOnlyMode) {
+            this.loadAllowedRueckennummern(this.match1, 1);
+            this.loadAllowedRueckennummern(this.match2, 2);
+          }
 
           console.log(this.match1, this.match2);
           if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
@@ -263,13 +268,17 @@ export class SchusszettelComponent implements OnInit {
             this.match2.matchpunkte = 0;
           }
 
-          this.matchProvider.pairToFollow(this.match2.id)
-            .then((nextData) => {
-              this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
-            })
-            .catch(() => {
-              this.hasNextMatch = false;
-            });
+          if (!this.embeddedMode) {
+            this.matchProvider.pairToFollow(this.match2.id)
+              .then((nextData) => {
+                this.hasNextMatch = nextData.payload && nextData.payload.length === 2;
+              })
+              .catch(() => {
+                this.hasNextMatch = false;
+              });
+          } else {
+            this.hasNextMatch = false;
+          }
 
         })
         .catch((error) => {

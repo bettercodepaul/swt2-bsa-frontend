@@ -212,6 +212,8 @@ input {
   .schusszettel-container {
     min-width: 0;
     padding: 10px;
+    overflow-x: hidden;
+    touch-action: pan-y;
   }
 
   /* Bootstrap-Spalten untereinander stapeln */

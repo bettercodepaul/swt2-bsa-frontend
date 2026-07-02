@@ -38,6 +38,7 @@
         <bla-maske4zustand
           *ngIf="showZustandFirst"
           [infos]="data"
+          [token]="token"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
 
@@ -53,6 +54,7 @@
         <bla-maske4zustand
           *ngIf="showZustandFirst"
           [infos]="data"
+          [token]="token"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
 
@@ -67,6 +69,7 @@
       <bla-maske6matchende
         *ngSwitchCase="'MATCH_ENDE'"
         [infos]="data"
+        [token]="token"
         (weiter)="onMatchEndeWeiter()">
       </bla-maske6matchende>
 
@@ -75,6 +78,7 @@
         <bla-maske4zustand
           *ngIf="showZustandFirst"
           [infos]="data"
+          [token]="token"
           (weiter)="onZustandWeiter()">
         </bla-maske4zustand>
 
