@@ -41,6 +41,10 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   private sessionHandling: SessionHandling;
 
+  // Gecachtes Admin-Flag: die Rolle des aktuellen Nutzers ändert sich innerhalb einer Session nicht,
+  // daher nur einmal laden und bei Folgerenderings (v.a. Quicksearch) wiederverwenden. (Review BSAPP-2191)
+  private isAdmin: boolean | null = null;
+
   constructor(
     private userDataProviderService: UserDataProviderService,
     private ligaDataProvider: LigaDataProviderService,
@@ -112,39 +116,48 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   private loadTableRows() {
     this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => {
-          this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
-            if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0) {
-              this.handleLoadTableRowsSuccess(response);
-            } else {
-              let filtered = response.payload.filter(ligadto => {
-                if (ligadto.ligaVerantwortlichMail === this.currentUserService.getEmail()){
-                  return true;}
-                else {
-                  return false;
-                }
-              })
-              this.handleLoadTableRows(filtered);
-            }
-          });
-        })
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.renderLigenForCurrentUser(response.payload))
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   public findBySearch($event: string) {
     this.ligaDataProvider.findBySearch($event)
-        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.renderLigenForCurrentUser(response.payload))
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<LigaDTO[]>): void {
-    this.rows = [];
-    this.loading = false;
+  /**
+   * Rendert die Ligen und wendet dabei die Sichtbarkeits-Beschränkung an:
+   * Nicht-Admins (z.B. Ligaleiter) sehen ausschließlich die Ligen, für die sie verantwortlich sind.
+   * Diese Beschränkung greift für die normale Übersicht UND für die Suche, damit das Suchfeld
+   * die Berechtigungen nicht umgehen kann (BSAPP-2191).
+   */
+  private renderLigenForCurrentUser(ligen: LigaDTO[]): void {
+    // Admin-Flag nur beim ersten Aufruf laden, danach das gecachte Ergebnis nutzen –
+    // vermeidet einen Rollen-Request pro Suche (Quicksearch feuert mehrfach). (Review BSAPP-2191)
+    if (this.isAdmin !== null) {
+      this.renderLigenFiltered(ligen, this.isAdmin);
+      return;
+    }
+    this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID())
+        .then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+          this.isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0;
+          this.renderLigenFiltered(ligen, this.isAdmin);
+        })
+        .catch(() => this.handleLoadTableRowsFailure());
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<LigaDTO[]>): void {
-    this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
+  private renderLigenFiltered(ligen: LigaDTO[], isAdmin: boolean): void {
+    if (isAdmin) {
+      this.handleLoadTableRows(ligen);
+    } else {
+      const filtered = ligen.filter(ligadto => ligadto.ligaVerantwortlichMail === this.currentUserService.getEmail());
+      this.handleLoadTableRows(filtered);
+    }
+  }
+
+  private handleLoadTableRowsFailure(response?: BogenligaResponse<LigaDTO[]>): void {
+    this.rows = [];
     this.loading = false;
   }
 
