@@ -71,17 +71,21 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((noData) => {
-            resolve({result: RequestResult.SUCCESS});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((noData) => {
+          resolve({ result: RequestResult.SUCCESS });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({
+              result: RequestResult.CONNECTION_PROBLEM,
+              message: 'Verbindungsproblem'
+            });
+          } else {
+            reject({
+              result: RequestResult.FAILURE,
+              message: error.error?.message || error.message
+            });
+          }
+        });
     });
   }
 
