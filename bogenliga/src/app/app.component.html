@@ -47,7 +47,9 @@
 
           <!-- Feedback -->
           <li>
-          <a href="#" (click)="popup=true"> {{ 'APP.FEEDBACK' | translate }}
+          <!-- preventDefault verhindert die Navigation auf "#", die sonst den liga-QueryParam
+               (und damit den Liga-Kontext) verwerfen würde (BSAPP-2103). -->
+          <a href="#" (click)="$event.preventDefault(); popup=true" style="cursor: pointer" data-cy="footer-feedback-link"> {{ 'APP.FEEDBACK' | translate }}
           </a>
           </li>
 
