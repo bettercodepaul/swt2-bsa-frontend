@@ -46,6 +46,8 @@ const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_delete_success';
 const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
+const NOTIFICATION_ADD_WETTKAMPFTAG_SUCCESS = 'wettkampftag_add_success';
+const NOTIFICATION_COPY_WETTKAMPFTAG_SUCCESS = 'wettkampftag_copy_success';
 
 const wettkampfTagNotification: Notification = {
   id:          NOTIFICATION_SAVE_VERANSTALTUNG,
@@ -238,16 +240,81 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public async onAddWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     await this.loadDistinctWettkampf();
-    await this.createInitWettkampfTag(this.getNextWettkampftagNumber());
+    const newWettkampftagNumber = this.getNextWettkampftagNumber();
+    const created = await this.createInitWettkampfTag(newWettkampftagNumber);
     await this.loadDistinctWettkampf();
+    if (created) {
+      // visual feedback so the user sees the action succeeded (BSAPP-2187)
+      this.selectNewWettkampftag(newWettkampftagNumber);
+      this.showWettkampftagFeedback(
+        NOTIFICATION_ADD_WETTKAMPFTAG_SUCCESS,
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD_SUCCESS.TITLE',
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD_SUCCESS.DESCRIPTION');
+    }
   }
 
   // Method copys current Wettkampftag -> called by "Kopieren"-Button
   public async onCopyWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     await this.loadDistinctWettkampf();
-    await this.copyCurrentWettkampfTag(this.getNextWettkampftagNumber());
+    const newWettkampftagNumber = this.getNextWettkampftagNumber();
+    const copied = await this.copyCurrentWettkampfTag(newWettkampftagNumber);
     await this.loadDistinctWettkampf();
+    if (copied) {
+      // visual feedback so the user sees the action succeeded (BSAPP-2187)
+      this.selectNewWettkampftag(newWettkampftagNumber);
+      this.showWettkampftagFeedback(
+        NOTIFICATION_COPY_WETTKAMPFTAG_SUCCESS,
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY_SUCCESS.TITLE',
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY_SUCCESS.DESCRIPTION');
+    }
+  }
+
+  /**
+   * Selects the freshly created/copied Wettkampftag in the selection list and scrolls
+   * back to the top, so the user immediately sees the new entry instead of being left
+   * at the bottom of the form. (BSAPP-2187)
+   */
+  private selectNewWettkampftag(wettkampftagNumber: number): void {
+    const newWettkampf = (this.selectedDTOs || [])
+        .find((wettkampf) => wettkampf.wettkampfTag === wettkampftagNumber);
+
+    if (!isNullOrUndefined(newWettkampf)) {
+      this.selectedWettkampfTag = newWettkampf.wettkampfTag;
+      this.selectedWettkampf = newWettkampf;
+      this.loadKampfrichter();
+    }
+
+    if (typeof window !== 'undefined' && !isNullOrUndefined(window.scrollTo)) {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }
+
+  /**
+   * Shows a short confirmation popup after a Wettkampftag was successfully added or copied.
+   * Uses a dedicated notification id (no navigation), so the user stays on the page. (BSAPP-2187)
+   */
+  private showWettkampftagFeedback(notificationId: string, titleKey: string, descriptionKey: string): void {
+    const notification: Notification = {
+      id:          notificationId,
+      title:       titleKey,
+      description: descriptionKey,
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(notificationId)
+        .pipe(
+          filter((myNotification) => myNotification.userAction === NotificationUserAction.ACCEPTED),
+          take(1)
+        )
+        .subscribe(() => {
+          this.saveLoading = false;
+        });
+
+    this.notificationService.showNotification(notification);
   }
 
   public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void {
@@ -788,6 +855,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       );
       this.currentWettkampftagArray[num] = temp;
       await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+      return true;
     } else {
       const notification: Notification = {
         id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
@@ -801,8 +869,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
       this.wettkampftagService();
       this.notificationService.showNotification(notification);
+      return false;
     }
-    return true;
   }
 
   public async updateNumbersAfterDelete(deletedWettkampfId: number): Promise<boolean> {
@@ -884,6 +952,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       );
       this.currentWettkampftagArray[num] = temp;
       await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+      return true;
     } else {
       const notification: Notification = {
         id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
@@ -897,8 +966,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
       this.wettkampftagService();
       this.notificationService.showNotification(notification);
+      return false;
     }
-    return true;
   }
 
   private getMaxWettkampftage(): number {
