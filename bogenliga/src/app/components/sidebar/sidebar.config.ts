@@ -32,7 +32,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-home-button'
   },
-
   {
     label: 'SIDEBAR.LIGAUEBERSICHT',
     icon: faSitemap,
@@ -49,7 +48,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-vereine-button'
   },
-
   {
     label: 'SIDEBAR.VERWALTUNG',
     icon: faCogs,
@@ -60,7 +58,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'DSB Mitglieder',
         route: '/verwaltung/dsbmitglieder',
-        permissons: [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
+        permissons: [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER], //don't add CAN_READ_MY_VEREIN, because Sportleiter can't access Verwaltung
         datacy: 'sidebar-verwaltung-mitglieder-button'
       },
       {
@@ -78,7 +76,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Vereine',
         route: '/verwaltung/vereine',
-        permissons: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
+        permissons: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT],
         datacy: 'sidebar-verwaltung-vereine-button'
       },
       {
@@ -107,8 +105,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       }
     ]
   },
-
-
   {
     label: 'SIDEBAR.WETTKAMPF',
     icon: faTrophy,
@@ -118,7 +114,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     datacy: 'sidebar-wettkampf-button',
     requiresLigaContext: true
   },
-
   {
     label: 'SIDEBAR.WKDURCHFUEHRUNG',
     icon: faCalendar,
@@ -144,8 +139,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-spotting-button'
   },
-
-
   {
     label: 'SIDEBAR.PLAYGROUND',
     icon: faCode,
@@ -166,7 +159,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
 ];
 // sidebar for offlinemode
 export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
-
   {
     label: 'SIDEBAR.HOME',
     icon: faHome,
@@ -175,19 +167,17 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-home-button'
   },
-
-
   {
     label: 'SIDEBAR.VERWALTUNG',
     icon: faArchive,
     route: '/verwaltung',
-    permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+    permissons: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
     datacy: 'sidebar-verwaltung-button',
     subitems: [
       {
         label: 'DSB Mitglieder',
         route: '/verwaltung/dsbmitglieder',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER], //don't add CAN_READ_MY_VEREIN, because Sportleiter can't access Verwaltung
         datacy: 'sidebar-verwaltung-mitglieder-button'
       },
       {
@@ -223,7 +213,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
       {
         label: 'Veranstaltungen',
         route: '/verwaltung/veranstaltung',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy: 'sidebar-verwaltung-veranstaltungen-button'
       }
     ]
