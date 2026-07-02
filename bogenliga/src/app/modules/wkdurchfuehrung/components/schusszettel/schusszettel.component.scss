@@ -207,6 +207,20 @@ input {
   box-sizing: border-box;
 }
 
+.schuetze-readonly-label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.mobile-fehlerpunkte-title {
+  display: none;
+}
+
+.fehlerpunkte-readonly-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
 /* Handy-Ansicht: Karten pro Schütze statt breiter 12-Spalten-Tabelle */
 @media (max-width: 768px) {
   .schusszettel-container {
@@ -214,6 +228,32 @@ input {
     padding: 10px;
     overflow-x: hidden;
     touch-action: pan-y;
+  }
+
+  .schuetze-readonly-label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 8px;
+    background: #f1f5f9;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    min-width: 44px;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .fehlerpunkte-header-row {
+    display: none;
+  }
+
+  .mobile-fehlerpunkte-title {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 20px 0 10px 0;
+    color: #2A2A2A;
+    text-align: center;
   }
 
   /* Bootstrap-Spalten untereinander stapeln */
@@ -263,19 +303,71 @@ input {
 
   .fehlerpunkte-wrapper {
     display: block;
+    width: 100%;
 
     .score-table {
-      width: auto;
+      display: block;
+      width: 100%;
+      border: none;
+
+      tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        gap: 6px;
+      }
+
+      tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        min-width: 50px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 6px;
+      }
 
       th {
-        padding: 4px 12px;
-        font-size: 12px;
+        border: none;
+        padding: 0 0 4px 0;
+        font-size: 11px;
+        color: #64748b;
+        text-align: center;
+      }
+
+      td {
+        border: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       input {
-        width: 56px;
-        max-width: 56px;
+        width: 36px;
+        height: 30px;
+        font-size: 15px;
+        text-align: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
       }
+    }
+
+    .fehlerpunkte-readonly-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      width: 36px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
