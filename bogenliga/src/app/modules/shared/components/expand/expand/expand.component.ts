@@ -9,6 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ExpandComponent {
   @Input() headerText: string;
+  @Input() headerSubText?: string;
   @Input() headerLink?: string;
   @Input() expanded: boolean = true;
   @Input() selectedItem: any;
