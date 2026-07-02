@@ -145,14 +145,14 @@
                  placeholder="{{ 'SELECTIONLIST.SEARCH_PLACEHOLDER' | translate }}"
                  autocomplete="off"
                  data-cy="detail-vereine-dsb-search"
-                 [readonly]="isReadOnly">
+                  [readonly]="isReadOnly || isSportleiter">
           <select class="form-control"
                   id="dsbMitgliedVerein"
                   name="dsbMitgliedVerein"
                   #dsbMitgliedVerein="ngModel"
                   [(ngModel)]="currentVerein"
                   data-cy="detail-vereine-dsb"
-                  [disabled]="isReadOnly">
+                  [disabled]="isReadOnly || isSportleiter">
             <option [ngValue]="verein" *ngFor="let verein of filteredVereine"> {{verein.name}}</option>
           </select>
           <div class="invalid-feedback">
