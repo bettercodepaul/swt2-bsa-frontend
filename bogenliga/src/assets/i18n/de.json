@@ -1073,6 +1073,10 @@
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         },
+        "EMPTY_MANNSCHAFT": {
+          "TITLE": "Download nicht möglich",
+          "DESCRIPTION": "Die Mannschaft enthält keine Mitglieder. Rückennummern und Lizenzen können daher nicht heruntergeladen werden."
+        },
         "DOWNLOAD_BEFORE_DEADLINE": {
           "TITLE": "Download nicht verfügbar",
           "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."
@@ -1483,6 +1487,7 @@
           "FORM": {
             "LABEL": "Wettkampftag",
             "REMINDSAVE": "Bitte speichern Sie zuerst Ihre Änderungen.",
+            "MAXREACHED": "Maximale Anzahl an Wettkampftagen erreicht",
             "DATUM": {
               "LABEL": "Datum",
               "PLACEHOLDER": "Datum",
@@ -1537,6 +1542,14 @@
             "COPY": {
               "TITLE": "Kopieren",
               "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+            },
+            "ADD_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich hinzugefügt."
+            },
+            "COPY_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich kopiert."
             },
             "DELETE_SUCCESS": {
               "TITLE": "Erfolgreich",
@@ -1913,6 +1926,10 @@
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
       },
+      "VERANSTALTUNG_MAX_CAPACITY_ERROR": {
+        "TITLE": "Veranstaltung ausgebucht",
+        "DESCRIPTION": "Die Veranstaltung hat ihre maximale Kapazität erreicht. Es kann keine weitere Mannschaft hinzugefügt werden."
+      },
       "INVALID_SIGN_IN_CREDENTIALS": {
         "TITLE": "Anmeldung nicht erfolgreich",
         "DESCRIPTION": "Bitte prüfen sie E-Mail-Adresse und Passwort"
@@ -1951,6 +1968,7 @@
       "EDIT": "Editieren",
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
+      "COPY": "Kopieren",
       "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
       "DOWNLOADLIZENZEN": "Lizenzen herunterladen",
       "DOWNLOAD": "Lizenz herunterladen",

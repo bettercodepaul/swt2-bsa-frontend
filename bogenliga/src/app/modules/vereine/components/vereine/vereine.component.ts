@@ -33,6 +33,11 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   }
 
   public findBySearch($event: string) {
+    // Bei leerer Suche zurueck zur initialen (Bezirks-)Liste, statt alle Vereine zu laden (swt2#2160).
+    if (!$event || $event.trim().length === 0) {
+      this.loadVereine();
+      return;
+    }
     this.vereinDataProvider.findBySearch($event)
       .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
       .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure());
