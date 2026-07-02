@@ -86,7 +86,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public saveLoading = false;
   public ActionButtonColors = ActionButtonColors;
   public UserPermission = UserPermission;
-  private isSportleiter = false;
+  public isSportleiter = false;
 
 
   private sessionHandling: SessionHandling;
