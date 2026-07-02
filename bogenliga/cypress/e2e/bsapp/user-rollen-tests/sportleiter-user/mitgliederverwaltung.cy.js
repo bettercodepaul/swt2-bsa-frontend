@@ -16,7 +16,6 @@ it('Login erfolgreich', function() {
   cy.get('p:nth-child(8) #undefined').click();
 });
 
-
 it('Anzeige Verwaltung', function() {
   // Sportleiter hat keinen Zugriff auf die Verwaltung: Button darf nicht vorhanden sein
   cy.get('[data-cy=sidebar-verwaltung-button]').should('not.exist')
@@ -41,7 +40,7 @@ it('Neues DSB-Mitglied', function() {
   cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('2000-01-01')
   cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
   cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type(randomID);
-  cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('SGes Gerstetten')
+  cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').should('contain', 'SGes Gerstetten')
   cy.get('[data-cy=detail-beitrittsdatum-feld]').click();
   cy.get('[data-cy=detail-beitrittsdatum-feld]').type('2025-01-01');
   cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
