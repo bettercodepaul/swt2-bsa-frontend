@@ -79,7 +79,7 @@
       </div>
     </div>
     <!-- Zeile Fehlerpunkte -->
-    <div class="row">
+    <div class="row fehlerpunkte-header-row">
       <div class="col-12 row-header">
         {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}
       </div>
@@ -120,10 +120,13 @@
             <tr>
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
+                  <span *ngIf="readOnlyMode" class="schuetze-readonly-label">
+                    {{ passe.rueckennummer || '–' }}
+                  </span>
                   <select
+                    *ngIf="!readOnlyMode"
                     [(ngModel)]="passe.rueckennummer"
                     (ngModelChange)="onSchuetzeChangeDropdown($event, 1, i, j)"
-                    [disabled]="readOnlyMode"
                     class="schuetze-select"
                   >
                     <option [ngValue]="null">–</option>
@@ -175,6 +178,7 @@
         </table>
       </div>
       <div class="col-2 fehlerpunkte-wrapper">
+        <h3 class="mobile-fehlerpunkte-title">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}</h3>
         <table class="table score-table">
           <tbody>
           <tr
@@ -189,12 +193,15 @@
             </th>
 
             <td>
+              <span *ngIf="readOnlyMode" class="fehlerpunkte-readonly-label">
+                {{ match1.fehlerpunkte[i] || 0 }}
+              </span>
               <input
+                *ngIf="!readOnlyMode"
                 type="number"
                 [(ngModel)]="match1.fehlerpunkte[i]"
                 (blur)="onFehlerpunkteBlur(1, i)"
                 blaFehlerNumberOnly
-                [readOnly]="readOnlyMode"
               />
             </td>
           </tr>
@@ -281,7 +288,7 @@
         </table>
       </div>
     </div>
-    <div class="row">
+    <div class="row fehlerpunkte-header-row">
       <div class="col-12 row-header">
         {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}
       </div>
@@ -322,10 +329,13 @@
             <tr>
               <ng-template ngFor let-j="index" let-passe [ngForOf]="schuetze">
                 <td *ngIf="j === 0">
+                  <span *ngIf="readOnlyMode" class="schuetze-readonly-label">
+                    {{ passe.rueckennummer || '–' }}
+                  </span>
                   <select
+                    *ngIf="!readOnlyMode"
                     [(ngModel)]="passe.rueckennummer"
                     (ngModelChange)="onSchuetzeChangeDropdown($event, 2, i, j)"
-                    [disabled]="readOnlyMode"
                     class="schuetze-select"
                   >
                     <option [ngValue]="null">–</option>
@@ -368,8 +378,7 @@
               <ng-template ngFor let-sum [ngForOf]="match2.sumSatz">
                 <td colspan="2">
                   {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SUMME' | translate }}
-                  <span
-                  ><input
+                  <span><input
                     [value]="sum"
                     readonly
                     tabindex="-1"
@@ -383,6 +392,7 @@
         </table>
       </div>
       <div class="col-2 fehlerpunkte-wrapper">
+        <h3 class="mobile-fehlerpunkte-title">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}</h3>
         <table class="table score-table">
           <tbody>
           <tr
@@ -397,12 +407,15 @@
             </th>
 
             <td>
+              <span *ngIf="readOnlyMode" class="fehlerpunkte-readonly-label">
+                {{ match2.fehlerpunkte[i] || 0 }}
+              </span>
               <input
+                *ngIf="!readOnlyMode"
                 type="number"
                 [(ngModel)]="match2.fehlerpunkte[i]"
                 (blur)="onFehlerpunkteBlur(2, i)"
                 blaFehlerNumberOnly
-                [readOnly]="readOnlyMode"
               />
             </td>
           </tr>
