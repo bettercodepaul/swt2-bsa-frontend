@@ -41,3 +41,18 @@
   top: 15px;
   right: 10%;
 }
+
+.header-sub-text {
+  font-size: 14px;
+  font-weight: normal;
+  color: #555;
+  margin-left: 15px;
+  display: inline-flex;
+  align-items: center;
+
+  .live-dot {
+    color: #c00;
+    margin-right: 5px;
+    font-size: 18px;
+  }
+}

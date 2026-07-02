@@ -3,6 +3,10 @@
   <div class="expand-header" (click)="toggleExpand()" [class.expanded]="expanded">
 
     <a [routerLink]="headerLink">{{ headerText }}</a>
+    <span *ngIf="headerSubText" class="header-sub-text">
+      <span class="live-dot">&#9679;</span>
+      {{ headerSubText }}
+    </span>
     <span class="selected-item">{{ selectedItem }}</span> <!-- Anzeige des ausgewählten Elements -->
     <span class="expand-icon">{{ expanded  ? '▲' : '▼' }}</span>
 

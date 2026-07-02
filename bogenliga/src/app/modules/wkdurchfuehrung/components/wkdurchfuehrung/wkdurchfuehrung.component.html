@@ -247,31 +247,24 @@
           </bla-teilnemende-manschaften-tabelle>
         </bla-expand>
 
-        <bla-expand headerText="{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }}">
-          <bla-col-layout>
-            <p *ngIf="liveAktualisiert && !isOffline()"
-               id="liveHinweis"
-               style="margin-left: 5px; color: #555;">
-              <span style="color: #c00;">&#9679;</span>
-              Live &ndash; Ergebnisse werden alle {{ liveIntervallSekunden }} Sekunden aktualisiert
-              (Stand: {{ liveAktualisiert | date:'HH:mm:ss' }})
-            </p>
-            <div class="row"
-                 style="margin-left: 5px">
-              <section class="overview-dialog-content">
-                <ng-container *ngFor="let group of groupedMatches">
-                  <h2 style="color:black;">
-                    {{group.groupName}}
-                  </h2>
-                  <bla-data-table [config]="config_table_match"
-                                  [rows]="group.matches"
-                                  [loading]="loading"
-                                  (onEditEntry)="onEdit($event)">
-                  </bla-data-table>
-                </ng-container>
-              </section>
-            </div>
-          </bla-col-layout>
+        <bla-expand
+          headerText="{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }}"
+          [headerSubText]="getLiveHinweisText()">
+          <div class="row"
+               style="margin-left: 5px; width: 100%;">
+            <section class="overview-dialog-content">
+              <ng-container *ngFor="let group of groupedMatches">
+                <h2 style="color:black;">
+                  {{group.groupName}}
+                </h2>
+                <bla-data-table [config]="config_table_match"
+                                [rows]="group.matches"
+                                [loading]="loading"
+                                (onEditEntry)="onEdit($event)">
+                </bla-data-table>
+              </ng-container>
+            </section>
+          </div>
         </bla-expand>
 
         <bla-actionbutton
