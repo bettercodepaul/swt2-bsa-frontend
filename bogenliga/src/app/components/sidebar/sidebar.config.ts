@@ -171,7 +171,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     label: 'SIDEBAR.VERWALTUNG',
     icon: faArchive,
     route: '/verwaltung',
-    permissons: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
+    permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
     datacy: 'sidebar-verwaltung-button',
     subitems: [
       {
