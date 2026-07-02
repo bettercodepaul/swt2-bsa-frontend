@@ -26,6 +26,7 @@
                  pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß0-9\ \-\.]{1,50}$"
                  placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}"
                  required
+                 [readonly]="isSportleiter"
                  type="text">
 
           <div class="invalid-feedback">
@@ -52,6 +53,7 @@
                  pattern="(?=.*[0-9])[A-Z0-9]{8,20}$"
                  placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}"
                  required
+                 [readonly]="isSportleiter"
                  type="text">
 
           <div class="invalid-feedback">
@@ -72,7 +74,8 @@
                   [(ngModel)]="currentRegion"
                   class="form-control"
                   id="vereinRegion"
-                  name="vereinRegion">
+                  name="vereinRegion"
+                  [disabled]="isSportleiter">
             <option *ngFor="let region of regionen"
                     [ngValue]="region"> {{region.regionName}}</option>
           </select>
