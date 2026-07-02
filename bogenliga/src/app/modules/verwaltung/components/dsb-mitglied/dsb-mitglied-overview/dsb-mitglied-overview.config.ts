@@ -34,9 +34,9 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.VIEW, TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_DSBMITGLIEDER],
+    editPermission : [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_MY_VEREIN],
     deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER],
-    viewPermission : [UserPermission.CAN_READ_DSBMITGLIEDER]
+    viewPermission : [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_READ_MY_VEREIN]
   },
   createPermission : [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
 };
