@@ -1073,6 +1073,10 @@
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         },
+        "EMPTY_MANNSCHAFT": {
+          "TITLE": "Download nicht möglich",
+          "DESCRIPTION": "Die Mannschaft enthält keine Mitglieder. Rückennummern und Lizenzen können daher nicht heruntergeladen werden."
+        },
         "DOWNLOAD_BEFORE_DEADLINE": {
           "TITLE": "Download nicht verfügbar",
           "DESCRIPTION": "Der Download ist erst nach Ablauf der Meldedeadline möglich."

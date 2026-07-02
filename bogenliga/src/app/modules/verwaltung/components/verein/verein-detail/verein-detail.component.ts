@@ -45,6 +45,7 @@ import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 const ID_PATH_PARAM = 'id';
@@ -58,6 +59,7 @@ const NOTIFICATION_COPY_MANNSCHAFT = 'mannschaft_detail_copy';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const NOTIFICATION_EMPTY_MANNSCHAFT = 'download_empty_mannschaft';
 const NOTIFICATION_DOWNLOAD_BEFORE_DEADLINE = 'download_before_deadline';
 const NOTIFICATION_ENTITY_CONFLICT_ERROR = 'ENTITY_CONFLICT_ERROR';
 const NOTIFICATION_DATABASE_ERROR = 'DATABASE_ERROR';
@@ -107,7 +109,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     private notificationService: NotificationService,
     private userDataProviderService: UserDataProviderService,
     private ligaProvider: LigaDataProviderService,
-    private wettkampfDataProviderService: WettkampfDataProviderService,) {
+    private wettkampfDataProviderService: WettkampfDataProviderService,
+    private mannschaftsmitgliedProvider: MannschaftsmitgliedDataProviderService,) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -439,20 +442,62 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       return;
     }
     if (!this.onOfflineService.isOffline()) {
-      const URL: string = new UriBuilder()
-        .fromPath(environment.backendBaseUrl)
-        .path('v1/download')
-        .path('pdf/rueckennummern')
-        .path('?mannschaftid=' + versionedDataObject.id)
-        .build();
-      this.downloadService.download(URL, 'rueckennummern.pdf', this.aElementRef)
-          .then((response: BogenligaResponse<string>) => console.log(response))
-          .catch((response: BogenligaResponse<string>) => console.log(response));
+      // Leere Mannschaft vorab abfangen -> sonst liefert das Backend einen unverständlichen
+      // Fehler (keine Mitglieder). (BSAPP-2179)
+      this.withNonEmptyMannschaft(versionedDataObject.id, () => this.performDownloadRueckennummer(versionedDataObject));
     } else {
       console.log('offline');
       this.returnMatch(versionedDataObject);
     }
 
+  }
+
+  private performDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/rueckennummern')
+      .path('?mannschaftid=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(URL, 'rueckennummern.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
+  }
+
+  /**
+   * Prüft, ob die Mannschaft Mitglieder hat. Ist sie leer, wird eine klare Meldung angezeigt und
+   * der Download NICHT ausgeführt. Bei nicht leeren Mannschaften (oder falls die Prüfung selbst
+   * fehlschlägt) wird der eigentliche Download über den Callback gestartet. (BSAPP-2179)
+   */
+  private withNonEmptyMannschaft(mannschaftId: number, onNonEmpty: () => void): void {
+    this.mannschaftsmitgliedProvider.findAllByTeamId(mannschaftId)
+        .then((response) => {
+          if (isNullOrUndefined(response.payload) || response.payload.length === 0) {
+            this.showEmptyMannschaftNotification();
+          } else {
+            onNonEmpty();
+          }
+        })
+        .catch(() => onNonEmpty());
+  }
+
+  private showEmptyMannschaftNotification(): void {
+    const notification: Notification = {
+      id:          NOTIFICATION_EMPTY_MANNSCHAFT,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.EMPTY_MANNSCHAFT.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.EMPTY_MANNSCHAFT.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_EMPTY_MANNSCHAFT)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
+    this.notificationService.showNotification(notification);
   }
 
   // Get match Info from offlineDB
@@ -503,6 +548,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
        this.showBeforeDeadlineNotification();
        return;
      }
+     // Leere Mannschaft vorab abfangen -> sonst wird ein leeres/unverständliches PDF erzeugt. (BSAPP-2179)
+     this.withNonEmptyMannschaft(versionedDataObject.id, () => this.performDownloadLizenzen(versionedDataObject));
+   }
+
+   private performDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
     const URL: string = new UriBuilder()
        .fromPath(environment.backendBaseUrl)
        .path('v1/download')
