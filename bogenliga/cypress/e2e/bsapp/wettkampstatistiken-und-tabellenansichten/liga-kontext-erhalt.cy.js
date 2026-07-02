@@ -41,6 +41,21 @@ describe('BSAPP-2103: Liga-Kontext bleibt bei Navigation erhalten', () => {
     cy.get('[data-cy=sidebar-ligatabelle-button]').should('exist');
   });
 
+  it('positiv: Liga-Kontext bleibt auch auf der reinen Verein-Route (/vereine/:id) erhalten', () => {
+    // Antwort auf Review-Frage: Die Route ':id' (VereinComponent) hat KEINEN LigaResolver und
+    // damit auch keinen Guard. Sie kann den Kontext gar nicht leeren; die Sidebar-Einträge
+    // bleiben über den gemerkten Kontext (remembered) erhalten – ohne dass ein Guard nötig ist.
+    cy.visit(`http://localhost:4200/#/wettkaempfe?liga=${LIGA_ID}`);
+    cy.get('[data-cy=sidebar-wettkampf-button]', {timeout: 20000}).should('exist');
+
+    // Reine Verein-Route OHNE mannschaftId und OHNE liga-Param.
+    cy.visit(`http://localhost:4200/#/vereine/${VEREIN_ID}`);
+
+    // POSITIV: Sidebar-Einträge bleiben erhalten (Kontext nicht verloren).
+    cy.get('[data-cy=sidebar-wettkampf-button]', {timeout: 20000}).should('exist');
+    cy.get('[data-cy=sidebar-ligatabelle-button]').should('exist');
+  });
+
   it('negativ: ohne Liga-Kontext erscheinen die liga-abhängigen Sidebar-Einträge nicht', () => {
     // Home ohne liga-Param leert den Liga-Kontext bewusst (echte Startseite).
     cy.visit('http://localhost:4200/#/home');
