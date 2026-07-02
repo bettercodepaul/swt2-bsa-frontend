@@ -231,6 +231,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
+  public getLiveHinweisText(): string {
+    if (this.liveAktualisiert && !this.isOffline()) {
+      const timeString = this.liveAktualisiert.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      return `Live – Ergebnisse werden alle ${this.liveIntervallSekunden} Sekunden aktualisiert (Stand: ${timeString})`;
+    }
+    return '';
+  }
   public isAdmin(): boolean {
     return this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN);
   }
