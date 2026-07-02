@@ -1067,7 +1067,7 @@
         },
         "SAVE_FAILURE": {
           "TITLE": "Fehler beim Aktualisieren",
-          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung Vereinsname, Vereinsnummer und Region zu editieren."
         },
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
