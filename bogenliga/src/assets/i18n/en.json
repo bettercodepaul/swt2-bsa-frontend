@@ -1944,6 +1944,7 @@
         "EDIT": "Edit",
         "DELETE": "Delete",
         "ADD": "Add",
+        "COPY": "Copy",
         "DOWNLOAD": "Download licence"
       },
       "ACTION_TEXT": {

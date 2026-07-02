@@ -130,11 +130,11 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           if (roleresponse && roleresponse.payload) {
             this.isSportleiter = roleresponse.payload.filter(role => role.roleName === 'SPORTLEITER').length > 0;
             if (this.isSportleiter) {
-              // create a deep copy of the table config and remove the ADD action so the button is hidden
+              // create a deep copy of the table config and remove the COPY action so the button is hidden
               this.config_table = JSON.parse(JSON.stringify(this.config_table));
               if (this.config_table.actions && Array.isArray(this.config_table.actions.actionTypes)) {
                 this.config_table.actions.actionTypes = this.config_table.actions.actionTypes
-                  .filter((action) => action !== TableActionType.ADD);
+                  .filter((action) => action !== TableActionType.COPY);
               }
             }
           }
