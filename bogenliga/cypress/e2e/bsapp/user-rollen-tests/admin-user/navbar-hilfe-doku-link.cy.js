@@ -1,8 +1,8 @@
 /**
  * Ticket swt2#2244:
  * Das Fragezeichen-Symbol in der Navbar (Seitenleiste) muss auf die neue
- * BookStack-Doku "Funktionen der App" verlinken und diese ZWINGEND in einem
- * neuen Browser-Tab oeffnen, damit der App-Status (z. B. die getroffene
+ * BookStack-Doku-Hauptseite (Bücherübersicht) verlinken und diese ZWINGEND in
+ * einem neuen Browser-Tab oeffnen, damit der App-Status (z. B. die getroffene
  * Ligaauswahl) nicht verloren geht. Der alte DokuWiki-Link bzw. die interne
  * /hilfe-Seite (iframes auf wiki.bsapp.de) darf nicht mehr angesteuert werden.
  *
@@ -10,7 +10,7 @@
  * Fragezeichens und dass ein Klick die App nicht verlaesst.
  */
 describe('swt2#2244 - Navbar-Hilfe verlinkt auf neue Doku (neuer Tab)', () => {
-  const DOKU_URL = 'https://docs.bsapp.de/books/funktionen-der-app';
+  const DOKU_URL = 'https://docs.bsapp.de/books';
 
   before(() => {
     cy.loginAdmin();

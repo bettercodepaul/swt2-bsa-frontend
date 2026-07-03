@@ -12,12 +12,12 @@ it('test hilfeicon', function() {
 
 /**
  * swt2#2244: Das Fragezeichen in der Navbar verlinkt nun auf die neue
- * BookStack-Doku "Funktionen der App" und oeffnet sie in einem neuen Tab -
- * es wird NICHT mehr intern auf die veraltete /hilfe-Seite geroutet.
+ * BookStack-Doku-Hauptseite (Bücherübersicht) und oeffnet sie in einem neuen
+ * Tab - es wird NICHT mehr intern auf die veraltete /hilfe-Seite geroutet.
  */
 it('Hilfe-Fragezeichen verlinkt auf die neue Doku (neuer Tab)', function () {
   cy.get('[data-cy=sidebar-hilfe-button]')
-    .should('have.attr', 'href', 'https://docs.bsapp.de/books/funktionen-der-app')
+    .should('have.attr', 'href', 'https://docs.bsapp.de/books')
     .and('have.attr', 'target', '_blank')
 })
 /*

@@ -22,8 +22,10 @@ import {
 
 } from '@fortawesome/free-solid-svg-icons';
 
-// swt2#2244: Doku-Seite „Funktionen der App" im neuen BookStack-System (löst das alte DokuWiki ab).
-export const HILFE_DOKU_URL = 'https://docs.bsapp.de/books/funktionen-der-app';
+// swt2#2244: Doku-Hauptseite (Bücherübersicht) im neuen BookStack-System (löst das alte DokuWiki ab).
+// Bewusst die Übersicht statt eines einzelnen Buchs: Die Doku ist rollenbasiert aufgebaut,
+// sodass Nutzer (z. B. Ligaleiter) von hier zum für sie relevanten Buch geleitet werden.
+export const HILFE_DOKU_URL = 'https://docs.bsapp.de/books';
 
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
