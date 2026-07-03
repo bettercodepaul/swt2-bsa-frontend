@@ -11,19 +11,22 @@ it('test hilfeicon', function() {
 })
 
 /**
- * This test opens the sidebar and clicks on the "HILFE" tab and checks if
- * the url has changed successfully
+ * swt2#2244: Das Fragezeichen in der Navbar verlinkt nun auf die neue
+ * BookStack-Doku "Funktionen der App" und oeffnet sie in einem neuen Tab -
+ * es wird NICHT mehr intern auf die veraltete /hilfe-Seite geroutet.
  */
-
-it('Hilfeseite aufrufen', function () {
-  cy.get('[data-cy=sidebar-hilfe-button]').click()
-  cy.url().should('include', '#/hilfe')
+it('Hilfe-Fragezeichen verlinkt auf die neue Doku (neuer Tab)', function () {
+  cy.get('[data-cy=sidebar-hilfe-button]')
+    .should('have.attr', 'href', 'https://docs.bsapp.de/books/funktionen-der-app')
+    .and('have.attr', 'target', '_blank')
 })
 /*
-    * This Test selects the "Startseite" in the Section and checks if
-    * the iframe is shown/displays the right content
+    * Die interne /hilfe-Seite existiert weiterhin (Legacy, ausserhalb von
+    * swt2#2244) und wird hier direkt aufgerufen, da die Navbar nicht mehr
+    * dorthin fuehrt. Dieser Test prueft die Startseiten-Sektion.
     * **/
 it('Startseite auswählen', function () {
+  cy.visit('http://localhost:4200/#/hilfe')
   cy.get('[data-cy=test-startseite]').click()
   cy  /*check if the iframe invokes the correct URL */
     .get('iframe')
