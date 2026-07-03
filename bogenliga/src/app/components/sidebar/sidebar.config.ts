@@ -22,6 +22,9 @@ import {
 
 } from '@fortawesome/free-solid-svg-icons';
 
+// swt2#2244: Doku-Seite „Funktionen der App" im neuen BookStack-System (löst das alte DokuWiki ab).
+export const HILFE_DOKU_URL = 'https://docs.bsapp.de/books/funktionen-der-app';
+
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
@@ -152,6 +155,9 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.HILFE',
     icon: faQuestion,
     route: '/hilfe',
+    // swt2#2244: öffnet die aktuelle Doku „Funktionen der App" in einem neuen Tab (BookStack),
+    // statt intern auf die veraltete DokuWiki-Hilfeseite zu routen.
+    externalUrl: HILFE_DOKU_URL,
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-hilfe-button'
@@ -263,6 +269,9 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     label: 'SIDEBAR.HILFE',
     icon: faQuestion,
     route: '/hilfe',
+    // swt2#2244: öffnet die aktuelle Doku „Funktionen der App" in einem neuen Tab (BookStack),
+    // statt intern auf die veraltete DokuWiki-Hilfeseite zu routen.
+    externalUrl: HILFE_DOKU_URL,
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-hilfe-button'
