@@ -198,12 +198,12 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
 
   private createLizenzForMember(memberId: number): void {
     if (this.onOfflineService.isOffline()) {
-      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_SCHUETZE', null);
       return;
     }
 
     if (this.currentMannschaft.veranstaltungId === null || this.currentMannschaft.veranstaltungId === undefined) {
-      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_SCHUETZE', null);
       return;
     }
 
@@ -295,7 +295,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
                     this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
                   }
                 } else {
-                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_SCHUETZE_HINZUGEFUEGT', null);
                   console.log('Keine Wettkaempfe gefunden. Mannschaftsmitglied wird ohne Lizenzpruefung gespeichert.');
                 }
 

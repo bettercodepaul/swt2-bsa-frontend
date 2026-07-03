@@ -1288,6 +1288,10 @@
           "TITLE": "Erfolg",
           "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt. Es wurde keine Lizenz erstellt, da der Schütze bereits eine in der selben Disziplin besitzt."
         },
+        "SAVE_SCHUETZE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich hinzugefügt"
+        },
         "DUPLICATE": {
           "TITLE": "Fehler",
           "DESCRIPTION": "Schütze ist schon in der Mannschaft vorhanden. Bitte fügen Sie einen anderen Schützen hinzu."

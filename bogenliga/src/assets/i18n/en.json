@@ -1282,6 +1282,10 @@
           "TITLE": "Success",
           "DESCRIPTION": "Successfully added marksman to team. No licence was created, because the marksman already has one in this discipline."
         },
+        "SAVE_SCHUETZE_HINZUGEFUEGT": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Marksman was successfully added"
+        },
         "DUPLICATE": {
           "TITLE": "Error",
           "DESCRIPTION": "Marksman already in team. Please add a different marksman."
