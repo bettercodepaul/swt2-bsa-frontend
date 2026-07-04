@@ -6,6 +6,8 @@ export interface SideBarNavigationItem {
   label: string;
   icon: IconDefinition;
   route: string;
+  // Externe URL (z. B. Doku): wird in der Navbar in einem neuen Tab geöffnet statt intern zu routen.
+  externalUrl?: string;
   detailType ?: string;
   permissons?: UserPermission[];
   subitems?: SideBarNavigationSubitem[];

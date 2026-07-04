@@ -17,7 +17,27 @@
 
           <!-- Haupt-Item -->
           <div class="sidebar-text-toggle" data-toggle="tooltip" data-placement="right" [class.flexBox]="!isActive">
+            <!-- Externe Navigation (z. B. Doku): öffnet zwingend in neuem Tab, damit der App-Status
+                 (z. B. Ligaauswahl) erhalten bleibt. swt2#2244 -->
+            <a
+              *ngIf="item.externalUrl; else internalNav"
+              [href]="item.externalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="navbar-text"
+              [class.flexChild]="!isActive"
+              [attr.data-cy]="item.datacy"
+              (click)="!isActive ? toggleSidebar(): null">
+
+              <bla-sidebar-item
+                [label]="item.label | translate"
+                [title]="item.label | translate"
+                [icon]="item.icon"
+                [subitems]="item.subitems"></bla-sidebar-item>
+            </a>
+
             <!-- Navigation: route + query params (liga falls vorhanden) -->
+            <ng-template #internalNav>
             <a
               [routerLink]="getRouteCommands(item)"
               [queryParams]="getRouteQueryParams(item)"
@@ -32,6 +52,7 @@
                 [icon]="item.icon"
                 [subitems]="item.subitems"></bla-sidebar-item>
             </a>
+            </ng-template>
 
             <!-- Dropdown Button -->
             <button *ngIf="existSubitems(item.subitems) && isActive == false"
